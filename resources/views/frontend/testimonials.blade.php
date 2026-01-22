@@ -1,135 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('frontend.layouts.app')
+@section('title', 'Testimonials - GrandStay')
+@section('content')
 
 
-<!-- Mirrored from madebydesignesia.com/themes/rivora/testimonials.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Jan 2026 12:06:15 GMT -->
-<head>
-    <title>Rivora - Luxury Hotel Booking HTML Template</title>
-    <link rel="icon" href="images/icon.webp" type="image/gif" sizes="16x16">
-    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" >
-    <meta content="" name="description" >
-    <meta content="" name="keywords" >
-    <meta content="" name="author" >
-    <!-- CSS Files
-    ================================================== -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
-    <link href="css/plugins.css" rel="stylesheet" type="text/css" >
-    <link href="css/swiper.css" rel="stylesheet" type="text/css" >
-    <link href="css/swiper-custom-1.css" rel="stylesheet" type="text/css" >
-    <link href="css/style.css" rel="stylesheet" type="text/css" >
-    <link href="css/coloring.css" rel="stylesheet" type="text/css" >
-    <!-- color scheme -->
-    <link id="colors" href="css/colors/scheme-01.css" rel="stylesheet" type="text/css" >
-
-</head>
-
-<body>
-
-    <header class="header-light transparent">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="de-flex">
-                        <div class="de-flex-col">
-                            <!-- logo begin -->
-                            <div id="logo">
-                                <a href="index.html">
-                                    <img class="logo-main" src="images/logo-black.webp" alt="" >
-                                    <img class="logo-scroll" src="images/logo-black.webp" alt="" >
-                                    <img class="logo-mobile" src="images/logo-black.webp" alt="" >
-                                </a>
-                            </div>
-                            <!-- logo close -->
-                        </div>
-
-                        <div class="de-flex-col">
-                            <div class="de-flex-col header-col-mid">
-                                <ul id="mainmenu">
-                                    <li><a class="menu-item" href="#">Home</a>
-                                        <ul class="mega">
-                                            <li>
-                                                <div class="container">
-                                                    <div class="sb-menu p-4">
-                                                        <div class="row g-4">
-                                                            <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                                                <div class="relative hover text-center overflow-hidden soft-shadow">
-                                                                    <a class="p-0" href="index.html">
-                                                                        <img src="images/demo/homepage-1.webp" class="w-100 relative hover-scale-1-1" alt="">
-                                                                    </a>
-                                                                </div>
-                                                                <h6 class="mt-3">Homepage 1</h6>
-                                                            </div>
-
-                                                            <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                                                <div class="relative hover text-center overflow-hidden soft-shadow">
-                                                                    <a class="p-0" href="homepage-2.html">
-                                                                        <img src="images/demo/homepage-2.webp" class="w-100 relative hover-scale-1-1" alt="">
-                                                                    </a>
-                                                                </div>
-                                                                <h6 class="mt-3">Homepage 2</h6>
-                                                            </div>
-
-                                                            <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                                                <div class="relative hover text-center overflow-hidden soft-shadow">
-                                                                    <a class="p-0" href="homepage-3.html">
-                                                                        <img src="images/demo/homepage-3.webp" class="w-100 relative hover-scale-1-1" alt="">
-                                                                    </a>
-                                                                </div>
-                                                                <h6 class="mt-3">Homepage 3</h6>
-                                                            </div>
-
-                                                            <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                                                <div class="relative hover text-center overflow-hidden soft-shadow">
-                                                                    <a class="p-0" href="homepage-4.html">
-                                                                        <img src="images/demo/homepage-4.webp" class="w-100 relative hover-scale-1-1" alt="">
-                                                                    </a>
-                                                                </div>
-                                                                <h6 class="mt-3">Homepage 4</h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="menu-item" href="rooms.html">Rooms</a>
-                                        <ul>
-                                            <li><a class="menu-item" href="rooms.html">Rooms Default</a></li>
-                                            <li><a class="menu-item" href="rooms-list.html">Rooms List</a></li>
-                                            <li><a class="menu-item" href="rooms-split.html">Rooms Split</a></li>
-                                            <li><a class="menu-item" href="rooms-slider.html">Rooms Slider</a></li>
-                                            <li><a class="menu-item" href="room-single.html">Single Room</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="menu-item" href="reservation.html">Reservation</a></li>
-                                    <li><a class="menu-item" href="#">Pages</a>
-                                        <ul>
-                                            <li><a class="menu-item" href="about.html">About Us</a></li>
-                                            <li><a class="menu-item" href="facilities.html">Facilities</a></li>
-                                            <li><a class="menu-item" href="offers.html">Offers</a></li>
-                                            <li><a class="menu-item" href="gallery.html">Gallery</a></li>
-                                            <li><a class="menu-item" href="gallery-carousel.html">Gallery Carousel</a></li>
-                                            <li><a class="menu-item" href="testimonials.html">Testimonials</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="menu-item" href="blog.html">Blog</a></li>
-                                    <li><a class="menu-item" href="contact.html">Contact</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="de-flex-col">
-                            <div class="menu_side_area">
-                                <a href="reservation.html" class="btn-main fx-slide hover-white"><span>Reservation</span></a>
-                                <span id="menu-btn"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <main>
 
     <main>
         <a href="#" id="back-to-top"></a>
@@ -139,7 +13,7 @@
         
         <section class="jarallax text-light relative rounded-1 overflow-hidden mt-80 mt-sm-70 mx-2">
             <div class="de-gradient-edge-top"></div>
-            <img src="images/background/1.webp" class="jarallax-img" alt="">
+            <img src="{{ asset('assets/frontend/images/background/1.webp') }}" class="jarallax-img" alt="">
             <div class="container relative z-2">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 text-center">
@@ -151,7 +25,7 @@
             </div>
             <div class="crumb-wrapper">
                 <ul class="crumb">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="{{ route('home') }}">Home</a></li>
                     <li class="active">Testimonials</li>
                 </ul>
             </div>
@@ -167,13 +41,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/1.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/1.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Emily Johnson</div>
                                         <small>12 March 2025</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -196,13 +70,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/2.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/2.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Michael Brown</div>
                                         <small>28 February 2025</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -225,13 +99,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/3.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/3.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Sophia Lee</div>
                                         <small>18 February 2025</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -254,13 +128,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/4.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/4.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Daniel Martinez</div>
                                         <small>02 February 2025</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -283,13 +157,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/5.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/5.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Olivia Wilson</div>
                                         <small>25 January 2025</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -312,13 +186,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/6.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/6.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">James Anderson</div>
                                         <small>10 January 2025</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -341,13 +215,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/7.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/7.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Laura Bennett</div>
                                         <small>22 December 2024</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -369,13 +243,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/8.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/8.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Thomas Müller</div>
                                         <small>18 December 2024</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -397,13 +271,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/9.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/9.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Isabella Rossi</div>
                                         <small>10 December 2024</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -425,13 +299,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/10.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/10.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Daniel Wong</div>
                                         <small>05 December 2024</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -453,13 +327,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/11.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/11.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Sophie Laurent</div>
                                         <small>30 November 2024</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -481,13 +355,13 @@
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="images/testimonial/12.webp">
+                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/12.webp') }}">
                                     <div class="mt-2">
                                         <div class="text-dark fw-bold lh-1">Alexander Novak</div>
                                         <small>22 November 2024</small>
                                     </div>
                                 </div>
-                                <img src="images/misc/google-icon.svg" class="w-30px" alt="">
+                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
                             </div>
 
                             <div class="de-rating-ext mb-2">
@@ -512,62 +386,16 @@
 
         
     </main>
-
-    <footer class="text-light section-dark m-2 mt-0 rounded-1">
-        <div class="container">
-            <div class="row g-4 align-items-center">
-                <div class="col-md-12">
-                    <div class="d-lg-flex align-items-center justify-content-between text-center">
-                        <div>
-                            <h3 class="fs-20">Address</h3>
-                            742 Evergreen Terrace<br>
-                            Brooklyn, NY 11201
-                        </div>
-                        <div>
-                            <img src="images/logo-white.webp" class="w-150px" alt=""><br>
-                            <div class="social-icons mb-sm-30 mt-4">
-                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                                <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                            </div>
-
-                        </div>
-                        <div>
-                            <h3 class="fs-20">Contact Us</h3>
-                            T. +929 333 9296<br>
-                            M. contact@rivora.com
-                        </div>
-                    </div>
-                </div>                    
-            </div>
-        </div>
-        <div class="subfooter">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        Copyright 2026 - Rivora by Designesia
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
+    
+    @push('scripts')
     <!-- Javascript Files
     ================================================== -->
-    <script src="js/vendors.js"></script>
-    <script src="js/designesia.js"></script>
+    <script src="{{ asset('assets/frontend/js/vendors.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/designesia.js') }}"></script>
 
     <!-- swiper slider -->
-    <script src="js/swiper.js"></script>
-    <script src="js/custom-swiper-1.js"></script>
+    <script src="{{ asset('assets/frontend/js/swiper.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/custom-swiper-1.js') }}"></script>
+    @endpush
 
-    <div id="buy-now" class="show-on-scroll">
-        <a class="btn-buy" href="https://themeforest.net/item/rivora-hotel-booking-html-template/61368522" target="_blank">Buy on <img src="demo/envato.svg" class="" alt=""></a>
-    </div>
-
-</body>
-
-
-<!-- Mirrored from madebydesignesia.com/themes/rivora/testimonials.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Jan 2026 12:06:19 GMT -->
-</html>
+@endsection

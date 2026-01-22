@@ -1,136 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-
-<!-- Mirrored from madebydesignesia.com/themes/rivora/homepage-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Jan 2026 12:05:27 GMT -->
-<head>
-    <title>Rivora - Luxury Hotel Booking HTML Template</title>
-    <link rel="icon" href="images/icon.webp" type="image/gif" sizes="16x16">
-    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" >
-    <meta content="" name="description" >
-    <meta content="" name="keywords" >
-    <meta content="" name="author" >
-    <!-- CSS Files
-    ================================================== -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
-    <link href="css/plugins.css" rel="stylesheet" type="text/css" >
-    <link href="css/swiper.css" rel="stylesheet" type="text/css" >
-    <link href="css/swiper-custom-1.css" rel="stylesheet" type="text/css" >
-    <link href="css/daterangepicker.css" rel="stylesheet" type="text/css" >
-    <link href="css/style.css" rel="stylesheet" type="text/css" >
-    <link href="css/coloring.css" rel="stylesheet" type="text/css" >
-    <!-- color scheme -->
-    <link id="colors" href="css/colors/scheme-01.css" rel="stylesheet" type="text/css" >
-
-</head>
-
-<body>
-
-    <header class="header-light transparent">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="de-flex">
-                        <div class="de-flex-col">
-                            <!-- logo begin -->
-                            <div id="logo">
-                                <a href="index.html">
-                                    <img class="logo-main" src="images/logo-black.webp" alt="" >
-                                    <img class="logo-scroll" src="images/logo-black.webp" alt="" >
-                                    <img class="logo-mobile" src="images/logo-black.webp" alt="" >
-                                </a>
-                            </div>
-                            <!-- logo close -->
-                        </div>
-
-                        <div class="de-flex-col">
-                            <div class="de-flex-col header-col-mid">
-                                <ul id="mainmenu">
-                                    <li><a class="menu-item" href="#">Home</a>
-                                        <ul class="mega">
-                                            <li>
-                                                <div class="container">
-                                                    <div class="sb-menu p-4">
-                                                        <div class="row g-4">
-                                                            <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                                                <div class="relative hover text-center overflow-hidden soft-shadow">
-                                                                    <a class="p-0" href="index.html">
-                                                                        <img src="images/demo/homepage-1.webp" class="w-100 relative hover-scale-1-1" alt="">
-                                                                    </a>
-                                                                </div>
-                                                                <h6 class="mt-3">Homepage 1</h6>
-                                                            </div>
-
-                                                            <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                                                <div class="relative hover text-center overflow-hidden soft-shadow">
-                                                                    <a class="p-0" href="homepage-2.html">
-                                                                        <img src="images/demo/homepage-2.webp" class="w-100 relative hover-scale-1-1" alt="">
-                                                                    </a>
-                                                                </div>
-                                                                <h6 class="mt-3">Homepage 2</h6>
-                                                            </div>
-
-                                                            <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                                                <div class="relative hover text-center overflow-hidden soft-shadow">
-                                                                    <a class="p-0" href="homepage-3.html">
-                                                                        <img src="images/demo/homepage-3.webp" class="w-100 relative hover-scale-1-1" alt="">
-                                                                    </a>
-                                                                </div>
-                                                                <h6 class="mt-3">Homepage 3</h6>
-                                                            </div>
-
-                                                            <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                                                <div class="relative hover text-center overflow-hidden soft-shadow">
-                                                                    <a class="p-0" href="homepage-4.html">
-                                                                        <img src="images/demo/homepage-4.webp" class="w-100 relative hover-scale-1-1" alt="">
-                                                                    </a>
-                                                                </div>
-                                                                <h6 class="mt-3">Homepage 4</h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="menu-item" href="rooms.html">Rooms</a>
-                                        <ul>
-                                            <li><a class="menu-item" href="rooms.html">Rooms Default</a></li>
-                                            <li><a class="menu-item" href="rooms-list.html">Rooms List</a></li>
-                                            <li><a class="menu-item" href="rooms-split.html">Rooms Split</a></li>
-                                            <li><a class="menu-item" href="rooms-slider.html">Rooms Slider</a></li>
-                                            <li><a class="menu-item" href="room-single.html">Single Room</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="menu-item" href="reservation.html">Reservation</a></li>
-                                    <li><a class="menu-item" href="#">Pages</a>
-                                        <ul>
-                                            <li><a class="menu-item" href="about.html">About Us</a></li>
-                                            <li><a class="menu-item" href="facilities.html">Facilities</a></li>
-                                            <li><a class="menu-item" href="offers.html">Offers</a></li>
-                                            <li><a class="menu-item" href="gallery.html">Gallery</a></li>
-                                            <li><a class="menu-item" href="gallery-carousel.html">Gallery Carousel</a></li>
-                                            <li><a class="menu-item" href="testimonials.html">Testimonials</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="menu-item" href="blog.html">Blog</a></li>
-                                    <li><a class="menu-item" href="contact.html">Contact</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="de-flex-col">
-                            <div class="menu_side_area">
-                                <a href="reservation.html" class="btn-main fx-slide hover-white"><span>Reservation</span></a>
-                                <span id="menu-btn"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+@extends('frontend.layouts.app')
+@section('title', 'Homepage 2 - Luxury Hotel Booking')
+@section('content')
 
     <main>
         <a href="#" id="back-to-top"></a>
@@ -145,7 +15,7 @@
 
                         <!-- Slide 1 -->
                         <div class="swiper-slide text-light">
-                            <div class="swiper-inner" data-bgimage="url(images/slider/1.webp)">
+                            <div class="swiper-inner" data-bgimage="url({{ asset('assets/frontend/images/slider/1.webp') }})">
                                 <div class="sw-caption">
                                     <div class="container">
                                         <div class="row gx-5 align-items-center justify-content-center">
@@ -178,7 +48,7 @@
 
                         <!-- Slide 2 -->
                         <div class="swiper-slide text-light">
-                            <div class="swiper-inner" data-bgimage="url(images/slider/2.webp)">
+                            <div class="swiper-inner" data-bgimage="url({{ asset('assets/frontend/images/slider/2.webp') }})">
                                 <div class="sw-caption">
                                     <div class="container">
                                         <div class="row gx-5 align-items-center justify-content-center">
@@ -304,9 +174,9 @@
                     <div class="room-item hover p-2 rounded-1 bg-white mb-4">
                         <div class="row g-5 align-items-center">
                             <div class="col-md-4">
-                                <a href="room-single.html" class="d-block hover relative">
+                                <a href="{{ route('property.single', ['id' => 1]) }}" class="d-block hover relative">
                                     <div class="rounded-1 overflow-hidden">
-                                        <img src="images/rooms/1.jpg" class="w-100 hover-scale-1-2" alt="">
+                                        <img src="{{ asset('assets/frontend/images/rooms/1.jpg') }}" class="w-100 hover-scale-1-2" alt="">
                                     </div>
                                 </a>
                             </div>
@@ -327,16 +197,16 @@
                                         <div class="col-md-4">
                                             <div class="fs-15">
                                                 <div class="d-flex align-items-center mb-1">
-                                                    <img src="images/ui/user.webp" class="w-15px me-2" alt="">2 guests
+                                                    <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
                                                 </div>
                                                 <div class="d-flex align-items-center mb-1">
-                                                    <img src="images/ui/floorplan.webp" class="w-15px me-2" alt="">28 ft
+                                                    <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
                                                 </div>
                                                 <div class="d-flex align-items-center">
                                                     <div class="fs-24 fw-bold mb-0 me-1">$109</div><span>/night</span>
                                                 </div>
                                                 <div class="spacer-single"></div>
-                                                <a href="room-single.html" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
+                                                <a href="{{ route('property.single', ['id' => 1]) }}" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -349,12 +219,12 @@
                     <div class="room-item hover p-2 rounded-1 bg-white mb-4">
                         <div class="row g-5 align-items-center">
                             <div class="col-md-4">
-                                <a href="room-single.html" class="d-block hover relative">
+                                <a href="{{ route('property.single', ['id' => 2]) }}" class="d-block hover relative">
                                     <div class="rounded-1 overflow-hidden position-relative">
                                         <span class="abs bg-color text-white fs-14 p-2 px-3 m-3 rounded-3 top-0 start-0 z-3">
                                             Best Selling
                                         </span>
-                                        <img src="images/rooms/2.jpg" class="w-100 hover-scale-1-2" alt="">
+                                        <img src="{{ asset('assets/frontend/images/rooms/2.jpg') }}" class="w-100 hover-scale-1-2" alt="">
                                     </div>
                                 </a>
                             </div>
@@ -375,16 +245,16 @@
                                         <div class="col-md-4">
                                             <div class="fs-15">
                                                 <div class="d-flex align-items-center mb-1">
-                                                    <img src="images/ui/user.webp" class="w-15px me-2" alt="">2 guests
+                                                    <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
                                                 </div>
                                                 <div class="d-flex align-items-center mb-1">
-                                                    <img src="images/ui/floorplan.webp" class="w-15px me-2" alt="">28 ft
+                                                    <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
                                                 </div>
                                                 <div class="d-flex align-items-center">
                                                     <div class="fs-24 fw-bold mb-0 me-1">$129</div><span>/night</span>
                                                 </div>
                                                 <div class="spacer-single"></div>
-                                                <a href="room-single.html" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
+                                                <a href="{{ route('property.single', ['id' => 2]) }}" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -397,9 +267,9 @@
                     <div class="room-item hover p-2 rounded-1 bg-white mb-4">
                         <div class="row g-5 align-items-center">
                             <div class="col-md-4">
-                                <a href="room-single.html" class="d-block hover relative">
+                                <a href="{{ route('property.single', ['id' => 3]) }}" class="d-block hover relative">
                                     <div class="rounded-1 overflow-hidden">
-                                        <img src="images/rooms/3.jpg" class="w-100 hover-scale-1-2" alt="">
+                                        <img src="{{ asset('assets/frontend/images/rooms/3.jpg') }}" class="w-100 hover-scale-1-2" alt="">
                                     </div>
                                 </a>
                             </div>
@@ -420,16 +290,16 @@
                                         <div class="col-md-4">
                                             <div class="fs-15">
                                                 <div class="d-flex align-items-center mb-1">
-                                                    <img src="images/ui/user.webp" class="w-15px me-2" alt="">2 guests
+                                                    <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
                                                 </div>
                                                 <div class="d-flex align-items-center mb-1">
-                                                    <img src="images/ui/floorplan.webp" class="w-15px me-2" alt="">28 ft
+                                                    <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
                                                 </div>
                                                 <div class="d-flex align-items-center">
                                                     <div class="fs-24 fw-bold mb-0 me-1">$149</div><span>/night</span>
                                                 </div>
                                                 <div class="spacer-single"></div>
-                                                <a href="room-single.html" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
+                                                <a href="{{ route('property.single', ['id' => 3]) }}" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -443,7 +313,7 @@
 
 
         <section class="text-light jarallax mx-2 rounded-1 overflow-hidden">
-            <img src="images/background/1.webp" class="jarallax-img" alt="">
+            <img src="{{ asset('assets/frontend/images/background/1.webp') }}" class="jarallax-img" alt="">
             <div class="sw-overlay op-6"></div>
             <div class="container relative z-2">
                 <div class="row g-4 gx-5 align-items-center">
@@ -520,7 +390,7 @@
             <div class="container">
                 <div class="row g-4 mb-4 justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">Welcome to GrandStay</div>
+                        <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">Welcome</div>
                         <h2 class="wow fadeInUp" data-wow-delay=".2s">Hotel Facilities</h2>
                         <p class="cwow fadeInUp" data-wow-delay=".4s">
                             From premium rooms to full-service amenities, our team ensures a comfortable and memorable stay from check-in to check-out.
@@ -530,7 +400,7 @@
 
                 <div class="row g-4">
                     <div class="col-md-6">
-                        <div class="h-100 rounded-1 mh-300 wow fadeInUp" data-bgimage="url(images/misc/s1.webp) center"></div>
+                        <div class="h-100 rounded-1 mh-300 wow fadeInUp" data-bgimage="url({{ asset('assets/frontend/images/misc/s1.webp') }}) center"></div>
                     </div>
 
                     <div class="col-md-6">
@@ -580,7 +450,7 @@
 
                             <!-- STAFF COUNT / SERVICE IMAGE -->
                             <div class="col-md-6 wow fadeInUp sm-hide d-md-block d-xs-none" data-wow-delay=".6s">
-                                <div class="p-30 bg-dark-2 rounded-1 h-100" data-bgimage="url(images/misc/s2.webp) center">
+                                <div class="p-30 bg-dark-2 rounded-1 h-100" data-bgimage="url({{ asset('assets/frontend/images/misc/s2.webp') }}) center">
                                 </div>
                             </div>
 
@@ -605,11 +475,11 @@
                     <div class="overflow-hidden rounded-1">
                         <div class="hover relative">
                             <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">20% OFF</h3>
-                            <img src="images/offers/1.webp" class="w-100 hover-scale-1-1" alt="">
-                            <a href="offer-single.html" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                            <img src="{{ asset('assets/frontend/images/offers/1.webp') }}" class="w-100 hover-scale-1-1" alt="">
+                            <a href="{{ route('offer.single', ['id' => 1]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                         </div>
                         <div class="p-40 bg-dark-2 text-light relative">
-                            <a class="text-white" href="offers.html">
+                            <a class="text-white" href="{{ route('offers') }}">
                                 <h3>Romantic Stay</h3>
                                 <p>20% Off Weekend Packages</p>
                             </a>
@@ -620,15 +490,15 @@
                 <div class="col-lg-4 wow fadeInUp" data-wow-delay=".4s">
                     <div class="overflow-hidden rounded-1">
                         <div class="p-40 bg-dark-2 text-light relative">
-                            <a class="text-white" href="offers.html">
+                            <a class="text-white" href="{{ route('offers') }}">
                                 <h3>Early Bird Deal</h3>
                                 <p>Save Up to 30% on Rooms</p>
                             </a>
                         </div>
                         <div class="hover relative">
                             <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 bottom-0 start-0 z-3">30% OFF</h3>
-                            <img src="images/offers/2.webp" class="w-100 hover-scale-1-1" alt="">
-                            <a href="offer-single.html" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                            <img src="{{ asset('assets/frontend/images/offers/2.webp') }}" class="w-100 hover-scale-1-1" alt="">
+                            <a href="{{ route('offer.single', ['id' => 2]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                         </div>
                     </div>
                 </div>
@@ -636,11 +506,11 @@
                 <div class="col-lg-4 wow fadeInUp" data-wow-delay=".6s">
                     <div class="overflow-hidden rounded-1">
                         <div class="hover relative">
-                            <img src="images/offers/3.webp" class="w-100 hover-scale-1-1" alt="">
-                            <a href="offer-single.html" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                            <img src="{{ asset('assets/frontend/images/offers/3.webp') }}" class="w-100 hover-scale-1-1" alt="">
+                            <a href="{{ route('offer.single', ['id' => 3]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                         </div>
                         <div class="p-40 bg-dark-2 text-light relative">
-                            <a class="text-white" href="offers.html">
+                            <a class="text-white" href="{{ route('offers') }}">
                                 <h3>Family Getaway</h3>
                                 <p>Kids Stay & Eat Free</p>
                             </a>
@@ -739,7 +609,7 @@
                                     <div class="player bg-color no-border circle wow scaleIn"><span></span></div>
                                 </div> 
                                 <div class="absolute w-100 h-100 top-0 bg-dark hover-op-05"></div>
-                                <img src="images/background/2.webp" class="w-100 hover-scale-1-1" alt="">
+                                <img src="{{ asset('assets/frontend/images/background/2.webp') }}" class="w-100 hover-scale-1-1" alt="">
                             </div>
                         </a>
                     </div>
@@ -766,13 +636,13 @@
                                 <span>Jun</span>
                             </div>
                             <div class="rounded-1 overflow-hidden">
-                                <img src="images/blog/1.jpg" class="w-100 hover-scale-1-1" alt="">
+                                <img src="{{ asset('assets/frontend/images/blog/1.jpg') }}" class="w-100 hover-scale-1-1" alt="">
                             </div>
-                            <a href="blog-single.html" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                            <a href="{{ route('blog.single', ['id' => 1]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                         </div>
 
                         <div class="pt-4 relative">
-                            <a href="blog-single.html">
+                            <a href="{{ route('blog.single', ['id' => 1]) }}">
                                 <h3>Top Hotel Amenities That Guests Love in 2025 Trends</h3>
                             </a>
                             <p>From smart-room technology to wellness features that elevate guest comfort and overall satisfaction.</p>
@@ -788,13 +658,13 @@
                                 <span>Jun</span>
                             </div>
                             <div class="rounded-1 overflow-hidden">
-                                <img src="images/blog/2.jpg" class="w-100 hover-scale-1-1" alt="">
+                                <img src="{{ asset('assets/frontend/images/blog/2.jpg') }}" class="w-100 hover-scale-1-1" alt="">
                             </div>
-                            <a href="blog-single.html" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                            <a href="{{ route('blog.single', ['id' => 2]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                         </div>
 
                         <div class="pt-4 relative">
-                            <a href="blog-single.html">
+                            <a href="{{ route('blog.single', ['id' => 2]) }}">
                                 <h3>How to Choose the Perfect Room for Your Stay</h3>
                             </a>
                             <p>Learn how to choose the ideal hotel room based on comfort, layout, and travel needs for a better stay.</p>
@@ -810,13 +680,13 @@
                                 <span>Jun</span>
                             </div>
                             <div class="rounded-1 overflow-hidden">
-                                <img src="images/blog/3.jpg" class="w-100 hover-scale-1-1" alt="">
+                                <img src="{{ asset('assets/frontend/images/blog/3.jpg') }}" class="w-100 hover-scale-1-1" alt="">
                             </div>
-                            <a href="blog-single.html" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                            <a href="{{ route('blog.single', ['id' => 3]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                         </div>
 
                         <div class="pt-4 relative">
-                            <a href="blog-single.html">
+                            <a href="{{ route('blog.single', ['id' => 3]) }}">
                                 <h3>The Art of Hospitality: Behind Our Signature Services</h3>
                             </a>
                             <p>Discover the thoughtful services and attention to detail that define exceptional hospitality experiences.</p>
@@ -832,13 +702,13 @@
                                 <span>Jun</span>
                             </div>
                             <div class="rounded-1 overflow-hidden">
-                                <img src="images/blog/4.jpg" class="w-100 hover-scale-1-1" alt="">
+                                <img src="{{ asset('assets/frontend/images/blog/4.jpg') }}" class="w-100 hover-scale-1-1" alt="">
                             </div>
-                            <a href="blog-single.html" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                            <a href="{{ route('blog.single', ['id' => 4]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                         </div>
 
                         <div class="pt-4 relative">
-                            <a href="blog-single.html">
+                            <a href="{{ route('blog.single', ['id' => 4]) }}">
                                 <h3>Why Location Matters: Choosing a Hotel for Your Next Trip</h3>
                             </a>
                             <p>See how hotel location impacts convenience, accessibility, and overall travel experience.</p>
@@ -863,7 +733,7 @@
                             Brooklyn, NY 11201
                         </div>
                         <div>
-                            <img src="images/logo-white.webp" class="w-150px" alt=""><br>
+                            <img src="{{ asset('assets/frontend/images/logo-white.webp') }}" class="w-150px" alt=""><br>
                             <div class="social-icons mb-sm-20 mt-4">
                                 <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
@@ -894,24 +764,18 @@
 
     <!-- Javascript Files
     ================================================== -->
-    <script src="js/vendors.js"></script>
-    <script src="js/designesia.js"></script>
+    @push('scripts')
+    <script src="{{ asset('assets/frontend/js/vendors.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/designesia.js') }}"></script>
 
     <!-- swiper slider -->
-    <script src="js/swiper.js"></script>
-    <script src="js/custom-swiper-1.js"></script>
+    <script src="{{ asset('assets/frontend/js/swiper.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/custom-swiper-1.js') }}"></script>
 
     <!-- form -->
-    <script src="js/moment.js"></script>
-    <script src="js/daterangepicker.js"></script>
-    <script src="js/custom-datepicker.js"></script>
+    <script src="{{ asset('assets/frontend/js/moment.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/custom-datepicker.js') }}"></script>
+    @endpush
 
-    <div id="buy-now" class="show-on-scroll">
-        <a class="btn-buy" href="https://themeforest.net/item/rivora-hotel-booking-html-template/61368522" target="_blank">Buy on <img src="demo/envato.svg" class="" alt=""></a>
-    </div>
-
-</body>
-
-
-<!-- Mirrored from madebydesignesia.com/themes/rivora/homepage-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Jan 2026 12:05:51 GMT -->
-</html>
+@endsection
