@@ -1,0 +1,41 @@
+/* Remix Icon - CSS Placeholder */
+/* Icon Reference: https://remixicon.com/ */
+/* Download: https://cdn.jsdelivr.net/npm/remixicon@3.0.0/fonts/remixicon.css */
+
+/* This is a minimal placeholder for icon classes */
+
+[class^="ri-"]::before,
+[class*=" ri-"]::before {
+    display: inline-block;
+    margin-right: 0.375rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    font-family: 'remixicon';
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+.ri-dashboard-2-line::before { content: "📊"; }
+.ri-mail-send-line::before { content: "✉️"; }
+.ri-account-circle-line::before { content: "👤"; }
+.ri-shopping-cart-2-line::before { content: "🛒"; }
+.ri-stack-line::before { content: "📚"; }
+.ri-user-line::before { content: "👥"; }
+.ri-trending-up-line::before { content: "📈"; }
+.ri-menu-line::before { content: "☰"; }
+.ri-bell::before { content: "🔔"; }
+.ri-moon::before { content: "🌙"; }
+.ri-fullscreen::before { content: "⛶"; }
+.ri-check-line::before { content: "✓"; }
+.ri-user-add-line::before { content: "➕"; }
+.ri-download-cloud-line::before { content: "⬇️"; }
+.ri-logout-line::before { content: "🚪"; }
+.ri-logout-box-line::before { content: "🚪"; }
+.ri-bar-chart-line::before { content: "📊"; }
+.ri-cog::before { content: "⚙️"; }
+.mdi::before { content: "◆"; }
+
+/* For actual implementation, use:
+   https://cdn.jsdelivr.net/npm/remixicon@3.0.0/fonts/remixicon.css
+*/

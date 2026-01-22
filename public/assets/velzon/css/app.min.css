@@ -1,0 +1,297 @@
+/* Velzon Admin Template - Bootstrap Styles */
+/* This file contains basic Bootstrap CSS customizations */
+
+:root {
+    --bs-primary: #4680ff;
+    --bs-secondary: #6c757d;
+    --bs-success: #34c38f;
+    --bs-danger: #f46a6a;
+    --bs-warning: #f0ad4e;
+    --bs-info: #50a5f1;
+    --bs-light: #f8f9fa;
+    --bs-dark: #323238;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f1f5f7;
+    color: #323238;
+}
+
+#layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+.app-header {
+    background: #fff;
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.navbar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+}
+
+.navbar-brand-box {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* Sidebar */
+.vertical-menu {
+    background: #fff;
+    border-right: 1px solid #e9ecef;
+    height: calc(100vh - 70px);
+    width: 260px;
+    position: fixed;
+    left: 0;
+    top: 70px;
+    overflow-y: auto;
+    z-index: 1019;
+}
+
+.vertical-menu[data-simplebar] {
+    position: relative;
+}
+
+#sidebar-menu {
+    list-style: none;
+    padding: 1.5rem 0;
+    margin: 0;
+}
+
+.menu-title {
+    color: #999;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.75rem 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+#sidebar-menu li a {
+    color: #323238;
+    display: block;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+#sidebar-menu li a:hover,
+#sidebar-menu li a.active {
+    background-color: #f1f5f7;
+    color: var(--bs-primary);
+    border-left-color: var(--bs-primary);
+}
+
+#sidebar-menu li a i {
+    margin-right: 0.5rem;
+    width: 20px;
+    text-align: center;
+}
+
+.sub-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #f9f9f9;
+}
+
+.sub-menu li a {
+    padding: 0.5rem 1.5rem 0.5rem 3rem;
+    font-size: 0.9rem;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 260px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.page-content {
+    padding: 1.5rem;
+    flex: 1;
+}
+
+/* Page Title */
+.page-title-box {
+    background: #fff;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.page-title-box h4 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #323238;
+}
+
+/* Cards */
+.card {
+    border: 1px solid #e9ecef;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem;
+}
+
+.card-animate {
+    transition: all 0.3s ease;
+}
+
+.card-animate:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background: #f9f9f9;
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #323238;
+}
+
+/* Avatar */
+.avatar-sm {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-xs {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+.bg-info-subtle {
+    background-color: rgba(80, 165, 241, 0.1);
+}
+
+.bg-success-subtle {
+    background-color: rgba(52, 195, 143, 0.1);
+}
+
+.bg-warning-subtle {
+    background-color: rgba(240, 173, 78, 0.1);
+}
+
+.bg-danger-subtle {
+    background-color: rgba(244, 106, 106, 0.1);
+}
+
+.text-info {
+    color: var(--bs-info) !important;
+}
+
+.text-success {
+    color: var(--bs-success) !important;
+}
+
+.text-warning {
+    color: var(--bs-warning) !important;
+}
+
+.text-danger {
+    color: var(--bs-danger) !important;
+}
+
+/* Activity */
+.activity-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.activity {
+    display: flex;
+    gap: 1rem;
+}
+
+.activity h6 {
+    margin: 0 0 0.25rem 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #323238;
+}
+
+.text-muted {
+    color: #999 !important;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+/* Footer */
+.footer {
+    background: #fff;
+    border-top: 1px solid #e9ecef;
+    padding: 1.5rem;
+    margin-top: auto;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .vertical-menu {
+        margin-left: -260px;
+        transition: margin-left 0.3s ease;
+    }
+
+    .vertical-menu.active {
+        margin-left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .page-content {
+        padding: 1rem;
+    }
+}

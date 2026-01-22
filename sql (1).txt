@@ -1,0 +1,362 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ============================
+-- USERS (Laravel default)
+-- ============================
+-- Laravel will create this via migrations.
+-- Included here for reference only.
+-- Do NOT manually run unless needed.
+
+-- ============================
+-- PROPERTIES (Houses)
+-- ============================
+
+CREATE TABLE properties (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  nightly_rate DECIMAL(12,2) NOT NULL DEFAULT 25000.00,
+  currency CHAR(3) NOT NULL DEFAULT 'KES',
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at TIMESTAMP NULL,
+  updated_at TIMESTAMP NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE property_images (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  property_id BIGINT UNSIGNED NOT NULL,
+  file_path VARCHAR(500) NOT NULL,
+  is_primary TINYINT(1) NOT NULL DEFAULT 0,
+  created_at TIMESTAMP NULL,
+  updated_at TIMESTAMP NULL,
+  CONSTRAINT fk_property_images_property
+    FOREIGN KEY (property_id) REFERENCES properties(id)
+    ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- ============================
+-- GUESTS
+-- ============================
+
+CREATE TABLE guests (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  full_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone_e164 VARCHAR(20) NOT NULL,
+  created_at TIMESTAMP NULL,
+  updated_at TIMESTAMP NULL
+) ENGINE=InnoDB;
+
+CREATE INDEX idx_guests_email ON guests(email);
+CREATE INDEX idx_guests_phone ON guests(phone_e164);
+
+-- ============================
+-- BOOKINGS
+-- ============================
+
+CREATE TABLE bookings (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  booking_ref VARCHAR(20) NOT NULL,
+  property_id BIGINT UNSIGNED NOT NULL,
+  guest_id BIGINT UNSIGNED NOT NULL,
+
+  check_in DATE NOT NULL,
+  check_out DATE NOT NULL,
+  adults INT NOT NULL DEFAULT 1,
+  children INT NOT NULL DEFAULT 0,
+  special_requests TEXT NULL,
+
+  status ENUM(
+    'DRAFT',
+    'PENDING_PAYMENT',
+    'PARTIALLY_PAID',
+    'PAID',
+    'CANCELLED',
+    'EXPIRED'
+  ) NOT NULL DEFAULT 'DRAFT',
+
+  currency CHAR(3) NOT NULL DEFAULT 'KES',
+
+  nightly_rate DECIMAL(12,2) NOT NULL,
+  nights INT NOT NULL,
+  accommodation_subtotal DECIMAL(12,2) NOT NULL,
+  addons_subtotal DECIMAL(12,2) NOT NULL DEFAULT 0,
+  total_amount DECIMAL(12,2) NOT NULL,
+
+  amount_paid DECIMAL(12,2) NOT NULL DEFAULT 0,
+  amount_due DECIMAL(12,2) NOT NULL DEFAULT 0,
+  minimum_deposit DECIMAL(12,2) NULL,
+
+  created_at TIMESTAMP NULL,
+  updated_at TIMESTAMP NULL,
+
+  CONSTRAINT uq_booking_ref UNIQUE (booking_ref),
+  CONSTRAINT fk_bookings_property
+    FOREIGN KEY (property_id) REFERENCES properties(id),
+  CONSTRAINT fk_bookings_guest
+    FOREIGN KEY (guest_id) REFERENCES guests(id),
+  CONSTRAINT chk_booking_dates CHECK (check_out > check_in)
+) ENGINE=InnoDB;
+
+CREATE INDEX idx_bookings_status ON bookings(status);
+CREATE INDEX idx_bookings_dates ON bookings(property_id, check_in, check_out);
+
+-- ============================
+-- AMENITIES
+-- ============================
+
+CREATE TABLE amenities (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  code VARCHAR(50) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  pricing_model ENUM(
+    'PER_BOOKING',
+    'PER_NIGHT',
+    'PER_PERSON',
+    'FIXED'
+  ) NOT NULL,
+  unit_price DECIMAL(12,2) NOT NULL,
+  currency CHAR(3) NOT NULL DEFAULT 'KES',
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at TIMESTAMP NULL,
+  updated_at TIMESTAMP NULL,
+  CONSTRAINT uq_amenity_code UNIQUE (code)
+) ENGINE=InnoDB;
+
+CREATE TABLE booking_amenities (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  booking_id BIGINT UNSIGNED NOT NULL,
+  amenity_id BIGINT UNSIGNED NOT NULL,
+  quantity DECIMAL(10,2) NOT NULL DEFAULT 1,
+  unit_price DECIMAL(12,2) NOT NULL,
+  line_total DECIMAL(12,2) NOT NULL,
+  created_at TIMESTAMP NULL,
+  updated_at TIMESTAMP NULL,
+  CONSTRAINT fk_booking_amenities_booking
+    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
+  CONSTRAINT fk_booking_amenities_amenity
+    FOREIGN KEY (amenity_id) REFERENCES amenities(id)
+) ENGINE=InnoDB;
+
+-- ============================
+-- PAYMENT INTENTS
+-- ============================
+
+CREATE TABLE payment_intents (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  booking_id BIGINT UNSIGNED NOT NULL,
+  intent_ref VARCHAR(30) NOT NULL,
+  method ENUM('MPESA_STK','MPESA_MANUAL') NOT NULL,
+  amount DECIMAL(12,2) NOT NULL,
+  currency CHAR(3) NOT NULL DEFAULT 'KES',
+  status ENUM(
+    'INITIATED',
+    'PENDING',
+    'SUCCEEDED',
+    'FAILED',
+    'UNDER_REVIEW',
+    'CANCELLED'
+  ) NOT NULL DEFAULT 'INITIATED',
+  created_by VARCHAR(20) NOT NULL DEFAULT 'SYSTEM',
+  created_at TIMESTAMP NULL,
+  updated_at TIMESTAMP NULL,
+  CONSTRAINT uq_payment_intent_ref UNIQUE (intent_ref),
+  CONSTRAINT fk_payment_intents_booking
+    FOREIGN KEY (booking_id) REFERENCES bookings(id)
+) ENGINE=InnoDB;
+
+-- ============================
+-- BOOKING TRANSACTIONS (LEDGER)
+-- ============================
+
+CREATE TABLE booking_transactions (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  booking_id BIGINT UNSIGNED NOT NULL,
+  payment_intent_id BIGINT UNSIGNED NULL,
+  type ENUM('PAYMENT','REFUND','ADJUSTMENT') NOT NULL,
+  source ENUM('MPESA_STK','MPESA_MANUAL','ADMIN') NOT NULL,
+  external_ref VARCHAR(50) NOT NULL,
+  amount DECIMAL(12,2) NOT NULL,
+  currency CHAR(3) NOT NULL DEFAULT 'KES',
+  meta JSON NULL,
+  posted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uq_booking_tx_external_ref UNIQUE (external_ref),
+  CONSTRAINT fk_booking_tx_booking
+    FOREIGN KEY (booking_id) REFERENCES bookings(id),
+  CONSTRAINT fk_booking_tx_payment_intent
+    FOREIGN KEY (payment_intent_id) REFERENCES payment_intents(id)
+) ENGINE=InnoDB;
+
+-- ============================
+-- M-PESA STK
+-- ============================
+
+CREATE TABLE mpesa_stk_requests (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  payment_intent_id BIGINT UNSIGNED NOT NULL,
+  phone_e164 VARCHAR(20) NOT NULL,
+  business_shortcode VARCHAR(20) NOT NULL,
+  account_reference VARCHAR(50) NOT NULL,
+  transaction_desc VARCHAR(255) NULL,
+  merchant_request_id VARCHAR(50) NULL,
+  checkout_request_id VARCHAR(50) NULL,
+  request_payload JSON NOT NULL,
+  response_payload JSON NULL,
+  status ENUM(
+    'REQUESTED',
+    'ACCEPTED',
+    'CALLBACK_RECEIVED',
+    'SUCCESS',
+    'FAILED',
+    'TIMEOUT'
+  ) NOT NULL DEFAULT 'REQUESTED',
+  created_at TIMESTAMP NULL,
+  updated_at TIMESTAMP NULL,
+  CONSTRAINT uq_stk_checkout_request UNIQUE (checkout_request_id),
+  CONSTRAINT fk_stk_request_payment_intent
+    FOREIGN KEY (payment_intent_id) REFERENCES payment_intents(id)
+) ENGINE=InnoDB;
+
+CREATE TABLE mpesa_stk_callbacks (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  stk_request_id BIGINT UNSIGNED NOT NULL,
+  result_code INT NOT NULL,
+  result_desc VARCHAR(255) NOT NULL,
+  mpesa_receipt_number VARCHAR(20) NULL,
+  transaction_date VARCHAR(14) NULL,
+  amount DECIMAL(12,2) NULL,
+  phone_e164 VARCHAR(20) NULL,
+  raw_payload JSON NOT NULL,
+  received_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_stk_callback_request
+    FOREIGN KEY (stk_request_id) REFERENCES mpesa_stk_requests(id)
+) ENGINE=InnoDB;
+
+-- ============================
+-- MANUAL M-PESA FALLBACK
+-- ============================
+
+CREATE TABLE mpesa_manual_submissions (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  payment_intent_id BIGINT UNSIGNED NOT NULL,
+  mpesa_receipt_number VARCHAR(20) NOT NULL,
+  phone_e164 VARCHAR(20) NULL,
+  amount DECIMAL(12,2) NOT NULL,
+  status ENUM('SUBMITTED','VERIFIED','REJECTED') NOT NULL DEFAULT 'SUBMITTED',
+  raw_notes TEXT NULL,
+  submitted_by_guest TINYINT(1) NOT NULL DEFAULT 1,
+  submitted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  reviewed_at TIMESTAMP NULL,
+  CONSTRAINT uq_manual_mpesa_receipt UNIQUE (mpesa_receipt_number),
+  CONSTRAINT fk_manual_submission_payment_intent
+    FOREIGN KEY (payment_intent_id) REFERENCES payment_intents(id)
+) ENGINE=InnoDB;
+
+-- ============================
+-- PAYBILL C2B CALLBACKS (OPTIONAL)
+-- ============================
+
+CREATE TABLE mpesa_c2b_transactions (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  booking_ref VARCHAR(20) NOT NULL,
+  trans_id VARCHAR(20) NOT NULL,
+  trans_time VARCHAR(14) NOT NULL,
+  trans_amount DECIMAL(12,2) NOT NULL,
+  msisdn VARCHAR(20) NULL,
+  first_name VARCHAR(100) NULL,
+  middle_name VARCHAR(100) NULL,
+  last_name VARCHAR(100) NULL,
+  business_shortcode VARCHAR(20) NULL,
+  raw_payload JSON NOT NULL,
+  received_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uq_c2b_trans_id UNIQUE (trans_id)
+) ENGINE=InnoDB;
+
+-- ============================
+-- RECEIPTS
+-- ============================
+
+CREATE TABLE receipts (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  booking_id BIGINT UNSIGNED NOT NULL,
+  payment_intent_id BIGINT UNSIGNED NOT NULL,
+  receipt_no VARCHAR(30) NOT NULL,
+  mpesa_receipt_number VARCHAR(20) NULL,
+  amount DECIMAL(12,2) NOT NULL,
+  currency CHAR(3) NOT NULL DEFAULT 'KES',
+  receipt_data JSON NOT NULL,
+  issued_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uq_receipt_no UNIQUE (receipt_no),
+  CONSTRAINT fk_receipt_booking
+    FOREIGN KEY (booking_id) REFERENCES bookings(id),
+  CONSTRAINT fk_receipt_payment_intent
+    FOREIGN KEY (payment_intent_id) REFERENCES payment_intents(id)
+) ENGINE=InnoDB;
+
+-- ============================
+-- EMAIL OUTBOX
+-- ============================
+
+CREATE TABLE email_outbox (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  to_email VARCHAR(255) NOT NULL,
+  subject VARCHAR(255) NOT NULL,
+  template_code VARCHAR(50) NOT NULL,
+  payload JSON NOT NULL,
+  status ENUM('QUEUED','SENT','FAILED') NOT NULL DEFAULT 'QUEUED',
+  last_error TEXT NULL,
+  created_at TIMESTAMP NULL,
+  sent_at TIMESTAMP NULL
+) ENGINE=InnoDB;
+
+-- ============================
+-- WEBHOOK EVENTS
+-- ============================
+
+CREATE TABLE webhook_events (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  provider VARCHAR(20) NOT NULL,
+  event_type VARCHAR(50) NOT NULL,
+  idempotency_key VARCHAR(100) NULL,
+  payload JSON NOT NULL,
+  process_status ENUM('PENDING','PROCESSED','FAILED') NOT NULL DEFAULT 'PENDING',
+  error_message TEXT NULL,
+  received_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  processed_at TIMESTAMP NULL
+) ENGINE=InnoDB;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- ============================
+-- AUDIT LOGS (CRITICAL)
+-- ============================
+
+CREATE TABLE audit_logs (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+  -- Who performed the action
+  actor_type ENUM('USER','SYSTEM') NOT NULL,
+  actor_id BIGINT UNSIGNED NULL,          -- users.id if actor_type = USER
+  actor_role VARCHAR(50) NULL,            -- admin / staff / system
+
+  -- What was done
+  action VARCHAR(100) NOT NULL,            -- e.g. BOOKING_CREATED, PAYMENT_VERIFIED
+  entity_type VARCHAR(50) NOT NULL,        -- BOOKING, PAYMENT, PROPERTY, USER, etc.
+  entity_id BIGINT UNSIGNED NULL,
+
+  -- Context
+  old_values JSON NULL,
+  new_values JSON NULL,
+  description TEXT NULL,
+
+  -- Request metadata
+  ip_address VARCHAR(45) NULL,             -- IPv4 / IPv6
+  user_agent VARCHAR(500) NULL,
+
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  INDEX idx_audit_entity (entity_type, entity_id),
+  INDEX idx_audit_actor (actor_type, actor_id),
+  INDEX idx_audit_action (action),
+  INDEX idx_audit_created (created_at)
+) ENGINE=InnoDB;
+
