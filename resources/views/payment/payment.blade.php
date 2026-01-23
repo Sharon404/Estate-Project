@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.velzon.app')
 
 @section('title', 'Payment - ' . $booking->booking_ref)
 
