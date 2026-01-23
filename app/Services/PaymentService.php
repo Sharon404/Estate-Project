@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\PaymentIntent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 /**
  * PaymentService
@@ -69,6 +70,8 @@ class PaymentService
         // Create payment intent
         return PaymentIntent::create([
             'booking_id' => $booking->id,
+            'intent_ref' => 'PI-' . Str::upper(Str::random(10)),
+            'method' => 'MPESA_STK',
             'amount' => $amount,
             'currency' => $booking->currency,
             'status' => 'INITIATED',
