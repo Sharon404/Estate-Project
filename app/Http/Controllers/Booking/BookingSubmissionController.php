@@ -55,19 +55,29 @@ class BookingSubmissionController extends Controller
             $checkOutDate = Carbon::createFromFormat('n/j/Y', $validated['checkout'])->startOfDay();
             $nights = $checkInDate->diffInDays($checkOutDate);
 
-            // Get an approved property matching the requested room type (fallback to first approved)
+            // Get an approved property matching the requested room type (case-insensitive), fallback to lowest-rate approved
+            $roomType = trim($validated['room_type'] ?? '');
+            if (strtolower($roomType) === 'standart room') {
+                $roomType = 'Standard Room';
+            }
+
             $propertyQuery = Property::query()
                 ->where('status', 'APPROVED')
                 ->where('pending_removal', false);
 
-            if (!empty($validated['room_type'])) {
-                $propertyQuery->where('name', $validated['room_type']);
+            if (!empty($roomType)) {
+                $propertyQuery->whereRaw('LOWER(name) = ?', [strtolower($roomType)]);
             }
 
-            $property = $propertyQuery->first() ?? Property::query()
-                ->where('status', 'APPROVED')
-                ->where('pending_removal', false)
-                ->first();
+            $property = $propertyQuery->orderBy('nightly_rate')->first();
+
+            if (!$property) {
+                $property = Property::query()
+                    ->where('status', 'APPROVED')
+                    ->where('pending_removal', false)
+                    ->orderBy('nightly_rate')
+                    ->first();
+            }
 
             if (!$property) {
                 return response()->json([

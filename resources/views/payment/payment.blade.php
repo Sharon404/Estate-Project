@@ -320,16 +320,20 @@
 
             paymentIntentId = intentData.data.payment_intent_id;
 
+            // Normalize phone to E.164 for M-PESA
+            const phoneE164 = phone.startsWith('+') ? phone : `+254${phone.replace(/^0/, '')}`;
+
             // Initiate STK
             const stkResponse = await fetch('/payment/mpesa/stk', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 },
                 body: JSON.stringify({
                     payment_intent_id: paymentIntentId,
-                    phone_number: phone
+                    phone_e164: phoneE164
                 })
             });
 
