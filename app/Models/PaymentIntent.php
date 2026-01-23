@@ -12,6 +12,7 @@ class PaymentIntent extends Model
 
     protected $casts = [
         'amount' => 'decimal:2',
+        'metadata' => 'array',
     ];
 
     public function booking(): BelongsTo
