@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Payment\MpesaController;
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Payment\AdminPaymentController;
 use App\Http\Controllers\FrontendController;
 
 // Frontend Routes
@@ -47,10 +49,13 @@ Route::patch('/bookings/{booking}/confirm', [BookingController::class, 'confirm'
 // Payment Routes - M-PESA Integration
 Route::prefix('payment')->name('payment.')->group(function () {
     // Payment intent creation (before STK)
-    Route::post('intents', [\App\Http\Controllers\Payment\PaymentController::class, 'createIntent'])->name('intent-create');
-    Route::get('intents/{paymentIntent}', [\App\Http\Controllers\Payment\PaymentController::class, 'getIntent'])->name('intent-get');
-    Route::get('bookings/{booking}/options', [\App\Http\Controllers\Payment\PaymentController::class, 'getPaymentOptions'])->name('options');
-    Route::get('bookings/{booking}/history', [\App\Http\Controllers\Payment\PaymentController::class, 'getPaymentHistory'])->name('history');
+    Route::post('intents', [PaymentController::class, 'createIntent'])->name('intent-create');
+    Route::get('intents/{paymentIntent}', [PaymentController::class, 'getIntent'])->name('intent-get');
+    Route::get('bookings/{booking}/options', [PaymentController::class, 'getPaymentOptions'])->name('options');
+    Route::get('bookings/{booking}/history', [PaymentController::class, 'getPaymentHistory'])->name('history');
+
+    // Manual M-PESA entry (when STK fails/times out)
+    Route::post('manual-entry', [PaymentController::class, 'submitManualPayment'])->name('manual-entry-submit');
 
     // M-PESA STK Push
     Route::prefix('mpesa')->name('mpesa.')->group(function () {
@@ -58,4 +63,16 @@ Route::prefix('payment')->name('payment.')->group(function () {
         Route::get('stk/{stkRequest}/status', [MpesaController::class, 'stkStatus'])->name('stk-status');
         Route::post('callback', [MpesaController::class, 'callback'])->name('callback');
     });
+});
+
+// Admin Payment Routes - Manual verification
+Route::middleware('auth')->prefix('admin/payment')->name('admin.payment.')->group(function () {
+    // Manual submission management
+    Route::get('manual-submissions/pending', [AdminPaymentController::class, 'getPendingSubmissions'])->name('manual-pending');
+    Route::get('manual-submissions/{submission}', [AdminPaymentController::class, 'getSubmissionDetails'])->name('manual-details');
+    Route::post('manual-submissions/{submission}/verify', [AdminPaymentController::class, 'verifySubmission'])->name('manual-verify');
+    Route::post('manual-submissions/{submission}/reject', [AdminPaymentController::class, 'rejectSubmission'])->name('manual-reject');
+
+    // Statistics
+    Route::get('statistics', [AdminPaymentController::class, 'getStatistics'])->name('statistics');
 });

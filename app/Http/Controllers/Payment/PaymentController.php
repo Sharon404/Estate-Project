@@ -170,42 +170,57 @@ class PaymentController extends Controller
     }
 
     /**
-     * Get payment history for a booking.
+     * Submit manual M-PESA payment.
      * 
-     * GET /payment/bookings/{bookingId}/history
+     * POST /payment/manual-entry
      * 
-     * Returns all payment transactions for the booking.
+     * Called when STK fails/times out and guest wants to enter receipt manually.
+     * Creates submission in UNDER_REVIEW status awaiting admin verification.
      * 
-     * @param Booking $booking
+     * Request body:
+     * {
+     *   "payment_intent_id": 1,
+     *   "mpesa_receipt_number": "LIK123ABC456",
+     *   "amount": 5000,
+     *   "phone_e164": "+254712345678",  // optional
+     *   "notes": "STK timed out, sending manual receipt"  // optional
+     * }
+     * 
+     * @param \App\Http\Requests\SubmitManualMpesaRequest $request
      * @return JsonResponse
      */
-    public function getPaymentHistory(Booking $booking): JsonResponse
+    public function submitManualPayment(\App\Http\Requests\SubmitManualMpesaRequest $request): JsonResponse
     {
         try {
-            $history = $this->paymentService->getPaymentHistory($booking);
+            $validated = $request->validated();
 
-            return response()->json([
-                'success' => true,
-                'data' => [
-                    'booking_id' => $booking->id,
-                    'booking_ref' => $booking->booking_ref,
-                    'payment_summary' => [
-                        'total_amount' => $history['total_amount'],
-                        'amount_paid' => $history['amount_paid'],
-                        'amount_due' => $history['amount_due'],
-                    ],
-                    'transactions' => $history['transactions'],
-                ],
+            $paymentIntent = PaymentIntent::findOrFail($validated['payment_intent_id']);
+
+            $result = $this->paymentService->submitManualPayment(
+                $paymentIntent,
+                $validated['mpesa_receipt_number'],
+                $validated['amount'],
+                $validated['phone_e164'] ?? null,
+                $validated['notes'] ?? null
+            );
+
+            Log::info('Manual payment submitted', [
+                'payment_intent_id' => $paymentIntent->id,
+                'receipt_number' => $validated['mpesa_receipt_number'],
+                'amount' => $validated['amount'],
             ]);
+
+            return response()->json($result, 201);
         } catch (\Exception $e) {
-            Log::error('Failed to get payment history', [
+            Log::error('Manual payment submission failed', [
                 'error' => $e->getMessage(),
-                'booking_id' => $booking->id,
+                'payment_intent_id' => $request->input('payment_intent_id'),
+                'receipt_number' => $request->input('mpesa_receipt_number'),
             ]);
 
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to get payment history',
+                'message' => 'Failed to submit manual payment',
                 'error' => $e->getMessage(),
             ], 400);
         }

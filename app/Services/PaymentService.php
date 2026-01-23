@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Booking;
 use App\Models\PaymentIntent;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * PaymentService
@@ -211,6 +212,267 @@ class PaymentService
                 'created_at' => $txn->created_at,
                 'meta' => $txn->meta,
             ]),
+        ];
+    }
+
+    /**
+     * Submit manual M-PESA payment.
+     * 
+     * Called when STK fails or times out and guest wants to enter receipt manually.
+     * Creates a submission record in UNDER_REVIEW status for admin verification.
+     * 
+     * Flow:
+     * 1. Validate payment intent exists and is in PENDING or INITIATED status
+     * 2. Validate receipt is unique (not already processed)
+     * 3. Create MpesaManualSubmission record in SUBMITTED status
+     * 4. Return submission details to guest
+     * 
+     * @param \App\Models\PaymentIntent $paymentIntent
+     * @param string $mpesaReceiptNumber M-PESA receipt (e.g., LIK123ABC456)
+     * @param float $amount Amount paid
+     * @param string|null $phoneE164 Customer phone
+     * @param string|null $notes Additional notes
+     * @return array Submission details
+     * @throws \Exception
+     */
+    public function submitManualPayment(
+        \App\Models\PaymentIntent $paymentIntent,
+        string $mpesaReceiptNumber,
+        float $amount,
+        ?string $phoneE164 = null,
+        ?string $notes = null
+    ): array {
+        // Validate payment intent is waiting for payment
+        if (!in_array($paymentIntent->status, ['INITIATED', 'PENDING'])) {
+            throw new \Exception(
+                "Cannot submit manual payment for intent in {$paymentIntent->status} status. " .
+                "Intent must be INITIATED or PENDING."
+            );
+        }
+
+        // Validate amount
+        if ($amount <= 0) {
+            throw new \Exception('Payment amount must be greater than zero');
+        }
+
+        if ($amount > $paymentIntent->booking->amount_due) {
+            throw new \Exception(
+                "Amount ({$amount}) exceeds amount due ({$paymentIntent->booking->amount_due})"
+            );
+        }
+
+        // Check if receipt already exists (prevents duplicates)
+        $existing = \App\Models\MpesaManualSubmission::where(
+            'mpesa_receipt_number',
+            $mpesaReceiptNumber
+        )->first();
+
+        if ($existing) {
+            throw new \Exception(
+                "Receipt '{$mpesaReceiptNumber}' has already been submitted. " .
+                "Status: {$existing->status}"
+            );
+        }
+
+        // Check if receipt already processed in callback
+        $processed = \App\Models\BookingTransaction::where(
+            'external_ref',
+            $mpesaReceiptNumber
+        )->first();
+
+        if ($processed) {
+            throw new \Exception(
+                "Receipt '{$mpesaReceiptNumber}' has already been verified and processed."
+            );
+        }
+
+        // Create manual submission record
+        $submission = \App\Models\MpesaManualSubmission::create([
+            'payment_intent_id' => $paymentIntent->id,
+            'mpesa_receipt_number' => strtoupper($mpesaReceiptNumber),
+            'phone_e164' => $phoneE164,
+            'amount' => $amount,
+            'status' => 'SUBMITTED',
+            'raw_notes' => $notes,
+            'submitted_by_guest' => true,
+            'submitted_at' => now(),
+        ]);
+
+        return [
+            'success' => true,
+            'message' => 'Manual payment submitted for verification',
+            'submission_id' => $submission->id,
+            'receipt_number' => $submission->mpesa_receipt_number,
+            'amount' => (float) $submission->amount,
+            'status' => $submission->status,
+            'next_step' => 'Admin will verify within 24 hours. You will receive a confirmation email.',
+            'submitted_at' => $submission->submitted_at,
+        ];
+    }
+
+    /**
+     * Get pending manual submissions (for admin verification).
+     * 
+     * @return array List of pending submissions
+     */
+    public function getPendingManualSubmissions(): array
+    {
+        $submissions = \App\Models\MpesaManualSubmission::where('status', 'SUBMITTED')
+            ->with(['paymentIntent.booking.guest'])
+            ->orderBy('submitted_at', 'asc')
+            ->get();
+
+        return [
+            'total_pending' => $submissions->count(),
+            'submissions' => $submissions->map(fn ($submission) => [
+                'id' => $submission->id,
+                'receipt_number' => $submission->mpesa_receipt_number,
+                'amount' => (float) $submission->amount,
+                'phone_e164' => $submission->phone_e164,
+                'booking_ref' => $submission->paymentIntent->booking->booking_ref,
+                'guest_name' => $submission->paymentIntent->booking->guest->name,
+                'guest_email' => $submission->paymentIntent->booking->guest->email,
+                'notes' => $submission->raw_notes,
+                'submitted_at' => $submission->submitted_at,
+            ]),
+        ];
+    }
+
+    /**
+     * Verify manual M-PESA payment and process like callback.
+     * 
+     * Called by admin to approve manual submission.
+     * Creates ledger entry, updates payment intent, and updates booking amounts.
+     * 
+     * NON-NEGOTIABLE SEQUENCE:
+     * 1. Validate submission exists and is SUBMITTED
+     * 2. Create BookingTransaction (ledger entry)
+     * 3. Update PaymentIntent status to SUCCEEDED
+     * 4. Calculate and update Booking amounts
+     * 5. Update MpesaManualSubmission to VERIFIED
+     * 
+     * @param \App\Models\MpesaManualSubmission $submission
+     * @return array Verification result
+     * @throws \Exception
+     */
+    public function verifyManualPayment(\App\Models\MpesaManualSubmission $submission): array
+    {
+        // Validate submission is pending
+        if ($submission->status !== 'SUBMITTED') {
+            throw new \Exception(
+                "Cannot verify submission in {$submission->status} status. " .
+                "Must be SUBMITTED."
+            );
+        }
+
+        // Get related records
+        $paymentIntent = $submission->paymentIntent;
+        $booking = $paymentIntent->booking;
+
+        try {
+            return DB::transaction(function () use ($submission, $paymentIntent, $booking) {
+                // Step 1: Create BookingTransaction (ledger entry)
+                $transaction = \App\Models\BookingTransaction::create([
+                    'booking_id' => $booking->id,
+                    'payment_intent_id' => $paymentIntent->id,
+                    'type' => 'PAYMENT',
+                    'source' => 'MANUAL_ENTRY',
+                    'external_ref' => $submission->mpesa_receipt_number,
+                    'amount' => $submission->amount,
+                    'currency' => $booking->currency,
+                    'meta' => [
+                        'phone_e164' => $submission->phone_e164,
+                        'manual_submission_id' => $submission->id,
+                        'verified_by' => 'admin',
+                        'verified_at' => now()->toIso8601String(),
+                    ],
+                ]);
+
+                // Step 2: Update PaymentIntent status
+                $paymentIntent->update(['status' => 'SUCCEEDED']);
+
+                // Step 3: Calculate booking amounts from ledger
+                $totalPaid = \App\Models\BookingTransaction::where(
+                    'booking_id',
+                    $booking->id
+                )
+                    ->where('type', 'PAYMENT')
+                    ->sum('amount');
+
+                $amountDue = $booking->total_amount - $totalPaid;
+                $bookingStatus = $amountDue <= 0 ? 'PAID' : 'PARTIALLY_PAID';
+
+                // Step 4: Update booking
+                $booking->update([
+                    'amount_paid' => $totalPaid,
+                    'amount_due' => max(0, $amountDue),
+                    'status' => $bookingStatus,
+                ]);
+
+                // Step 5: Update manual submission status
+                $submission->update([
+                    'status' => 'VERIFIED',
+                    'reviewed_at' => now(),
+                ]);
+
+                return [
+                    'success' => true,
+                    'message' => 'Manual payment verified successfully',
+                    'transaction_id' => $transaction->id,
+                    'receipt_number' => $submission->mpesa_receipt_number,
+                    'amount' => (float) $submission->amount,
+                    'booking_ref' => $booking->booking_ref,
+                    'booking_status' => $bookingStatus,
+                    'amount_paid' => (float) $totalPaid,
+                    'amount_due' => max(0, (float) $amountDue),
+                    'verified_at' => now(),
+                ];
+            });
+        } catch (\Exception $e) {
+            Log::error('Manual payment verification failed', [
+                'error' => $e->getMessage(),
+                'submission_id' => $submission->id,
+                'receipt_number' => $submission->mpesa_receipt_number,
+            ]);
+
+            throw new \Exception("Verification failed: {$e->getMessage()}");
+        }
+    }
+
+    /**
+     * Reject manual M-PESA submission.
+     * 
+     * Called by admin to reject a manual submission.
+     * Booking remains unchanged, guest can resubmit or try STK again.
+     * 
+     * @param \App\Models\MpesaManualSubmission $submission
+     * @param string|null $reason Rejection reason
+     * @return array Rejection result
+     * @throws \Exception
+     */
+    public function rejectManualPayment(\App\Models\MpesaManualSubmission $submission, ?string $reason = null): array
+    {
+        if ($submission->status !== 'SUBMITTED') {
+            throw new \Exception(
+                "Cannot reject submission in {$submission->status} status. " .
+                "Must be SUBMITTED."
+            );
+        }
+
+        $submission->update([
+            'status' => 'REJECTED',
+            'reviewed_at' => now(),
+            'raw_notes' => ($submission->raw_notes ? $submission->raw_notes . "\n\n" : '') . 
+                           "REJECTED: " . ($reason ?? 'Receipt could not be verified'),
+        ]);
+
+        return [
+            'success' => true,
+            'message' => 'Manual submission rejected',
+            'submission_id' => $submission->id,
+            'receipt_number' => $submission->mpesa_receipt_number,
+            'reason' => $reason,
+            'next_step' => 'Guest can resubmit with correct receipt or try STK Push again',
         ];
     }
 }
