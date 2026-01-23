@@ -55,17 +55,29 @@ class BookingSubmissionController extends Controller
             $checkOutDate = Carbon::createFromFormat('n/j/Y', $validated['checkout'])->startOfDay();
             $nights = $checkInDate->diffInDays($checkOutDate);
 
-            // Get a property based on room type (for now, use first property)
-            $property = Property::first();
+            // Get an approved property matching the requested room type (fallback to first approved)
+            $propertyQuery = Property::query()
+                ->where('status', 'APPROVED')
+                ->where('pending_removal', false);
+
+            if (!empty($validated['room_type'])) {
+                $propertyQuery->where('name', $validated['room_type']);
+            }
+
+            $property = $propertyQuery->first() ?? Property::query()
+                ->where('status', 'APPROVED')
+                ->where('pending_removal', false)
+                ->first();
+
             if (!$property) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No properties available. Please try again later.'
+                    'message' => 'No approved rooms are available. Please try again later.'
                 ], 400);
             }
 
-            // Calculate pricing
-            $nightly_rate = 15000; // Default KES rate
+            // Calculate pricing from property rate
+            $nightly_rate = (float) $property->nightly_rate;
             $accommodation_subtotal = $nightly_rate * $nights;
             $addons_subtotal = 0;
             $total_amount = $accommodation_subtotal + $addons_subtotal;
