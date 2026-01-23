@@ -45,7 +45,7 @@
                         </div>
 
                         <div id="booking_form_wrap">
-                            <form name="contactForm" id='booking_form' class="form-border" method="post" action="https://madebydesignesia.com/themes/rivora/booking.php">
+                            <form name="contactForm" id='booking_form' class="form-border" method="post" action="{{ route('booking.submit') }}">
                                 
                                 <div class="row g-4 mb-4">
                                     <div class="col-md-12">
@@ -90,22 +90,22 @@
 
                                     <select class="room-type form-control" name="room_type">
                                       <option value='Standart Room' data-src="{{ asset('assets/frontend/images/form/1.jpg') }}">
-                                        Standart Room | $119/night | 2 Guests
+                                        Standart Room | KES 11,900/night | 2 Guests
                                       </option>
                                       <option value='Deluxe Room' data-src="{{ asset('assets/frontend/images/form/2.jpg') }}">
-                                        Deluxe Room | $129/night | 2 Guests
+                                        Deluxe Room | KES 12,900/night | 2 Guests
                                       </option>
                                       <option value='Premier Room' data-src="{{ asset('assets/frontend/images/form/3.jpg') }}">
-                                        Premier Room | $139/night | 2 Guests
+                                        Premier Room | KES 13,900/night | 2 Guests
                                       </option>
                                       <option value='Family Suite' data-src="{{ asset('assets/frontend/images/form/4.jpg') }}">
-                                        Family Suite | $149/night | 4 Guests
+                                        Family Suite | KES 14,900/night | 4 Guests
                                       </option>
                                       <option value='Luxury Suite' data-src="{{ asset('assets/frontend/images/form/5.jpg') }}">
-                                        Luxury Suite | $179/night | 2 Guests
+                                        Luxury Suite | KES 17,900/night | 2 Guests
                                       </option>
                                       <option value='Presidential Suite' data-src="{{ asset('assets/frontend/images/form/6.jpg') }}">
-                                        Presidential Suite | $199/night | 2 Guests
+                                        Presidential Suite | KES 19,900/night | 2 Guests
                                       </option>
                                     </select>
                                 </div>

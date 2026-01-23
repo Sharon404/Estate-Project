@@ -142,6 +142,18 @@ class MpesaCallbackService
         // Update STK request status
         $stkRequest->update(['status' => 'SUCCESS']);
 
+        // ===== CREATE RECEIPT =====
+        // Generate receipt for successful payment with snapshot of all details
+        $receiptService = new ReceiptService();
+        $receipt = $receiptService->createStkReceipt($transaction, $callback->mpesa_receipt_number);
+
+        // Audit log payment success
+        try {
+            AuditService::logPaymentSucceeded($paymentIntent, $callback->mpesa_receipt_number);
+        } catch (\Exception $e) {
+            Log::error('Failed to log payment success audit', ['error' => $e->getMessage()]);
+        }
+
         return [
             'success' => true,
             'message' => 'Payment processed successfully',
@@ -151,6 +163,8 @@ class MpesaCallbackService
             'amount_due' => $newAmountDue,
             'transaction_id' => $transaction->id,
             'receipt_number' => $callback->mpesa_receipt_number,
+            'receipt_id' => $receipt->id,
+            'receipt_no' => $receipt->receipt_no,
         ];
     }
 

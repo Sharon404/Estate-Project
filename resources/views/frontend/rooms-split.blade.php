@@ -65,7 +65,7 @@
                                  <div class="spacer-single"></div>
                                  <div class="d-flex">
                                     <div class="d-flex align-items-center me-5">
-                                       <div class="fs-24 fw-bold mb-0 me-1">$109</div>
+                                       <div class="fs-24 fw-bold mb-0 me-1">KES 10,900</div>
                                        <span>/night</span>
                                     </div>
                                     <a href="{{ route('property.single', ['id' => 1]) }}" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
@@ -109,7 +109,7 @@
                                  <div class="spacer-single"></div>
                                  <div class="d-flex">
                                     <div class="d-flex align-items-center me-5">
-                                       <div class="fs-24 fw-bold mb-0 me-1">$129</div>
+                                       <div class="fs-24 fw-bold mb-0 me-1">KES 12,900</div>
                                        <span>/night</span>
                                     </div>
                                     <a href="{{ route('property.single', ['id' => 2]) }}" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
@@ -153,7 +153,7 @@
                                  <div class="spacer-single"></div>
                                  <div class="d-flex">
                                     <div class="d-flex align-items-center me-5">
-                                       <div class="fs-24 fw-bold mb-0 me-1">$149</div>
+                                       <div class="fs-24 fw-bold mb-0 me-1">KES 14,900</div>
                                        <span>/night</span>
                                     </div>
                                     <a href="{{ route('property.single', ['id' => 3]) }}" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
@@ -197,7 +197,7 @@
                                  <div class="spacer-single"></div>
                                  <div class="d-flex">
                                     <div class="d-flex align-items-center me-5">
-                                       <div class="fs-24 fw-bold mb-0 me-1">$179</div>
+                                       <div class="fs-24 fw-bold mb-0 me-1">KES 17,900</div>
                                        <span>/night</span>
                                     </div>
                                     <a href="{{ route('property.single', ['id' => 4]) }}" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
@@ -241,7 +241,7 @@
                                  <div class="spacer-single"></div>
                                  <div class="d-flex">
                                     <div class="d-flex align-items-center me-5">
-                                       <div class="fs-24 fw-bold mb-0 me-1">$199</div>
+                                       <div class="fs-24 fw-bold mb-0 me-1">KES 19,900</div>
                                        <span>/night</span>
                                     </div>
                                     <a href="{{ route('property.single', ['id' => 5]) }}" class="btn-main fx-slide hover-white"><span>Select Room</span></a>
@@ -285,7 +285,7 @@
                                  <div class="spacer-single"></div>
                                  <div class="d-flex">
                                     <div class="d-flex align-items-center me-5">
-                                       <div class="fs-24 fw-bold mb-0 me-1">$249</div>
+                                       <div class="fs-24 fw-bold mb-0 me-1">KES 24,900</div>
                                        <span>/night</span>
                                     </div>
                                     <a href="{{ route('property.single', ['id' => 6]) }}" class="btn-main fx-slide hover-white"><span>Select Room</span></a>

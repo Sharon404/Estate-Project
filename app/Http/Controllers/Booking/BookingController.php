@@ -6,21 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookingRequest;
 use App\Http\Requests\ConfirmBookingRequest;
 use App\Models\Booking;
-use App\Services\BookingCreationService;
-use App\Services\BookingConfirmationService;
+use App\Services\BookingService;
+use App\Services\AuditService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class BookingController extends Controller
 {
-    protected BookingCreationService $bookingCreationService;
-    protected BookingConfirmationService $bookingConfirmationService;
+    protected BookingService $bookingService;
+    protected AuditService $auditService;
 
     public function __construct(
-        BookingCreationService $bookingCreationService,
-        BookingConfirmationService $bookingConfirmationService
+        BookingService $bookingService,
+        AuditService $auditService
     ) {
-        $this->bookingCreationService = $bookingCreationService;
-        $this->bookingConfirmationService = $bookingConfirmationService;
+        $this->bookingService = $bookingService;
+        $this->auditService = $auditService;
     }
 
     /**
@@ -28,21 +29,51 @@ class BookingController extends Controller
      *
      * POST /bookings
      *
+     * Request body:
+     * {
+     *   "property_id": 1,
+     *   "check_in": "2026-01-25",
+     *   "check_out": "2026-01-28",
+     *   "adults": 2,
+     *   "children": 1,
+     *   "special_requests": "High floor preferred",
+     *   "guest": {
+     *     "full_name": "John Doe",
+     *     "email": "john@example.com",
+     *     "phone_e164": "+254701123456"
+     *   }
+     * }
+     *
+     * Response: Booking created in DRAFT status, ready for summary view
+     *
      * @param StoreBookingRequest $request
      * @return JsonResponse
      */
     public function store(StoreBookingRequest $request): JsonResponse
     {
-        $booking = $this->bookingCreationService->create($request->validated());
+        try {
+            $booking = $this->bookingService->createReservation($request->validated());
 
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Booking created successfully',
-                'data' => $booking,
-            ],
-            201
-        );
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Reservation created successfully',
+                    'data' => $booking,
+                ],
+                201
+            );
+        } catch (\Exception $e) {
+            Log::error('Booking creation failed', [
+                'error' => $e->getMessage(),
+                'guest' => $request->input('guest.email'),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create reservation',
+                'error' => $e->getMessage(),
+            ], 400);
+        }
     }
 
     /**
@@ -51,26 +82,63 @@ class BookingController extends Controller
      *
      * GET /bookings/{id}/summary
      *
+     * Response includes:
+     * - Booking reference (newly generated if not set)
+     * - Guest details
+     * - Property details
+     * - Dates and pricing breakdown
+     * - Amount due
+     *
      * @param Booking $booking
      * @return JsonResponse
      */
     public function summary(Booking $booking): JsonResponse
     {
-        $summary = $this->bookingConfirmationService->getSummary($booking);
+        try {
+            if ($booking->status !== 'DRAFT') {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Cannot get summary for booking in {$booking->status} status",
+                ], 400);
+            }
 
-        return response()->json(
-            [
-                'success' => true,
-                'data' => $summary,
-            ]
-        );
+            $summary = $this->bookingService->getConfirmationSummary($booking);
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'data' => $summary,
+                ]
+            );
+        } catch (\Exception $e) {
+            Log::error('Booking summary retrieval failed', [
+                'booking_id' => $booking->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve booking summary',
+                'error' => $e->getMessage(),
+            ], 400);
+        }
     }
 
     /**
      * Confirm booking and transition to PENDING_PAYMENT status.
      * Allows updates to editable fields (special_requests, adults, children).
+     * Locks booking for payment processing.
      *
      * PATCH /bookings/{id}/confirm
+     *
+     * Request body:
+     * {
+     *   "adults": 2,
+     *   "children": 1,
+     *   "special_requests": "Early check-in preferred"
+     * }
+     *
+     * Response: Booking confirmed in PENDING_PAYMENT status, ready for payment
      *
      * @param Booking $booking
      * @param ConfirmBookingRequest $request
@@ -78,14 +146,34 @@ class BookingController extends Controller
      */
     public function confirm(Booking $booking, ConfirmBookingRequest $request): JsonResponse
     {
-        $confirmed = $this->bookingConfirmationService->confirm($booking, $request->validated());
+        try {
+            if ($booking->status !== 'DRAFT') {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Cannot confirm booking in {$booking->status} status",
+                ], 400);
+            }
 
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Booking confirmed successfully and moved to payment pending status',
-                'data' => $confirmed,
-            ]
-        );
+            $confirmed = $this->bookingService->confirmAndLock($booking, $request->validated());
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Booking confirmed successfully and moved to payment',
+                    'data' => $confirmed,
+                ]
+            );
+        } catch (\Exception $e) {
+            Log::error('Booking confirmation failed', [
+                'booking_id' => $booking->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to confirm booking',
+                'error' => $e->getMessage(),
+            ], 400);
+        }
     }
 }

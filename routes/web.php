@@ -4,9 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Booking\BookingController;
+use App\Http\Controllers\Booking\BookingSubmissionController;
 use App\Http\Controllers\Payment\MpesaController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Payment\AdminPaymentController;
+use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\FrontendController;
 
 // Frontend Routes
@@ -46,8 +48,14 @@ Route::apiResource('bookings', BookingController::class, ['only' => ['store']]);
 Route::get('/bookings/{booking}/summary', [BookingController::class, 'summary']);
 Route::patch('/bookings/{booking}/confirm', [BookingController::class, 'confirm']);
 
+// Booking Submission from Frontend Form
+Route::post('/booking/submit', [BookingSubmissionController::class, 'submitReservation'])->name('booking.submit');
+
 // Payment Routes - M-PESA Integration
 Route::prefix('payment')->name('payment.')->group(function () {
+    // Payment page display
+    Route::get('booking/{booking}', [PaymentController::class, 'showPaymentPage'])->name('show');
+    
     // Payment intent creation (before STK)
     Route::post('intents', [PaymentController::class, 'createIntent'])->name('intent-create');
     Route::get('intents/{paymentIntent}', [PaymentController::class, 'getIntent'])->name('intent-get');
@@ -56,6 +64,11 @@ Route::prefix('payment')->name('payment.')->group(function () {
 
     // Manual M-PESA entry (when STK fails/times out)
     Route::post('manual-entry', [PaymentController::class, 'submitManualPayment'])->name('manual-entry-submit');
+
+    // Receipt retrieval
+    Route::get('receipts/{receiptNo}', [PaymentController::class, 'getReceiptByNumber'])->name('receipt-get');
+    Route::get('bookings/{bookingId}/receipts', [PaymentController::class, 'getBookingReceipts'])->name('receipt-list');
+    Route::get('bookings/{bookingId}/receipts/{receiptNo}', [PaymentController::class, 'getBookingReceipt'])->name('receipt-get-booking');
 
     // M-PESA STK Push
     Route::prefix('mpesa')->name('mpesa.')->group(function () {
@@ -67,12 +80,33 @@ Route::prefix('payment')->name('payment.')->group(function () {
 
 // Admin Payment Routes - Manual verification
 Route::middleware('auth')->prefix('admin/payment')->name('admin.payment.')->group(function () {
+    // Dashboard
+    Route::get('verification-dashboard', [AdminPaymentController::class, 'verificationDashboard'])->name('verification-dashboard');
+    
     // Manual submission management
     Route::get('manual-submissions/pending', [AdminPaymentController::class, 'getPendingSubmissions'])->name('manual-pending');
     Route::get('manual-submissions/{submission}', [AdminPaymentController::class, 'getSubmissionDetails'])->name('manual-details');
     Route::post('manual-submissions/{submission}/verify', [AdminPaymentController::class, 'verifySubmission'])->name('manual-verify');
     Route::post('manual-submissions/{submission}/reject', [AdminPaymentController::class, 'rejectSubmission'])->name('manual-reject');
 
+    // Email management
+    Route::post('emails/{emailOutbox}/resend', [AdminPaymentController::class, 'resendReceiptEmail'])->name('email-resend');
+    Route::get('receipts/{receipt}/email-history', [AdminPaymentController::class, 'getReceiptEmailHistory'])->name('email-history');
+    Route::get('emails/statistics', [AdminPaymentController::class, 'getEmailStatistics'])->name('email-statistics');
+
     // Statistics
     Route::get('statistics', [AdminPaymentController::class, 'getStatistics'])->name('statistics');
+});
+
+// Admin Audit Routes - Logging and compliance
+Route::middleware('auth')->prefix('admin/audit')->name('admin.audit.')->group(function () {
+    Route::get('logs', [AuditController::class, 'index'])->name('logs');
+    Route::get('logs/{id}', [AuditController::class, 'show'])->name('logs-show');
+    Route::get('resource', [AuditController::class, 'forResource'])->name('resource');
+    Route::get('users/{userId}', [AuditController::class, 'forUser'])->name('user');
+    Route::get('actions', [AuditController::class, 'byAction'])->name('action');
+    Route::get('ip', [AuditController::class, 'byIp'])->name('ip');
+    Route::get('suspicious', [AuditController::class, 'suspiciousActivity'])->name('suspicious');
+    Route::get('statistics', [AuditController::class, 'statistics'])->name('statistics');
+    Route::get('export', [AuditController::class, 'export'])->name('export');
 });

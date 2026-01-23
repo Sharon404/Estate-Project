@@ -40,7 +40,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
-                                                            <div class="fs-20 fw-bold">$109</div><span>/night</span>
+                                                            <div class="fs-20 fw-bold">KES 10,900</div><span>/night</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -82,7 +82,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
-                                                            <div class="fs-20 fw-bold">$129</div><span>/night</span>
+                                                            <div class="fs-20 fw-bold">KES 12,900</div><span>/night</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -124,7 +124,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
-                                                            <div class="fs-20 fw-bold">$149</div><span>/night</span>
+                                                            <div class="fs-20 fw-bold">KES 14,900</div><span>/night</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -166,7 +166,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
-                                                            <div class="fs-20 fw-bold">$179</div><span>/night</span>
+                                                            <div class="fs-20 fw-bold">KES 17,900</div><span>/night</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -208,7 +208,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
-                                                            <div class="fs-20 fw-bold">$199</div><span>/night</span>
+                                                            <div class="fs-20 fw-bold">KES 19,900</div><span>/night</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -250,7 +250,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
-                                                            <div class="fs-20 fw-bold">$249</div><span>/night</span>
+                                                            <div class="fs-20 fw-bold">KES 24,900</div><span>/night</span>
                                                         </div>
                                                     </div>
                                                 </div>

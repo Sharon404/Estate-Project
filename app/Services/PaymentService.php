@@ -415,11 +415,24 @@ class PaymentService
                     'reviewed_at' => now(),
                 ]);
 
+                // Step 6: Create receipt
+                $receiptService = new ReceiptService();
+                $receipt = $receiptService->createManualReceipt($transaction, $submission->mpesa_receipt_number);
+
+                // Step 7: Audit log manual payment verification
+                try {
+                    AuditService::logManualPaymentVerified($paymentIntent, $submission->mpesa_receipt_number, Auth::id());
+                } catch (\Exception $e) {
+                    Log::error('Failed to log manual payment audit', ['error' => $e->getMessage()]);
+                }
+
                 return [
                     'success' => true,
                     'message' => 'Manual payment verified successfully',
                     'transaction_id' => $transaction->id,
                     'receipt_number' => $submission->mpesa_receipt_number,
+                    'receipt_id' => $receipt->id,
+                    'receipt_no' => $receipt->receipt_no,
                     'amount' => (float) $submission->amount,
                     'booking_ref' => $booking->booking_ref,
                     'booking_status' => $bookingStatus,

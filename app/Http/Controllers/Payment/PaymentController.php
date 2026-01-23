@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Payment;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\PaymentIntent;
+use App\Models\Receipt;
 use App\Services\PaymentService;
+use App\Services\ReceiptService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -26,6 +28,30 @@ class PaymentController extends Controller
     public function __construct(PaymentService $paymentService)
     {
         $this->paymentService = $paymentService;
+    }
+
+    /**
+     * Show payment page for a booking.
+     * 
+     * GET /payment/booking/{bookingId}
+     * 
+     * Displays payment interface where user can:
+     * - Pay via STK push (primary method)
+     * - Pay via manual entry (fallback if STK fails)
+     * 
+     * @param Booking $booking
+     * @return \Illuminate\View\View
+     */
+    public function showPaymentPage(Booking $booking)
+    {
+        // Validate booking is pending payment
+        if (!in_array($booking->status, ['PENDING_PAYMENT', 'PARTIALLY_PAID'])) {
+            return redirect('/')->with('error', 'This booking is not awaiting payment.');
+        }
+
+        return view('payment.payment', [
+            'booking' => $booking,
+        ]);
     }
 
     /**
@@ -225,4 +251,145 @@ class PaymentController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Get receipt by receipt number.
+     * 
+     * GET /payment/receipts/{receiptNo}
+     * 
+     * Response: Complete receipt with all details and snapshot data
+     * 
+     * @param string $receiptNo
+     * @return JsonResponse
+     */
+    public function getReceiptByNumber(string $receiptNo): JsonResponse
+    {
+        try {
+            $receipt = Receipt::where('receipt_no', $receiptNo)->first();
+
+            if (!$receipt) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Receipt not found',
+                ], 404);
+            }
+
+            $receiptService = new ReceiptService();
+            $details = $receiptService->getReceiptDetails($receipt);
+
+            return response()->json([
+                'success' => true,
+                'data' => $details,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to retrieve receipt', [
+                'error' => $e->getMessage(),
+                'receipt_no' => $receiptNo,
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve receipt',
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Get all receipts for a booking.
+     * 
+     * GET /payment/bookings/{bookingId}/receipts
+     * 
+     * Response: Array of receipts with basic info
+     * 
+     * @param int $bookingId
+     * @return JsonResponse
+     */
+    public function getBookingReceipts(int $bookingId): JsonResponse
+    {
+        try {
+            $booking = Booking::findOrFail($bookingId);
+
+            $receiptService = new ReceiptService();
+            $receipts = $receiptService->getBookingReceipts($booking);
+
+            return response()->json([
+                'success' => true,
+                'booking_ref' => $booking->booking_ref,
+                'receipt_count' => $receipts->count(),
+                'data' => $receipts->map(function ($receipt) {
+                    return [
+                        'receipt_id' => $receipt->id,
+                        'receipt_no' => $receipt->receipt_no,
+                        'amount' => (float) $receipt->amount,
+                        'currency' => $receipt->currency,
+                        'mpesa_receipt_number' => $receipt->mpesa_receipt_number,
+                        'issued_at' => $receipt->issued_at->toIso8601String(),
+                        'payment_method' => $receipt->receipt_data['receipt_info']['type'] ?? 'UNKNOWN',
+                    ];
+                })->all(),
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to retrieve booking receipts', [
+                'error' => $e->getMessage(),
+                'booking_id' => $bookingId,
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve receipts',
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Get specific receipt for a booking.
+     * 
+     * GET /payment/bookings/{bookingId}/receipts/{receiptNo}
+     * 
+     * Response: Complete receipt details
+     * 
+     * @param int $bookingId
+     * @param string $receiptNo
+     * @return JsonResponse
+     */
+    public function getBookingReceipt(int $bookingId, string $receiptNo): JsonResponse
+    {
+        try {
+            $booking = Booking::findOrFail($bookingId);
+
+            $receipt = Receipt::where('receipt_no', $receiptNo)
+                ->where('booking_id', $bookingId)
+                ->first();
+
+            if (!$receipt) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Receipt not found for this booking',
+                ], 404);
+            }
+
+            $receiptService = new ReceiptService();
+            $details = $receiptService->getReceiptDetails($receipt);
+
+            return response()->json([
+                'success' => true,
+                'data' => $details,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to retrieve booking receipt', [
+                'error' => $e->getMessage(),
+                'booking_id' => $bookingId,
+                'receipt_no' => $receiptNo,
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve receipt',
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
 }
+

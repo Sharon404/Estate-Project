@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
+use App\Models\EmailOutbox;
 use App\Models\MpesaManualSubmission;
+use App\Models\Receipt;
+use App\Services\EmailService;
 use App\Services\PaymentService;
+use App\Services\AuditService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * AdminPaymentController
@@ -28,6 +33,20 @@ class AdminPaymentController extends Controller
     {
         $this->paymentService = $paymentService;
         // Middleware can be added to routes to ensure admin access
+    }
+
+    /**
+     * Show admin verification dashboard.
+     * 
+     * GET /admin/payment/verification-dashboard
+     * 
+     * Displays the admin dashboard for verifying manual payments.
+     * 
+     * @return \Illuminate\View\View
+     */
+    public function verificationDashboard()
+    {
+        return view('payment.admin-verification');
     }
 
     /**
@@ -139,6 +158,26 @@ class AdminPaymentController extends Controller
 
             $result = $this->paymentService->verifyManualPayment($submission);
 
+            // Audit log the verification
+            try {
+                AuditService::logAdminAction(
+                    'manual_payment_verified',
+                    'Payment',
+                    $submission->payment_intent_id,
+                    "Admin verified manual payment - MPESA Ref: {$submission->mpesa_receipt_number} - KES {$submission->amount}",
+                    [
+                        'submission_id' => $submission->id,
+                        'mpesa_reference' => $submission->mpesa_receipt_number,
+                        'booking_id' => $submission->payment_intent->booking_id,
+                        'amount' => $submission->amount,
+                        'verified_notes' => $validated['verified_notes'] ?? null
+                    ],
+                    Auth::id()
+                );
+            } catch (\Exception $e) {
+                Log::error('Failed to log manual payment audit', ['error' => $e->getMessage()]);
+            }
+
             Log::info('Manual payment verified', [
                 'submission_id' => $submission->id,
                 'receipt_number' => $submission->mpesa_receipt_number,
@@ -152,6 +191,25 @@ class AdminPaymentController extends Controller
                 'data' => $result,
             ]);
         } catch (\Exception $e) {
+            // Audit log the failure
+            try {
+                AuditService::createLog([
+                    'user_id' => Auth::id(),
+                    'action' => 'manual_payment_verified',
+                    'resource_type' => 'Payment',
+                    'resource_id' => $submission->payment_intent_id,
+                    'status' => 'failed',
+                    'error_message' => $e->getMessage(),
+                    'description' => "Manual payment verification failed - {$submission->mpesa_receipt_number}",
+                    'metadata' => [
+                        'submission_id' => $submission->id,
+                        'mpesa_reference' => $submission->mpesa_receipt_number
+                    ]
+                ]);
+            } catch (\Exception $auditError) {
+                Log::error('Failed to log verification failure audit', ['error' => $auditError->getMessage()]);
+            }
+
             Log::error('Manual payment verification failed', [
                 'error' => $e->getMessage(),
                 'submission_id' => $submission->id,
@@ -259,6 +317,147 @@ class AdminPaymentController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve statistics',
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Resend receipt email to guest.
+     * 
+     * POST /admin/payment/emails/{emailOutboxId}/resend
+     * 
+     * Allows admin to resend receipt email if guest didn't receive it.
+     * Updates retry count and timestamp.
+     * 
+     * @param EmailOutbox $emailOutbox
+     * @return JsonResponse
+     */
+    public function resendReceiptEmail(EmailOutbox $emailOutbox): JsonResponse
+    {
+        try {
+            $emailService = new EmailService();
+
+            // Check if email can be retried
+            if (!$emailOutbox->canRetry()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Email has exceeded maximum retries ({$emailOutbox->max_retries})",
+                    'retry_count' => $emailOutbox->retry_count,
+                    'max_retries' => $emailOutbox->max_retries,
+                ], 400);
+            }
+
+            // Resend the email
+            $emailService->resendReceiptEmail($emailOutbox);
+
+            Log::info('Admin resent receipt email', [
+                'email_outbox_id' => $emailOutbox->id,
+                'receipt_id' => $emailOutbox->receipt_id,
+                'recipient_email' => $emailOutbox->recipient_email,
+                'retry_count' => $emailOutbox->retry_count,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Receipt email resent successfully',
+                'email_outbox_id' => $emailOutbox->id,
+                'status' => $emailOutbox->status,
+                'retry_count' => $emailOutbox->retry_count,
+                'max_retries' => $emailOutbox->max_retries,
+                'last_retry_at' => $emailOutbox->last_retry_at,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to resend receipt email', [
+                'email_outbox_id' => $emailOutbox->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to resend email',
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Get email history for a receipt.
+     * 
+     * GET /admin/payment/receipts/{receiptId}/email-history
+     * 
+     * Shows all email attempts (sent, failed, retries).
+     * 
+     * @param Receipt $receipt
+     * @return JsonResponse
+     */
+    public function getReceiptEmailHistory(Receipt $receipt): JsonResponse
+    {
+        try {
+            $emails = EmailOutbox::where('receipt_id', $receipt->id)
+                ->recentFirst()
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'receipt_no' => $receipt->receipt_no,
+                'email_count' => $emails->count(),
+                'data' => $emails->map(function ($email) {
+                    return [
+                        'id' => $email->id,
+                        'recipient_email' => $email->recipient_email,
+                        'status' => $email->status,
+                        'subject' => $email->subject,
+                        'retry_count' => $email->retry_count,
+                        'max_retries' => $email->max_retries,
+                        'error_message' => $email->error_message,
+                        'sent_at' => $email->sent_at?->toIso8601String(),
+                        'last_retry_at' => $email->last_retry_at?->toIso8601String(),
+                        'created_at' => $email->created_at->toIso8601String(),
+                    ];
+                })->all(),
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to get email history', [
+                'receipt_id' => $receipt->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve email history',
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Get email statistics.
+     * 
+     * GET /admin/payment/emails/statistics
+     * 
+     * Shows overall email delivery status (pending, sent, failed, etc).
+     * 
+     * @return JsonResponse
+     */
+    public function getEmailStatistics(): JsonResponse
+    {
+        try {
+            $emailService = new EmailService();
+            $stats = $emailService->getEmailStatistics();
+
+            return response()->json([
+                'success' => true,
+                'data' => $stats,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to get email statistics', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve email statistics',
                 'error' => $e->getMessage(),
             ], 400);
         }

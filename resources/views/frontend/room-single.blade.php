@@ -44,7 +44,7 @@
                             <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt="">35 m²</div>
                             <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt=""> King Bed</div>
                             <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt=""> City View</div>
-                            <div class="d-lg-block d-sm-inline-block"><h2 class="fs-40 m-0 lh-1">$149 <span class="fs-20">/ night</span></h2></div>
+                            <div class="d-lg-block d-sm-inline-block"><h2 class="fs-40 m-0 lh-1">KES 15,000 <span class="fs-20">/ night</span></h2></div>
                         </div>
                     </div>
 
@@ -114,7 +114,7 @@
 
                     <div class="col-lg-4" id="booking">
                         <div class="p-40 bg-white rounded-1">
-                            <form name="contactForm" id="contact_form" method="post" action="#">
+                            <form name="contactForm" id="contact_form" method="get" action="javascript:void(0)" onsubmit="handleAvailabilityCheck(); return false;">
                                 <div class="row g-4 align-items-end">
                                     
                                     <div class="col-lg-12">
@@ -196,7 +196,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="fs-20 fw-bold">$129</div><span>/night</span>
+                                            <div class="fs-20 fw-bold">KES 15,000</div><span>/night</span>
                                         </div>
                                     </div>
                                     <div class="relative">
@@ -222,7 +222,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="fs-20 fw-bold">$149</div><span>/night</span>
+                                            <div class="fs-20 fw-bold">KES 14,900</div><span>/night</span>
                                         </div>
                                     </div>
                                     <div class="relative">
@@ -248,7 +248,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="fs-20 fw-bold">$179</div><span>/night</span>
+                                            <div class="fs-20 fw-bold">KES 17,900</div><span>/night</span>
                                         </div>
                                     </div>
                                     <div class="relative">
@@ -278,6 +278,31 @@
     <script src="{{ asset('assets/frontend/js/moment.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/daterangepicker.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/custom-datepicker.js') }}"></script>
+
+    <script>
+        function handleAvailabilityCheck() {
+            const checkin = document.getElementById('checkin').value;
+            const checkout = document.getElementById('checkout').value;
+            const rooms = document.getElementById('rooms').value;
+            const guests = document.getElementById('guests').value;
+
+            if (!checkin || !checkout) {
+                alert('Please select check-in and check-out dates');
+                return false;
+            }
+
+            // Redirect to booking page with parameters
+            const params = new URLSearchParams({
+                checkin: checkin,
+                checkout: checkout,
+                rooms: rooms,
+                guests: guests
+            });
+
+            window.location.href = '/reservation?' + params.toString();
+            return false;
+        }
+    </script>
     @endpush
 
 @endsection

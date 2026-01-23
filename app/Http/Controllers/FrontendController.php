@@ -117,17 +117,6 @@ class FrontendController extends Controller
     }
 
     /**
-     * Display reservation page
-     */
-    public function reservation(): View
-    {
-        return view('frontend.reservation', [
-            'title' => 'Make a Reservation - GrandStay',
-            'description' => 'Reserve your perfect stay at GrandStay.'
-        ]);
-    }
-
-    /**
      * Display single property (room) page
      */
     public function propertySingle($id): View
@@ -162,4 +151,16 @@ class FrontendController extends Controller
             'description' => 'Read our latest blog post.'
         ]);
     }
+
+    /**
+     * Display the reservation form page
+     */
+    public function reservation(): View
+    {
+        return view('frontend.reservation', [
+            'title' => 'Make a Reservation - GrandStay',
+            'description' => 'Book your perfect stay with us.'
+        ]);
+    }
+
 }

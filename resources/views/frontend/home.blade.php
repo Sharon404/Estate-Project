@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="fs-20 fw-bold">$109</div><span>/night</span>
+                                        <div class="fs-20 fw-bold">KES 10,900</div><span>/night</span>
                                     </div>
                                 </div>
                                 <div class="relative">
@@ -109,7 +109,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="fs-20 fw-bold">$129</div><span>/night</span>
+                                        <div class="fs-20 fw-bold">KES 12,900</div><span>/night</span>
                                     </div>
                                 </div>
                                 <div class="relative">
@@ -135,7 +135,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="fs-20 fw-bold">$149</div><span>/night</span>
+                                        <div class="fs-20 fw-bold">KES 14,900</div><span>/night</span>
                                     </div>
                                 </div>
                                 <div class="relative">
@@ -161,7 +161,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="fs-20 fw-bold">$179</div><span>/night</span>
+                                        <div class="fs-20 fw-bold">KES 17,900</div><span>/night</span>
                                     </div>
                                 </div>
                                 <div class="relative">
@@ -268,7 +268,7 @@
 
                 <div class="row g-4">
                     <div class="col-md-6">
-                        <div class="h-100 rounded-1 mh-300 wow fadeInUp" data-bgimage="url({{ asset('assets/frontend/images/misc/s1.webp') }}) center"></div>
+                        <div class="h-100 rounded-1 mh-300 wow fadeInUp" data-bgimage="url({{ asset('assets/frontend/images/misc/s5.webp') }}) center"></div>
                     </div>
 
                     <div class="col-md-6">
@@ -318,7 +318,7 @@
 
                             <!-- STAFF COUNT / SERVICE IMAGE -->
                             <div class="col-md-6 wow fadeInUp sm-hide d-md-block d-xs-none" data-wow-delay=".6s">
-                                <div class="p-30 bg-dark-2 rounded-1 h-100" data-bgimage="url({{ asset('assets/frontend/images/misc/s2.webp') }}) center">
+                                <div class="p-30 bg-dark-2 rounded-1 h-100" data-bgimage="url({{ asset('assets/frontend/images/misc/s3.webp') }}) center">
                                 </div>
                             </div>
 
