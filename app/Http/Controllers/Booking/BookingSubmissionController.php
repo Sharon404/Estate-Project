@@ -55,23 +55,37 @@ class BookingSubmissionController extends Controller
             $checkOutDate = Carbon::createFromFormat('n/j/Y', $validated['checkout'])->startOfDay();
             $nights = $checkInDate->diffInDays($checkOutDate);
 
-            // Get an approved property matching the requested room type (case-insensitive), fallback to lowest-rate approved
+            // Select approved property based on submitted room_type (supports exact name, partial match, or numeric ID)
             $roomType = trim($validated['room_type'] ?? '');
-            if (strtolower($roomType) === 'standart room') {
-                $roomType = 'Standard Room';
-            }
 
             $propertyQuery = Property::query()
                 ->where('status', 'APPROVED')
                 ->where('pending_removal', false);
 
-            if (!empty($roomType)) {
-                $propertyQuery->whereRaw('LOWER(name) = ?', [strtolower($roomType)]);
+            if ($roomType !== '') {
+                if (ctype_digit($roomType)) {
+                    // If frontend passed an ID, use it
+                    $propertyQuery->where('id', (int) $roomType);
+                } else {
+                    // Try exact (case-insensitive) name match first
+                    $propertyQuery->whereRaw('LOWER(name) = ?', [strtolower($roomType)]);
+                }
             }
 
-            $property = $propertyQuery->orderBy('nightly_rate')->first();
+            $property = $propertyQuery->first();
+
+            if (!$property && $roomType !== '' && !ctype_digit($roomType)) {
+                // Fallback to partial match if exact name not found
+                $property = Property::query()
+                    ->where('status', 'APPROVED')
+                    ->where('pending_removal', false)
+                    ->whereRaw('LOWER(name) LIKE ?', [strtolower($roomType) . '%'])
+                    ->orderBy('nightly_rate')
+                    ->first();
+            }
 
             if (!$property) {
+                // As a last resort, pick the lowest-rate approved property
                 $property = Property::query()
                     ->where('status', 'APPROVED')
                     ->where('pending_removal', false)
