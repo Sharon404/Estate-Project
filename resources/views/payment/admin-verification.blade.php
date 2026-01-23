@@ -379,8 +379,8 @@
                         <h4 class="font-semibold text-gray-900 mb-4">Property Information</h4>
                         <div class="space-y-2">
                             <p><strong>Property:</strong> ${submission.property_name}</p>
-                            <p><strong>Check-in:</strong> ${formatDate(submission.check_in_date)}</p>
-                            <p><strong>Check-out:</strong> ${formatDate(submission.check_out_date)}</p>
+                            <p><strong>Check-in:</strong> ${formatDate(submission.check_in)}</p>
+                            <p><strong>Check-out:</strong> ${formatDate(submission.check_out)}</p>
                         </div>
                     </div>
                 </div>

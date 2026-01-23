@@ -22,11 +22,11 @@
                     </div>
                     <div>
                         <p class="text-blue-100 text-sm">Check-in</p>
-                        <p class="text-lg font-semibold">{{ $booking->check_in_date->format('M d, Y') }}</p>
+                        <p class="text-lg font-semibold">{{ $booking->check_in->format('M d, Y') }}</p>
                     </div>
                     <div>
                         <p class="text-blue-100 text-sm">Check-out</p>
-                        <p class="text-lg font-semibold">{{ $booking->check_out_date->format('M d, Y') }}</p>
+                        <p class="text-lg font-semibold">{{ $booking->check_out->format('M d, Y') }}</p>
                     </div>
                     <div>
                         <p class="text-blue-100 text-sm">Duration</p>
