@@ -23,10 +23,14 @@ class MpesaCallbackService
     {
         $bodyData = Arr::get($callbackPayload, 'Body.stkCallback', []);
 
+        $resultDesc = Arr::get($bodyData, 'ResultDesc')
+            ?? Arr::get($bodyData, 'ResultDescription')
+            ?? 'Unknown ResultDesc';
+
         return MpesaStkCallback::create([
             'stk_request_id' => $stkRequest->id,
             'result_code' => Arr::get($bodyData, 'ResultCode'),
-            'result_desc' => Arr::get($bodyData, 'ResultDescription'),
+            'result_desc' => $resultDesc,
             'mpesa_receipt_number' => $this->extractReceiptNumber($bodyData),
             'transaction_date' => $this->extractTransactionDate($bodyData),
             'amount' => $this->extractAmount($bodyData),

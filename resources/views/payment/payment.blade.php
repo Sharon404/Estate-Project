@@ -380,7 +380,7 @@
                 const response = await fetch(`/payment/intents/${paymentIntentId}`);
                 const data = await response.json();
 
-                if (data.data.status === 'SUCCESS') {
+                if (data.data.status === 'SUCCEEDED') {
                     clearInterval(stkPollingInterval);
                     showSuccess('Payment confirmed! Receipt sent to your email.');
                     setTimeout(() => {

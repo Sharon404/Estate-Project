@@ -27,4 +27,12 @@ class Receipt extends Model
     {
         return $this->belongsTo(PaymentIntent::class);
     }
+
+    /**
+     * Get a value from receipt_data metadata
+     */
+    public function getMetadataValue($key, $default = null)
+    {
+        return data_get($this->receipt_data, $key, $default);
+    }
 }
