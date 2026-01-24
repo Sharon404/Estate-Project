@@ -46,7 +46,7 @@ class MpesaStkService
             'PartyA' => $phoneE164,
             'PartyB' => config('mpesa.business_shortcode'),
             'PhoneNumber' => $phoneE164,
-            'CallBackURL' => route('mpesa.callback'),
+            'CallBackURL' => route('payment.mpesa.callback'),
             'AccountReference' => $booking->booking_ref,
             'TransactionDesc' => "Payment for booking {$booking->booking_ref}",
         ];
