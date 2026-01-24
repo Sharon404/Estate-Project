@@ -78,6 +78,9 @@ Route::prefix('payment')->name('payment.')->group(function () {
     });
 });
 
+// Public callback endpoint to match external URL (e.g., https://<ngrok>/api/mpesa/callback)
+Route::post('api/mpesa/callback', [MpesaController::class, 'callback'])->name('payment.mpesa.callback-external');
+
 // Admin Payment Routes - Manual verification
 Route::middleware('auth')->prefix('admin/payment')->name('admin.payment.')->group(function () {
     // Dashboard

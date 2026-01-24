@@ -36,6 +36,9 @@ class MpesaStkService
         // Get booking for reference
         $booking = $paymentIntent->booking;
 
+        // Normalize phone to MSISDN (no +) as required by Safaricom
+        $msisdn = preg_replace('/[^0-9]/', '', ltrim($phoneE164, '+'));
+        
         // Build STK request payload
         $requestPayload = [
             'BusinessShortCode' => config('mpesa.business_shortcode'),
@@ -43,10 +46,10 @@ class MpesaStkService
             'Timestamp' => now()->format('YmdHis'),
             'TransactionType' => 'CustomerPayBillOnline',
             'Amount' => (int) $paymentIntent->amount,
-            'PartyA' => $phoneE164,
+            'PartyA' => $msisdn,
             'PartyB' => config('mpesa.business_shortcode'),
-            'PhoneNumber' => $phoneE164,
-            'CallBackURL' => route('payment.mpesa.callback'),
+            'PhoneNumber' => $msisdn,
+            'CallBackURL' => rtrim(config('mpesa.callback_url'), '/'),
             'AccountReference' => $booking->booking_ref,
             'TransactionDesc' => "Payment for booking {$booking->booking_ref}",
         ];
@@ -143,8 +146,9 @@ class MpesaStkService
         ]);
 
         $response = Http::withBasicAuth($consumerKey, $consumerSecret)
+            ->accept('application/json')
             ->timeout(30)
-            ->post($authUrl);
+            ->get($authUrl);
 
         if (!$response->successful()) {
             \Log::error('Failed to get M-PESA access token', [
@@ -154,8 +158,19 @@ class MpesaStkService
             throw new \Exception("Failed to get M-PESA access token: {$response->body()}");
         }
 
-        \Log::info('M-PESA OAuth token retrieved successfully');
-        return $response->json('access_token');
+        $responseData = $response->json();
+        \Log::info('M-PESA OAuth token retrieved successfully', [
+            'response_keys' => array_keys($responseData ?? []),
+            'response_body' => $response->body(),
+        ]);
+        
+        $accessToken = $responseData['access_token'] ?? null;
+        if (!$accessToken) {
+            \Log::error('access_token not found in OAuth response', ['response' => $responseData]);
+            throw new \Exception('M-PESA OAuth response missing access_token field');
+        }
+        
+        return $accessToken;
     }
 
     /**
