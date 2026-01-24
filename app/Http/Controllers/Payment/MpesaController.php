@@ -35,14 +35,30 @@ class MpesaController extends Controller
     public function initiateStk(InitiateStkRequest $request): JsonResponse
     {
         try {
+            \Log::info('STK initiation request received', [
+                'payment_intent_id' => $request->validated('payment_intent_id'),
+                'phone_e164' => $request->validated('phone_e164'),
+            ]);
+
             $paymentIntent = \App\Models\PaymentIntent::findOrFail(
                 $request->validated('payment_intent_id')
             );
+
+            \Log::info('Payment intent found', [
+                'intent_id' => $paymentIntent->id,
+                'amount' => $paymentIntent->amount,
+                'status' => $paymentIntent->status,
+            ]);
 
             $stkRequest = $this->stkService->initiateStk(
                 $paymentIntent,
                 $request->validated('phone_e164')
             );
+
+            \Log::info('STK request successful', [
+                'stk_request_id' => $stkRequest->id,
+                'checkout_request_id' => $stkRequest->checkout_request_id,
+            ]);
 
             return response()->json([
                 'success' => true,
@@ -58,8 +74,10 @@ class MpesaController extends Controller
             ], 200);
         } catch (\Exception $e) {
             Log::error('STK Push initiation failed', [
-                'payment_intent_id' => $request->validated('payment_intent_id'),
+                'payment_intent_id' => $request->validated('payment_intent_id') ?? 'not provided',
+                'phone' => $request->validated('phone_e164') ?? 'not provided',
                 'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
 
             return response()->json([

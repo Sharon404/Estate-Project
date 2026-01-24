@@ -92,11 +92,23 @@ class MpesaStkService
     private function callMpesaApi(array $payload): array
     {
         $apiUrl = config('mpesa.stk_push_url');
+        \Log::info('Getting M-PESA access token');
         $bearerToken = $this->getAccessToken();
+        \Log::info('Access token retrieved', ['token_prefix' => substr($bearerToken, 0, 10)]);
+
+        \Log::info('Calling M-PESA STK API', [
+            'url' => $apiUrl,
+            'payload' => $payload,
+        ]);
 
         $response = Http::withToken($bearerToken)
             ->timeout(30)
             ->post($apiUrl, $payload);
+
+        \Log::info('M-PESA API response', [
+            'status' => $response->status(),
+            'body' => $response->body(),
+        ]);
 
         if (!$response->successful()) {
             throw new \Exception(
@@ -117,6 +129,7 @@ class MpesaStkService
     private function getAccessToken(): string
     {
         if (config('mpesa.mock_mode')) {
+            \Log::info('Using mock M-PESA token');
             return config('mpesa.mock_access_token');
         }
 
@@ -124,14 +137,24 @@ class MpesaStkService
         $consumerKey = config('mpesa.consumer_key');
         $consumerSecret = config('mpesa.consumer_secret');
 
+        \Log::info('Retrieving M-PESA OAuth token', [
+            'auth_url' => $authUrl,
+            'consumer_key' => substr($consumerKey, 0, 10) . '...',
+        ]);
+
         $response = Http::withBasicAuth($consumerKey, $consumerSecret)
             ->timeout(30)
             ->post($authUrl);
 
         if (!$response->successful()) {
+            \Log::error('Failed to get M-PESA access token', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
             throw new \Exception("Failed to get M-PESA access token: {$response->body()}");
         }
 
+        \Log::info('M-PESA OAuth token retrieved successfully');
         return $response->json('access_token');
     }
 
