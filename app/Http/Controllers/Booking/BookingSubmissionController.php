@@ -38,6 +38,8 @@ class BookingSubmissionController extends Controller
             'children' => 'required|integer|min:0',
             'room_count' => 'required|integer|min:1',
             'room_type' => 'required|string',
+            // Allow precise selection by property id when available
+            'property_id' => 'nullable|integer',
         ]);
 
         try {
@@ -55,48 +57,67 @@ class BookingSubmissionController extends Controller
             $checkOutDate = Carbon::createFromFormat('n/j/Y', $validated['checkout'])->startOfDay();
             $nights = $checkInDate->diffInDays($checkOutDate);
 
-            // Select approved property based on submitted room_type (supports exact name, partial match, or numeric ID)
+            // Select approved property prioritizing explicit property_id, then room_type
             $roomType = trim($validated['room_type'] ?? '');
+            $propertyId = $validated['property_id'] ?? null;
 
-            $propertyQuery = Property::query()
-                ->where('status', 'APPROVED')
-                ->where('pending_removal', false);
+            // Logging selection criteria for debugging
+            \Log::info('Room selection criteria', [
+                'room_type' => $roomType,
+                'property_id' => $propertyId,
+            ]);
 
-            if ($roomType !== '') {
-                if (ctype_digit($roomType)) {
-                    // If frontend passed an ID, use it
-                    $propertyQuery->where('id', (int) $roomType);
-                } else {
-                    // Try exact (case-insensitive) name match first
-                    $propertyQuery->whereRaw('LOWER(name) = ?', [strtolower($roomType)]);
+            $property = null;
+
+            // 1) Prefer explicit property_id when present
+            if (!empty($propertyId)) {
+                $property = Property::query()
+                    ->where('status', 'APPROVED')
+                    ->where('pending_removal', false)
+                    ->where('id', (int) $propertyId)
+                    ->first();
+            }
+
+            // 2) Otherwise use room_type: numeric id, exact name, then contains match
+            if (!$property) {
+                $propertyQuery = Property::query()
+                    ->where('status', 'APPROVED')
+                    ->where('pending_removal', false);
+
+                if ($roomType !== '') {
+                    if (ctype_digit($roomType)) {
+                        // If frontend passed an ID as string, use it
+                        $propertyQuery->where('id', (int) $roomType);
+                        $property = $propertyQuery->first();
+                    } else {
+                        // Try exact (case-insensitive) name match first
+                        $exact = (clone $propertyQuery)
+                            ->whereRaw('LOWER(name) = ?', [strtolower($roomType)])
+                            ->first();
+
+                        if ($exact) {
+                            $property = $exact;
+                        } else {
+                            // Then try contains match (case-insensitive)
+                            $contains = (clone $propertyQuery)
+                                ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($roomType) . '%'])
+                                ->first();
+                            if ($contains) {
+                                $property = $contains;
+                            }
+                        }
+                    }
                 }
             }
 
-            $property = $propertyQuery->first();
-
-            if (!$property && $roomType !== '' && !ctype_digit($roomType)) {
-                // Fallback to partial match if exact name not found
-                $property = Property::query()
-                    ->where('status', 'APPROVED')
-                    ->where('pending_removal', false)
-                    ->whereRaw('LOWER(name) LIKE ?', [strtolower($roomType) . '%'])
-                    ->orderBy('nightly_rate')
-                    ->first();
-            }
-
             if (!$property) {
-                // As a last resort, pick the lowest-rate approved property
-                $property = Property::query()
-                    ->where('status', 'APPROVED')
-                    ->where('pending_removal', false)
-                    ->orderBy('nightly_rate')
-                    ->first();
-            }
-
-            if (!$property) {
+                \Log::warning('No property matched selection', [
+                    'room_type' => $roomType,
+                    'property_id' => $propertyId,
+                ]);
                 return response()->json([
                     'success' => false,
-                    'message' => 'No approved rooms are available. Please try again later.'
+                    'message' => 'The selected room could not be found. Please reselect the room and try again.',
                 ], 400);
             }
 
