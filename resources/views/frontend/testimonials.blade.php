@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Testimonials - GrandStay')
+@section('title', 'Testimonials - Tausi Holiday & Getaway Homes')
 @section('content')
 
 

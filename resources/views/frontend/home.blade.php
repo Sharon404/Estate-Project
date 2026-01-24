@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Home - Luxury Hotel Booking')
+@section('title', 'Home - Tausi Holiday & Getaway Homes')
 @section('content')
 
     <main>
@@ -14,11 +14,11 @@
                     <div class="container-fluid">
                         <div class="row g-4 justify-content-between align-items-end">
                             <div class="col-md-10">
-                                <h1 class="fs-96 lh-1 fs-xs-10vw wow fadeInUp mb-2">Experience the <span>Ultimate Harmony</span> of Luxury</h1>
+                                <h1 class="fs-96 lh-1 fs-xs-10vw wow fadeInUp mb-2">An Entire <span>House Just For You</span></h1>
                             </div>
                             <div class="col-md-6 offset-md-1">
-                                <p class="col-md-8 text-white wow fadeInUp" data-wow-delay=".4s">Make your vacation unforgettable with the perfect blend of luxury and comfort designed for total relaxation.</p>
-                                <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white wow fadeInUp" data-wow-delay=".8s"><span>Explore Room</span></a>
+                                <p class="col-md-8 text-white wow fadeInUp" data-wow-delay=".4s">Privacy, comfort, and a warm hosting experience. Every stay includes fresh breakfast to help you start your day relaxed and refreshed.</p>
+                                <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white wow fadeInUp" data-wow-delay=".8s"><span>Check Availability</span></a>
                             </div>
                         </div>
                     </div>
@@ -56,17 +56,17 @@
 
                 <div class="row g-4 mb-4 justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle mb-0 id-color wow fadeInUp" data-wow-delay=".0s">Enjoy Your Stay</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Explore Room</h2>
+                        <div class="subtitle mb-0 id-color wow fadeInUp" data-wow-delay=".0s">Simple Pricing</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">One Flat Rate Entire Home Stay</h2>
                         <p class="cwow fadeInUp" data-wow-delay=".4s">
-                            Discover a curated selection of elegant rooms designed for comfort. From cozy spaces to refined suites, every detail is crafted for a relaxing stay.
+                            KES 25,000 per night. Breakfast and hospitality included. Perfect for families and small groups seeking privacy and comfort.
                         </p>
                     </div>
                 </div>
 
                 <div class="row g-4">
 
-                    <div class="col-md-6">
+                    <div class="col-lg-8 offset-lg-2">
                         <a href="{{ route('property.single', ['id' => 1]) }}" class="d-block h-100 hover relative">
                             <div class="rounded-1 overflow-hidden">
                                 <img src="{{ asset('assets/frontend/images/rooms/1.jpg') }}" class="w-100 hover-scale-1-2" alt="">
@@ -75,104 +75,26 @@
                                 <div class="d-flex mb-2 fs-15 justify-content-between">
                                     <div class="d-flex">    
                                         <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
+                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4-6 guests
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
+                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 10,900</div><span>/night</span>
+                                        <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                     </div>
                                 </div>
                                 <div class="relative">
-                                    <h3 class="mb-2">Deluxe Room</h3>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-md-6">
-                        <a href="{{ route('property.single', ['id' => 2]) }}" class="d-block h-100 hover relative">
-                            <div class="rounded-1 overflow-hidden">
-                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">Best Selling</h3>
-                                <img src="{{ asset('assets/frontend/images/rooms/2.jpg') }}" class="w-100 hover-scale-1-2" alt="">
-                            </div>
-                            <div class="pt-4">
-                                <div class="d-flex mb-2 fs-15 justify-content-between">
-                                    <div class="d-flex">    
-                                        <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 12,900</div><span>/night</span>
-                                    </div>
-                                </div>
-                                <div class="relative">
-                                    <h3 class="mb-2">Superior Room</h3>
-                                </div>
-                            </div>
-                        </a>
-                    </div>           
-
-                    <div class="col-md-6">
-                        <a href="{{ route('property.single', ['id' => 3]) }}" class="d-block h-100 hover relative">
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/rooms/3.jpg') }}" class="w-100 hover-scale-1-2" alt="">
-                            </div>
-                            <div class="pt-4">
-                                <div class="d-flex mb-2 fs-15 justify-content-between">
-                                    <div class="d-flex">    
-                                        <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 14,900</div><span>/night</span>
-                                    </div>
-                                </div>
-                                <div class="relative">
-                                    <h3 class="mb-2">Executive Room</h3>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-md-6">
-                        <a href="{{ route('property.single', ['id' => 4]) }}" class="d-block h-100 hover relative">
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/rooms/4.jpg') }}" class="w-100 hover-scale-1-2" alt="">
-                            </div>
-                            <div class="pt-4">
-                                <div class="d-flex mb-2 fs-15 justify-content-between">
-                                    <div class="d-flex">    
-                                        <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 17,900</div><span>/night</span>
-                                    </div>
-                                </div>
-                                <div class="relative">
-                                    <h3 class="mb-2">Premium Suite</h3>
+                                    <h3 class="mb-2">Tausi Holiday Home - Nanyuki</h3>
+                                    <p class="text-muted">Breakfast & hospitality included</p>
                                 </div>
                             </div>
                         </a>
                     </div>
 
                     <div class="col-lg-12 text-center">
-                        <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white"><span>View More Rooms</span></a>
+                        <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white"><span>View Available Homes</span></a>
                     </div>            
 
                 </div>
@@ -194,7 +116,7 @@
                             <i class="icofont-star"></i>
                             <i class="icofont-star"></i>
                         </span>
-                        (300+ Reviews)
+                        (150+ Reviews)
                     </div>
                     <div class="col-lg-7">
                         <div class="owl-single-dots owl-carousel owl-theme">
@@ -203,48 +125,48 @@
                                 <span class="d-stars id-color d-block mb-3">
                                     <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">A truly outstanding stay — warm service, beautiful rooms, and an atmosphere that feels unforgettable.</h3>
-                                <span class="wow fadeInUp">Anna L., Paris</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">The breakfast was amazing and prepared fresh every morning. We felt completely at home!</h3>
+                                <span class="wow fadeInUp">Sarah M., Nairobi</span>
                             </div>
 
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
                                     <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Everything exceeded expectations — from the amenities to the staff, truly a memorable hotel experience.</h3>
-                                <span class="wow fadeInUp">Michael H., Toronto</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Perfect for our family getaway. The entire home was clean, comfortable, and the hosts were so warm and welcoming.</h3>
+                                <span class="wow fadeInUp">James K., Kisumu</span>
                             </div>
 
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
                                     <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Impeccable attention to detail. Every moment felt personal and thoughtfully crafted during our stay.</h3>
-                                <span class="wow fadeInUp">Nadia R., Dubai</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Nanyuki location is beautiful. We appreciated the quiet, respectful environment and excellent hospitality.</h3>
+                                <span class="wow fadeInUp">Emily W., Nairobi</span>
                             </div>
 
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
                                     <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">From check-in to check-out, the experience was effortless and luxurious. Highly recommended.</h3>
-                                <span class="wow fadeInUp">Tom S., Los Angeles</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Having the entire home to ourselves was wonderful. Privacy, comfort, and breakfast included - what more could we ask for?</h3>
+                                <span class="wow fadeInUp">Peter M., Kenyatta</span>
                             </div>
 
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
                                     <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Beautiful interiors, friendly staff, and great location. We loved every moment of our vacation.</h3>
-                                <span class="wow fadeInUp">Elise K., Amsterdam</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Excellent value for money. The home is well-maintained and the hosts are attentive without being intrusive.</h3>
+                                <span class="wow fadeInUp">Lisa T., Thika</span>
                             </div>
 
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
                                     <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Exceptional hospitality and comfort. The perfect choice for a relaxing and refreshing getaway.</h3>
-                                <span class="wow fadeInUp">David M., Singapore</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Our favorite getaway spot! The peaceful surroundings and home-style hospitality make it perfect for relaxation.</h3>
+                                <span class="wow fadeInUp">David R., Mombasa</span>
                             </div>
 
                         </div>

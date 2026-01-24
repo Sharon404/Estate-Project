@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'GrandStay - Luxury Hotel Booking')</title>
-    <meta name="description" content="@yield('description', 'Experience luxury hospitality at GrandStay')">
+    <title>@yield('title', 'Tausirental - Holiday & Getaway Homes')</title>
+    <meta name="description" content="@yield('description', 'An entire house just for you. Breakfast included.')">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
@@ -35,7 +35,7 @@
             <nav class="navbar navbar-expand-lg navbar-light">
                 <!-- Logo -->
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    <img src="{{ asset('assets/frontend/images/logo-black.webp') }}" alt="GrandStay" class="logo">
+                    <img src="{{ asset('assets/frontend/images/logo-black.webp') }}" alt="Tausirental" class="logo">
                 </a>
 
                 <!-- Navbar Toggler for Mobile -->
@@ -51,13 +51,13 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="roomsDropdown" role="button" data-bs-toggle="dropdown">
-                                Rooms
+                                Homes
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('properties') }}">All Rooms</a></li>
-                                <li><a class="dropdown-item" href="{{ route('properties') }}">Deluxe</a></li>
-                                <li><a class="dropdown-item" href="{{ route('properties') }}">Superior</a></li>
-                                <li><a class="dropdown-item" href="{{ route('properties') }}">Executive</a></li>
+                                <li><a class="dropdown-item" href="{{ route('properties') }}">All Homes</a></li>
+                                <li><a class="dropdown-item" href="{{ route('properties') }}">Entire Home</a></li>
+                                <li><a class="dropdown-item" href="{{ route('properties') }}">Family Stay</a></li>
+                                <li><a class="dropdown-item" href="{{ route('properties') }}">Group Stay</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -82,7 +82,7 @@
 
                     <!-- Reservation Button -->
                     <a href="{{ route('reservation') }}" class="btn btn-primary ms-lg-3 mt-3 mt-lg-0">
-                        Make a Reservation
+                        Check Availability
                     </a>
                 </div>
             </nav>
@@ -101,9 +101,9 @@
                 <!-- About Column -->
                 <div class="col-md-3">
                     <a href="{{ route('home') }}" class="d-inline-block mb-3">
-                        <img src="{{ asset('assets/frontend/images/logo-white.webp') }}" alt="GrandStay" style="max-width: 150px;">
+                        <img src="{{ asset('assets/frontend/images/logo-white.webp') }}" alt="Tausirental" style="max-width: 150px;">
                     </a>
-                    <p class="text-muted">Experience luxury hospitality at GrandStay, your premier destination for unforgettable memories.</p>
+                    <p class="text-muted">Privacy, comfort, and warm hosting. Every stay includes freshly prepared breakfast so you start your day relaxed and refreshed.</p>
                     <div class="social-icons mt-3">
                         <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
@@ -118,7 +118,7 @@
                     <ul class="list-unstyled">
                         <li><a href="{{ route('home') }}" class="text-muted text-decoration-none">Home</a></li>
                         <li><a href="{{ route('about') }}" class="text-muted text-decoration-none">About Us</a></li>
-                        <li><a href="{{ route('properties') }}" class="text-muted text-decoration-none">Rooms</a></li>
+                        <li><a href="{{ route('properties') }}" class="text-muted text-decoration-none">Homes</a></li>
                         <li><a href="{{ route('offers') }}" class="text-muted text-decoration-none">Special Offers</a></li>
                         <li><a href="{{ route('contact') }}" class="text-muted text-decoration-none">Contact</a></li>
                     </ul>
@@ -129,16 +129,15 @@
                     <h5 class="fw-bold mb-3">Contact Info</h5>
                     <p class="text-muted mb-2">
                         <i class="fas fa-map-marker-alt me-2"></i>
-                        742 Evergreen Terrace<br>
-                        <span class="ms-4">Brooklyn, NY 11201</span>
+                        Nanyuki, Kenya
                     </p>
                     <p class="text-muted mb-2">
                         <i class="fas fa-phone me-2"></i>
-                        +1 (929) 333-9296
+                        +254 718 756 254
                     </p>
                     <p class="text-muted">
                         <i class="fas fa-envelope me-2"></i>
-                        contact@rivora.com
+                        bookings@tausivacations.com
                     </p>
                 </div>
 
@@ -156,7 +155,7 @@
             <!-- Footer Bottom -->
             <div class="row mt-4 pt-4 border-top border-secondary">
                 <div class="col-md-6 text-muted text-sm">
-                    <p>&copy; {{ date('Y') }} GrandStay. All rights reserved.</p>
+                    <p>&copy; {{ date('Y') }} Tausi Holiday & Getaway Homes. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <a href="#" class="text-muted text-decoration-none me-3">Privacy Policy</a>

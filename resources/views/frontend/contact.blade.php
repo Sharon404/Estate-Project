@@ -17,9 +17,9 @@
             <div class="container relative z-2">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp mb-2">Enjoy Your Stay</div>
+                        <div class="subtitle id-color wow fadeInUp mb-2">Get in Touch</div>
                         <div class="clearfix"></div>
-                        <h2 class="fs-60 fs-xs-8vw wow fadeInUp" data-wow-delay=".4s">Contact</h2>
+                        <h2 class="fs-60 fs-xs-8vw wow fadeInUp" data-wow-delay=".4s">Booking & Enquiries</h2>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     <div class="subtitle">Write a Message</div>
                     <h2 class="wow fadeInUp">Get In Touch</h2>
 
-                    <p class="col-lg-8">Have a question, suggestion, or just want to say hi? We’re here and happy to hear from you!</p>
+                    <p class="col-lg-8">Have a question about availability, pricing, or house options? Reach out and we'll be happy to assist you with your booking.</p>
 
                     <div class="spacer-single"></div>
 
@@ -47,8 +47,8 @@
                         <div class="col-md-6">
                             <i class="abs fs-28 p-3 bg-color text-light rounded-1 icofont-location-pin"></i>
                             <div class="ms-80px">
-                                <h3 class="fs-20 mb-0">Address</h3>
-                                742 Evergreen Terrace
+                                <h3 class="fs-20 mb-0">Location</h3>
+                                Nanyuki, Kenya
                             </div>
                         </div>
 
@@ -56,23 +56,23 @@
                             <i class="abs fs-28 p-3 bg-color text-light rounded-1 icofont-envelope"></i>
                             <div class="ms-80px">
                                 <h3 class="fs-20 mb-0">Email</h3>
-                                contact@rivora.com
+                                bookings@tausivacations.com
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <i class="abs fs-28 p-3 bg-color text-light rounded-1 icofont-phone"></i>
                             <div class="ms-80px">
-                                <h3 class="fs-20 mb-0">Phone</h3>
-                                (123) 202-9296
+                                <h3 class="fs-20 mb-0">Call or WhatsApp</h3>
+                                +254 718 756 254
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <i class="abs fs-28 p-3 bg-color text-light rounded-1 icofont-phone"></i>
                             <div class="ms-80px">
-                                <h3 class="fs-20 mb-0">Instagram</h3>
-                                rivora_hotel_theme
+                                <h3 class="fs-20 mb-0">Contact</h3>
+                                Message & Reply Guaranteed
                             </div>
                         </div>
                     </div>

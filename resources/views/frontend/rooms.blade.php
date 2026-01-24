@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Rooms - GrandStay')
+@section('title', 'Homes - Tausirental')
 @section('content')
 
 
@@ -17,9 +17,9 @@
             <div class="container relative z-2">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <h2 class="subtitle id-color wow fadeInUp mb-2">Enjoy Your Stay</h2>
+                        <h2 class="subtitle id-color wow fadeInUp mb-2">Simple Pricing</h2>
                         <div class="clearfix"></div>
-                        <h2 class="fs-60 fs-xs-8vw wow fadeInUp" data-wow-delay=".4s">Our Rooms</h2>
+                        <h2 class="fs-60 fs-xs-8vw wow fadeInUp" data-wow-delay=".4s">Available Homes</h2>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
 
                 <div class="row g-4">
 
-                    <div class="col-md-6">
+                    <div class="col-lg-8 offset-lg-2">
                         <a href="{{ route('property.single', ['id' => 1]) }}" class="d-block h-100 hover relative">
                             <div class="rounded-1 overflow-hidden">
                                 <img src="{{ asset('assets/frontend/images/rooms/1.jpg') }}" class="w-100 hover-scale-1-2" alt="">
@@ -47,49 +47,23 @@
                                 <div class="d-flex mb-2 fs-15 justify-content-between">
                                     <div class="d-flex">    
                                         <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
+                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4-6 guests
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
+                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 10,900</div><span>/night</span>
+                                        <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                     </div>
                                 </div>
                                 <div class="relative">
-                                    <h3 class="mb-2">Deluxe Room</h3>
+                                    <h3 class="mb-2">Tausi Holiday Home - Nanyuki</h3>
+                                    <p class="text-muted">Breakfast & hospitality included</p>
                                 </div>
                             </div>
                         </a>
                     </div>
-
-                    <div class="col-md-6">
-                        <a href="#" class="d-block h-100 hover relative">
-                            <div class="rounded-1 overflow-hidden">
-                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">Best Selling</h3>
-                                <img src="{{ asset('assets/frontend/images/rooms/2.jpg') }}" class="w-100 hover-scale-1-2" alt="">
-                            </div>
-                            <div class="pt-4">
-                                <div class="d-flex mb-2 fs-15 justify-content-between">
-                                    <div class="d-flex">    
-                                        <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 12,900</div><span>/night</span>
-                                    </div>
-                                </div>
-                                <div class="relative">
-                                    <h3 class="mb-2">Superior Room</h3>
-                                </div>
-                            </div>
-                        </a>
-                    </div>           
 
                     <div class="col-md-6">
                         <a href="{{ route('property.single', ['id' => 3]) }}" class="d-block h-100 hover relative">
