@@ -135,14 +135,18 @@
 
                     <!-- Pending State -->
                     <div id="pending_state" class="card-body d-none">
-                        <div class="alert alert-warning">
+                        <div class="alert alert-info">
                             <h5 class="mb-2">
-                                <i class="fas fa-hourglass-half me-2"></i>
-                                Payment Under Review
+                                <i class="fas fa-clock me-2"></i>
+                                Awaiting Payment Confirmation
                             </h5>
-                            <p class="mb-2">Your receipt has been submitted for verification.</p>
-                            <p class="mb-2"><strong>Receipt:</strong> <code id="pending_receipt"></code></p>
-                            <p class="mb-0">Our team will verify your payment within 24 hours. You'll receive an email confirmation.</p>
+                            <p class="mb-2">Please complete your Paybill payment using:</p>
+                            <ul class="mb-2">
+                                <li><strong>Paybill Number:</strong> {{ config('mpesa.business_shortcode', '174379') }}</li>
+                                <li><strong>Account Number:</strong> {{ $booking->booking_ref }}</li>
+                                <li><strong>Amount:</strong> {{ number_format($booking->amount_due, 2) }} {{ $booking->currency }}</li>
+                            </ul>
+                            <p class="mb-0">Your payment will be automatically confirmed within seconds after you complete the transaction.</p>
                         </div>
                     </div>
 
@@ -153,19 +157,19 @@
                                 <i class="fas fa-exclamation-triangle me-2"></i>
                                 Payment Prompt Failed
                             </h5>
-                            <p class="mb-0 mt-2">The automatic M-PESA prompt didn't work. Please pay manually using the details below:</p>
+                            <p class="mb-0 mt-2">The automatic M-PESA prompt didn't work. Please pay manually via Paybill using the details below:</p>
                         </div>
 
-                        <!-- Till Information -->
+                        <!-- Paybill Information -->
                         <div class="card bg-light mb-4">
                             <div class="card-body">
-                                <h6 class="mb-3 fw-bold">Payment Details</h6>
+                                <h6 class="mb-3 fw-bold">Paybill Payment Details</h6>
                                 <div class="row mb-3">
                                     <div class="col-sm-6">
-                                        <small class="text-muted">Till Number:</small>
+                                        <small class="text-muted">Paybill Number:</small>
                                         <div class="d-flex gap-2 align-items-center">
-                                            <code class="bg-white px-2 py-1 rounded fw-bold text-primary">{{ config('mpesa.till_number', '*138#') }}</code>
-                                            <button onclick="copyToClipboard('{{ config('mpesa.till_number', '*138#') }}')" class="btn btn-sm btn-link" title="Copy">
+                                            <code class="bg-white px-2 py-1 rounded fw-bold text-primary">{{ config('mpesa.business_shortcode', '174379') }}</code>
+                                            <button onclick="copyToClipboard('{{ config('mpesa.business_shortcode', '174379') }}')" class="btn btn-sm btn-link" title="Copy">
                                                 <i class="fas fa-copy"></i>
                                             </button>
                                         </div>
@@ -175,10 +179,22 @@
                                         <p class="mb-0 fw-bold">{{ number_format($booking->amount_due, 2) }} {{ $booking->currency }}</p>
                                     </div>
                                 </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-12">
+                                        <small class="text-muted">Account Number:</small>
+                                        <div class="d-flex gap-2 align-items-center">
+                                            <code class="bg-white px-2 py-1 rounded fw-bold text-primary">{{ $booking->booking_ref }}</code>
+                                            <button onclick="copyToClipboard('{{ $booking->booking_ref }}')" class="btn btn-sm btn-link" title="Copy">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                        </div>
+                                        <small class="text-muted">Enter this as the Account Number to link your payment automatically.</small>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <small class="text-muted">Company:</small>
-                                        <p class="mb-0 fw-bold">{{ config('mpesa.company_name', 'Nairobi Homes') }}</p>
+                                        <p class="mb-0 fw-bold">{{ config('mpesa.company_name', 'Holiday Rentals') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -187,65 +203,38 @@
                         <!-- Instructions -->
                         <div class="card bg-light mb-4">
                             <div class="card-body">
-                                <h6 class="mb-3 fw-bold">How to Pay:</h6>
+                                <h6 class="mb-3 fw-bold">How to Pay via M-PESA Paybill:</h6>
                                 <ol class="mb-0">
                                     <li>Open M-PESA on your phone</li>
-                                    <li>Select "Lipa na M-Pesa Online"</li>
-                                    <li>Enter till: <code>{{ config('mpesa.till_number', '*138#') }}</code></li>
-                                    <li>Enter amount: {{ number_format($booking->amount_due, 2) }}</li>
+                                    <li>Select <strong>"Lipa na M-PESA"</strong> then <strong>"Pay Bill"</strong></li>
+                                    <li>Enter Business Number (Paybill): <code>{{ config('mpesa.business_shortcode', '174379') }}</code></li>
+                                    <li>Enter Account Number: <code>{{ $booking->booking_ref }}</code></li>
+                                    <li>Enter Amount: <strong>{{ number_format($booking->amount_due, 2) }}</strong></li>
                                     <li>Enter your M-PESA PIN</li>
-                                    <li>You'll get a receipt code (e.g., LIK123ABC456)</li>
-                                </ol>
-                            </div>
+                                    <li>You'll receive a confirmation SMS with a receipt code. Your payment will be auto-confirmed within seconds.</li>
+
+                        <!-- Payment Status Info -->
+                        <div class="alert alert-info">
+                            <h6 class="mb-2">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Automatic Payment Confirmation
+                            </h6>
+                            <p class="mb-2">After completing your Paybill payment:</p>
+                            <ul class="mb-2">
+                                <li>Your payment will be <strong>automatically confirmed</strong> by M-PESA within seconds</li>
+                                <li>You'll receive a confirmation email with your receipt</li>
+                                <li>Your booking status will update to <strong>PAID</strong></li>
+                            </ul>
+                            <p class="mb-0">
+                                <strong>No manual entry needed!</strong> Simply pay via Paybill with your booking reference as the Account Number, and we'll handle the rest.
+                            </p>
                         </div>
 
-                        <!-- Manual Receipt Form -->
-                        <form id="manual_form" onsubmit="submitManualPayment(event)">
-                            <h6 class="mb-3 fw-bold">Enter Receipt Details</h6>
-                            
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">M-PESA Receipt Number *</label>
-                                <input 
-                                    type="text" 
-                                    id="receipt_number" 
-                                    class="form-control"
-                                    placeholder="e.g., LIK123ABC456"
-                                    pattern="[A-Z0-9]{9,20}"
-                                    required
-                                />
-                                <small class="text-muted">Format: 9-20 uppercase letters and numbers</small>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Amount Paid *</label>
-                                <input 
-                                    type="text" 
-                                    value="{{ number_format($booking->amount_due, 2) }} {{ $booking->currency }}" 
-                                    class="form-control"
-                                    readonly
-                                    disabled
-                                />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Additional Notes (optional)</label>
-                                <textarea 
-                                    id="notes" 
-                                    class="form-control"
-                                    placeholder="e.g., Any additional information..."
-                                    maxlength="500"
-                                    rows="3"
-                                ></textarea>
-                            </div>
-
-                            <button 
-                                type="submit" 
-                                class="btn btn-primary btn-lg w-100 fw-bold"
-                            >
-                                <i class="fas fa-check me-2"></i>
-                                Submit Receipt for Verification
-                            </button>
-                        </form>
+                        <div class="text-center">
+                            <a href="/" class="btn btn-outline-primary">
+                                <i class="fas fa-home me-2"></i>Return to Home
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -414,52 +403,7 @@
         document.getElementById('manual_section').classList.remove('d-none');
     }
 
-    // Submit Manual Payment
-    async function submitManualPayment(event) {
-        event.preventDefault();
 
-        const receipt = document.getElementById('receipt_number').value.toUpperCase().trim();
-        const notes = document.getElementById('notes').value.trim();
-
-        if (!receipt.match(/^[A-Z0-9]{9,20}$/)) {
-            showError('Invalid receipt format. Use 9-20 alphanumeric characters (e.g., LIK123ABC456)');
-            return;
-        }
-
-        try {
-            showLoading('Submitting receipt for verification...');
-
-            const response = await fetch('/payment/manual-entry', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-                body: JSON.stringify({
-                    payment_intent_id: paymentIntentId,
-                    mpesa_receipt_number: receipt,
-                    amount: amount,
-                    notes: notes || null
-                })
-            });
-
-            const data = await response.json();
-
-            if (!data.success) {
-                throw new Error(data.message || 'Failed to submit payment');
-            }
-
-            // Show pending state
-            document.getElementById('pending_receipt').textContent = receipt;
-            document.getElementById('pending_state').classList.remove('d-none');
-            document.getElementById('loading_state').classList.add('d-none');
-            document.getElementById('manual_section').classList.add('d-none');
-
-        } catch (error) {
-            console.error('Error:', error);
-            showError(error.message || 'Failed to submit receipt');
-        }
-    }
 
     // UI Helper Functions
     function showLoading(message = 'Processing...') {

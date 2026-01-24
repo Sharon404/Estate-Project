@@ -303,12 +303,12 @@ class PaymentService
 
         return [
             'success' => true,
-            'message' => 'Manual payment submitted for verification',
+            'message' => 'Manual payment submitted. Awaiting automatic confirmation via M-PESA callback.',
             'submission_id' => $submission->id,
             'receipt_number' => $submission->mpesa_receipt_number,
             'amount' => (float) $submission->amount,
             'status' => $submission->status,
-            'next_step' => 'Admin will verify within 24 hours. You will receive a confirmation email.',
+            'next_step' => 'We will auto-confirm once Safaricom sends the C2B callback. No admin action needed.',
             'submitted_at' => $submission->submitted_at,
         ];
     }

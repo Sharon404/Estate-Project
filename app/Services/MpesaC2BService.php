@@ -1,0 +1,273 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Booking;
+use App\Models\BookingTransaction;
+use App\Models\PaymentIntent;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+
+class MpesaC2BService
+{
+    /**
+     * Register C2B Validation and Confirmation URLs with Daraja.
+     */
+    public function registerUrls(): array
+    {
+        $registerUrl = config('mpesa.c2b_register_url', 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl');
+        $shortCode = config('mpesa.business_shortcode');
+        $validationUrl = config('mpesa.c2b_validation_url');
+        $confirmationUrl = config('mpesa.c2b_confirmation_url');
+
+        $token = $this->getAccessToken();
+
+        $payload = [
+            'ShortCode' => $shortCode,
+            'ResponseType' => 'Completed',
+            'ConfirmationURL' => $confirmationUrl,
+            'ValidationURL' => $validationUrl,
+        ];
+
+        Log::info('Registering M-PESA C2B URLs', [
+            'register_url' => $registerUrl,
+            'payload' => $payload,
+        ]);
+
+        $response = Http::withToken($token)
+            ->acceptJson()
+            ->withoutVerifying() // Skip SSL verification for sandbox
+            ->timeout(30)
+            ->post($registerUrl, $payload);
+
+        if (!$response->successful()) {
+            Log::error('Failed to register C2B URLs', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+            return [
+                'success' => false,
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ];
+        }
+
+        $body = $response->json();
+
+        Log::info('C2B URLs registered successfully', [
+            'response' => $body,
+        ]);
+
+        return [
+            'success' => true,
+            'response' => $body,
+        ];
+    }
+
+    /**
+     * Validate a C2B transaction before confirmation.
+     * Returns Daraja-compatible ResultCode/ResultDesc.
+     */
+    public function validate(array $payload): array
+    {
+        $billRef = $payload['BillRefNumber'] ?? null;
+        $amount = isset($payload['TransAmount']) ? (float) $payload['TransAmount'] : null;
+
+        if (!$billRef || !$amount) {
+            return ['ResultCode' => 1, 'ResultDesc' => 'Missing BillRefNumber or TransAmount'];
+        }
+
+        $booking = Booking::where('booking_ref', $billRef)->first();
+        if (!$booking) {
+            return ['ResultCode' => 1, 'ResultDesc' => 'Booking not found'];
+        }
+
+        // Reject if already fully paid
+        if ($booking->status === 'PAID') {
+            return ['ResultCode' => 1, 'ResultDesc' => 'Booking already paid'];
+        }
+
+        // Enforce exact match to total amount (per requirements)
+        if ((float) $booking->total_amount !== $amount) {
+            return ['ResultCode' => 1, 'ResultDesc' => 'Amount does not match booking total'];
+        }
+
+        return ['ResultCode' => 0, 'ResultDesc' => 'Accepted'];
+    }
+
+    /**
+     * Confirm a C2B transaction.
+     * Idempotent: if transaction already exists, does nothing and returns success.
+     */
+    public function confirm(array $payload): array
+    {
+        $transId = $payload['TransID'] ?? null;
+        $amount = isset($payload['TransAmount']) ? (float) $payload['TransAmount'] : null;
+        $msisdn = $payload['MSISDN'] ?? null;
+        $billRef = $payload['BillRefNumber'] ?? null;
+
+        if (!$transId || !$billRef || !$amount) {
+            Log::error('C2B confirm missing required fields', compact('transId','billRef','amount'));
+            return ['ResultCode' => 0, 'ResultDesc' => 'Received'];
+        }
+
+        // Idempotency: check if a transaction with this external_ref already exists
+        $existing = BookingTransaction::where('external_ref', $transId)->first();
+        if ($existing) {
+            Log::info('C2B confirm duplicate ignored', ['trans_id' => $transId]);
+            return ['ResultCode' => 0, 'ResultDesc' => 'Received'];
+        }
+
+        $booking = Booking::where('booking_ref', $billRef)->first();
+        if (!$booking) {
+            Log::error('C2B confirm booking not found', ['bill_ref' => $billRef]);
+            return ['ResultCode' => 0, 'ResultDesc' => 'Received'];
+        }
+
+        // Only auto-confirm if amount matches booking total (per requirements)
+        if ((float) $booking->total_amount !== $amount) {
+            Log::warning('C2B amount mismatch; leaving booking pending', [
+                'bill_ref' => $billRef,
+                'expected' => (float) $booking->total_amount,
+                'actual' => $amount,
+            ]);
+            return ['ResultCode' => 0, 'ResultDesc' => 'Received'];
+        }
+
+        try {
+            DB::transaction(function () use ($booking, $amount, $msisdn, $transId) {
+                // Create ledger entry
+                $transaction = BookingTransaction::create([
+                    'booking_id' => $booking->id,
+                    'payment_intent_id' => $this->getOrCreateC2bIntent($booking, $amount)->id,
+                    'type' => 'PAYMENT',
+                    'source' => 'MPESA_C2B',
+                    'external_ref' => $transId,
+                    'amount' => $amount,
+                    'currency' => $booking->currency,
+                    'meta' => [
+                        'phone_e164' => $msisdn ? $this->normalizeMsisdnToE164($msisdn) : null,
+                        'transaction_id' => $transId,
+                        'method' => 'C2B',
+                    ],
+                ]);
+
+                // Update payment intent status
+                $transaction->paymentIntent->update(['status' => 'SUCCEEDED']);
+
+                // Recompute booking amounts from ledger
+                $totalPaid = BookingTransaction::where('booking_id', $booking->id)
+                    ->where('type', 'PAYMENT')
+                    ->sum('amount');
+
+                $amountDue = $booking->total_amount - $totalPaid;
+                $bookingStatus = $amountDue <= 0 ? 'PAID' : 'PARTIALLY_PAID';
+
+                $booking->update([
+                    'amount_paid' => $totalPaid,
+                    'amount_due' => max(0, $amountDue),
+                    'status' => $bookingStatus,
+                ]);
+
+                // Create receipt and queue email
+                $receiptService = new ReceiptService();
+                $receipt = $receiptService->createManualReceipt($transaction, $transId);
+
+                try {
+                    AuditService::logPaymentSucceeded($transaction->paymentIntent, $transId);
+                } catch (\Exception $e) {
+                    Log::error('Failed to log C2B payment audit', ['error' => $e->getMessage()]);
+                }
+
+                Log::info('C2B payment processed', [
+                    'booking_id' => $booking->id,
+                    'booking_status' => $bookingStatus,
+                    'amount_paid' => $totalPaid,
+                    'amount_due' => max(0, $amountDue),
+                    'transaction_id' => $transaction->id,
+                    'receipt_no' => $receipt->receipt_no,
+                ]);
+            });
+        } catch (\Exception $e) {
+            Log::error('C2B confirmation processing failed', ['error' => $e->getMessage(), 'payload' => $payload]);
+        }
+
+        // Always ACK to Safaricom
+        return ['ResultCode' => 0, 'ResultDesc' => 'Received'];
+    }
+
+    private function getOrCreateC2bIntent(Booking $booking, float $amount): PaymentIntent
+    {
+        $intent = PaymentIntent::where('booking_id', $booking->id)
+            ->whereIn('status', ['INITIATED','PENDING'])
+            ->latest('created_at')
+            ->first();
+
+        if ($intent) {
+            return $intent;
+        }
+
+        return PaymentIntent::create([
+            'booking_id' => $booking->id,
+            'intent_ref' => 'PI-' . Str::upper(Str::random(10)),
+            'method' => 'MPESA_C2B',
+            'amount' => $amount,
+            'currency' => $booking->currency,
+            'status' => 'PENDING',
+            'metadata' => [
+                'booking_ref' => $booking->booking_ref,
+            ],
+        ]);
+    }
+
+    private function normalizeMsisdnToE164(string $msisdn): string
+    {
+        $msisdn = preg_replace('/[^0-9]/', '', $msisdn);
+        if (Str::startsWith($msisdn, '0')) {
+            $msisdn = '254' . substr($msisdn, 1);
+        }
+        if (!Str::startsWith($msisdn, '254')) {
+            $msisdn = '254' . $msisdn;
+        }
+        return '+' . $msisdn;
+    }
+
+    /**
+     * Obtain OAuth access token for C2B registration calls.
+     */
+    private function getAccessToken(): string
+    {
+        if (config('mpesa.mock_mode')) {
+            Log::info('Using mock M-PESA token for C2B registration');
+            return config('mpesa.mock_access_token');
+        }
+
+        $authUrl = config('mpesa.auth_url');
+        $consumerKey = config('mpesa.consumer_key');
+        $consumerSecret = config('mpesa.consumer_secret');
+
+        Log::info('Retrieving M-PESA OAuth token for C2B registration', [
+            'auth_url' => $authUrl,
+            'consumer_key' => substr($consumerKey, 0, 6) . '...',
+        ]);
+
+        $response = Http::withBasicAuth($consumerKey, $consumerSecret)
+            ->accept('application/json')
+            ->withoutVerifying() // Skip SSL verification for sandbox
+            ->timeout(30)
+            ->get($authUrl);
+
+        if (!$response->successful()) {
+            throw new \Exception("Failed to get M-PESA access token: {$response->body()}");
+        }
+
+        $token = $response->json('access_token');
+        if (!$token) {
+            throw new \Exception('M-PESA OAuth response missing access_token field');
+        }
+
+        return $token;
+    }
+}

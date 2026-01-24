@@ -200,8 +200,10 @@ class PaymentController extends Controller
      * 
      * POST /payment/manual-entry
      * 
-     * Called when STK fails/times out and guest wants to enter receipt manually.
-     * Creates submission in UNDER_REVIEW status awaiting admin verification.
+    * Called when STK fails/times out and guest wants to enter receipt manually.
+    * Stores the receipt for reference only; booking is auto-confirmed
+    * exclusively when Safaricom sends the C2B confirmation webhook
+    * (no admin intervention).
      * 
      * Request body:
      * {
