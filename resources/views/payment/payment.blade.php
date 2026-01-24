@@ -288,7 +288,10 @@
 
     // Handle Payment Method
     async function handlePaymentMethod() {
+        console.log('handlePaymentMethod called');
         const phone = document.getElementById('phone_input').value.trim();
+        
+        console.log('Phone:', phone);
         
         if (!phone) {
             showError('Please enter your phone number');
@@ -296,10 +299,13 @@
         }
 
         try {
+            console.log('Starting payment flow for booking:', bookingId, 'amount:', amount);
+            
             // Show loading state
             showLoading('Sending M-PESA prompt to your phone...');
 
             // Create payment intent
+            console.log('Creating payment intent...');
             const intentResponse = await fetch('/payment/intents', {
                 method: 'POST',
                 headers: {
@@ -312,7 +318,9 @@
                 })
             });
 
+            console.log('Payment intent response status:', intentResponse.status);
             const intentData = await intentResponse.json();
+            console.log('Payment intent data:', intentData);
             
             if (!intentData.success) {
                 throw new Error(intentData.message || 'Failed to create payment intent');
@@ -322,8 +330,10 @@
 
             // Normalize phone to E.164 for M-PESA
             const phoneE164 = phone.startsWith('+') ? phone : `+254${phone.replace(/^0/, '')}`;
+            console.log('Normalized phone:', phoneE164);
 
             // Initiate STK
+            console.log('Initiating STK push...');
             const stkResponse = await fetch('/payment/mpesa/stk', {
                 method: 'POST',
                 headers: {
@@ -337,7 +347,9 @@
                 })
             });
 
+            console.log('STK response status:', stkResponse.status);
             const stkData = await stkResponse.json();
+            console.log('STK data:', stkData);
 
             if (!stkData.success) {
                 // STK failed - show manual fallback after timeout
