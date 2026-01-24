@@ -64,6 +64,7 @@ class BookingSubmissionController extends Controller
             // Logging selection criteria for debugging
             \Log::info('Room selection criteria', [
                 'room_type' => $roomType,
+                'room_type_lowercase' => strtolower($roomType),
                 'property_id' => $propertyId,
             ]);
 
@@ -76,6 +77,9 @@ class BookingSubmissionController extends Controller
                     ->where('pending_removal', false)
                     ->where('id', (int) $propertyId)
                     ->first();
+                if ($property) {
+                    \Log::info('Property matched by ID', ['property_id' => $property->id, 'name' => $property->name]);
+                }
             }
 
             // 2) Otherwise use room_type: numeric id, exact name, then contains match
@@ -89,6 +93,9 @@ class BookingSubmissionController extends Controller
                         // If frontend passed an ID as string, use it
                         $propertyQuery->where('id', (int) $roomType);
                         $property = $propertyQuery->first();
+                        if ($property) {
+                            \Log::info('Property matched by numeric room_type', ['property_id' => $property->id, 'name' => $property->name]);
+                        }
                     } else {
                         // Try exact (case-insensitive) name match first
                         $exact = (clone $propertyQuery)
@@ -97,6 +104,7 @@ class BookingSubmissionController extends Controller
 
                         if ($exact) {
                             $property = $exact;
+                            \Log::info('Property matched by exact name', ['property_id' => $property->id, 'name' => $property->name, 'room_type' => $roomType]);
                         } else {
                             // Then try contains match (case-insensitive)
                             $contains = (clone $propertyQuery)
@@ -104,9 +112,12 @@ class BookingSubmissionController extends Controller
                                 ->first();
                             if ($contains) {
                                 $property = $contains;
+                                \Log::info('Property matched by contains', ['property_id' => $property->id, 'name' => $property->name, 'room_type' => $roomType]);
                             }
                         }
                     }
+                } else {
+                    \Log::warning('room_type is empty', ['room_type' => $roomType]);
                 }
             }
 
