@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Booking\BookingController;
-use App\Http\Controllers\Booking\BookingSubmissionController;
 use App\Http\Controllers\Payment\MpesaController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Payment\AdminPaymentController;
@@ -28,7 +27,8 @@ Route::get('/gallery/carousel', [FrontendController::class, 'gallery'])->name('g
 Route::get('/testimonials', [FrontendController::class, 'testimonials'])->name('testimonials');
 Route::get('/blog', [FrontendController::class, 'blog'])->name('blog');
 Route::get('/blog/{id}', [FrontendController::class, 'blogSingle'])->name('blog.single');
-Route::get('/reservation', [FrontendController::class, 'reservation'])->name('reservation');
+// Reservation entry point handled by BookingController (non-submitting)
+Route::get('/reservation', [BookingController::class, 'reservationForm'])->name('reservation');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
@@ -43,14 +43,27 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-// Booking Routes - Public (can be called before guest logs in)
-Route::apiResource('bookings', BookingController::class, ['only' => ['store']]);
-Route::get('/bookings/{booking}/summary', [BookingController::class, 'showSummary'])->name('booking.summary');
-Route::post('/bookings/{booking}/confirm-payment', [BookingController::class, 'confirmAndPay'])->name('booking.confirm-pay');
-Route::post('/bookings/{booking}/edit', [BookingController::class, 'editReservation'])->name('booking.edit');
+// Booking Routes - Public Three-Step Flow: Form → Confirm → Store
+// Step 1: GET /reservation - Display reservation form (no submission)
+Route::get('/reservation', [BookingController::class, 'reservationForm'])->name('reservation');
 
-// Booking Submission from Frontend Form
-Route::post('/booking/submit', [BookingSubmissionController::class, 'submitReservation'])->name('booking.submit');
+// Step 2: GET /reservation/confirm - Display confirmation before POST
+Route::get('/reservation/confirm', [BookingController::class, 'confirmForm'])->name('reservation.confirm');
+
+// Step 3: POST /booking/store - Create booking after @csrf validation
+Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+
+// Booking summary/history (after booking created)
+Route::get('/bookings/{booking}/summary', [BookingController::class, 'showSummary'])->name('booking.summary');
+
+// CSRF validation test routes
+Route::get('/csrf-test', function () {
+    return view('booking.csrf-test');
+})->name('csrf.test');
+
+Route::post('/csrf-test', function () {
+    return back()->with('success', 'CSRF validation passed successfully.');
+})->name('csrf.test.submit');
 
 // Payment Routes - M-PESA Integration
 Route::prefix('payment')->name('payment.')->group(function () {

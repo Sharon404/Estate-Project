@@ -412,8 +412,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="bg-white p-40 rounded-1">
-                            <!-- Reservation Form -->
-                            <form name="contactForm" id="contact_form" method="post" action="#">
+                            <!-- Reservation Form - NO POST, just redirects via JS -->
+                            <form name="contactForm" id="contact_form" method="get" action="#">
                                 @if (session('booking_data'))
                                     <div class="alert alert-info mb-4" role="alert">
                                         <i class="fas fa-info-circle me-2"></i>
@@ -435,31 +435,31 @@
 
                                     <div class="col-md-1-5">
                                         <div class="fs-18 text-dark fw-500 mb-10">Rooms</div>
-                                        <select name="rooms" id="rooms" class="form-control">
-                                            <option value="1" @selected(session('booking_data.rooms') == 1)>1</option>
-                                            <option value="2" @selected(session('booking_data.rooms') == 2)>2</option>
-                                            <option value="3" @selected(session('booking_data.rooms') == 3)>3</option>
-                                            <option value="4" @selected(session('booking_data.rooms') == 4)>4</option>
-                                            <option value="5" @selected(session('booking_data.rooms') == 5)>5</option>
-                                            <option value="6" @selected(session('booking_data.rooms') == 6)>6</option>
-                                            <option value="7" @selected(session('booking_data.rooms') == 7)>7</option>
-                                            <option value="8" @selected(session('booking_data.rooms') == 8)>8</option>
-                                            <option value="9" @selected(session('booking_data.rooms') == 9)>9</option>
-                                            <option value="10" @selected(session('booking_data.rooms') == 10)>10</option>
+                                        <select id="room-count" class="form-control">
+                                            <option value="1" @selected(session('booking_data.room_count') == 1)>1</option>
+                                            <option value="2" @selected(session('booking_data.room_count') == 2)>2</option>
+                                            <option value="3" @selected(session('booking_data.room_count') == 3)>3</option>
+                                            <option value="4" @selected(session('booking_data.room_count') == 4)>4</option>
+                                            <option value="5" @selected(session('booking_data.room_count') == 5)>5</option>
+                                            <option value="6" @selected(session('booking_data.room_count') == 6)>6</option>
+                                            <option value="7" @selected(session('booking_data.room_count') == 7)>7</option>
+                                            <option value="8" @selected(session('booking_data.room_count') == 8)>8</option>
+                                            <option value="9" @selected(session('booking_data.room_count') == 9)>9</option>
+                                            <option value="10" @selected(session('booking_data.room_count') == 10)>10</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-1-5">
                                         <div class="fs-18 text-dark fw-500 mb-10">Guests</div>
-                                        <select name="guests" id="guests" class="form-control">
-                                            <option value="1" @selected(session('booking_data.guests') == 1)>1</option>
-                                            <option value="2" @selected(session('booking_data.guests') == 2)>2</option>
-                                            <option value="3" @selected(session('booking_data.guests') == 3)>3</option>
-                                            <option value="4" @selected(session('booking_data.guests') == 4)>4</option>
-                                            <option value="5" @selected(session('booking_data.guests') == 5)>5</option>
-                                            <option value="6" @selected(session('booking_data.guests') == 6)>6</option>
-                                            <option value="7" @selected(session('booking_data.guests') == 7)>7</option>
-                                            <option value="8" @selected(session('booking_data.guests') == 8)>8</option>
+                                        <select id="guests" class="form-control">
+                                            <option value="1" @selected(session('booking_data.adult') == 1)>1</option>
+                                            <option value="2" @selected(session('booking_data.adult') == 2)>2</option>
+                                            <option value="3" @selected(session('booking_data.adult') == 3)>3</option>
+                                            <option value="4" @selected(session('booking_data.adult') == 4)>4</option>
+                                            <option value="5" @selected(session('booking_data.adult') == 5)>5</option>
+                                            <option value="6" @selected(session('booking_data.adult') == 6)>6</option>
+                                            <option value="7" @selected(session('booking_data.adult') == 7)>7</option>
+                                            <option value="8" @selected(session('booking_data.adult') == 8)>8</option>
                                             <option value="9" @selected(session('booking_data.guests') == 9)>9</option>
                                             <option value="10" @selected(session('booking_data.guests') == 10)>10</option>
                                         </select>
@@ -475,66 +475,6 @@
                                 </div>
 
                             </form>
-
-                            <!-- Guest Details Form (shown when editing) -->
-                            @if (session('booking_data'))
-                                <form id="guest-details-form" method="post" action="#" style="display: none;">
-                                    <div class="row g-4 mt-4 pt-4 border-top">
-                                        <div class="col-12">
-                                            <h5 class="mb-4">Guest Information</h5>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Full Name</label>
-                                            <input type="text" id="guest_full_name" class="form-control" value="{{ session('booking_data.guest_full_name', '') }}" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Email</label>
-                                            <input type="email" id="guest_email" class="form-control" value="{{ session('booking_data.guest_email', '') }}" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Phone</label>
-                                            <input type="tel" id="guest_phone" class="form-control" value="{{ session('booking_data.guest_phone', '') }}" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Special Requests</label>
-                                            <textarea id="special_requests" class="form-control" rows="3">{{ session('booking_data.special_requests', '') }}</textarea>
-                                        </div>
-                                        <div class="col-12">
-                                            <button type="button" class="btn-main" onclick="submitGuestDetails()">Update & Proceed</button>
-                                            <button type="button" class="btn btn-outline-secondary" onclick="cancelEditMode()">Cancel</button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                                <script>
-                                    function enterEditMode() {
-                                        document.getElementById('contact_form').style.display = 'none';
-                                        document.getElementById('guest-details-form').style.display = 'block';
-                                    }
-
-                                    function cancelEditMode() {
-                                        location.reload();
-                                    }
-
-                                    function submitGuestDetails() {
-                                        // Store guest details in session or localStorage
-                                        const guestData = {
-                                            full_name: document.getElementById('guest_full_name').value,
-                                            email: document.getElementById('guest_email').value,
-                                            phone: document.getElementById('guest_phone').value,
-                                            special_requests: document.getElementById('special_requests').value,
-                                        };
-                                        localStorage.setItem('guestDetails', JSON.stringify(guestData));
-                                        // Trigger availability check with updated data
-                                        document.getElementById('contact_form').submit();
-                                    }
-
-                                    // Auto-enter edit mode on page load
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        enterEditMode();
-                                    });
-                                </script>
-                            @endif
                         </div>
                     </div>
                 </div>

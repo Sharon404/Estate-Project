@@ -85,119 +85,68 @@ $(document).ready(function(){
         
         // Variable declaration
         var error = false;
-        var name = $('#name').val();
-        var email = $('#email').val();
-        var phone = $('#phone').val();
-        var checkin = $('#date-picker').val();
-        var adult = $('input[name="adult"]').val();
-        var children = $('input[name="children"]').val();
-        var room_count = $('#room-count').val();
-        var room_type = $('.room-type').val();
-        var message = $('#message').val();
+        var checkin_display = $('#checkin').val();
+        var checkout_display = $('#checkout').val();
+        var guests = $('#guests').val() || 1;
+        var room_count = $('#room-count').val() || 1;
+        var room_type = $('.room-type').val() || '';
         
-        $('#name,#email,#phone,#message').click(function(){
-            $(this).removeClass("error_input");
-        });
-        
-        // Form field validation
-        if(name.length == 0){
-            var error = true;
-            $('#name').addClass("error_input");
-        }else{
-            $('#name').removeClass("error_input");
-        }
-        if(email.length == 0 || email.indexOf('@') == '-1'){
-            var error = true;
-            $('#email').addClass("error_input");
-        }else{
-            $('#email').removeClass("error_input");
-        }
-        if(phone.length == 0){
-            var error = true;
-            $('#phone').addClass("error_input");
-        }else{
-            $('#phone').removeClass("error_input");
-        }
+        // Guest info (optional on initial form)
+        var name = $('#name').val() || '';
+        var email = $('#email').val() || '';
+        var phone = $('#phone').val() || '';
+        var message = '';
         
         // Check if dates are selected
-        if(!checkin || checkin.length == 0){
+        if(!checkin_display || !checkout_display || checkin_display.length == 0){
             error = true;
             alert('Please select check-in and check-out dates');
+            return false;
         }
         
-        // If there is no validation error, next to process the booking
         if(error == false){
-           // Disable submit button
-            $('#send_message').attr({'disabled' : 'true', 'value' : 'Sending...' });
+            // Disable submit button
+            $('#send_message').attr({'disabled' : 'true', 'value' : 'Loading...' });
             
-            // Parse date range from the date picker
-            var dateRange = $('#date-picker').val();
+            // Parse date range from the displayed dates
+            var dateRange = checkin_display + ' - ' + checkout_display;
             var dates = dateRange.split(' - ');
             
             // Format dates to m/d/Y format required by backend
             var checkInDate = formatDateToMDY(dates[0]);
             var checkOutDate = formatDateToMDY(dates[1] || dates[0]);
             
-            console.log('Raw dateRange:', dateRange);
-            console.log('Parsed dates:', dates);
             console.log('Formatted checkInDate:', checkInDate);
             console.log('Formatted checkOutDate:', checkOutDate);
             
             if(!checkInDate || !checkOutDate){
                 error = true;
-                alert('Invalid date format. Please select valid dates.\n\nDates received: ' + dateRange);
-                $('#send_message').removeAttr('disabled').attr('value', 'Submit Form');
+                alert('Invalid date format. Please select valid dates.');
+                $('#send_message').removeAttr('disabled').attr('value', 'Check Availability');
                 return false;
             }
             
-            /* Post Ajax function to submit the booking form */
-            $.ajax({
-                type: 'POST',
-                url: '/booking/submit',
-                dataType: 'json',
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content'),
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    message: message,
-                    checkin: checkInDate,
-                    checkout: checkOutDate,
-                    adult: adult,
-                    children: children,
-                    room_count: room_count,
-                    room_type: room_type
-                },
-                success: function(response){
-                    // Show success message
-                    $('#booking_form_wrap').fadeOut(500);
-                    $('#success_message').fadeIn(500);
-                    
-                    // Redirect to payment page after 2 seconds
-                    setTimeout(function(){
-                        window.location.href = response.redirect_url || '/';
-                    }, 2000);
-                },
-                error: function(xhr, status, error){
-                    console.error('Booking error:', xhr.responseText);
-                    
-                    // Show error message
-                    var errorMessage = 'An error occurred while creating your booking.';
-                    
-                    if(xhr.responseJSON && xhr.responseJSON.message){
-                        errorMessage = xhr.responseJSON.message;
-                    } else if(xhr.status === 422){
-                        // Validation errors
-                        var errors = xhr.responseJSON.errors;
-                        if(errors){
-                            errorMessage = Object.values(errors).flat().join('\n');
-                        }
-                    }
-                    
-                    alert(errorMessage);
-                    
-                    // Enable the submit button again
-                    $('#send_message').removeAttr('disabled').attr('value', 'Submit Form');
+            // Store data in sessionStorage for the confirm page
+            var bookingData = {
+                checkin: checkInDate,
+                checkout: checkOutDate,
+                adult: guests,
+                children: 0,
+                room_count: room_count,
+                room_type: room_type,
+                name: name,
+                email: email,
+                phone: phone,
+                message: message
+            };
+            
+            sessionStorage.setItem('bookingData', JSON.stringify(bookingData));
+            
+            console.log('Booking data stored:', bookingData);
+            
+            // Redirect to confirm page
+            window.location.href = '/booking/confirm-details';
+        }
                 }
             });
         }
