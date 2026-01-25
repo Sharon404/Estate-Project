@@ -120,43 +120,54 @@
 </section>
 
 <script>
-function validateAndRedirect(event) {
-    event.preventDefault();
-    
-    // Get form values
+function goToConfirm() {
+    // Collect values
     const checkin = document.getElementById('checkin').value.trim();
     const checkout = document.getElementById('checkout').value.trim();
     const rooms = document.getElementById('rooms').value;
-    const guests = document.getElementById('guests').value;
+    const adults = document.getElementById('guests').value;
+    const children = document.getElementById('children').value;
+    const fullName = document.getElementById('full_name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const notes = document.getElementById('notes').value.trim();
 
-    // Validate dates
+    // Basic validation
     if (!checkin || !checkout) {
         alert('Please select both check-in and check-out dates');
-        return false;
+        return;
     }
 
-    // Validate that checkout is after checkin
     const checkinDate = new Date(checkin);
     const checkoutDate = new Date(checkout);
     if (checkoutDate <= checkinDate) {
         alert('Check-out date must be after check-in date');
-        return false;
+        return;
     }
 
-    // Validate rooms and guests
-    if (!rooms || !guests) {
-        alert('Please select number of rooms and guests');
-        return false;
+    if (!rooms || !adults) {
+        alert('Please select rooms and adults');
+        return;
     }
 
-    // Build query string with all parameters
+    if (!fullName || !email || !phone) {
+        alert('Please provide your full name, email, and phone');
+        return;
+    }
+
+    // Build query parameters
     const params = new URLSearchParams();
     params.append('checkin', checkin);
     params.append('checkout', checkout);
     params.append('rooms', rooms);
-    params.append('guests', guests);
+    params.append('adults', adults);
+    params.append('children', children || '0');
+    params.append('full_name', fullName);
+    params.append('email', email);
+    params.append('phone', phone);
+    if (notes) params.append('notes', notes);
 
-    // Redirect to confirmation page with query parameters (NO POST)
+    // Redirect to confirmation page without POST
     window.location.href = `/reservation/confirm?${params.toString()}`;
 }
 </script>
