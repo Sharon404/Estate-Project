@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Booking;
 
 use App\Http\Controllers\Controller;
-use App\Models\Booking;
 use App\Models\Guest;
 use App\Models\Property;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
+use App\Models\Booking;
 
 class BookingSubmissionController extends Controller
 {
@@ -134,19 +134,21 @@ class BookingSubmissionController extends Controller
 
             // Calculate pricing from property rate
             $nightly_rate = (float) $property->nightly_rate;
-            $accommodation_subtotal = $nightly_rate * $nights;
+            $roomCount = max(1, (int) $validated['room_count']);
+            $accommodation_subtotal = $nightly_rate * $nights * $roomCount;
             $addons_subtotal = 0;
             $total_amount = $accommodation_subtotal + $addons_subtotal;
 
             // Create booking with PENDING_PAYMENT status
             $booking = Booking::create([
-                'booking_ref' => 'BK-' . Str::upper(Str::random(8)),
+                'booking_ref' => $this->generateBookingReference(),
                 'property_id' => $property->id,
                 'guest_id' => $guest->id,
                 'check_in' => $checkInDate,
                 'check_out' => $checkOutDate,
                 'adults' => $validated['adult'],
                 'children' => $validated['children'],
+                'rooms' => $roomCount,
                 'special_requests' => $validated['message'] ?? null,
                 'status' => 'PENDING_PAYMENT',
                 'currency' => 'KES',
@@ -179,5 +181,17 @@ class BookingSubmissionController extends Controller
                 'message' => 'An error occurred while creating your booking. Please try again.'
             ], 500);
         }
+    }
+
+    /**
+     * Generate a unique booking reference like BOOK-9XK2A7
+     */
+    private function generateBookingReference(): string
+    {
+        do {
+            $ref = 'BOOK-' . Str::upper(Str::random(6));
+        } while (Booking::where('booking_ref', $ref)->exists());
+
+        return $ref;
     }
 }

@@ -182,6 +182,67 @@ class ReceiptService
     }
 
     /**
+     * Create receipt for automated C2B payment.
+     *
+     * Called after successful C2B confirmation webhook.
+     *
+     * @param BookingTransaction $transaction
+     * @param string $mpesaReceiptNumber
+     * @return Receipt
+     * @throws \Exception
+     */
+    public function createC2bReceipt(BookingTransaction $transaction, string $mpesaReceiptNumber): Receipt
+    {
+        $booking = $transaction->booking;
+        $paymentIntent = $transaction->paymentIntent;
+
+        $receiptData = $this->buildReceiptData(
+            $booking,
+            $paymentIntent,
+            $transaction,
+            'C2B',
+            $mpesaReceiptNumber
+        );
+
+        $receipt = Receipt::create([
+            'booking_id' => $booking->id,
+            'payment_intent_id' => $paymentIntent->id,
+            'receipt_no' => self::generateReceiptNumber(),
+            'mpesa_receipt_number' => $mpesaReceiptNumber,
+            'amount' => $transaction->amount,
+            'currency' => $transaction->currency,
+            'receipt_data' => $receiptData,
+            'issued_at' => now(),
+        ]);
+
+        Log::info('C2B receipt created', [
+            'receipt_id' => $receipt->id,
+            'receipt_no' => $receipt->receipt_no,
+            'booking_id' => $booking->id,
+            'amount' => $transaction->amount,
+            'mpesa_receipt_number' => $mpesaReceiptNumber,
+        ]);
+
+        try {
+            AuditService::logReceiptGenerated($receipt);
+        } catch (\Exception $e) {
+            Log::error('Failed to log C2B receipt audit', ['error' => $e->getMessage()]);
+        }
+
+        try {
+            $emailService = new EmailService();
+            $emailService->queueReceiptNotification($receipt);
+        } catch (\Exception $e) {
+            Log::error('Failed to queue C2B receipt email', [
+                'receipt_id' => $receipt->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return $receipt;
+    }
+
+    /**
      * Build comprehensive receipt data snapshot.
      * 
      * Captures all relevant payment and booking information

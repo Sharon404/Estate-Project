@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Booking;
 use App\Models\BookingTransaction;
 use App\Models\PaymentIntent;
+use App\Services\ReceiptService;
+use App\Services\AuditService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
@@ -84,14 +86,12 @@ class MpesaC2BService
             return ['ResultCode' => 1, 'ResultDesc' => 'Booking not found'];
         }
 
-        // Reject if already fully paid
-        if ($booking->status === 'PAID') {
-            return ['ResultCode' => 1, 'ResultDesc' => 'Booking already paid'];
+        if (in_array($booking->status, ['CANCELLED', 'EXPIRED'])) {
+            return ['ResultCode' => 1, 'ResultDesc' => 'Booking is not payable'];
         }
 
-        // Enforce exact match to total amount (per requirements)
-        if ((float) $booking->total_amount !== $amount) {
-            return ['ResultCode' => 1, 'ResultDesc' => 'Amount does not match booking total'];
+        if ($amount <= 0) {
+            return ['ResultCode' => 1, 'ResultDesc' => 'Invalid amount'];
         }
 
         return ['ResultCode' => 0, 'ResultDesc' => 'Accepted'];
@@ -126,22 +126,12 @@ class MpesaC2BService
             return ['ResultCode' => 0, 'ResultDesc' => 'Received'];
         }
 
-        // Only auto-confirm if amount matches booking total (per requirements)
-        if ((float) $booking->total_amount !== $amount) {
-            Log::warning('C2B amount mismatch; leaving booking pending', [
-                'bill_ref' => $billRef,
-                'expected' => (float) $booking->total_amount,
-                'actual' => $amount,
-            ]);
-            return ['ResultCode' => 0, 'ResultDesc' => 'Received'];
-        }
-
         try {
             DB::transaction(function () use ($booking, $amount, $msisdn, $transId) {
                 // Create ledger entry
                 $transaction = BookingTransaction::create([
                     'booking_id' => $booking->id,
-                    'payment_intent_id' => $this->getOrCreateC2bIntent($booking, $amount)->id,
+                    'payment_intent_id' => $this->createC2bIntent($booking, $amount)->id,
                     'type' => 'PAYMENT',
                     'source' => 'MPESA_C2B',
                     'external_ref' => $transId,
@@ -173,7 +163,7 @@ class MpesaC2BService
 
                 // Create receipt and queue email
                 $receiptService = new ReceiptService();
-                $receipt = $receiptService->createManualReceipt($transaction, $transId);
+                $receipt = $receiptService->createC2bReceipt($transaction, $transId);
 
                 try {
                     AuditService::logPaymentSucceeded($transaction->paymentIntent, $transId);
@@ -198,17 +188,9 @@ class MpesaC2BService
         return ['ResultCode' => 0, 'ResultDesc' => 'Received'];
     }
 
-    private function getOrCreateC2bIntent(Booking $booking, float $amount): PaymentIntent
+    private function createC2bIntent(Booking $booking, float $amount): PaymentIntent
     {
-        $intent = PaymentIntent::where('booking_id', $booking->id)
-            ->whereIn('status', ['INITIATED','PENDING'])
-            ->latest('created_at')
-            ->first();
-
-        if ($intent) {
-            return $intent;
-        }
-
+        // Create a fresh intent per C2B transaction to preserve ledger linkage
         return PaymentIntent::create([
             'booking_id' => $booking->id,
             'intent_ref' => 'PI-' . Str::upper(Str::random(10)),

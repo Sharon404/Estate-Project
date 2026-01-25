@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Payment\MpesaController;
 use App\Http\Controllers\Payment\MpesaC2BController;
+use App\Http\Controllers\Booking\BookingStatusController;
 
 // Public M-PESA callback (no CSRF)
 Route::post('mpesa/callback', [MpesaController::class, 'callback'])
@@ -28,3 +29,7 @@ Route::get('payment/c2b/test', function() {
         'timestamp' => now()->toIso8601String(),
     ]);
 })->name('api.c2b.test');
+
+// Booking status polling endpoint
+Route::get('booking/{reference}/status', [BookingStatusController::class, 'show'])
+    ->name('api.booking.status');

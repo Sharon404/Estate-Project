@@ -102,7 +102,7 @@
         </section>
 
 
-        <section class="text-light jarallax mx-2 rounded-1 overflow-hidden">
+        <section class="text-light jarallax jarallax-reviews mx-2 rounded-1 overflow-hidden">
             <img src="{{ asset('assets/frontend/images/background/1.webp') }}" class="jarallax-img" alt="">
             <div class="sw-overlay op-6"></div>
             <div class="container relative z-2">

@@ -21,6 +21,7 @@ class Booking extends Model
         'amount_paid' => 'decimal:2',
         'amount_due' => 'decimal:2',
         'minimum_deposit' => 'decimal:2',
+        'rooms' => 'integer',
     ];
 
     public function property(): BelongsTo

@@ -12098,3 +12098,32 @@ img {
     width: auto;
   }
 }
+
+/* Ensure jarallax backgrounds fit nicely */
+.jarallax {
+  position: relative;
+  min-height: 480px;
+}
+.jarallax .jarallax-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* Shorter hero for the reviews band on home */
+.jarallax.jarallax-reviews {
+  min-height: 200px;
+}
+.jarallax.jarallax-reviews .container {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+/* Limit only the background image height for reviews band */
+.jarallax.jarallax-reviews .jarallax-img {
+  height: 120px;
+}

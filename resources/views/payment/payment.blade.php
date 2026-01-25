@@ -93,6 +93,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="card border-success mt-3">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input 
+                                            class="form-check-input" 
+                                            type="radio" 
+                                            id="method_paybill" 
+                                            name="payment_method" 
+                                            value="paybill"
+                                        />
+                                        <label class="form-check-label w-100" for="method_paybill">
+                                            <strong>M-PESA Paybill / Till</strong>
+                                            <br/>
+                                            <small class="text-muted">Use the booking reference as Account Number. We will auto-confirm from the M-PESA callback.</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Pay Button -->
@@ -268,27 +286,33 @@
 <!-- JavaScript -->
 <script>
     const bookingId = {{ $booking->id }};
+    const bookingRef = '{{ $booking->booking_ref }}';
     const amount = {{ $booking->amount_due }};
     const currency = '{{ $booking->currency }}';
     const till = '{{ config("mpesa.till_number", "*138#") }}';
     
     let paymentIntentId = null;
     let stkPollingInterval = null;
+    let statusPollingInterval = null;
 
     // Handle Payment Method
     async function handlePaymentMethod() {
-        console.log('handlePaymentMethod called');
+        const method = document.querySelector('input[name="payment_method"]:checked')?.value || 'stk';
+
+        if (method === 'paybill') {
+            showPendingState();
+            startStatusPolling();
+            return;
+        }
+
         const phone = document.getElementById('phone_input').value.trim();
-        
-        console.log('Phone:', phone);
-        
         if (!phone) {
             showError('Please enter your phone number');
             return;
         }
 
         try {
-            console.log('Starting payment flow for booking:', bookingId, 'amount:', amount);
+            console.log('Starting STK payment flow for booking:', bookingId, 'amount:', amount);
             
             // Show loading state
             showLoading('Sending M-PESA prompt to your phone...');
@@ -393,6 +417,48 @@
         }, 2000);
     }
 
+    // Poll booking status for C2B
+    function startStatusPolling() {
+        clearInterval(statusPollingInterval);
+        const maxAttempts = 120; // ~10 minutes at 5s interval
+        let attempts = 0;
+
+        statusPollingInterval = setInterval(async () => {
+            attempts++;
+            try {
+                const response = await fetch(`/api/booking/${bookingRef}/status`);
+                const data = await response.json();
+
+                if (!data.success) {
+                    return;
+                }
+
+                const status = data.data.status;
+                const paid = data.data.amount_paid;
+                const receiptNo = data.data.last_receipt?.receipt_no;
+                const mpesaReceipt = data.data.last_receipt?.mpesa_receipt_number;
+
+                if (status === 'PAID') {
+                    clearInterval(statusPollingInterval);
+                    const receiptText = mpesaReceipt ? ` Receipt: ${mpesaReceipt}` : '';
+                    showSuccess(`Payment confirmed for ${bookingRef}.${receiptText}`);
+                    return;
+                }
+
+                if (status === 'PARTIALLY_PAID') {
+                    updateLoadingMessage(`Waiting for payment confirmation... Paid ${paid} / ${amount} ${currency}`);
+                }
+
+                if (attempts >= maxAttempts) {
+                    clearInterval(statusPollingInterval);
+                    showManualFallback();
+                }
+            } catch (error) {
+                console.error('Polling error', error);
+            }
+        }, 5000);
+    }
+
     // Show Manual Fallback
     function showManualFallback() {
         document.getElementById('payment-container').classList.add('d-none');
@@ -401,6 +467,16 @@
         document.getElementById('error_state').classList.add('d-none');
         document.getElementById('pending_state').classList.add('d-none');
         document.getElementById('manual_section').classList.remove('d-none');
+    }
+
+    function showPendingState() {
+        document.getElementById('payment-container').classList.add('d-none');
+        document.getElementById('loading_state').classList.remove('d-none');
+        document.getElementById('success_state').classList.add('d-none');
+        document.getElementById('error_state').classList.add('d-none');
+        document.getElementById('pending_state').classList.add('d-none');
+        document.getElementById('manual_section').classList.add('d-none');
+        updateLoadingMessage('Waiting for payment confirmation... Complete Paybill using your booking reference.');
     }
 
 
