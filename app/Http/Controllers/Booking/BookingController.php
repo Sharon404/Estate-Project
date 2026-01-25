@@ -125,55 +125,69 @@ class BookingController extends Controller
     }
 
     /**
-     * Confirm booking and transition to PENDING_PAYMENT status.
-     * Allows updates to editable fields (special_requests, adults, children).
-     * Locks booking for payment processing.
+     * Show booking summary/confirmation page.
+     * Guest reviews all details and chooses to pay or edit.
      *
-     * PATCH /bookings/{id}/confirm
-     *
-     * Request body:
-     * {
-     *   "adults": 2,
-     *   "children": 1,
-     *   "special_requests": "Early check-in preferred"
-     * }
-     *
-     * Response: Booking confirmed in PENDING_PAYMENT status, ready for payment
+     * GET /bookings/{id}/summary
      *
      * @param Booking $booking
-     * @param ConfirmBookingRequest $request
-     * @return JsonResponse
+     * @return \Illuminate\View\View
      */
-    public function confirm(Booking $booking, ConfirmBookingRequest $request): JsonResponse
+    public function showSummary(Booking $booking)
     {
-        try {
-            if ($booking->status !== 'DRAFT') {
-                return response()->json([
-                    'success' => false,
-                    'message' => "Cannot confirm booking in {$booking->status} status",
-                ], 400);
-            }
-
-            $confirmed = $this->bookingService->confirmAndLock($booking, $request->validated());
-
-            return response()->json(
-                [
-                    'success' => true,
-                    'message' => 'Booking confirmed successfully and moved to payment',
-                    'data' => $confirmed,
-                ]
-            );
-        } catch (\Exception $e) {
-            Log::error('Booking confirmation failed', [
-                'booking_id' => $booking->id,
-                'error' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to confirm booking',
-                'error' => $e->getMessage(),
-            ], 400);
+        if ($booking->status !== 'PENDING_PAYMENT') {
+            return redirect('/')->with('error', 'This booking cannot be reviewed.');
         }
+
+        return view('booking.summary', [
+            'booking' => $booking,
+        ]);
+    }
+
+    /**
+     * Confirm booking and redirect to payment.
+     *
+     * POST /bookings/{id}/confirm-payment
+     *
+     * @param Booking $booking
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function confirmAndPay(Booking $booking)
+    {
+        if ($booking->status !== 'PENDING_PAYMENT') {
+            return redirect('/')->with('error', 'This booking cannot be processed.');
+        }
+
+        return redirect()->route('payment.show', ['booking' => $booking->id]);
+    }
+
+    /**
+     * Redirect back to edit reservation with pre-filled data.
+     *
+     * POST /bookings/{id}/edit
+     *
+     * @param Booking $booking
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editReservation(Booking $booking)
+    {
+        // Store booking data in session before deletion
+        session(['booking_data' => [
+            'check_in' => $booking->check_in->format('m/d/Y'),
+            'check_out' => $booking->check_out->format('m/d/Y'),
+            'rooms' => $booking->rooms,
+            'guests' => $booking->num_guests,
+            'adults' => $booking->num_adults,
+            'children' => $booking->num_children,
+            'special_requests' => $booking->special_requests,
+            'guest_full_name' => $booking->guest->full_name ?? '',
+            'guest_email' => $booking->guest->email ?? '',
+            'guest_phone' => $booking->guest->phone_e164 ?? '',
+        ]]);
+
+        // Delete the booking to start fresh
+        $booking->delete();
+
+        return redirect('/')->with('info', 'Edit your reservation details below.');
     }
 }

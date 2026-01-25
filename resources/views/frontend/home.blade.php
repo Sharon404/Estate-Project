@@ -14,11 +14,11 @@
                     <div class="container-fluid">
                         <div class="row g-4 justify-content-between align-items-end">
                             <div class="col-md-10">
-                                <h1 class="fs-96 lh-1 fs-xs-10vw wow fadeInUp mb-2">An Entire <span>House Just For You</span></h1>
+                                <h1 class="fs-96 lh-1 fs-xs-10vw wow fadeInUp mb-2">AN ENTIRE HOUSE<br><span>JUST FOR YOU</span></h1>
                             </div>
                             <div class="col-md-6 offset-md-1">
-                                <p class="col-md-8 text-white wow fadeInUp" data-wow-delay=".4s">Privacy, comfort, and a warm hosting experience. Every stay includes fresh breakfast to help you start your day relaxed and refreshed.</p>
-                                <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white wow fadeInUp" data-wow-delay=".8s"><span>Check Availability</span></a>
+                                <p class="col-md-8 text-white wow fadeInUp" data-wow-delay=".4s">Privacy, comfort, and a warm hosting experience. Breakfast included.</p>
+                                <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white wow fadeInUp" data-wow-delay=".8s"><span>Book Your Stay</span></a>
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                         <div class="subtitle mb-0 id-color wow fadeInUp" data-wow-delay=".0s">Simple Pricing</div>
                         <h2 class="wow fadeInUp" data-wow-delay=".2s">One Flat Rate Entire Home Stay</h2>
                         <p class="cwow fadeInUp" data-wow-delay=".4s">
-                            KES 25,000 per night. Breakfast and hospitality included. Perfect for families and small groups seeking privacy and comfort.
+                            KES 25,000 per night · Breakfast Included
                         </p>
                     </div>
                 </div>
@@ -412,48 +412,56 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="bg-white p-40 rounded-1">
+                            <!-- Reservation Form -->
                             <form name="contactForm" id="contact_form" method="post" action="#">
+                                @if (session('booking_data'))
+                                    <div class="alert alert-info mb-4" role="alert">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Edit Your Reservation</strong> - Update your dates, rooms, or guest information below.
+                                    </div>
+                                @endif
+
                                 <div class="row g-4 align-items-end">
                                     
                                     <div class="col-md-1-5">
                                         <div class="fs-18 text-dark fw-500 mb-10">Check In</div>
-                                        <input type="text" id="checkin" class="form-control" required>
+                                        <input type="text" id="checkin" class="form-control" value="{{ session('booking_data.check_in', '') }}" required>
                                     </div>
 
                                     <div class="col-md-1-5">
                                         <div class="fs-18 text-dark fw-500 mb-10">Check Out</div>
-                                        <input type="text" id="checkout" class="form-control" required>
+                                        <input type="text" id="checkout" class="form-control" value="{{ session('booking_data.check_out', '') }}" required>
                                     </div>
 
                                     <div class="col-md-1-5">
                                         <div class="fs-18 text-dark fw-500 mb-10">Rooms</div>
                                         <select name="rooms" id="rooms" class="form-control">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
+                                            <option value="1" @selected(session('booking_data.rooms') == 1)>1</option>
+                                            <option value="2" @selected(session('booking_data.rooms') == 2)>2</option>
+                                            <option value="3" @selected(session('booking_data.rooms') == 3)>3</option>
+                                            <option value="4" @selected(session('booking_data.rooms') == 4)>4</option>
+                                            <option value="5" @selected(session('booking_data.rooms') == 5)>5</option>
+                                            <option value="6" @selected(session('booking_data.rooms') == 6)>6</option>
+                                            <option value="7" @selected(session('booking_data.rooms') == 7)>7</option>
+                                            <option value="8" @selected(session('booking_data.rooms') == 8)>8</option>
+                                            <option value="9" @selected(session('booking_data.rooms') == 9)>9</option>
+                                            <option value="10" @selected(session('booking_data.rooms') == 10)>10</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-1-5">
                                         <div class="fs-18 text-dark fw-500 mb-10">Guests</div>
                                         <select name="guests" id="guests" class="form-control">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
+                                            <option value="1" @selected(session('booking_data.guests') == 1)>1</option>
+                                            <option value="2" @selected(session('booking_data.guests') == 2)>2</option>
+                                            <option value="3" @selected(session('booking_data.guests') == 3)>3</option>
+                                            <option value="4" @selected(session('booking_data.guests') == 4)>4</option>
+                                            <option value="5" @selected(session('booking_data.guests') == 5)>5</option>
+                                            <option value="6" @selected(session('booking_data.guests') == 6)>6</option>
+                                            <option value="7" @selected(session('booking_data.guests') == 7)>7</option>
+                                            <option value="8" @selected(session('booking_data.guests') == 8)>8</option>
+                                            <option value="9" @selected(session('booking_data.guests') == 9)>9</option>
+                                            <option value="10" @selected(session('booking_data.guests') == 10)>10</option>
                                         </select>
                                     </div>
 
@@ -467,6 +475,66 @@
                                 </div>
 
                             </form>
+
+                            <!-- Guest Details Form (shown when editing) -->
+                            @if (session('booking_data'))
+                                <form id="guest-details-form" method="post" action="#" style="display: none;">
+                                    <div class="row g-4 mt-4 pt-4 border-top">
+                                        <div class="col-12">
+                                            <h5 class="mb-4">Guest Information</h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" id="guest_full_name" class="form-control" value="{{ session('booking_data.guest_full_name', '') }}" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" id="guest_email" class="form-control" value="{{ session('booking_data.guest_email', '') }}" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Phone</label>
+                                            <input type="tel" id="guest_phone" class="form-control" value="{{ session('booking_data.guest_phone', '') }}" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Special Requests</label>
+                                            <textarea id="special_requests" class="form-control" rows="3">{{ session('booking_data.special_requests', '') }}</textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="button" class="btn-main" onclick="submitGuestDetails()">Update & Proceed</button>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="cancelEditMode()">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <script>
+                                    function enterEditMode() {
+                                        document.getElementById('contact_form').style.display = 'none';
+                                        document.getElementById('guest-details-form').style.display = 'block';
+                                    }
+
+                                    function cancelEditMode() {
+                                        location.reload();
+                                    }
+
+                                    function submitGuestDetails() {
+                                        // Store guest details in session or localStorage
+                                        const guestData = {
+                                            full_name: document.getElementById('guest_full_name').value,
+                                            email: document.getElementById('guest_email').value,
+                                            phone: document.getElementById('guest_phone').value,
+                                            special_requests: document.getElementById('special_requests').value,
+                                        };
+                                        localStorage.setItem('guestDetails', JSON.stringify(guestData));
+                                        // Trigger availability check with updated data
+                                        document.getElementById('contact_form').submit();
+                                    }
+
+                                    // Auto-enter edit mode on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        enterEditMode();
+                                    });
+                                </script>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -15,9 +15,9 @@ class BookingSubmissionController extends Controller
 {
     /**
      * Handle reservation form submission from frontend
-     * Creates a booking and returns JSON with payment redirect URL
+     * Stores data in session and redirects to summary (doesn't create booking yet)
      */
-    public function submitReservation(Request $request): JsonResponse
+    public function submitReservation(Request $request)
     {
         // Log the incoming request for debugging
         \Log::info('Booking submission request:', [
@@ -38,66 +38,36 @@ class BookingSubmissionController extends Controller
             'children' => 'required|integer|min:0',
             'room_count' => 'required|integer|min:1',
             'room_type' => 'required|string',
-            // Allow precise selection by property id when available
             'property_id' => 'nullable|integer',
         ]);
 
         try {
-            // Find or create guest
-            $guest = Guest::firstOrCreate(
-                ['email' => $validated['email']],
-                [
-                    'full_name' => $validated['name'],
-                    'phone_e164' => $validated['phone'],
-                ]
-            );
+            // Store all form data in session for later booking creation
+            session(['pending_booking_data' => [
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'message' => $validated['message'] ?? '',
+                'checkin' => $validated['checkin'],
+                'checkout' => $validated['checkout'],
+                'adult' => $validated['adult'],
+                'children' => $validated['children'],
+                'room_count' => $validated['room_count'],
+                'room_type' => $validated['room_type'],
+                'property_id' => $validated['property_id'],
+            ]]);
 
-            // Parse dates
-            $checkInDate = Carbon::createFromFormat('n/j/Y', $validated['checkin'])->startOfDay();
-            $checkOutDate = Carbon::createFromFormat('n/j/Y', $validated['checkout'])->startOfDay();
-            $nights = $checkInDate->diffInDays($checkOutDate);
-
-            // Select approved property prioritizing explicit property_id, then room_type
-            $roomType = trim($validated['room_type'] ?? '');
-            $propertyId = $validated['property_id'] ?? null;
-
-            // Logging selection criteria for debugging
-            \Log::info('Room selection criteria', [
-                'room_type' => $roomType,
-                'room_type_lowercase' => strtolower($roomType),
-                'property_id' => $propertyId,
+            // Redirect to summary preview (without booking ref since no booking exists yet)
+            return redirect()->route('booking.preview')->with('success', 'Please review your booking details.');
+        } catch (\Exception $e) {
+            \Log::error('Booking submission failed', [
+                'error' => $e->getMessage(),
+                'email' => $validated['email'] ?? 'unknown',
             ]);
 
-            $property = null;
-
-            // 1) Prefer explicit property_id when present
-            if (!empty($propertyId)) {
-                $property = Property::query()
-                    ->where('status', 'APPROVED')
-                    ->where('pending_removal', false)
-                    ->where('id', (int) $propertyId)
-                    ->first();
-                if ($property) {
-                    \Log::info('Property matched by ID', ['property_id' => $property->id, 'name' => $property->name]);
-                }
-            }
-
-            // 2) Otherwise use room_type: numeric id, exact name, then contains match
-            if (!$property) {
-                $propertyQuery = Property::query()
-                    ->where('status', 'APPROVED')
-                    ->where('pending_removal', false);
-
-                if ($roomType !== '') {
-                    if (ctype_digit($roomType)) {
-                        // If frontend passed an ID as string, use it
-                        $propertyQuery->where('id', (int) $roomType);
-                        $property = $propertyQuery->first();
-                        if ($property) {
-                            \Log::info('Property matched by numeric room_type', ['property_id' => $property->id, 'name' => $property->name]);
-                        }
-                    } else {
-                        // Try exact (case-insensitive) name match first
+            return back()->withErrors(['error' => 'Failed to process reservation. ' . $e->getMessage()]);
+        }
+    }
                         $exact = (clone $propertyQuery)
                             ->whereRaw('LOWER(name) = ?', [strtolower($roomType)])
                             ->first();
@@ -162,12 +132,12 @@ class BookingSubmissionController extends Controller
                 'minimum_deposit' => $total_amount,
             ]);
 
-            // Return success with payment redirect URL
+            // Return success with summary page redirect
             return response()->json([
                 'success' => true,
-                'message' => 'Booking created successfully! Redirecting to payment...',
+                'message' => 'Booking created successfully! Please review your details.',
                 'booking_id' => $booking->id,
-                'redirect_url' => route('payment.show', ['booking' => $booking->id])
+                'redirect_url' => route('booking.summary', ['booking' => $booking->id])
             ], 201);
 
         } catch (\Exception $e) {

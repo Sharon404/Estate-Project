@@ -45,8 +45,9 @@ Route::middleware('auth')->group(function () {
 
 // Booking Routes - Public (can be called before guest logs in)
 Route::apiResource('bookings', BookingController::class, ['only' => ['store']]);
-Route::get('/bookings/{booking}/summary', [BookingController::class, 'summary']);
-Route::patch('/bookings/{booking}/confirm', [BookingController::class, 'confirm']);
+Route::get('/bookings/{booking}/summary', [BookingController::class, 'showSummary'])->name('booking.summary');
+Route::post('/bookings/{booking}/confirm-payment', [BookingController::class, 'confirmAndPay'])->name('booking.confirm-pay');
+Route::post('/bookings/{booking}/edit', [BookingController::class, 'editReservation'])->name('booking.edit');
 
 // Booking Submission from Frontend Form
 Route::post('/booking/submit', [BookingSubmissionController::class, 'submitReservation'])->name('booking.submit');
