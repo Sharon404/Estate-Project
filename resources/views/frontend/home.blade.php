@@ -8,47 +8,42 @@
         <div id="de-loader"></div>
         <!-- page preloader close -->
         
-        <section class="text-dark no-top no-bottom relative rounded-1 overflow-hidden mt-80 mt-sm-50 mx-2" style="background-color:#decfbc;">
-            <div class="mh-400">
-                <div class="abs bottom-10 w-100 p-5 mt-3 z-3">
-                    <div class="container-fluid">
-                        <div class="row g-4 justify-content-between align-items-end">
-                            <div class="col-md-10">
-                                <h1 class="fs-96 lh-1 fs-xs-10vw wow fadeInUp mb-2" style="margin-top: 40px;">AN ENTIRE HOUSE<br><span>JUST FOR YOU</span></h1>
-                            </div>
-                            <div class="col-md-6 offset-md-1">
-                                <p class="col-md-8 text-dark wow fadeInUp" data-wow-delay=".4s">Privacy, comfort, and a warm hosting experience. Breakfast included.</p>
-                                <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white wow fadeInUp" data-wow-delay=".8s"><span>Book Your Stay</span></a>
-                            </div>
-                        </div>
-                    </div>
+        <section class="no-top no-bottom position-relative overflow-hidden mt-80 mt-sm-50 mx-2 rounded-1" style="min-height: 550px; background: #decfbc;">
+            <!-- Background Swiper -->
+            <div class="swiper-hero position-absolute w-100 h-100 top-0 start-0">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                    <div class="swiper-inner w-100 h-100" style="background-image: url('{{ asset('assets/frontend/images/misc/h1.jpg') }}'); background-size: cover; background-position: center; opacity: 0.4;"></div>
                 </div>
-
-                <div class="swiper">
-                  <!-- Additional required wrapper -->
-                  <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide text-light">
-                        <div class="swiper-inner" data-bgimage="url({{ asset('assets/frontend/images/slider/3.webp') }})">
-                            <div class="sw-overlay op-6"></div>
-                        </div>
-                    </div>
-
-                    <!-- Slides -->
-                    <div class="swiper-slide text-light">
-                        <div class="swiper-inner" data-bgimage="url({{ asset('assets/frontend/images/slider/4.webp') }})">
-                            <div class="sw-overlay op-6"></div>
-                        </div>
-                    </div>
-                    
-
-                  </div>
-                  <!-- If we need pagination -->
-                  <div class="swiper-pagination"></div>
-
+                <div class="swiper-slide">
+                    <div class="swiper-inner w-100 h-100" style="background-image: url('{{ asset('assets/frontend/images/misc/h2.jpg') }}'); background-size: cover; background-position: center; opacity: 0.4;"></div>
                 </div>
+                <div class="swiper-slide">
+                    <div class="swiper-inner w-100 h-100" style="background-image: url('{{ asset('assets/frontend/images/misc/h3.jpg') }}'); background-size: cover; background-position: center; opacity: 0.4;"></div>
+                </div>
+              </div>
+                            <div class="swiper-hero-pagination"></div>
             </div>
 
+
+            <!-- Content -->
+            <div class="position-relative d-flex align-items-end h-100" style="min-height: 550px; z-index: 2;">
+                <div class="container py-5">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <h1 class="text-dark wow fadeInUp mb-3" style="font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; font-weight: 700; max-width: 800px;">
+                                AN ENTIRE HOUSE<br><span style="color: #decfbc;">JUST FOR YOU</span>
+                            </h1>
+                            <p class="text-dark wow fadeInUp mb-3" data-wow-delay=".2s" style="font-size: 1.125rem; max-width: 600px;">
+                                Privacy, comfort, and a warm hosting experience. Breakfast included.
+                            </p>
+                            <a href="{{ route('properties') }}" class="btn-main fx-slide wow fadeInUp" data-wow-delay=".4s">
+                                <span>Book Your Stay</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section>
@@ -412,14 +407,27 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="bg-white p-40 rounded-1">
-                            <!-- Reservation Form - NO POST, just redirects via JS -->
-                            <form name="contactForm" id="contact_form" method="get" action="#">
+                            <!-- Reservation Form -->
+                            <form name="contactForm" id="contact_form" method="post" action="{{ route('booking.store') }}">
+                                @csrf
                                 @if (session('booking_data'))
                                     <div class="alert alert-info mb-4" role="alert">
                                         <i class="fas fa-info-circle me-2"></i>
                                         <strong>Edit Your Reservation</strong> - Update your dates, rooms, or guest information below.
                                     </div>
                                 @endif
+
+                                <!-- Hidden fields for guest info -->
+                                <input type="hidden" id="name" name="name" value="{{ session('booking_data.guest_full_name', '') }}">
+                                <input type="hidden" id="email" name="email" value="{{ session('booking_data.guest_email', '') }}">
+                                <input type="hidden" id="phone" name="phone" value="{{ session('booking_data.guest_phone', '') }}">
+                                <input type="hidden" id="message" name="message" value="{{ session('booking_data.special_requests', '') }}">
+                                <input type="hidden" id="date-picker" name="date_picker">
+                                <input type="hidden" id="adult" name="adult">
+                                <input type="hidden" id="children" name="children">
+                                <input type="hidden" class="room-type" name="room_type">
+                                <input type="hidden" id="room-count" name="room_count">
+                                <input type="hidden" id="property_id" name="property_id">
 
                                 <div class="row g-4 align-items-end">
                                     
@@ -451,6 +459,8 @@
 
                                     <div class="col-md-1-5">
                                         <div class="fs-18 text-dark fw-500 mb-10">Guests</div>
+                                        <input type="hidden" name="adult" id="adult">
+                                        <input type="hidden" name="children" id="children">
                                         <select id="guests" class="form-control">
                                             <option value="1" @selected(session('booking_data.adult') == 1)>1</option>
                                             <option value="2" @selected(session('booking_data.adult') == 2)>2</option>
@@ -475,6 +485,66 @@
                                 </div>
 
                             </form>
+
+                            <!-- Guest Details Form (shown when editing) -->
+                            @if (session('booking_data'))
+                                <form id="guest-details-form" method="post" action="#" style="display: none;">
+                                    <div class="row g-4 mt-4 pt-4 border-top">
+                                        <div class="col-12">
+                                            <h5 class="mb-4">Guest Information</h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" id="guest_full_name" class="form-control" value="{{ session('booking_data.guest_full_name', '') }}" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" id="guest_email" class="form-control" value="{{ session('booking_data.guest_email', '') }}" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Phone</label>
+                                            <input type="tel" id="guest_phone" class="form-control" value="{{ session('booking_data.guest_phone', '') }}" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Special Requests</label>
+                                            <textarea id="special_requests" class="form-control" rows="3">{{ session('booking_data.special_requests', '') }}</textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="button" class="btn-main" onclick="submitGuestDetails()">Update & Proceed</button>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="cancelEditMode()">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <script>
+                                    function enterEditMode() {
+                                        document.getElementById('contact_form').style.display = 'none';
+                                        document.getElementById('guest-details-form').style.display = 'block';
+                                    }
+
+                                    function cancelEditMode() {
+                                        location.reload();
+                                    }
+
+                                    function submitGuestDetails() {
+                                        // Store guest details in session or localStorage
+                                        const guestData = {
+                                            full_name: document.getElementById('guest_full_name').value,
+                                            email: document.getElementById('guest_email').value,
+                                            phone: document.getElementById('guest_phone').value,
+                                            special_requests: document.getElementById('special_requests').value,
+                                        };
+                                        localStorage.setItem('guestDetails', JSON.stringify(guestData));
+                                        // Trigger availability check with updated data
+                                        document.getElementById('contact_form').submit();
+                                    }
+
+                                    // Auto-enter edit mode on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        enterEditMode();
+                                    });
+                                </script>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -747,6 +817,7 @@
         <script src="{{ asset('assets/frontend/js/swiper.js') }}"></script>
         <script src="{{ asset('assets/frontend/js/custom-swiper-1.js') }}"></script>
         <script src="{{ asset('assets/frontend/js/moment.js') }}"></script>
+        <script src="{{ asset('assets/frontend/js/hero-swiper.js') }}"></script>
         <script src="{{ asset('assets/frontend/js/daterangepicker.js') }}"></script>
         <script src="{{ asset('assets/frontend/js/custom-datepicker.js') }}"></script>
     @endpush

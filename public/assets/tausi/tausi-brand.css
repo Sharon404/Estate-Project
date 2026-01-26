@@ -454,18 +454,45 @@ img {
   background: rgba(222, 207, 188, 0.8) !important;
 }
 
+/* =============== HERO ROW FIT =============== */
+.mh-400 .row.g-4.justify-content-between.align-items-end {
+  flex-wrap: wrap !important;
+  gap: 12px 24px !important;
+  align-items: flex-start !important;
+}
+
+.mh-400 .row.g-4.justify-content-between.align-items-end h1.fs-96 {
+  font-size: clamp(32px, 6vw, 60px) !important;
+  line-height: 1.1 !important;
+  margin-bottom: 6px !important;
+}
+
+.mh-400 .row.g-4.justify-content-between.align-items-end p {
+  margin-bottom: 8px !important;
+}
+
+.mh-400 .row.g-4.justify-content-between.align-items-end .btn-main {
+  margin-top: 4px !important;
+}
+
+.mh-400 .abs.bottom-10.w-100 {
+  bottom: 0 !important;
+  padding: 24px !important;
+  margin-top: 0 !important;
+}
+
 /* =============== RESPONSIVE OVERRIDES =============== */
 @media (max-width: 768px) {
   .hero,
   .hero-section {
-    min-height: 300px !important;
-    max-height: 400px !important;
+    min-height: 100px !important;
+    max-height: 100px !important;
     padding: 40px 0 !important;
   }
   
   .navbar-brand img,
   .logo {
-    max-width: 140px !important;
+    max-width: 40px !important;
   }
 }
 
