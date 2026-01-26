@@ -28,7 +28,7 @@
                         <div class="me-lg-3">
                             <div class="spacer-double"></div>
                             <div class="spacer-single sm-hide"></div>
-                            <div class="subtitle s2 mb-3 wow fadeInUp" data-wow-delay=".0s">Welcome to Rivora</div>
+                            <div class="subtitle s2 mb-3 wow fadeInUp" data-wow-delay=".0s">Welcome to Tausi Holiday & Getaway Homes</div>
                             <h1 class="fs-96 lh-1 fs-xs-10vw wow fadeInUp">Ultimate Harmony of Luxury</h1>
                             <p class="wow fadeInUp" data-wow-delay=".4s">Transform your outdoor space with our expert garden services! From design to maintenance, we create beautiful, thriving gardens tailored to your vision. Let us bring your dream garden to life—professional, reliable, and passionate about nature.</p>
                             <a class="btn-main fx-slide wow fadeInUp" data-wow-delay=".8s" href="{{ route('properties') }}"><span>Explore Rooms</span></a>

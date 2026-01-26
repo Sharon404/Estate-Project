@@ -14,74 +14,74 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { height: 100%; }
-        body { font-family: 'Inter', system-ui, sans-serif; line-height: 1.6; color: #59585D !important; background: #F6F6F6 !important; }
+        body { font-family: 'Inter', system-ui, sans-serif; line-height: 1.6; color: #222222 !important; background: #f8f5f0 !important; }
         
-        header { background: white; padding: 1.5rem 2rem; border-bottom: 1px solid #e8e8e6; position: sticky; top: 0; z-index: 100; }
+        header { background: white; padding: 1.5rem 2rem; border-bottom: 1px solid #decfbc; position: sticky; top: 0; z-index: 100; }
         .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        header h1 { font-size: 1.5rem; font-weight: 700; color: #1C1C1D !important; }
+        header h1 { font-size: 1.5rem; font-weight: 700; color: #222222 !important; }
         
         .nav-links { display: flex; gap: 1.5rem; }
-        .nav-links a { color: #1C1C1D !important; text-decoration: none; font-weight: 500; transition: color 0.2s; }
-        .nav-links a:hover { color: #8b7000 !important; }
-        .nav-links .auth-link { color: #8b7000 !important; font-weight: 600; }
+        .nav-links a { color: #222222 !important; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: #652482 !important; }
+        .nav-links .auth-link { color: #652482 !important; font-weight: 600; }
         
         .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
         
         /* Hero Section */
-        .hero { background: linear-gradient(135deg, #f5f3f0 0%, #fefdfb 100%); padding: 3rem 0; min-height: auto; }
+        .hero { background: linear-gradient(135deg, #f8f5f0 0%, #ffffff 100%); padding: 3rem 0; min-height: auto; }
         .hero-container { display: flex; align-items: flex-start; gap: 3rem; flex-wrap: wrap-reverse; }
         .hero-text { flex: 1; min-width: 300px; padding-top: 0.5rem; }
-        .hero-text h1 { font-size: 2.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1C1C1D !important; line-height: 1.2; }
-        .pricing-badge { background: #fff !important; border: 2px solid #8b7000 !important; padding: 0.875rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600; color: #8b7000 !important; margin-bottom: 2rem; font-size: 0.95rem; }
-        .hero-text > p { font-size: 1.125rem; color: #59585D !important; margin-bottom: 2rem; line-height: 1.8; }
+        .hero-text h1 { font-size: 2.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #222222 !important; line-height: 1.2; }
+        .pricing-badge { background: #fff !important; border: 2px solid #652482 !important; padding: 0.875rem 1.5rem; border-radius: 50px; display: inline-block; font-weight: 600; color: #652482 !important; margin-bottom: 2rem; font-size: 0.95rem; }
+        .hero-text > p { font-size: 1.125rem; color: #222222 !important; margin-bottom: 2rem; line-height: 1.8; }
         
         /* Booking Widget */
-        .booking-widget { background: white; border-radius: 12px; padding: 2.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.1); max-width: 380px; width: 100%; flex-shrink: 0; }
+        .booking-widget { background: white; border-radius: 12px; padding: 2.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.1); max-width: 380px; width: 100%; flex-shrink: 0; border: 1px solid #decfbc; }
         .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.625rem; color: #1C1C1D !important; }
-        .form-group input, .form-group select { width: 100%; padding: 0.875rem; border: 1px solid #d8d8d6; border-radius: 6px; font-size: 1rem; font-family: inherit; transition: border-color 0.2s, box-shadow 0.2s; color: #1C1C1D !important; }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: #8b7000 !important; box-shadow: 0 0 0 3px rgba(139, 112, 0, 0.1) !important; }
-        .btn-primary { background: #574640 !important; color: white !important; padding: 1rem 1.5rem; border-radius: 6px; border: none !important; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; font-size: 1rem; }
-        .btn-primary:hover { background: #303030 !important; }
+        .form-group label { display: block; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.625rem; color: #222222 !important; }
+        .form-group input, .form-group select { width: 100%; padding: 0.875rem; border: 1px solid #decfbc; border-radius: 6px; font-size: 1rem; font-family: inherit; transition: border-color 0.2s, box-shadow 0.2s; color: #222222 !important; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #652482 !important; box-shadow: 0 0 0 3px rgba(101, 36, 130, 0.15) !important; }
+        .btn-primary { background: #652482 !important; color: white !important; padding: 1rem 1.5rem; border-radius: 6px; border: none !important; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; font-size: 1rem; }
+        .btn-primary:hover { background: #4f1c65 !important; }
         .btn-primary:active { transform: scale(0.98); }
         
         /* Sections */
-        section { padding: 4.5rem 0; border-bottom: 1px solid #e8e8e6; }
+        section { padding: 4.5rem 0; border-bottom: 1px solid #decfbc; }
         section:last-of-type { border-bottom: none; }
         .section-header { text-align: center; margin-bottom: 3.5rem; }
-        .section-header h2 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1rem; color: #1C1C1D !important; letter-spacing: -0.5px; }
-        .section-header p { font-size: 1.125rem; color: #59585D !important; max-width: 700px; margin: 0 auto; }
+        .section-header h2 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1rem; color: #222222 !important; letter-spacing: -0.5px; }
+        .section-header p { font-size: 1.125rem; color: #222222 !important; max-width: 700px; margin: 0 auto; }
         
         /* Features Grid */
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .feature-card { background: white; padding: 2.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .feature-card h3 { font-size: 1.375rem; font-weight: 700; margin-bottom: 1.5rem; color: #1C1C1D !important; }
+        .feature-card { background: white; padding: 2.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #decfbc; }
+        .feature-card h3 { font-size: 1.375rem; font-weight: 700; margin-bottom: 1.5rem; color: #222222 !important; }
         .feature-card ul { list-style: none; text-align: left; }
-        .feature-card li { padding: 0.625rem 0; color: #59585D !important; font-size: 0.95rem; }
-        .feature-card li:before { content: "✓ "; color: #8b7000 !important; font-weight: bold; margin-right: 0.75rem; }
+        .feature-card li { padding: 0.625rem 0; color: #222222 !important; font-size: 0.95rem; }
+        .feature-card li:before { content: "✓ "; color: #652482 !important; font-weight: bold; margin-right: 0.75rem; }
         
-        .pricing-display { background: white; padding: 3rem 2rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .pricing-display .price { font-size: 3.5rem; font-weight: 700; color: #8b7000 !important; margin-bottom: 0.5rem; }
-        .pricing-display .period { font-size: 1.25rem; color: #59585D !important; margin-bottom: 1.5rem; }
-        .pricing-display .subtitle { color: #1C1C1D !important; font-weight: 600; }
+        .pricing-display { background: white; padding: 3rem 2rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #decfbc; }
+        .pricing-display .price { font-size: 3.5rem; font-weight: 700; color: #652482 !important; margin-bottom: 0.5rem; }
+        .pricing-display .period { font-size: 1.25rem; color: #222222 !important; margin-bottom: 1.5rem; }
+        .pricing-display .subtitle { color: #222222 !important; font-weight: 600; }
         
         /* Contact Section */
         .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2.5rem; }
-        .contact-card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; }
-        .contact-card h3 { font-weight: 700; margin-bottom: 1rem; color: #1C1C1D !important; }
-        .contact-card a { color: #8b7000 !important; text-decoration: none; font-weight: 600; font-size: 1.125rem; }
+        .contact-card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; border: 1px solid #decfbc; }
+        .contact-card h3 { font-weight: 700; margin-bottom: 1rem; color: #222222 !important; }
+        .contact-card a { color: #652482 !important; text-decoration: none; font-weight: 600; font-size: 1.125rem; }
         .contact-card a:hover { text-decoration: underline; }
-        .contact-card p { color: #59585D !important; font-size: 1rem; }
+        .contact-card p { color: #222222 !important; font-size: 1rem; }
         
         /* Footer */
-        footer { background: #1C1C1D; color: white; padding: 2rem; text-align: center; font-size: 0.875rem; }
-        footer a { color: #8b7000 !important; text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
+        footer { background: #652482 !important; color: white; padding: 2rem; text-align: center; font-size: 0.875rem; }
+        footer a { color: #decfbc !important; text-decoration: none; }
+        footer a:hover { text-decoration: underline; color: #ffffff !important; }
         
         /* Testimonial Section */
-        .testimonial-card { background: white; padding: 2.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .testimonial-card p:first-child { font-style: italic; color: #59585D !important; margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.8; }
-        .testimonial-card p:last-child { font-weight: 600; color: #1C1C1D !important; }
+        .testimonial-card { background: white; padding: 2.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #decfbc; }
+        .testimonial-card p:first-child { font-style: italic; color: #222222 !important; margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.8; }
+        .testimonial-card p:last-child { font-weight: 600; color: #222222 !important; }
         
         /* Image Sizing */
         img { max-width: 33%; height: auto; display: block; }

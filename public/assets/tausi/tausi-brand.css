@@ -1,0 +1,470 @@
+/* ================================================== */
+/* TAUSI HOLIDAY & GETAWAY HOMES - BRAND OVERRIDE
+/* Complete rebrand from Rivora to Tausi
+/* © 2026 Tausi Holiday & Getaway Homes
+/* ================================================== */
+
+/* =============== TAUSI BRAND COLORS =============== */
+:root {
+  /* TAUSI PRIMARY BRAND COLORS */
+  --primary-color: #652482 !important;
+  --primary-color-rgb: 101, 36, 130;
+  --secondary-color: #decfbc !important;
+  --secondary-color-rgb: 222, 207, 188;
+  
+  /* TAUSI BACKGROUNDS */
+  --background-color: #f8f5f0 !important;
+  --bg-default: #f8f5f0 !important;
+  --bg-light: #f8f5f0 !important;
+  
+  /* TAUSI TEXT COLORS */
+  --text-dark: #222222 !important;
+  --body-font-color: #222222 !important;
+  --heading-font-color: #222222 !important;
+  --white: #ffffff !important;
+  
+  /* OVERRIDE OLD RIVORA COLORS */
+  --bg-dark-1: #652482 !important;
+  --bg-dark-2: #652482 !important;
+  --bg-dark-3: #652482 !important;
+  --bg-dark-1-rgb: 101, 36, 130 !important;
+}
+
+/* =============== GLOBAL BODY OVERRIDE =============== */
+body {
+  background: #f8f5f0 !important;
+  color: #222222 !important;
+}
+
+/* =============== HEADING COLORS =============== */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: #222222 !important;
+}
+
+/* =============== BUTTONS - PRIMARY =============== */
+.btn-primary,
+.btn.btn-primary,
+button.btn-primary,
+a.btn-primary,
+input[type="submit"].btn-primary,
+.de-btn.btn-primary {
+  background: #652482 !important;
+  background-color: #652482 !important;
+  border-color: #652482 !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover,
+.btn.btn-primary:hover,
+button.btn-primary:hover,
+a.btn-primary:hover,
+.de-btn.btn-primary:hover {
+  background: #4f1c65 !important;
+  background-color: #4f1c65 !important;
+  border-color: #4f1c65 !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary.active {
+  background: #4f1c65 !important;
+  border-color: #4f1c65 !important;
+  color: #ffffff !important;
+}
+
+/* =============== BUTTONS - SECONDARY =============== */
+.btn-secondary,
+.btn.btn-secondary,
+.btn-outline,
+.btn-line {
+  background: #decfbc !important;
+  border-color: #decfbc !important;
+  color: #222222 !important;
+}
+
+.btn-secondary:hover,
+.btn-outline:hover,
+.btn-line:hover {
+  background: #d0bda7 !important;
+  border-color: #d0bda7 !important;
+  color: #222222 !important;
+}
+
+/* =============== LINKS =============== */
+a {
+  color: #652482 !important;
+}
+
+a:hover {
+  color: #4f1c65 !important;
+}
+
+/* Header navigation links exception */
+.navbar-nav .nav-link,
+.navbar-brand {
+  color: #222222 !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #652482 !important;
+}
+
+/* =============== HEADER & NAVIGATION =============== */
+.header,
+.navbar,
+header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #decfbc !important;
+}
+
+.navbar-brand img,
+.logo {
+  max-width: 180px !important;
+  height: auto !important;
+}
+
+/* Mobile menu */
+.navbar-toggler {
+  border-color: #652482 !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(101, 36, 130, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* =============== FOOTER =============== */
+.footer,
+footer {
+  background: #652482 !important;
+  color: #ffffff !important;
+}
+
+.footer h5,
+.footer h6,
+footer h5,
+footer h6 {
+  color: #ffffff !important;
+}
+
+.footer a,
+footer a {
+  color: #decfbc !important;
+}
+
+.footer a:hover,
+footer a:hover {
+  color: #ffffff !important;
+}
+
+.footer .text-muted,
+footer .text-muted {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.footer .border-secondary,
+footer .border-secondary {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* =============== FORMS =============== */
+.form-control:focus {
+  border-color: #652482 !important;
+  box-shadow: 0 0 0 0.2rem rgba(101, 36, 130, 0.25) !important;
+}
+
+.form-check-input:checked {
+  background-color: #652482 !important;
+  border-color: #652482 !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #652482 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 0.2rem rgba(101, 36, 130, 0.25) !important;
+}
+
+/* =============== CARDS =============== */
+.card {
+  background: #ffffff !important;
+  border: 1px solid #decfbc !important;
+}
+
+.card-header {
+  background: #f8f5f0 !important;
+  border-bottom: 1px solid #decfbc !important;
+}
+
+/* =============== BADGES & TAGS =============== */
+.badge-primary,
+.badge.bg-primary {
+  background-color: #652482 !important;
+  color: #ffffff !important;
+}
+
+.badge-secondary,
+.badge.bg-secondary {
+  background-color: #decfbc !important;
+  color: #222222 !important;
+}
+
+/* =============== ALERTS =============== */
+.alert-primary {
+  background-color: rgba(101, 36, 130, 0.1) !important;
+  border-color: #652482 !important;
+  color: #652482 !important;
+}
+
+/* =============== PROGRESS BARS =============== */
+.progress-bar {
+  background-color: #652482 !important;
+}
+
+/* =============== PAGINATION =============== */
+.pagination .page-link {
+  color: #652482 !important;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #652482 !important;
+  border-color: #652482 !important;
+  color: #ffffff !important;
+}
+
+.pagination .page-link:hover {
+  background-color: #decfbc !important;
+  color: #222222 !important;
+}
+
+/* =============== ICONS =============== */
+.icon-primary,
+.text-primary,
+i.text-primary {
+  color: #652482 !important;
+}
+
+.icon-secondary,
+.text-secondary {
+  color: #decfbc !important;
+}
+
+/* =============== BACKGROUNDS =============== */
+.bg-primary {
+  background-color: #652482 !important;
+}
+
+.bg-secondary {
+  background-color: #decfbc !important;
+}
+
+.bg-light {
+  background-color: #f8f5f0 !important;
+}
+
+.bg-dark {
+  background-color: #652482 !important;
+}
+
+/* =============== BORDERS =============== */
+.border-primary {
+  border-color: #652482 !important;
+}
+
+.border-secondary {
+  border-color: #decfbc !important;
+}
+
+/* =============== SECTIONS & HERO =============== */
+section {
+  background-color: #ffffff !important;
+}
+
+section:nth-child(even) {
+  background-color: #f8f5f0 !important;
+}
+
+.hero,
+.hero-section,
+.banner,
+.subheader {
+  background-color: #f8f5f0 !important;
+}
+
+/* Fix oversized hero sections */
+.hero,
+.hero-section {
+  min-height: 400px !important;
+  max-height: 600px !important;
+  padding: 60px 0 !important;
+}
+
+/* =============== IMAGES =============== */
+img {
+  object-fit: cover !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Prevent image stretching */
+.img-fluid {
+  object-fit: cover !important;
+}
+
+/* =============== TABLES =============== */
+.table-primary {
+  background-color: rgba(101, 36, 130, 0.1) !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(248, 245, 240, 0.5) !important;
+}
+
+/* =============== MODALS =============== */
+.modal-header {
+  background-color: #652482 !important;
+  color: #ffffff !important;
+}
+
+.modal-header .btn-close {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* =============== DROPDOWNS =============== */
+.dropdown-menu {
+  border: 1px solid #decfbc !important;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f5f0 !important;
+  color: #652482 !important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #652482 !important;
+  color: #ffffff !important;
+}
+
+/* =============== TABS & PILLS =============== */
+.nav-tabs .nav-link.active {
+  background-color: #652482 !important;
+  border-color: #652482 !important;
+  color: #ffffff !important;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #652482 !important;
+}
+
+/* =============== ACCORDION =============== */
+.accordion-button:not(.collapsed) {
+  background-color: #decfbc !important;
+  color: #222222 !important;
+}
+
+.accordion-button:focus {
+  border-color: #652482 !important;
+  box-shadow: 0 0 0 0.25rem rgba(101, 36, 130, 0.25) !important;
+}
+
+/* =============== SOCIAL ICONS =============== */
+.social-icons a {
+  color: #decfbc !important;
+  transition: color 0.3s ease !important;
+}
+
+.social-icons a:hover {
+  color: #ffffff !important;
+}
+
+/* =============== PRICING TABLES =============== */
+.pricing-card.featured,
+.pricing-table.featured {
+  border: 2px solid #652482 !important;
+  background: rgba(101, 36, 130, 0.05) !important;
+}
+
+/* =============== TESTIMONIALS =============== */
+.testimonial-card {
+  border-left: 4px solid #652482 !important;
+}
+
+/* =============== OVERLAYS =============== */
+.overlay,
+.overlay-primary {
+  background: rgba(101, 36, 130, 0.8) !important;
+}
+
+.overlay-secondary {
+  background: rgba(222, 207, 188, 0.8) !important;
+}
+
+/* =============== RESPONSIVE OVERRIDES =============== */
+@media (max-width: 768px) {
+  .hero,
+  .hero-section {
+    min-height: 300px !important;
+    max-height: 400px !important;
+    padding: 40px 0 !important;
+  }
+  
+  .navbar-brand img,
+  .logo {
+    max-width: 140px !important;
+  }
+}
+
+/* =============== UTILITY CLASSES =============== */
+.text-tausi-primary {
+  color: #652482 !important;
+}
+
+.text-tausi-secondary {
+  color: #decfbc !important;
+}
+
+.bg-tausi-primary {
+  background-color: #652482 !important;
+}
+
+.bg-tausi-secondary {
+  background-color: #decfbc !important;
+}
+
+.border-tausi-primary {
+  border-color: #652482 !important;
+}
+
+.border-tausi-secondary {
+  border-color: #decfbc !important;
+}
+
+/* =============== LOGO OVERRIDE =============== */
+.logo-dark,
+.logo-black,
+img[src*="logo-black"],
+img[src*="logo-dark"] {
+  content: url('/assets/tausi/tausi-logo.png') !important;
+}
+
+.logo-light,
+.logo-white,
+img[src*="logo-white"],
+img[src*="logo-light"] {
+  content: url('/assets/tausi/tausi-logo-white.png') !important;
+}
+
+/* =============== REMOVE RIVORA BRANDING =============== */
+*[class*="rivora"],
+*[id*="rivora"] {
+  display: none !important;
+}
+
+/* =============== END TAUSI BRAND OVERRIDE =============== */

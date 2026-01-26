@@ -1,5 +1,5 @@
  /* --------------------------------------------------
-  * © Copyright 2025 - Rivora by Designesia
+  * © Copyright {{ date('Y') }} - Tausi Holiday & Getaway Homes
   * --------------------------------------------------*/
 (function($) {
     'use strict';

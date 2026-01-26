@@ -24,6 +24,9 @@
 
     <!-- Custom Styles -->
     <link href="{{ asset('assets/frontend/css/style.css') }}" rel="stylesheet">
+    
+    <!-- TAUSI BRAND OVERRIDE - Must be loaded last -->
+    <link href="{{ asset('assets/tausi/tausi-brand.css') }}" rel="stylesheet">
 
     @stack('css')
 </head>

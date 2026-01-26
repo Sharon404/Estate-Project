@@ -745,7 +745,7 @@
                         <div>
                             <h3 class="fs-20">Contact Us</h3>
                             T. +929 333 9296<br>
-                            M. contact@rivora.com
+                            M. bookings@tausivacations.com
                         </div>
                     </div>
                 </div>                    
@@ -755,7 +755,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        Copyright 2026 - Rivora by Designesia
+                        Copyright {{ date('Y') }} - Tausi Holiday & Getaway Homes. All rights reserved.
                     </div>
                 </div>
             </div>
