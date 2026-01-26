@@ -2748,6 +2748,9 @@ a.btn-line,
   border: none;
   position: relative;
   display: inline-block;
+}
+
+#mainmenu li ul.mega a.btn-main {
   text-align: center;
   outline: 0;
 }
@@ -6128,7 +6131,7 @@ footer .tiny-border span {
 .top-100px{top: 100px;}
 
 /* bottom (percent) */
-.bottom-10{bottom: 10%;}
+.bottom-10{bottom: 4%;}
 .bottom-20{bottom: 20%;}
 .bottom-30{bottom: 30%;}
 .bottom-40{bottom: 40%;}
@@ -6509,7 +6512,7 @@ footer .tiny-border span {
 .mh-100{min-height:100px;}
 .mh-200{min-height:200px;}
 .mh-300{min-height:300px;}
-.mh-400{min-height:400px;}
+.mh-400{min-height:300px;}
 .mh-500{min-height:500px;}
 .mh-600{min-height:600px;}
 .mh-700{min-height:700px;}

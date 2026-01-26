@@ -28,6 +28,24 @@
   --bg-dark-2: #652482 !important;
   --bg-dark-3: #652482 !important;
   --bg-dark-1-rgb: 101, 36, 130 !important;
+
+    --btn-primary-bg: #222222 !important;
+    --btn-primary-border: #222222 !important;
+    --btn-primary-color: #ffffff !important;
+
+    --btn-primary-bg-hover: #4f1c65 !important;
+    --btn-primary-border-hover: #4f1c65 !important;
+    --btn-primary-color-hover: #ffffff !important;
+    
+    --btn-secondary-bg: #decfbc !important;
+    --btn-secondary-border: #decfbc !important;
+    --btn-secondary-color: #222222 !important;
+
+    --btn-secondary-bg-hover: #222222 !important;
+    --btn-secondary-border-hover: #222222 !important;
+    --btn-secondary-color-hover: #decfbc !important;
+
+
 }
 
 /* =============== GLOBAL BODY OVERRIDE =============== */
@@ -49,9 +67,9 @@ button.btn-primary,
 a.btn-primary,
 input[type="submit"].btn-primary,
 .de-btn.btn-primary {
-  background: #652482 !important;
-  background-color: #652482 !important;
-  border-color: #652482 !important;
+  background: #222222 !important;
+  background-color: #222222 !important;
+  border-color: #222222 !important;
   color: #ffffff !important;
 }
 
@@ -74,6 +92,34 @@ a.btn-primary:hover,
   color: #ffffff !important;
 }
 
+/* =============== BUTTON MAIN OVERRIDE =============== */
+a.btn-main,
+.btn-main {
+  background: #652482 !important;
+  border-color: #652482 !important;
+  color: #ffffff !important;
+}
+
+a.btn-main:hover,
+.btn-main:hover {
+  background: #222222 !important;
+  border-color: #222222 !important;
+  color: #ffffff !important;
+}
+
+/* Menu button specific styling */
+#mainmenu li ul.mega a.btn-main {
+  background: #652482 !important;
+  border-color: #652482 !important;
+  color: #ffffff !important;
+}
+
+#mainmenu li ul.mega a.btn-main:hover {
+  background: #222222 !important;
+  border-color: #222222 !important;
+  color: #ffffff !important;
+}
+
 /* =============== BUTTONS - SECONDARY =============== */
 .btn-secondary,
 .btn.btn-secondary,
@@ -81,7 +127,7 @@ a.btn-primary:hover,
 .btn-line {
   background: #decfbc !important;
   border-color: #decfbc !important;
-  color: #ffffff !important;
+  color: #222222 !important;
 }
 
 .btn-secondary:hover,
@@ -230,6 +276,8 @@ textarea:focus {
 /* =============== PAGINATION =============== */
 .pagination .page-link {
   color: #652482 !important;
+  border-color: #decfbc !important;
+  background-color: #ffffff !important;
 }
 
 .pagination .page-item.active .page-link {
