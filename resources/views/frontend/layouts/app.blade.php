@@ -38,7 +38,7 @@
             <nav class="navbar navbar-expand-lg navbar-light">
                 <!-- Logo -->
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    <img src="{{ asset('assets/frontend/images/logo-black.webp') }}" alt="Tausirental" class="logo">
+                    <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausirental" class="logo">
                 </a>
 
                 <!-- Navbar Toggler for Mobile -->
@@ -104,7 +104,7 @@
                 <!-- About Column -->
                 <div class="col-md-3">
                     <a href="{{ route('home') }}" class="d-inline-block mb-3">
-                        <img src="{{ asset('assets/frontend/images/logo-white.webp') }}" alt="Tausirental" style="max-width: 150px;">
+                        <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausirental" style="max-width: 150px;">
                     </a>
                     <p class="text-muted">Privacy, comfort, and warm hosting. Every stay includes freshly prepared breakfast so you start your day relaxed and refreshed.</p>
                     <div class="social-icons mt-3">
