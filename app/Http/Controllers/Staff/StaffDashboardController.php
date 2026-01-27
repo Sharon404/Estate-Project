@@ -11,27 +11,50 @@ class StaffDashboardController extends Controller
     public function index()
     {
         $today = Carbon::today();
+        $tomorrow = Carbon::tomorrow();
+        $nextWeek = Carbon::today()->addDays(7);
 
-        $todaysBookings = Booking::forStaffOperations()
+        // Today's check-ins
+        $todaysCheckins = Booking::with(['guest', 'property'])
             ->whereDate('check_in', $today)
-            ->with(['guest', 'property'])
+            ->whereIn('status', ['CONFIRMED', 'PENDING_PAYMENT'])
             ->orderBy('check_in')
             ->get();
 
-        $upcomingCheckins = Booking::forStaffOperations()
+        // Today's check-outs
+        $todaysCheckouts = Booking::with(['guest', 'property'])
+            ->whereDate('check_out', $today)
+            ->whereIn('status', ['CHECKED_IN', 'CONFIRMED'])
+            ->orderBy('check_out')
+            ->get();
+
+        // Upcoming check-ins (next 7 days)
+        $upcomingCheckins = Booking::with(['guest', 'property'])
             ->whereDate('check_in', '>', $today)
-            ->with(['guest', 'property'])
+            ->whereDate('check_in', '<=', $nextWeek)
+            ->whereIn('status', ['CONFIRMED', 'PENDING_PAYMENT'])
             ->orderBy('check_in')
-            ->limit(6)
+            ->get();
+
+        // Upcoming check-outs (next 7 days)
+        $upcomingCheckouts = Booking::with(['guest', 'property'])
+            ->whereDate('check_out', '>', $today)
+            ->whereDate('check_out', '<=', $nextWeek)
+            ->whereIn('status', ['CHECKED_IN', 'CONFIRMED'])
+            ->orderBy('check_out')
             ->get();
 
         return view('dashboard.staff', [
             'today' => $today,
-            'todaysBookings' => $todaysBookings,
+            'todaysCheckins' => $todaysCheckins,
+            'todaysCheckouts' => $todaysCheckouts,
             'upcomingCheckins' => $upcomingCheckins,
+            'upcomingCheckouts' => $upcomingCheckouts,
             'stats' => [
-                'today_count' => $todaysBookings->count(),
-                'upcoming_count' => $upcomingCheckins->count(),
+                'today_checkins' => $todaysCheckins->count(),
+                'today_checkouts' => $todaysCheckouts->count(),
+                'upcoming_checkins' => $upcomingCheckins->count(),
+                'upcoming_checkouts' => $upcomingCheckouts->count(),
             ],
         ]);
     }

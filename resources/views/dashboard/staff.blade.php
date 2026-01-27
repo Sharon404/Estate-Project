@@ -7,55 +7,64 @@
     <div class="dash-shell">
         <div class="dash-head">
             <div>
-                <p class="eyebrow">Front desk view</p>
-                <h1>Today’s operations</h1>
-                <p class="lede">Only the bookings you need to manage, nothing else.</p>
+                <p class="eyebrow">Front desk operations</p>
+                <h1>Today's Schedule</h1>
+                <p class="lede">Check-ins, check-outs, and upcoming bookings you need to manage.</p>
             </div>
             <div class="pill">{{ $today->format('M d, Y') }}</div>
         </div>
 
         <div class="metrics">
             <div class="card metric">
-                <p class="label">Today’s check-ins</p>
-                <p class="value">{{ number_format($stats['today_count']) }}</p>
-                <p class="sub">Confirmed guests arriving</p>
+                <p class="label">Today's Check-ins</p>
+                <p class="value">{{ $stats['today_checkins'] }}</p>
+                <p class="sub">Guests arriving</p>
             </div>
             <div class="card metric">
-                <p class="label">Upcoming check-ins</p>
-                <p class="value">{{ number_format($stats['upcoming_count']) }}</p>
-                <p class="sub">Next arrivals</p>
+                <p class="label">Today's Check-outs</p>
+                <p class="value">{{ $stats['today_checkouts'] }}</p>
+                <p class="sub">Guests departing</p>
+            </div>
+            <div class="card metric">
+                <p class="label">Upcoming Check-ins</p>
+                <p class="value">{{ $stats['upcoming_checkins'] }}</p>
+                <p class="sub">Next 7 days</p>
+            </div>
+            <div class="card metric">
+                <p class="label">Upcoming Check-outs</p>
+                <p class="value">{{ $stats['upcoming_checkouts'] }}</p>
+                <p class="sub">Next 7 days</p>
             </div>
         </div>
 
         <div class="grid">
-            <div class="card wide">
+            <!-- Today's Check-ins -->
+            <div class="card">
                 <div class="card-head">
-                    <div>
-                        <h3>Today’s bookings</h3>
-                        <p class="muted">Confirmed and ready for arrival.</p>
-                    </div>
+                    <h3>Today's Check-ins</h3>
+                    <p class="muted">Guests arriving today</p>
                 </div>
                 <div class="table-responsive">
-                    <table class="table align-middle mb-0">
+                    <table class="table" style="font-size: 0.875rem;">
                         <thead>
                             <tr>
                                 <th>Guest</th>
-                                <th>Property</th>
-                                <th>Dates</th>
+                                <th>House</th>
+                                <th>Time</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($todaysBookings as $booking)
+                            @forelse($todaysCheckins as $booking)
                                 <tr>
-                                    <td>{{ $booking->guest->name ?? 'Guest' }}</td>
-                                    <td>{{ $booking->property->name ?? 'Property' }}</td>
-                                    <td>{{ optional($booking->check_in)->format('M d') }} – {{ optional($booking->check_out)->format('M d') }}</td>
-                                    <td><span class="status status-paid">Confirmed</span></td>
+                                    <td><strong>{{ $booking->guest->full_name }}</strong></td>
+                                    <td><small>{{ $booking->property->name ?? 'N/A' }}</small></td>
+                                    <td><small>{{ $booking->check_in->format('H:i') }}</small></td>
+                                    <td><span style="background: #E8F5E9; color: #2E7D32; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">{{ str_replace('_', ' ', $booking->status) }}</span></td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center text-muted py-4">No check-ins today.</td>
+                                    <td colspan="4" style="text-align: center; padding: 1rem; color: #999;">No check-ins today</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -63,71 +72,131 @@
                 </div>
             </div>
 
-            <div class="card stack">
+            <!-- Today's Check-outs -->
+            <div class="card">
                 <div class="card-head">
-                    <h3>Upcoming arrivals</h3>
-                    <p class="muted">Confirmed guests to prepare for.</p>
+                    <h3>Today's Check-outs</h3>
+                    <p class="muted">Guests departing today</p>
                 </div>
-                <div class="list">
-                    @forelse ($upcomingCheckins as $booking)
-                        <div class="list-item">
-                            <div>
-                                <p class="label mb-1">{{ $booking->guest->name ?? 'Guest' }}</p>
-                                <p class="muted mb-0">{{ optional($booking->check_in)->format('M d') }} · {{ $booking->property->name ?? 'Property' }}</p>
-                            </div>
-                            <span class="pill light">{{ $booking->booking_ref }}</span>
-                        </div>
-                    @empty
-                        <p class="muted mb-0">No upcoming check-ins.</p>
-                    @endforelse
+                <div class="table-responsive">
+                    <table class="table" style="font-size: 0.875rem;">
+                        <thead>
+                            <tr>
+                                <th>Guest</th>
+                                <th>House</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($todaysCheckouts as $booking)
+                                <tr>
+                                    <td><strong>{{ $booking->guest->full_name }}</strong></td>
+                                    <td><small>{{ $booking->property->name ?? 'N/A' }}</small></td>
+                                    <td><small>{{ $booking->check_out->format('H:i') }}</small></td>
+                                    <td><span style="background: #FFF3E0; color: #E65100; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">Checkout</span></td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" style="text-align: center; padding: 1rem; color: #999;">No check-outs today</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Upcoming Check-ins -->
+            <div class="card">
+                <div class="card-head">
+                    <h3>Upcoming Check-ins (Next 7 Days)</h3>
+                    <p class="muted">Prepare for arrivals</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" style="font-size: 0.875rem;">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Guest</th>
+                                <th>House</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($upcomingCheckins as $booking)
+                                <tr>
+                                    <td><small><strong>{{ $booking->check_in->format('M d') }}</strong></small></td>
+                                    <td><small>{{ $booking->guest->full_name }}</small></td>
+                                    <td><small>{{ $booking->property->name ?? 'N/A' }}</small></td>
+                                    <td><span style="background: #E3F2FD; color: #1565C0; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">{{ $booking->nights }} nights</span></td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" style="text-align: center; padding: 1rem; color: #999;">No upcoming check-ins</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Upcoming Check-outs -->
+            <div class="card">
+                <div class="card-head">
+                    <h3>Upcoming Check-outs (Next 7 Days)</h3>
+                    <p class="muted">Prepare for departures</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" style="font-size: 0.875rem;">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Guest</th>
+                                <th>House</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($upcomingCheckouts as $booking)
+                                <tr>
+                                    <td><small><strong>{{ $booking->check_out->format('M d') }}</strong></small></td>
+                                    <td><small>{{ $booking->guest->full_name }}</small></td>
+                                    <td><small>{{ $booking->property->name ?? 'N/A' }}</small></td>
+                                    <td><span style="background: #FFF9C4; color: #F57F17; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">Departing</span></td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" style="text-align: center; padding: 1rem; color: #999;">No upcoming check-outs</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        .dash-shell { max-width: 1400px; margin: 0 auto; }
+        .dash-head { margin-bottom: 2rem; }
+        .dash-head h1 { font-size: 2rem; margin: 0.5rem 0; }
+        .eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; margin: 0 0 6px; color: #999; }
+        .pill { display: inline-block; background: #E3F2FD; color: #1565C0; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; }
+        .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .card.metric { padding: 1.5rem; }
+        .card.metric .label { font-size: 0.875rem; color: #666; margin: 0; }
+        .card.metric .value { font-size: 1.75rem; font-weight: bold; margin: 0.5rem 0; }
+        .card.metric .sub { font-size: 0.75rem; color: #999; margin: 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; }
+        .card-head { margin-bottom: 1rem; }
+        .card-head h3 { margin: 0 0 0.25rem 0; font-size: 1rem; }
+        .card-head .muted { margin: 0; font-size: 0.875rem; color: #999; }
+        .table-responsive { overflow-x: auto; }
+        .table { width: 100%; border-collapse: collapse; }
+        .table thead { background: #f5f5f5; }
+        .table th { padding: 0.5rem; text-align: left; font-weight: 600; font-size: 0.875rem; }
+        .table td { padding: 0.5rem; border-bottom: 1px solid #f0f0f0; }
+        .muted { color: #999; }
+    </style>
 @endsection
-
-@push('styles')
-<style>
-    :root {
-        --brand-primary: #652482;
-        --brand-bg: #f8f5f0;
-        --brand-text: #222222;
-        --brand-accent: #decfbc;
-    }
-
-    body { background: var(--brand-bg); color: var(--brand-text); }
-
-    .dash-shell { display: flex; flex-direction: column; gap: 24px; }
-    .dash-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-    .eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; margin: 0 0 6px; color: #5b5566; }
-    .dash-head h1 { margin: 0 0 6px; font-weight: 700; }
-    .lede { margin: 0; color: #4a4550; }
-    .pill { background: var(--brand-accent); color: var(--brand-text); padding: 10px 14px; border-radius: 999px; font-weight: 600; }
-
-    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-    .card { background: white; border: 1px solid rgba(0,0,0,0.04); border-radius: 18px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
-    .metric .label { margin: 0 0 6px; color: #5a5661; }
-    .metric .value { margin: 0; font-size: 32px; font-weight: 700; color: var(--brand-primary); }
-    .metric .sub { margin: 4px 0 0; color: #6f6a75; }
-
-    .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
-    .card-head h3 { margin: 0; }
-    .card-head .muted { margin: 4px 0 0; }
-    .muted { color: #6d6673; }
-    .wide { padding: 18px 18px 12px; }
-    .stack { display: flex; flex-direction: column; gap: 16px; }
-
-    .pill.light { background: rgba(101,36,130,0.08); color: var(--brand-primary); padding: 6px 10px; border-radius: 12px; font-weight: 600; }
-    .status { padding: 6px 10px; border-radius: 12px; font-weight: 600; font-size: 12px; text-transform: capitalize; }
-    .status-paid { background: rgba(60,179,113,0.12); color: #2d8658; }
-
-    .list { display: flex; flex-direction: column; gap: 10px; }
-    .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
-    .list-item:last-child { border-bottom: none; }
-
-    @media (max-width: 992px) {
-        .grid { grid-template-columns: 1fr; }
-        .dash-head { flex-direction: column; align-items: flex-start; }
-    }
-</style>
-@endpush
