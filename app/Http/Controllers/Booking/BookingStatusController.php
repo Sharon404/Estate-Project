@@ -16,11 +16,14 @@ class BookingStatusController extends Controller
     public function show(string $reference): JsonResponse
     {
         try {
-            $booking = Booking::with(['bookingTransactions' => function ($q) {
-                $q->latest();
-            }, 'receipts' => function ($q) {
-                $q->latest();
-            }])->where('booking_ref', $reference)->first();
+            $booking = Booking::with([
+                'bookingTransactions' => function ($q) {
+                    $q->orderByDesc('posted_at');
+                },
+                'receipts' => function ($q) {
+                    $q->orderByDesc('issued_at');
+                }
+            ])->where('booking_ref', $reference)->first();
 
             if (!$booking) {
                 return response()->json([

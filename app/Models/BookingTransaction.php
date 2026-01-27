@@ -14,7 +14,7 @@ class BookingTransaction extends Model
     protected $casts = [
         'amount' => 'decimal:2',
         'meta' => 'json',
-        'posted_at' => 'timestamp',
+        'posted_at' => 'datetime',
     ];
 
     public $timestamps = false;

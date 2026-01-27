@@ -12,11 +12,10 @@ class Receipt extends Model
     protected $casts = [
         'amount' => 'decimal:2',
         'receipt_data' => 'json',
+        'issued_at' => 'datetime',
     ];
 
     public $timestamps = false;
-
-    protected $dates = ['issued_at'];
 
     public function booking(): BelongsTo
     {
