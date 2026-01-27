@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\AuditLogsController;
+use App\Http\Controllers\Staff\StaffDashboardController;
 
 // Frontend Routes
 Route::get('/', [FrontendController::class, 'index'])->name('home');
