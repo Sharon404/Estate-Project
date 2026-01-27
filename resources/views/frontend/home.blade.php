@@ -35,9 +35,9 @@
                                 AN ENTIRE HOUSE<br><span style="color: #decfbc;">JUST FOR YOU</span>
                             </h1>
                             <p class="text-dark wow fadeInUp mb-3" data-wow-delay=".2s" style="font-size: 1.125rem; max-width: 600px;">
-                                Privacy, comfort, and a warm hosting experience. Breakfast included.
+                                KES 25,000 per night · Breakfast included
                             </p>
-                            <a href="{{ route('properties') }}" class="btn-main fx-slide wow fadeInUp" data-wow-delay=".4s">
+                            <a href="#booking" class="btn-main fx-slide wow fadeInUp" data-wow-delay=".4s">
                                 <span>Book Your Stay</span>
                             </a>
                         </div>
@@ -62,7 +62,7 @@
                 <div class="row g-4">
 
                     <div class="col-lg-8 offset-lg-2">
-                        <a href="{{ route('property.single', ['id' => 1]) }}" class="d-block h-100 hover relative">
+                        <a href="#pricing" class="d-block h-100 hover relative">
                             <div class="rounded-1 overflow-hidden">
                                 <img src="{{ asset('assets/frontend/images/rooms/1.jpg') }}" class="w-100 hover-scale-1-2" alt="">
                             </div>
@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="col-lg-12 text-center">
-                        <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white"><span>View Available Homes</span></a>
+                        <a href="#pricing" class="btn-main fx-slide hover-white"><span>View Available Homes</span></a>
                     </div>            
 
                 </div>
@@ -175,10 +175,10 @@
             <div class="container">
                 <div class="row g-4 mb-4 justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">Welcome</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Hotel Facilities</h2>
+                        <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">What's Included</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">What's Included in Your Stay</h2>
                         <p class="cwow fadeInUp" data-wow-delay=".4s">
-                            From premium rooms to full-service amenities, our team ensures a comfortable and memorable stay from check-in to check-out.
+                            Each Tausi home comes with everything you need for a comfortable, worry-free stay — from fully furnished bedrooms to included breakfast every morning.
                         </p>
                     </div>
                 </div>
@@ -191,17 +191,17 @@
                     <div class="col-md-6">
                         <div class="row g-4">
 
-                            <!-- TOTAL ROOMS -->
+                            <!-- TOTAL HOMES -->
                             <div class="col-md-6 wow fadeInUp" data-wow-delay=".0s">
                                 <div class="p-30 bg-white rounded-1 h-100">
-                                    <small class="text-uppercase border-bottom d-block">TOTAL ROOMS</small>
+                                    <small class="text-uppercase border-bottom d-block">PRIVATE HOMES</small>
                                     <div class="sm-hide spacer-double"></div>
                                     <div class="spacer-double"></div>
                                     <h2 class="mb-0">
-                                        <span class="timer" data-to="180" data-speed="3000">0</span>
+                                        <span class="timer" data-to="8" data-speed="3000">0</span>
                                         <span class="id-color">+</span>
                                     </h2>
-                                    luxury rooms & suites
+                                    fully furnished homes
                                 </div>
                             </div>
 
@@ -250,15 +250,15 @@
             <div class="container">
                 <div class="row g-4 gx-5 align-items-center justify-content-between">
                     <div class="col-lg-6">
-                        <div class="subtitle wow fadeInUp" data-wow-delay=".0s">Welcome</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Experience Comfort, Elegance, and Exceptional Hospitality</h2>
+                        <div class="subtitle wow fadeInUp" data-wow-delay=".0s">Tausi Holiday & Getaway Homes</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Private Homes Designed for Comfort & Quiet</h2>
                     </div>
                     <div class="col-lg-6">
                         <p class="wow fadeInUp" data-wow-delay=".4s">
-                            Welcome to our hotel, where comfort meets refined elegance in a setting designed for relaxation and unforgettable stays. 
-                            Located in a prime destination, our property offers thoughtfully designed rooms, modern amenities, and warm hospitality 
-                            tailored to every traveler. From peaceful mornings to restful nights, every detail is carefully crafted to ensure your stay 
-                            is seamless, comfortable, and truly memorable.
+                            Tausi offers fully furnished private houses ideal for families, couples, and small groups seeking a peaceful escape. 
+                            Each home provides privacy, comfort, and a calm environment — with breakfast included and a simple flat nightly rate. 
+                            From quiet mornings with freshly prepared breakfast to restful evenings in complete privacy, every detail is carefully 
+                            designed to ensure your stay is seamless, comfortable, and truly memorable.
                         </p>
                     </div>
                 </div>
@@ -269,8 +269,8 @@
                   <div class="col-md-12 text-center">
                       <ul id="filters" class="wow fadeInUp" data-wow-delay="0s">
                         <li><a href="#" data-filter="*" class="selected">View All</a></li>
-                          <li><a href="#" data-filter=".rooms">Rooms</a></li>
-                          <li><a href="#" data-filter=".dining">Dining</a></li>
+                          <li><a href="#" data-filter=".homes">Homes</a></li>
+                          <li><a href="#" data-filter=".dining">Breakfast</a></li>
                           <li><a href="#" data-filter=".facilities">Facilities</a><li>
                       </ul>
                   </div>
@@ -278,7 +278,7 @@
 
                 <div id="gallery" class="row g-3 wow fadeIn" data-wow-delay=".3s">
 
-                    <div class="col-md-3 col-sm-6 col-12 item rooms">
+                    <div class="col-md-3 col-sm-6 col-12 item homes">
                       <a href="{{ asset('assets/frontend/images/gallery/1.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -288,7 +288,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item dining">
+                    <div class="col-md-3 col-sm-6 col-12 item breakfast">
                       <a href="{{ asset('assets/frontend/images/gallery/6.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -298,7 +298,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item facilities">
+                    <div class="col-md-3 col-sm-6 col-12 item amenities">
                       <a href="{{ asset('assets/frontend/images/gallery/9.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -308,7 +308,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item rooms">
+                    <div class="col-md-3 col-sm-6 col-12 item homes">
                       <a href="{{ asset('assets/frontend/images/gallery/3.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -318,7 +318,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item dining">
+                    <div class="col-md-3 col-sm-6 col-12 item breakfast">
                       <a href="{{ asset('assets/frontend/images/gallery/8.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -328,7 +328,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item rooms">
+                    <div class="col-md-3 col-sm-6 col-12 item homes">
                       <a href="{{ asset('assets/frontend/images/gallery/5.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -338,7 +338,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item facilities">
+                    <div class="col-md-3 col-sm-6 col-12 item amenities">
                       <a href="{{ asset('assets/frontend/images/gallery/11.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -348,7 +348,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item rooms">
+                    <div class="col-md-3 col-sm-6 col-12 item homes">
                       <a href="{{ asset('assets/frontend/images/gallery/2.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -358,7 +358,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item facilities">
+                    <div class="col-md-3 col-sm-6 col-12 item amenities">
                       <a href="{{ asset('assets/frontend/images/gallery/10.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -368,7 +368,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item rooms">
+                    <div class="col-md-3 col-sm-6 col-12 item homes">
                       <a href="{{ asset('assets/frontend/images/gallery/4.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -378,7 +378,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item dining">
+                    <div class="col-md-3 col-sm-6 col-12 item breakfast">
                       <a href="{{ asset('assets/frontend/images/gallery/7.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -388,7 +388,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item facilities">
+                    <div class="col-md-3 col-sm-6 col-12 item amenities">
                       <a href="{{ asset('assets/frontend/images/gallery/12.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -442,7 +442,7 @@
                                     </div>
 
                                     <div class="col-md-1-5">
-                                        <div class="fs-18 text-dark fw-500 mb-10">Rooms</div>
+                                        <div class="fs-18 text-dark fw-500 mb-10">Guests</div>
                                         <select id="room-count" class="form-control">
                                             <option value="1" @selected(session('booking_data.room_count') == 1)>1</option>
                                             <option value="2" @selected(session('booking_data.room_count') == 2)>2</option>
@@ -555,8 +555,8 @@
             <div class="container">
                 <div class="row g-4 mb-2 justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp">Exclusive Deals</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Latest Hotel Offers</h2>
+                        <div class="subtitle id-color wow fadeInUp">Simple Pricing</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">One Flat Rate Entire Home Stay</h2>
                     </div>
                 </div>
 
@@ -564,14 +564,14 @@
                     <div class="col-lg-4 wow fadeInUp" data-wow-delay=".2s">
                         <div class="overflow-hidden rounded-1">
                             <div class="hover relative">
-                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">20% OFF</h3>
+                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">KES 25,000</h3>
                                 <img src="{{ asset('assets/frontend/images/offers/1.webp') }}" class="w-100 hover-scale-1-1" alt="">
-                                <a href="{{ route('offer.single', ['id' => 1]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                                <a href="#booking" class="d-block abs w-100 h-100 top-0 start-0"></a>
                             </div>
                             <div class="p-40 bg-dark-2 text-light relative">
-                                <a class="text-white" href="{{ route('offers') }}">
-                                    <h3>Romantic Stay</h3>
-                                    <p>20% Off Weekend Packages</p>
+                                <a class="text-white" href="#booking">
+                                    <h3>2-3 Bedroom Home</h3>
+                                    <p>Per Night • Breakfast Included</p>
                                 </a>
                             </div>
                         </div>
@@ -580,15 +580,15 @@
                     <div class="col-lg-4 wow fadeInUp" data-wow-delay=".4s">
                         <div class="overflow-hidden rounded-1">
                             <div class="p-40 bg-dark-2 text-light relative">
-                                <a class="text-white" href="{{ route('offers') }}">
-                                    <h3>Early Bird Deal</h3>
-                                    <p>Save Up to 30% on Rooms</p>
+                                <a class="text-white" href="#booking">
+                                    <h3>3-4 Bedroom Home</h3>
+                                    <p>Per Night • Breakfast Included</p>
                                 </a>
                             </div>
                             <div class="hover relative">
-                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 bottom-0 start-0 z-3">30% OFF</h3>
+                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 bottom-0 start-0 z-3">KES 25,000</h3>
                                 <img src="{{ asset('assets/frontend/images/offers/2.webp') }}" class="w-100 hover-scale-1-1" alt="">
-                                <a href="{{ route('offer.single', ['id' => 2]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                                <a href="#booking" class="d-block abs w-100 h-100 top-0 start-0"></a>
                             </div>
                         </div>
                     </div>
@@ -637,47 +637,47 @@
                                 </div>
 
                                 <div class="accordion-section-title" data-tab="#accordion-b2">
-                                    Do you offer airport pick-up or shuttle service?
+                                    What's included in the stay?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b2">
                                     <p class="mb-0">
-                                        Yes, we provide airport transfers and private shuttle services. Please contact us in advance to arrange transportation.
+                                        Every Tausi home includes full furnishings, all linens and towels, fully equipped kitchen, Wi-Fi, breakfast ingredients or daily-prepared breakfast, and secure parking.
                                     </p>
                                 </div>
 
                                 <div class="accordion-section-title" data-tab="#accordion-b3">
-                                    Are pets allowed in the hotel?
+                                    Do you offer airport pick-up or shuttle service?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b3">
                                     <p class="mb-0">
-                                        We welcome small pets in designated pet-friendly rooms. Additional cleaning fees may apply.
+                                        Yes, we provide pick-up and drop-off services on request. Please contact us in advance to arrange your transportation from Nanyuki town or the nearest airport.
                                     </p>
                                 </div>
 
                                 <div class="accordion-section-title" data-tab="#accordion-b4">
-                                    Do you have free Wi-Fi?
+                                    Are pets allowed in the homes?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b4">
                                     <p class="mb-0">
-                                        Yes, complimentary high-speed Wi-Fi is available throughout the hotel, including rooms and public areas.
+                                        We welcome small, well-behaved pets in Tausi homes. Please inform us in advance so we can prepare appropriately.
                                     </p>
                                 </div>
 
                                 <div class="accordion-section-title" data-tab="#accordion-b5">
-                                    What facilities are available for guests?
+                                    Is Wi-Fi available?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b5">
                                     <p class="mb-0">
-                                        Guests can enjoy our swimming pool, fitness center, spa, restaurant, lounge bar, and business center. Facility access varies by room type.
+                                        Yes, complimentary high-speed Wi-Fi is available throughout all Tausi homes, perfect for staying connected during your stay.
                                     </p>
                                 </div>
 
                                 <div class="accordion-section-title" data-tab="#accordion-b6">
-                                    Do you offer breakfast?
+                                    How many guests can each home accommodate?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b6">
                                     <p class="mb-0">
-                                        Yes, we offer daily breakfast with continental and international options. Breakfast is included for certain room packages.
+                                        Our 2-3 bedroom homes comfortably accommodate 4-6 guests, while our 3-4 bedroom homes can sleep 6-8 guests. All homes are perfect for families or small groups seeking privacy.
                                     </p>
                                 </div>
 
@@ -708,104 +708,105 @@
             </div>
         </section>
 
-        <section>
+        <section id="testimonial">
             <div class="container">
-                <div class="row g-4 mb-2 justify-content-center">
+                <div class="row g-4 mb-4 justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp">Our Blog</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">News &amp; Articles</h2>
+                        <div class="subtitle id-color wow fadeInUp">Guest Experiences</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">What Our Guests Say</h2>
                     </div>
                 </div>
 
                 <div class="row g-4">
-
-                    <div class="col-xl-3 col-lg-6">
-                    <div class="overflow-hidden">
-                        <div class="hover relative">
-                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
-                                <div class="fs-36 fw-bold lh-1">20</div>
-                                <span>Jun</span>
+                    <div class="col-xl-4 col-lg-6 wow fadeInUp">
+                        <div class="p-4 bg-white rounded-1">
+                            <div class="mb-3">
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
                             </div>
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/blog/1.jpg') }}" class="w-100 hover-scale-1-1" alt="">
-                            </div>
-                            <a href="{{ route('blog.single', ['id' => 1]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
-                        </div>
-
-                        <div class="pt-4 relative">
-                            <a href="{{ route('blog.single', ['id' => 1]) }}">
-                                <h3>Top Hotel Amenities That Guests Love in 2025 Trends</h3>
-                            </a>
-                            <p>From smart-room technology to wellness features that elevate guest comfort and overall satisfaction.</p>
+                            <p class="mb-3">"Our stay at Tausi was absolutely perfect. The home was beautifully furnished, spotless, and felt like a true retreat. The included breakfast was delicious, and the whole experience was seamless."</p>
+                            <h5 class="mb-0">Sarah & James</h5>
+                            <small>Nanyuki, Kenya</small>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-xl-3 col-lg-6">
-                    <div class="overflow-hidden">
-                        <div class="hover relative">
-                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
-                                <div class="fs-36 fw-bold lh-1">19</div>
-                                <span>Jun</span>
+                    <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-delay=".2s">
+                        <div class="p-4 bg-white rounded-1">
+                            <div class="mb-3">
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
                             </div>
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/blog/2.jpg') }}" class="w-100 hover-scale-1-1" alt="">
-                            </div>
-                            <a href="{{ route('blog.single', ['id' => 2]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
-                        </div>
-
-                        <div class="pt-4 relative">
-                            <a href="{{ route('blog.single', ['id' => 2]) }}">
-                                <h3>How to Choose the Perfect Room for Your Stay</h3>
-                            </a>
-                            <p>Learn how to choose the ideal hotel room based on comfort, layout, and travel needs for a better stay.</p>
+                            <p class="mb-3">"We needed a private space away from the hustle. Tausi provided exactly that – calm, comfort, and all the amenities we could ask for. Highly recommended for families!"</p>
+                            <h5 class="mb-0">Margaret Ochieng</h5>
+                            <small>Nairobi, Kenya</small>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-xl-3 col-lg-6">
-                    <div class="overflow-hidden">
-                        <div class="hover relative">
-                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
-                                <div class="fs-36 fw-bold lh-1">18</div>
-                                <span>Jun</span>
+                    <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-delay=".4s">
+                        <div class="p-4 bg-white rounded-1">
+                            <div class="mb-3">
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
                             </div>
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/blog/3.jpg') }}" class="w-100 hover-scale-1-1" alt="">
-                            </div>
-                            <a href="{{ route('blog.single', ['id' => 3]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
-                        </div>
-
-                        <div class="pt-4 relative">
-                            <a href="{{ route('blog.single', ['id' => 3]) }}">
-                                <h3>The Art of Hospitality: Behind Our Signature Services</h3>
-                            </a>
-                            <p>Discover the thoughtful services and attention to detail that define exceptional hospitality experiences.</p>
+                            <p class="mb-3">"The pick-up service was convenient, the home was lovely, and we felt genuinely welcomed. This is perfect for a quiet family getaway. We're definitely coming back!"</p>
+                            <h5 class="mb-0">David Kipchoge</h5>
+                            <small>Mombasa, Kenya</small>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-xl-3 col-lg-6">
-                    <div class="overflow-hidden">
-                        <div class="hover relative">
-                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
-                                <div class="fs-36 fw-bold lh-1">17</div>
-                                <span>Jun</span>
+                    <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-delay=".1s">
+                        <div class="p-4 bg-white rounded-1">
+                            <div class="mb-3">
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
                             </div>
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/blog/4.jpg') }}" class="w-100 hover-scale-1-1" alt="">
-                            </div>
-                            <a href="{{ route('blog.single', ['id' => 4]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
-                        </div>
-
-                        <div class="pt-4 relative">
-                            <a href="{{ route('blog.single', ['id' => 4]) }}">
-                                <h3>Why Location Matters: Choosing a Hotel for Your Next Trip</h3>
-                            </a>
-                            <p>See how hotel location impacts convenience, accessibility, and overall travel experience.</p>
+                            <p class="mb-3">"As couples seeking privacy and comfort, Tausi was ideal. The entire home setup, Wi-Fi connectivity, and breakfast made our romantic weekend unforgettable."</p>
+                            <h5 class="mb-0">Lisa & Mike</h5>
+                            <small>Nairobi, Kenya</small>
                         </div>
                     </div>
-                </div>
+
+                    <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-delay=".3s">
+                        <div class="p-4 bg-white rounded-1">
+                            <div class="mb-3">
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                            </div>
+                            <p class="mb-3">"We brought our extended family of 8, and Tausi's larger home accommodated everyone comfortably. The communal spaces were perfect for our reunion."</p>
+                            <h5 class="mb-0">Paul & Family</h5>
+                            <small>Eldoret, Kenya</small>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-delay=".5s">
+                        <div class="p-4 bg-white rounded-1">
+                            <div class="mb-3">
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                                <i class="fa fa-star id-color"></i>
+                            </div>
+                            <p class="mb-3">"Outstanding value for money. The flat rate pricing is transparent, and you get everything advertised. No hidden costs, just genuine hospitality."</p>
+                            <h5 class="mb-0">Rachel Kamau</h5>
+                            <small>Nanyuki, Kenya</small>
+                        </div>
+                    </div>
 
                 </div>
             </div>

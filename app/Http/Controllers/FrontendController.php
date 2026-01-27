@@ -17,8 +17,8 @@ class FrontendController extends Controller
     public function index(): View
     {
         return view('frontend.home', [
-            'title' => 'Home - GrandStay',
-            'description' => 'Welcome to GrandStay, your premier destination for luxury hospitality.'
+            'title' => 'Tausi Holiday & Getaway Homes',
+            'description' => 'AN ENTIRE HOUSE JUST FOR YOU · KES 25,000 PER NIGHT · BREAKFAST INCLUDED'
         ]);
     }
 
@@ -27,10 +27,7 @@ class FrontendController extends Controller
      */
     public function home2(): View
     {
-        return view('frontend.homepage-2', [
-            'title' => 'Home 2 - GrandStay',
-            'description' => 'Experience luxury at GrandStay with our alternative homepage design.'
-        ]);
+        return redirect()->route('home');
     }
 
     /**
@@ -38,10 +35,7 @@ class FrontendController extends Controller
      */
     public function about(): View
     {
-        return view('frontend.about', [
-            'title' => 'About Us - GrandStay',
-            'description' => 'Learn more about GrandStay and our commitment to excellence.'
-        ]);
+        return redirect()->to(route('home').'#about');
     }
 
     /**
@@ -49,10 +43,7 @@ class FrontendController extends Controller
      */
     public function contact(): View
     {
-        return view('frontend.contact', [
-            'title' => 'Contact Us - GrandStay',
-            'description' => 'Get in touch with our team. We\'d love to hear from you.'
-        ]);
+        return redirect()->to(route('home').'#contact');
     }
 
     /**
@@ -87,7 +78,7 @@ class FrontendController extends Controller
             \Log::error('Failed to send contact form email: ' . $e->getMessage());
         }
         
-        return redirect()->route('contact')->with('success', 'Thank you for contacting us! We will get back to you soon.');
+        return redirect()->to(route('home').'#contact')->with('success', 'Thank you for contacting us! We will get back to you soon.');
     }
 
     /**
@@ -95,10 +86,7 @@ class FrontendController extends Controller
      */
     public function properties(): View
     {
-        return view('frontend.rooms', [
-            'title' => 'Our Rooms - GrandStay',
-            'description' => 'Browse our exquisite collection of luxury rooms and suites.'
-        ]);
+        return redirect()->to(route('home').'#services');
     }
 
     /**
@@ -106,10 +94,7 @@ class FrontendController extends Controller
      */
     public function facilities(): View
     {
-        return view('frontend.facilities', [
-            'title' => 'Facilities - GrandStay',
-            'description' => 'Discover our world-class amenities and facilities.'
-        ]);
+        return redirect()->to(route('home').'#services');
     }
 
     /**
@@ -117,10 +102,7 @@ class FrontendController extends Controller
      */
     public function offers(): View
     {
-        return view('frontend.offers', [
-            'title' => 'Special Offers - GrandStay',
-            'description' => 'Check out our amazing special offers and packages.'
-        ]);
+        return redirect()->to(route('home').'#pricing');
     }
 
     /**
@@ -128,10 +110,7 @@ class FrontendController extends Controller
      */
     public function gallery(): View
     {
-        return view('frontend.gallery', [
-            'title' => 'Gallery - GrandStay',
-            'description' => 'Explore stunning photos of our resort and facilities.'
-        ]);
+        return redirect()->to(route('home'));
     }
 
     /**
@@ -139,10 +118,7 @@ class FrontendController extends Controller
      */
     public function testimonials(): View
     {
-        return view('frontend.testimonials', [
-            'title' => 'Testimonials - GrandStay',
-            'description' => 'See what our guests say about their experience.'
-        ]);
+        return redirect()->to(route('home').'#testimonial');
     }
 
     /**
@@ -150,10 +126,7 @@ class FrontendController extends Controller
      */
     public function blog(): View
     {
-        return view('frontend.blog', [
-            'title' => 'Blog - GrandStay',
-            'description' => 'Read our latest travel tips, hotel updates, and guest stories.'
-        ]);
+        return redirect()->to(route('home'));
     }
 
     /**
@@ -161,11 +134,7 @@ class FrontendController extends Controller
      */
     public function propertySingle($id): View
     {
-        return view('frontend.room-single', [
-            'id' => $id,
-            'title' => 'Room Details - GrandStay',
-            'description' => 'Explore the details of this beautiful room.'
-        ]);
+        return redirect()->to(route('home').'#pricing');
     }
 
     /**
@@ -173,11 +142,7 @@ class FrontendController extends Controller
      */
     public function offerSingle($id): View
     {
-        return view('frontend.offer-single', [
-            'id' => $id,
-            'title' => 'Special Offer - GrandStay',
-            'description' => 'Learn more about this amazing offer.'
-        ]);
+        return redirect()->to(route('home').'#pricing');
     }
 
     /**
@@ -185,11 +150,7 @@ class FrontendController extends Controller
      */
     public function blogSingle($id): View
     {
-        return view('frontend.blog-single', [
-            'id' => $id,
-            'title' => 'Blog Post - GrandStay',
-            'description' => 'Read our latest blog post.'
-        ]);
+        return redirect()->to(route('home'));
     }
 
     /**
@@ -197,10 +158,7 @@ class FrontendController extends Controller
      */
     public function reservation(): View
     {
-        return view('frontend.reservation', [
-            'title' => 'Make a Reservation - GrandStay',
-            'description' => 'Book your perfect stay with us.'
-        ]);
+        return redirect()->to(route('home').'#booking');
     }
 
 }
