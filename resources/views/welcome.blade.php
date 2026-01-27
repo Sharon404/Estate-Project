@@ -131,7 +131,7 @@
                 <div class="hero-text">
                     <h1>AN ENTIRE HOUSE JUST FOR YOU</h1>
                     <div class="pricing-badge">KES 25,000 PER NIGHT · BREAKFAST INCLUDED</div>
-                    <p>Experience privacy, comfort, and warm hospitality in Nanyuki, Kenya. Every stay includes fresh breakfast prepared just for you.</p>
+                    <p>Private Holiday Homes for Rest & Reconnection. Families · Couples · Small Groups.</p>
                 </div>
                 <div class="booking-widget">
                     <form id="bookingForm" onsubmit="goToConfirm(event)">

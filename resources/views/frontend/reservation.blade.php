@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Reservation - GrandStay')
+@section('title', 'Reservation - Tausi Holiday & Getaway Homes')
 @section('content')
 
 
@@ -88,26 +88,26 @@
                                 <div class="select-room mb-4">
                                     <h4>Select Home</h4>
 
-                                    <select class="room-type form-control" name="room_type">
-                                      <option value='Standart Room' data-src="{{ asset('assets/frontend/images/form/1.jpg') }}">
-                                        Studio | KES 25,000/night | 2 Guests
-                                      </option>
-                                      <option value='Deluxe Room' data-src="{{ asset('assets/frontend/images/form/2.jpg') }}">
-                                        Bedsitter | KES 25,000/night | 2 Guests
-                                      </option>
-                                      <option value='Premier Room' data-src="{{ asset('assets/frontend/images/form/3.jpg') }}">
-                                        1 Bedroom House | KES 25,000/night | 4 Guests
-                                      </option>
-                                      <option value='Family Suite' data-src="{{ asset('assets/frontend/images/form/4.jpg') }}">
-                                        2 Bedroom House | KES 25,000/night | 6 Guests
-                                      </option>
-                                      <option value='Luxury Suite' data-src="{{ asset('assets/frontend/images/form/5.jpg') }}">
-                                        2 Bedroom House | KES 25,000/night | 6 Guests
-                                      </option>
-                                      <option value='Presidential Suite' data-src="{{ asset('assets/frontend/images/form/6.jpg') }}">
-                                        Premium Home | KES 25,000/night | 8 Guests
-                                      </option>
-                                    </select>
+                                                                        <select class="room-type form-control" name="room_type">
+                                                                            <option value='Standart Room' data-src="{{ asset('assets/frontend/images/form/1.jpg') }}">
+                                                                                Whole House — 2 Bedrooms
+                                                                            </option>
+                                                                            <option value='Deluxe Room' data-src="{{ asset('assets/frontend/images/form/2.jpg') }}">
+                                                                                Whole House — 3 Bedrooms
+                                                                            </option>
+                                                                            <option value='Premier Room' data-src="{{ asset('assets/frontend/images/form/3.jpg') }}">
+                                                                                Whole House — 4 Bedrooms
+                                                                            </option>
+                                                                            <option value='Family Suite' data-src="{{ asset('assets/frontend/images/form/4.jpg') }}">
+                                                                                Private House (2–3 Bedrooms)
+                                                                            </option>
+                                                                            <option value='Luxury Suite' data-src="{{ asset('assets/frontend/images/form/5.jpg') }}">
+                                                                                Private House (3–4 Bedrooms)
+                                                                            </option>
+                                                                            <option value='Presidential Suite' data-src="{{ asset('assets/frontend/images/form/6.jpg') }}">
+                                                                                Entire House — No Shared Spaces
+                                                                            </option>
+                                                                        </select>
                                 </div>
 
                                 <div class="row">

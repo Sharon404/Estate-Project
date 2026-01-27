@@ -21,22 +21,22 @@
                                         <div class="row g-5 align-items-center">
                                             <div class="col-lg-5"> 
                                                 <div class="sw-text-wrapper wow anim-order-1">
-                                                    <h2 class="fs-60 mb-2">Studio</h2>
+                                                    <h2 class="fs-60 mb-2">Private House (2–3 Bedrooms)</h2>
                                                     <span class="d-stars id-color d-block mb-4">
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i>
                                                     </span>
                                                     <p class="lead mb-4 text-white mb-0">
-                                                        Compact, comfortable space perfect for solo travelers or couples, with essentials for a relaxing stay.
+                                                        Entire house — no shared spaces. Breakfast included. Secure parking & Wi-Fi. Ideal for families & small groups.
                                                     </p>
                                                     <div class="d-flex mb-2 fs-18 justify-content-between">
                                                         <div class="d-flex">    
                                                             <div class="d-flex align-items-center me-3">
-                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">2 guests
+                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">2–3 guests
                                                             </div>
                                                             <div class="d-flex align-items-center">
-                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Private
+                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Entire house
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
@@ -63,22 +63,22 @@
                                         <div class="row g-5 align-items-center">
                                             <div class="col-lg-5"> 
                                                 <div class="sw-text-wrapper wow anim-order-1">
-                                                    <h2 class="fs-60 mb-2">Bedsitter</h2>
+                                                    <h2 class="fs-60 mb-2">Private House (3–4 Bedrooms)</h2>
                                                     <span class="d-stars id-color d-block mb-4">
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i>
                                                     </span>
                                                     <p class="lead mb-4 text-white mb-0">
-                                                        Cozy self-contained unit with sleeping and living space, ideal for short-term stays with everything you need for comfort.
+                                                        Entire house — full privacy. Breakfast included. Spacious outdoor compound. Perfect for longer stays.
                                                     </p>
                                                     <div class="d-flex mb-2 fs-18 justify-content-between">
                                                         <div class="d-flex">    
                                                             <div class="d-flex align-items-center me-3">
-                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">2 guests
+                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">3–4 guests
                                                             </div>
                                                             <div class="d-flex align-items-center">
-                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Private
+                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Entire house
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
@@ -105,22 +105,22 @@
                                         <div class="row g-5 align-items-center">
                                             <div class="col-lg-5"> 
                                                 <div class="sw-text-wrapper wow anim-order-1">
-                                                    <h2 class="fs-60 mb-2">1 Bedroom House</h2>
+                                                    <h2 class="fs-60 mb-2">Your Quiet Escape Starts Here</h2>
                                                     <span class="d-stars id-color d-block mb-4">
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i>
                                                     </span>
                                                     <p class="lead mb-4 text-white mb-0">
-                                                        Perfect for small families or groups, with separate living and sleeping areas. Privacy and comfort in an entire home.
+                                                        Convenient location with clear directions provided in advance. Pick-up and drop-off can be arranged on request.
                                                     </p>
                                                     <div class="d-flex mb-2 fs-18 justify-content-between">
                                                         <div class="d-flex">    
                                                             <div class="d-flex align-items-center me-3">
-                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">4 guests
+                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">Up to 5 guests
                                                             </div>
                                                             <div class="d-flex align-items-center">
-                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Entire Home
+                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Easy access
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
@@ -147,22 +147,22 @@
                                         <div class="row g-5 align-items-center">
                                             <div class="col-lg-5"> 
                                                 <div class="sw-text-wrapper wow anim-order-1">
-                                                    <h2 class="fs-60 mb-2">2 Bedroom House</h2>
+                                                    <h2 class="fs-60 mb-2">Space, Privacy & Comfort</h2>
                                                     <span class="d-stars id-color d-block mb-4">
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i>
                                                     </span>
                                                     <p class="lead mb-4 text-white mb-0">
-                                                        Spacious home perfect for families. Two bedrooms, full amenities, and complete privacy for your entire stay.
+                                                        Entire private houses with outdoor space, ideal for families, couples, and small groups seeking a calm environment.
                                                     </p>
                                                     <div class="d-flex mb-2 fs-18 justify-content-between">
                                                         <div class="d-flex">    
                                                             <div class="d-flex align-items-center me-3">
-                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">6 guests
+                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">Families & small groups
                                                             </div>
                                                             <div class="d-flex align-items-center">
-                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Entire Home
+                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Entire house
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">

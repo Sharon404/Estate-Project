@@ -35,7 +35,7 @@
                                 AN ENTIRE HOUSE<br><span style="color: #decfbc;">JUST FOR YOU</span>
                             </h1>
                             <p class="text-dark wow fadeInUp mb-3" data-wow-delay=".2s" style="font-size: 1.125rem; max-width: 600px;">
-                                Privacy, comfort, and a warm hosting experience. Breakfast included.
+                                KES 25,000 per night · Breakfast Included
                             </p>
                             <a href="{{ route('properties') }}" class="btn-main fx-slide wow fadeInUp" data-wow-delay=".4s">
                                 <span>Book Your Stay</span>
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="relative">
                                     <h3 class="mb-2">Tausi Holiday Home - Nanyuki</h3>
-                                    <p class="text-muted">Breakfast & hospitality included</p>
+                                    <p class="text-muted">Flat rate of KES 25,000 per house per night, with breakfast included.</p>
                                 </div>
                             </div>
                         </a>
@@ -175,10 +175,10 @@
             <div class="container">
                 <div class="row g-4 mb-4 justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">Welcome</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Breakfast & Hospitality</h2>
+                        <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">BREAKFAST & HOSPITALITY</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Simple Comforts That Make a Difference</h2>
                         <p class="cwow fadeInUp" data-wow-delay=".4s">
-                            Simple Comforts That Make a Difference
+                            At Tausi Holiday & Getaway Homes, we focus on the essentials that matter most — privacy, comfort, and a warm hosting experience. Every stay includes breakfast, prepared fresh to help you start your day relaxed and refreshed.
                         </p>
                     </div>
                 </div>
@@ -197,12 +197,8 @@
                                     <small class="text-uppercase border-bottom d-block">Breakfast Included</small>
                                     <div class="sm-hide spacer-double"></div>
                                     <div class="spacer-double"></div>
-                                    <p class="mb-0">
-                                        Freshly prepared daily breakfast
-                                    </p>
-                                    <p>
-                                        Served in a calm, private setting
-                                    </p>
+                                    <p class="mb-0">Freshly prepared daily breakfast</p>
+                                    <p>Served in a calm, private setting</p>
                                 </div>
                             </div>
 
@@ -212,27 +208,19 @@
                                     <small class="text-uppercase border-bottom d-block">Home-Style Hosting</small>
                                     <div class="sm-hide spacer-double"></div>
                                     <div class="spacer-double"></div>
-                                    <p class="mb-0">
-                                        Quiet, respectful environment
-                                    </p>
-                                    <p>
-                                        Ideal for families & small groups
-                                    </p>
+                                    <p class="mb-0">Quiet, respectful environment</p>
+                                    <p>Attentive on-request support</p>
                                 </div>
                             </div>
 
                             <!-- PRIVACY & COMFORT -->
                             <div class="col-md-6 wow fadeInUp" data-wow-delay=".4s">
                                 <div class="p-30 bg-white rounded-1 h-100">
-                                    <small class="text-uppercase border-bottom d-block">Privacy & Comfort</small>
+                                    <small class="text-uppercase border-bottom d-block">Ideal for families & small groups</small>
                                     <div class="sm-hide spacer-double"></div>
                                     <div class="spacer-double"></div>
-                                    <p class="mb-0">
-                                        Your entire home to yourself
-                                    </p>
-                                    <p>
-                                        Attentive on-request support
-                                    </p>
+                                    <p class="mb-0">Included in the nightly rate</p>
+                                    <p>Quiet, respectful environment</p>
                                 </div>
                             </div>
 
@@ -253,12 +241,12 @@
             <div class="container">
                 <div class="row g-4 gx-5 align-items-center justify-content-between">
                     <div class="col-lg-6">
-                        <div class="subtitle wow fadeInUp" data-wow-delay=".0s">Welcome</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Experience Comfort, Elegance, and Exceptional Hospitality</h2>
+                        <div class="subtitle wow fadeInUp" data-wow-delay=".0s">Tausi Holiday & Getaway Homes</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Private Homes Designed for Comfort & Quiet</h2>
                     </div>
                     <div class="col-lg-6">
                         <p class="wow fadeInUp" data-wow-delay=".4s">
-                            At Tausi Holiday & Getaway Homes, we focus on the essentials that matter most — privacy, comfort, and a warm hosting experience. Every stay includes breakfast, prepared fresh to help you start your day relaxed and refreshed. Located in Nanyuki, Kenya, our entire homes are ideal for families and small groups seeking a quiet, respectful environment with attentive on-request support.
+                            At Tausi Holiday & Getaway Homes, we focus on the essentials that matter most — privacy, comfort, and a warm hosting experience. Every stay includes breakfast, prepared fresh to help you start your day relaxed and refreshed.
                         </p>
                     </div>
                 </div>
@@ -430,7 +418,6 @@
                                 <input type="hidden" id="property_id" name="property_id">
 
                                 <div class="row g-4 align-items-end">
-                                    
                                     <div class="col-md-1-5">
                                         <div class="fs-18 text-dark fw-500 mb-10">Check In</div>
                                         <input type="text" id="checkin" class="form-control" value="{{ session('booking_data.check_in', '') }}" required>
@@ -443,31 +430,13 @@
 
                                     <div class="col-md-1-5">
                                         <div class="fs-18 text-dark fw-500 mb-10">Number of Homes</div>
-                                        <select id="room-count" class="form-control">
+                                        <select id="room-count" name="room_count" class="form-control">
                                             <option value="1" @selected(session('booking_data.room_count') == 1)>1</option>
                                             <option value="2" @selected(session('booking_data.room_count') == 2)>2</option>
                                             <option value="3" @selected(session('booking_data.room_count') == 3)>3</option>
                                             <option value="4" @selected(session('booking_data.room_count') == 4)>4</option>
                                             <option value="5" @selected(session('booking_data.room_count') == 5)>5</option>
                                             <option value="6" @selected(session('booking_data.room_count') == 6)>6</option>
-                                            <option value="7" @selected(session('booking_data.room_count') == 7)>7</option>
-                                            <option value="8" @selected(session('booking_data.room_count') == 8)>8</option>
-                                            <option value="9" @selected(session('booking_data.room_count') == 9)>9</option>
-                                            <option value="10" @selected(session('booking_data.room_count') == 10)>10</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-1-5">
-                                        <div class="fs-18 text-dark fw-500 mb-10">Guests</div>
-                                        <input type="hidden" name="adult" id="adult">
-                                        <input type="hidden" name="children" id="children">
-                                        <select id="guests" class="form-control">
-                                            <option value="1" @selected(session('booking_data.adult') == 1)>1</option>
-                                            <option value="2" @selected(session('booking_data.adult') == 2)>2</option>
-                                            <option value="3" @selected(session('booking_data.adult') == 3)>3</option>
-                                            <option value="4" @selected(session('booking_data.adult') == 4)>4</option>
-                                            <option value="5" @selected(session('booking_data.adult') == 5)>5</option>
-                                            <option value="6" @selected(session('booking_data.adult') == 6)>6</option>
                                             <option value="7" @selected(session('booking_data.adult') == 7)>7</option>
                                             <option value="8" @selected(session('booking_data.adult') == 8)>8</option>
                                             <option value="9" @selected(session('booking_data.guests') == 9)>9</option>
@@ -555,8 +524,8 @@
             <div class="container">
                 <div class="row g-4 mb-2 justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp">Exclusive Deals</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Latest Hotel Offers</h2>
+                        <div class="subtitle id-color wow fadeInUp">Plan Your Stay</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Your Quiet Escape Starts Here</h2>
                     </div>
                 </div>
 
@@ -570,8 +539,8 @@
                             </div>
                             <div class="p-40 bg-dark-2 text-light relative">
                                 <a class="text-white" href="{{ route('offers') }}">
-                                    <h3>Romantic Stay</h3>
-                                    <p>20% Off Weekend Packages</p>
+                                    <h3>Private House (2–3 Bedrooms)</h3>
+                                    <p>Flat rate of KES 25,000 per house per night, with breakfast included.</p>
                                 </a>
                             </div>
                         </div>
@@ -581,8 +550,8 @@
                         <div class="overflow-hidden rounded-1">
                             <div class="p-40 bg-dark-2 text-light relative">
                                 <a class="text-white" href="{{ route('offers') }}">
-                                    <h3>Early Bird Deal</h3>
-                                    <p>Save Up to 30% on Rooms</p>
+                                    <h3>Breakfast Included</h3>
+                                    <p>Enjoy a complimentary breakfast prepared daily as part of your nightly rate.</p>
                                 </a>
                             </div>
                             <div class="hover relative">
@@ -601,8 +570,8 @@
                             </div>
                             <div class="p-40 bg-dark-2 text-light relative">
                                 <a class="text-white" href="{{ route('offers') }}">
-                                    <h3>Family Getaway</h3>
-                                    <p>Kids Stay & Eat Free</p>
+                                    <h3>Entire house — no shared spaces</h3>
+                                    <p>Ideal for families, couples, and small groups seeking a calm environment.</p>
                                 </a>
                             </div>
                         </div>
@@ -612,79 +581,90 @@
             </div>
         </section>
 
+        <!-- About Section -->
+        <section id="about" class="bg-color-op-1 rounded-1 mx-2">
+            <div class="container">
+                <div class="row g-5 align-items-center">
+                    <!-- Content Column -->
+                    <div class="col-lg-6">
+                        <div class="subtitle id-color wow fadeInUp">Tausi Holiday & Getaway Homes</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Private Homes Designed for Comfort & Quiet</h2>
+                        <p class="wow fadeInUp" data-wow-delay=".4s">
+                            Tausi offers fully furnished private houses ideal for families, couples, and small groups seeking a peaceful escape. Each home provides privacy, comfort, and a calm environment — with breakfast included and a simple flat nightly rate.
+                        </p>
+                        <div class="row g-3 my-4">
+                            <div class="col-md-6 wow fadeInUp" data-wow-delay=".0s">
+                                <div class="d-flex">
+                                    <div class="me-3">
+                                        <div class="icon-box mb-3"><i class="fa fa-lightbulb" style="font-size: 24px; color: #decfbc;"></i></div>
+                                    </div>
+                                    <div>
+                                        <h4 class="title">Calm & Comfortable Spaces</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 wow fadeInUp" data-wow-delay=".2s">
+                                <div class="d-flex">
+                                    <div class="me-3">
+                                        <div class="icon-box mb-3"><i class="fa fa-tree" style="font-size: 24px; color: #decfbc;"></i></div>
+                                    </div>
+                                    <div>
+                                        <h4 class="title">Private Outdoor Areas</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2 wow fadeInUp" data-wow-delay=".4s"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Entire house rental — no shared spaces</li>
+                            <li class="mb-2 wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-check me-2" style="color: #decfbc;"></i>KES 25,000 per night per house (breakfast included)</li>
+                            <li class="mb-2 wow fadeInUp" data-wow-delay=".6s"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Secure parking, Wi-Fi, and on-request services</li>
+                        </ul>
+                        <div class="wow fadeInUp" data-wow-delay=".8s">
+                            <a href="{{ route('properties') }}" class="btn-main fx-slide"><span>View Homes</span></a>
+                        </div>
+                    </div>
+                    <!-- Image Column -->
+                    <div class="col-lg-6">
+                        <div class="relative wow fadeInRight">
+                            <img src="{{ asset('assets/frontend/images/misc/s5.webp') }}" class="w-100 rounded-1 mb-3" alt="Tausi Homes">
+                            <img src="{{ asset('assets/frontend/images/misc/s3.webp') }}" class="w-100 rounded-1" alt="Tausi Outdoor">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section>
             <div class="container">
                 <div class="row g-4 gx-5 justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="subtitle id-color">FAQ</div>
-                        <h2 class="wow fadeInUp">
-                            Everything You Need to Know About Staying With Us
-                        </h2>
+                    <div class="col-lg-6 text-center">
+                        <div class="subtitle id-color">Guest Feedback</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">What Our Guests Say</h2>
                     </div>
+                </div>
 
-                    <div class="col-lg-6">
-                        <div class="accordion title-boxed wow fadeInUp">
-                            <div class="accordion-section">
-
-                                <div class="accordion-section-title" data-tab="#accordion-b1">
-                                    Is breakfast really included in the nightly rate?
-                                </div>
-                                <div class="accordion-section-content" id="accordion-b1">
-                                    <p class="mb-0">
-                                        Yes! Freshly prepared breakfast is included every morning. It's served in a calm, private setting and included in your nightly rate of KES 25,000.
-                                    </p>
-                                </div>
-
-                                <div class="accordion-section-title" data-tab="#accordion-b2">
-                                    Can we check in early or late checkout?
-                                </div>
-                                <div class="accordion-section-content" id="accordion-b2">
-                                    <p class="mb-0">
-                                        Early check-in and late checkout are available upon request, subject to availability. Please contact us in advance at +254 718 756 254 or bookings@tausivacations.com.
-                                    </p>
-                                </div>
-
-                                <div class="accordion-section-title" data-tab="#accordion-b3">
-                                    Is Tausi suitable for families?
-                                </div>
-                                <div class="accordion-section-content" id="accordion-b3">
-                                    <p class="mb-0">
-                                        Absolutely! Our homes are ideal for families and small groups. The quiet, respectful environment makes them perfect for children, and you have an entire home to yourselves with full privacy.
-                                    </p>
-                                </div>
-
-                                <div class="accordion-section-title" data-tab="#accordion-b4">
-                                    Do you have Wi-Fi?
-                                </div>
-                                <div class="accordion-section-content" id="accordion-b4">
-                                    <p class="mb-0">
-                                        Yes, complimentary high-speed Wi-Fi is available throughout all homes so you can stay connected during your stay.
-                                    </p>
-                                </div>
-
-                                <div class="accordion-section-title" data-tab="#accordion-b5">
-                                    What's included in the home?
-                                </div>
-                                <div class="accordion-section-content" id="accordion-b5">
-                                    <p class="mb-0">
-                                        Every home includes a full kitchen, living area, bedroom(s), bathroom, Wi-Fi, and daily breakfast. We focus on the essentials that make your stay comfortable and convenient.
-                                    </p>
-                                </div>
-
-                                <div class="accordion-section-title" data-tab="#accordion-b6">
-                                    Where is Tausi located?
-                                </div>
-                                <div class="accordion-section-content" id="accordion-b6">
-                                    <p class="mb-0">
-                                        We're located in Nanyuki, Kenya. For directions, booking inquiries, or to arrange transportation, contact us at +254 718 756 254 or bookings@tausivacations.com.
-                                    </p>
-                                </div>
-
-                            </div>
+                <div class="row g-4 mt-2">
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".0s">
+                        <div class="p-30 bg-white rounded-1 h-100 shadow-sm">
+                            <h4 class="mb-1">Esther Mwangi</h4>
+                            <span class="text-muted d-block mb-3">Family Guest</span>
+                            <p class="mb-0">We booked a whole house for a family weekend and everything was exactly as described. The space was peaceful, breakfast was great, and the privacy made the stay very relaxing.</p>
                         </div>
                     </div>
-
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".1s">
+                        <div class="p-30 bg-white rounded-1 h-100 shadow-sm">
+                            <h4 class="mb-1">Daniel Otieno</h4>
+                            <span class="text-muted d-block mb-3">Business Traveler</span>
+                            <p class="mb-0">A quiet and comfortable place to stay while working remotely. Reliable Wi-Fi, clean spaces, and a simple booking process. I would definitely return.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".2s">
+                        <div class="p-30 bg-white rounded-1 h-100 shadow-sm">
+                            <h4 class="mb-1">Miriam Karanja</h4>
+                            <span class="text-muted d-block mb-3">Group Guest</span>
+                            <p class="mb-0">Perfect for a small group getaway. The house was spacious, well kept, and the environment was calm. Great value for the price.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -708,108 +688,7 @@
             </div>
         </section>
 
-        <section>
-            <div class="container">
-                <div class="row g-4 mb-2 justify-content-center">
-                    <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp">Guest Experiences</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">What Our Guests Say</h2>
-                    </div>
-                </div>
-
-                <div class="row g-4">
-
-                    <div class="col-xl-3 col-lg-6">
-                    <div class="overflow-hidden">
-                        <div class="hover relative">
-                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
-                                <div class="fs-36 fw-bold lh-1">20</div>
-                                <span>Jun</span>
-                            </div>
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/blog/1.jpg') }}" class="w-100 hover-scale-1-1" alt="">
-                            </div>
-                            <a href="{{ route('blog.single', ['id' => 1]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
-                        </div>
-
-                        <div class="pt-4 relative">
-                            <a href="{{ route('blog.single', ['id' => 1]) }}">
-                                <h3>Top Hotel Amenities That Guests Love in 2025 Trends</h3>
-                            </a>
-                            <p>From smart-room technology to wellness features that elevate guest comfort and overall satisfaction.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-6">
-                    <div class="overflow-hidden">
-                        <div class="hover relative">
-                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
-                                <div class="fs-36 fw-bold lh-1">19</div>
-                                <span>Jun</span>
-                            </div>
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/blog/2.jpg') }}" class="w-100 hover-scale-1-1" alt="">
-                            </div>
-                            <a href="{{ route('blog.single', ['id' => 2]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
-                        </div>
-
-                        <div class="pt-4 relative">
-                            <a href="{{ route('blog.single', ['id' => 2]) }}">
-                                <h3>How to Choose the Perfect Room for Your Stay</h3>
-                            </a>
-                            <p>Learn how to choose the ideal hotel room based on comfort, layout, and travel needs for a better stay.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-6">
-                    <div class="overflow-hidden">
-                        <div class="hover relative">
-                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
-                                <div class="fs-36 fw-bold lh-1">18</div>
-                                <span>Jun</span>
-                            </div>
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/blog/3.jpg') }}" class="w-100 hover-scale-1-1" alt="">
-                            </div>
-                            <a href="{{ route('blog.single', ['id' => 3]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
-                        </div>
-
-                        <div class="pt-4 relative">
-                            <a href="{{ route('blog.single', ['id' => 3]) }}">
-                                <h3>The Art of Hospitality: Behind Our Signature Services</h3>
-                            </a>
-                            <p>Discover the thoughtful services and attention to detail that define exceptional hospitality experiences.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-6">
-                    <div class="overflow-hidden">
-                        <div class="hover relative">
-                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
-                                <div class="fs-36 fw-bold lh-1">17</div>
-                                <span>Jun</span>
-                            </div>
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/blog/4.jpg') }}" class="w-100 hover-scale-1-1" alt="">
-                            </div>
-                            <a href="{{ route('blog.single', ['id' => 4]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
-                        </div>
-
-                        <div class="pt-4 relative">
-                            <a href="{{ route('blog.single', ['id' => 4]) }}">
-                                <h3>Why Location Matters: Choosing a Hotel for Your Next Trip</h3>
-                            </a>
-                            <p>See how hotel location impacts convenience, accessibility, and overall travel experience.</p>
-                        </div>
-                    </div>
-                </div>
-
-                </div>
-            </div>
-        </section>
+        <!-- Blog section removed per Tausi reference -->
 
     @push('scripts')
         <script src="{{ asset('assets/frontend/js/vendors.js') }}"></script>

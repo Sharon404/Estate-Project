@@ -55,31 +55,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('home') }}">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="roomsDropdown" role="button" data-bs-toggle="dropdown">
-                                Homes
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('properties') }}">All Homes</a></li>
-                                <li><a class="dropdown-item" href="{{ route('properties') }}">Entire Home</a></li>
-                                <li><a class="dropdown-item" href="{{ route('properties') }}">Family Stay</a></li>
-                                <li><a class="dropdown-item" href="{{ route('properties') }}">Group Stay</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-bs-toggle="dropdown">
-                                Pages
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('about') }}">About Us</a></li>
-                                <li><a class="dropdown-item" href="{{ route('facilities') }}">Facilities</a></li>
-                                <li><a class="dropdown-item" href="{{ route('offers') }}">Special Offers</a></li>
-                                <li><a class="dropdown-item" href="{{ route('gallery') }}">Gallery</a></li>
-                                <li><a class="dropdown-item" href="{{ route('testimonials') }}">Testimonials</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('properties') }}">Homes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('blog') }}">Blog</a>
+                            <a class="nav-link" href="{{ route('about') }}">About</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('contact') }}">Contact</a>
@@ -109,7 +89,7 @@
                     <a href="{{ route('home') }}" class="d-inline-block mb-3">
                         <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausirental" style="max-width: 150px;">
                     </a>
-                    <p class="text-muted">Privacy, comfort, and warm hosting. Every stay includes freshly prepared breakfast so you start your day relaxed and refreshed.</p>
+                    <p class="text-muted">Tausi Holiday & Getaway Homes offers private, fully furnished houses for peaceful stays. Flat rate of KES 25,000 per house per night, with breakfast included.</p>
                     <div class="social-icons mt-3">
                         <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
@@ -123,9 +103,8 @@
                     <h5 class="fw-bold mb-3">Quick Links</h5>
                     <ul class="list-unstyled">
                         <li><a href="{{ route('home') }}" class="text-muted text-decoration-none">Home</a></li>
-                        <li><a href="{{ route('about') }}" class="text-muted text-decoration-none">About Us</a></li>
+                        <li><a href="{{ route('about') }}" class="text-muted text-decoration-none">About</a></li>
                         <li><a href="{{ route('properties') }}" class="text-muted text-decoration-none">Homes</a></li>
-                        <li><a href="{{ route('offers') }}" class="text-muted text-decoration-none">Special Offers</a></li>
                         <li><a href="{{ route('contact') }}" class="text-muted text-decoration-none">Contact</a></li>
                     </ul>
                 </div>
