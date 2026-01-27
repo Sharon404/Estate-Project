@@ -64,7 +64,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($recentBookings as $booking)
+                            @forelse ($bookings as $booking)
                                 <tr>
                                     <td><span class="pill light">{{ $booking->booking_ref }}</span></td>
                                     <td>{{ $booking->guest->name ?? 'Guest' }}</td>
@@ -92,7 +92,15 @@
                     <p class="muted">Status across all payment intents.</p>
                 </div>
                 <div class="chip-grid">
-                    @foreach ($paymentStatusSummary as $row)
+                    @php
+                        $statuses = $paymentMethodSummary->groupBy('status')->map(function($items) {
+                            return (object)[
+                                'status' => $items->first()->status,
+                                'total' => $items->sum('total')
+                            ];
+                        });
+                    @endphp
+                    @foreach ($statuses as $row)
                         <div class="chip">
                             <span class="dot dot-{{ strtolower($row->status) }}"></span>
                             <div>
@@ -101,7 +109,7 @@
                             </div>
                         </div>
                     @endforeach
-                    @if ($paymentStatusSummary->isEmpty())
+                    @if ($statuses->isEmpty())
                         <p class="muted mb-0">No payment activity yet.</p>
                     @endif
                 </div>
