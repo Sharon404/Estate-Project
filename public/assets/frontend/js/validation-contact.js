@@ -42,17 +42,17 @@ $(document).ready(function() {
                 'value': 'Sending...'
             });
 
-            $.post("contact.php", $("#contact_form").serialize(), function(result) {
-                if (result.trim() === 'sent') {
-                    // Success message
+            const postUrl = $('#contact_form').attr('action') || '/contact';
+            $.post(postUrl, $("#contact_form").serialize())
+                .done(function() {
                     $('#contact_form').fadeOut(400, function() {
                         $('<div id="success_message" class="alert alert-success mt-3">Your message has been sent successfully!</div>')
                             .hide()
                             .appendTo($(this).parent())
                             .fadeIn(500);
                     });
-                } else {
-                    // Failure message
+                })
+                .fail(function() {
                     if (!$('#mail_fail').length) {
                         $('<div id="mail_fail" class="alert alert-danger mt-3">Message failed to send. Please try again.</div>')
                             .hide()
@@ -60,8 +60,7 @@ $(document).ready(function() {
                             .fadeIn(500);
                     }
                     $('#send_message').removeAttr('disabled').attr('value', 'Send Message');
-                }
-            });
+                });
         }
     });
 });
