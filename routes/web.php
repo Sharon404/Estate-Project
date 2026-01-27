@@ -4,6 +4,14 @@ use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\AuditLogsController;
 use App\Http\Controllers\Staff\StaffDashboardController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\Booking\BookingController;
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Payment\MpesaController;
+use App\Http\Controllers\Admin\AdminPaymentController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AuditController;
 
 // Frontend Routes
 Route::get('/', [FrontendController::class, 'index'])->name('home');
