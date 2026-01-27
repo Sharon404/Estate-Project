@@ -19,10 +19,11 @@ class MpesaC2BService
      */
     public function registerUrls(): array
     {
-        $registerUrl = config('mpesa.c2b_register_url', 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl');
+        $registerUrl = config('mpesa.c2b_register_url');
         $shortCode = config('mpesa.business_shortcode');
         $validationUrl = config('mpesa.c2b_validation_url');
         $confirmationUrl = config('mpesa.c2b_confirmation_url');
+        $verifySSL = config('mpesa.verify_ssl', true);
 
         $token = $this->getAccessToken();
 
@@ -35,19 +36,22 @@ class MpesaC2BService
 
         Log::info('Registering M-PESA C2B URLs', [
             'register_url' => $registerUrl,
-            'payload' => $payload,
+            'environment' => config('mpesa.environment'),
+            'shortcode' => config('mpesa.business_shortcode'),
         ]);
 
         $response = Http::withToken($token)
             ->acceptJson()
-            ->withoutVerifying() // Skip SSL verification for sandbox
+            ->when(!$verifySSL, function ($http) {
+                return $http->withoutVerifying();
+            })
             ->timeout(30)
             ->post($registerUrl, $payload);
 
         if (!$response->successful()) {
             Log::error('Failed to register C2B URLs', [
                 'status' => $response->status(),
-                'body' => $response->body(),
+                'environment' => config('mpesa.environment'),
             ]);
             return [
                 'success' => false,
@@ -59,7 +63,7 @@ class MpesaC2BService
         $body = $response->json();
 
         Log::info('C2B URLs registered successfully', [
-            'response' => $body,
+            'environment' => config('mpesa.environment'),
         ]);
 
         return [
@@ -223,21 +227,25 @@ class MpesaC2BService
     {
         if (config('mpesa.mock_mode')) {
             Log::info('Using mock M-PESA token for C2B registration');
-            return config('mpesa.mock_access_token');
+            return config('mpesa.mock_access_token', 'mock_token_12345');
         }
 
         $authUrl = config('mpesa.auth_url');
         $consumerKey = config('mpesa.consumer_key');
         $consumerSecret = config('mpesa.consumer_secret');
+        $verifySSL = config('mpesa.verify_ssl', true);
 
-        Log::info('Retrieving M-PESA OAuth token for C2B registration', [
+        Log::info('Retrieving M-PESA OAuth token for C2B', [
             'auth_url' => $authUrl,
-            'consumer_key' => substr($consumerKey, 0, 6) . '...',
+            'consumer_key' => substr($consumerKey, 0, 4) . '***',
+            'environment' => config('mpesa.environment'),
         ]);
 
         $response = Http::withBasicAuth($consumerKey, $consumerSecret)
             ->accept('application/json')
-            ->withoutVerifying() // Skip SSL verification for sandbox
+            ->when(!$verifySSL, function ($http) {
+                return $http->withoutVerifying();
+            })
             ->timeout(30)
             ->get($authUrl);
 

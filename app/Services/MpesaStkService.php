@@ -95,22 +95,30 @@ class MpesaStkService
     private function callMpesaApi(array $payload): array
     {
         $apiUrl = config('mpesa.stk_push_url');
+        $verifySSL = config('mpesa.verify_ssl', true);
+
         \Log::info('Getting M-PESA access token');
         $bearerToken = $this->getAccessToken();
         \Log::info('Access token retrieved', ['token_prefix' => substr($bearerToken, 0, 10)]);
 
         \Log::info('Calling M-PESA STK API', [
             'url' => $apiUrl,
-            'payload' => $payload,
+            'environment' => config('mpesa.environment'),
+            'business_shortcode' => config('mpesa.business_shortcode'),
+            'amount' => $payload['Amount'] ?? null,
+            'msisdn' => str_repeat('*', strlen($payload['PhoneNumber'] ?? '') - 2) . substr($payload['PhoneNumber'] ?? '', -2),
         ]);
 
         $response = Http::withToken($bearerToken)
+            ->when(!$verifySSL, function ($http) {
+                return $http->withoutVerifying();
+            })
             ->timeout(30)
             ->post($apiUrl, $payload);
 
         \Log::info('M-PESA API response', [
             'status' => $response->status(),
-            'body' => $response->body(),
+            'has_error' => !$response->successful(),
         ]);
 
         if (!$response->successful()) {
@@ -133,40 +141,44 @@ class MpesaStkService
     {
         if (config('mpesa.mock_mode')) {
             \Log::info('Using mock M-PESA token');
-            return config('mpesa.mock_access_token');
+            return config('mpesa.mock_access_token', 'mock_token_12345');
         }
 
         $authUrl = config('mpesa.auth_url');
         $consumerKey = config('mpesa.consumer_key');
         $consumerSecret = config('mpesa.consumer_secret');
+        $verifySSL = config('mpesa.verify_ssl', true);
 
         \Log::info('Retrieving M-PESA OAuth token', [
             'auth_url' => $authUrl,
-            'consumer_key' => substr($consumerKey, 0, 10) . '...',
+            'consumer_key' => substr($consumerKey, 0, 4) . '***',
+            'environment' => config('mpesa.environment'),
         ]);
 
         $response = Http::withBasicAuth($consumerKey, $consumerSecret)
             ->accept('application/json')
+            ->when(!$verifySSL, function ($http) {
+                return $http->withoutVerifying();
+            })
             ->timeout(30)
             ->get($authUrl);
 
         if (!$response->successful()) {
             \Log::error('Failed to get M-PESA access token', [
                 'status' => $response->status(),
-                'body' => $response->body(),
+                'environment' => config('mpesa.environment'),
             ]);
             throw new \Exception("Failed to get M-PESA access token: {$response->body()}");
         }
 
         $responseData = $response->json();
         \Log::info('M-PESA OAuth token retrieved successfully', [
-            'response_keys' => array_keys($responseData ?? []),
-            'response_body' => $response->body(),
+            'environment' => config('mpesa.environment'),
         ]);
         
         $accessToken = $responseData['access_token'] ?? null;
         if (!$accessToken) {
-            \Log::error('access_token not found in OAuth response', ['response' => $responseData]);
+            \Log::error('access_token not found in OAuth response', ['environment' => config('mpesa.environment')]);
             throw new \Exception('M-PESA OAuth response missing access_token field');
         }
         
