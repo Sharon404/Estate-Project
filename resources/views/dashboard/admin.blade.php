@@ -16,24 +16,29 @@
 
         <div class="metrics">
             <div class="card metric">
-                <p class="label">Total bookings</p>
-                <p class="value">{{ number_format($totalBookings) }}</p>
-                <p class="sub">All time</p>
-            </div>
-            <div class="card metric">
-                <p class="label">Total revenue</p>
+                <p class="label">Total Revenue</p>
                 <p class="value">KES {{ number_format($totalRevenue, 2) }}</p>
-                <p class="sub">Confirmed payments</p>
+                <p class="sub">This month</p>
             </div>
             <div class="card metric">
-                <p class="label">Pending bookings</p>
-                <p class="value">{{ number_format($pendingBookings) }}</p>
-                <p class="sub">Awaiting payment</p>
+                <p class="label">Total Bookings</p>
+                <p class="value">{{ number_format($totalBookings) }}</p>
+                <p class="sub">This month</p>
             </div>
             <div class="card metric">
-                <p class="label">Payment alerts</p>
-                <p class="value">{{ number_format($failedOrPendingPayments) }}</p>
-                <p class="sub">Failed / pending intents</p>
+                <p class="label">Completed Payments</p>
+                <p class="value">{{ number_format($completedPayments) }}</p>
+                <p class="sub">Successful intents</p>
+            </div>
+            <div class="card metric">
+                <p class="label">Pending / Failed</p>
+                <p class="value">{{ number_format($pendingOrFailedPayments) }}</p>
+                <p class="sub">Requires attention</p>
+            </div>
+            <div class="card metric">
+                <p class="label">Avg Nights</p>
+                <p class="value">{{ $avgNights }}</p>
+                <p class="sub">Per booking</p>
             </div>
         </div>
 

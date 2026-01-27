@@ -1,16 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Staff\StaffDashboardController;
-use App\Http\Controllers\Booking\BookingController;
-use App\Http\Controllers\Payment\MpesaController;
-use App\Http\Controllers\Payment\PaymentController;
-use App\Http\Controllers\Payment\AdminPaymentController;
-use App\Http\Controllers\Admin\AuditController;
-use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\Admin\BookingsController;
+use App\Http\Controllers\Admin\AnalyticsController;
+use App\Http\Controllers\Admin\AuditLogsController;
 
 // Frontend Routes
 Route::get('/', [FrontendController::class, 'index'])->name('home');
@@ -58,6 +50,11 @@ Route::middleware('auth')->group(function () {
 // Admin Dashboard
 Route::middleware(['auth', 'role:admin', 'audit.request'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings');
+    Route::get('/bookings/{booking}', [BookingsController::class, 'show'])->name('booking-detail');
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
+    Route::get('/audit-logs', [AuditLogsController::class, 'index'])->name('audit-logs');
+    Route::get('/audit-logs/{auditLog}', [AuditLogsController::class, 'show'])->name('audit-log-detail');
 });
 
 // Staff Dashboard
