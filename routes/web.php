@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Staff\StaffDashboardController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Payment\MpesaController;
 use App\Http\Controllers\Payment\PaymentController;
@@ -29,7 +31,7 @@ Route::get('/testimonials', [FrontendController::class, 'testimonials'])->name('
 Route::get('/blog', [FrontendController::class, 'blog'])->name('blog');
 Route::get('/blog/{id}', [FrontendController::class, 'blogSingle'])->name('blog.single');
 // Reservation entry point handled by BookingController (non-submitting)
-Route::get('/reservation', [BookingController::class, 'reservationForm'])->name('reservation');
+// (see detailed flow below)
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
@@ -40,8 +42,26 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 // Protected Routes - Authenticated Users
-Route::middleware(['auth', 'audit.request'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return redirect()->route('staff.dashboard');
+    })->name('dashboard');
+});
+
+// Admin Dashboard
+Route::middleware(['auth', 'role:admin', 'audit.request'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+});
+
+// Staff Dashboard
+Route::middleware(['auth', 'role:staff', 'audit.request'])->prefix('staff')->name('staff.')->group(function () {
+    Route::get('/dashboard', [StaffDashboardController::class, 'index'])->name('dashboard');
 });
 
 // Booking Routes - Public Three-Step Flow: Form → Confirm → Store

@@ -31,9 +31,15 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            AuditService::logLoginSuccess(Auth::user());
+            $user = Auth::user();
 
-            return redirect()->intended(route('dashboard'))->with('success', 'Welcome back!');
+            AuditService::logLoginSuccess($user);
+
+            $redirectTo = $user && $user->role === 'admin'
+                ? route('admin.dashboard')
+                : route('staff.dashboard');
+
+            return redirect()->intended($redirectTo)->with('success', 'Welcome back!');
         }
 
         AuditService::logLoginFailed($request->input('email'));

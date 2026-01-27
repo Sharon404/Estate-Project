@@ -4,347 +4,130 @@
 @section('page-title', 'Staff Dashboard')
 
 @section('content')
-    <div class="alert alert-success mb-4">
-        <i class="ri-team-line"></i> You are viewing the <strong>Staff Dashboard</strong> with your assigned tasks and orders.
-    </div>
+    <div class="dash-shell">
+        <div class="dash-head">
+            <div>
+                <p class="eyebrow">Front desk view</p>
+                <h1>Today’s operations</h1>
+                <p class="lede">Only the bookings you need to manage, nothing else.</p>
+            </div>
+            <div class="pill">{{ $today->format('M d, Y') }}</div>
+        </div>
 
-    <!-- Staff Statistics -->
-    <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card card-animate">
-                <div class="card-body">
-                    <div class="d-flex align-items-end justify-content-between">
-                        <div>
-                            <h4 class="text-muted fw-normal mb-0">Assigned Tasks</h4>
-                            <h2 class="mb-2"><span class="counter-value" data-target="{{ $stats['assigned_tasks'] }}">0</span></h2>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                            <span class="avatar-title bg-info-subtle rounded fs-3">
-                                <i class="ri-task-2-line text-info"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+        <div class="metrics">
+            <div class="card metric">
+                <p class="label">Today’s check-ins</p>
+                <p class="value">{{ number_format($stats['today_count']) }}</p>
+                <p class="sub">Confirmed guests arriving</p>
+            </div>
+            <div class="card metric">
+                <p class="label">Upcoming check-ins</p>
+                <p class="value">{{ number_format($stats['upcoming_count']) }}</p>
+                <p class="sub">Next arrivals</p>
             </div>
         </div>
 
-        <div class="col-xl-3 col-md-6">
-            <div class="card card-animate">
-                <div class="card-body">
-                    <div class="d-flex align-items-end justify-content-between">
-                        <div>
-                            <h4 class="text-muted fw-normal mb-0">Completed</h4>
-                            <h2 class="mb-2"><span class="counter-value" data-target="{{ $stats['completed_tasks'] }}">0</span></h2>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                            <span class="avatar-title bg-success-subtle rounded fs-3">
-                                <i class="ri-checkbox-circle-line text-success"></i>
-                            </span>
-                        </div>
+        <div class="grid">
+            <div class="card wide">
+                <div class="card-head">
+                    <div>
+                        <h3>Today’s bookings</h3>
+                        <p class="muted">Confirmed and ready for arrival.</p>
                     </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Guest</th>
+                                <th>Property</th>
+                                <th>Dates</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($todaysBookings as $booking)
+                                <tr>
+                                    <td>{{ $booking->guest->name ?? 'Guest' }}</td>
+                                    <td>{{ $booking->property->name ?? 'Property' }}</td>
+                                    <td>{{ optional($booking->check_in)->format('M d') }} – {{ optional($booking->check_out)->format('M d') }}</td>
+                                    <td><span class="status status-paid">Confirmed</span></td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-4">No check-ins today.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
 
-        <div class="col-xl-3 col-md-6">
-            <div class="card card-animate">
-                <div class="card-body">
-                    <div class="d-flex align-items-end justify-content-between">
-                        <div>
-                            <h4 class="text-muted fw-normal mb-0">Pending Tasks</h4>
-                            <h2 class="mb-2"><span class="counter-value" data-target="{{ $stats['pending_tasks'] }}">0</span></h2>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                            <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                <i class="ri-time-line text-warning"></i>
-                            </span>
-                        </div>
-                    </div>
+            <div class="card stack">
+                <div class="card-head">
+                    <h3>Upcoming arrivals</h3>
+                    <p class="muted">Confirmed guests to prepare for.</p>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card card-animate">
-                <div class="card-body">
-                    <div class="d-flex align-items-end justify-content-between">
-                        <div>
-                            <h4 class="text-muted fw-normal mb-0">Total Orders</h4>
-                            <h2 class="mb-2"><span class="counter-value" data-target="{{ $stats['total_orders'] }}">0</span></h2>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                            <span class="avatar-title bg-primary-subtle rounded fs-3">
-                                <i class="ri-shopping-cart-line text-primary"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- My Tasks -->
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title">My Pending Tasks</h5>
-                    <a href="#" class="btn btn-sm btn-primary">Add Task</a>
-                </div>
-                <div class="card-body">
-                    <div class="task-list">
-                        <div class="task-item d-flex justify-content-between align-items-start p-3 border-bottom">
+                <div class="list">
+                    @forelse ($upcomingCheckins as $booking)
+                        <div class="list-item">
                             <div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="task1">
-                                    <label class="form-check-label" for="task1">
-                                        <strong>Complete property inspection report</strong>
-                                        <p class="text-muted text-sm mb-0">Due: Jan 25, 2026</p>
-                                    </label>
-                                </div>
+                                <p class="label mb-1">{{ $booking->guest->name ?? 'Guest' }}</p>
+                                <p class="muted mb-0">{{ optional($booking->check_in)->format('M d') }} · {{ $booking->property->name ?? 'Property' }}</p>
                             </div>
-                            <span class="badge bg-warning">High</span>
+                            <span class="pill light">{{ $booking->booking_ref }}</span>
                         </div>
-
-                        <div class="task-item d-flex justify-content-between align-items-start p-3 border-bottom">
-                            <div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="task2">
-                                    <label class="form-check-label" for="task2">
-                                        <strong>Follow up with clients</strong>
-                                        <p class="text-muted text-sm mb-0">Due: Jan 23, 2026</p>
-                                    </label>
-                                </div>
-                            </div>
-                            <span class="badge bg-info">Medium</span>
-                        </div>
-
-                        <div class="task-item d-flex justify-content-between align-items-start p-3 border-bottom">
-                            <div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="task3">
-                                    <label class="form-check-label" for="task3">
-                                        <strong>Update property listings</strong>
-                                        <p class="text-muted text-sm mb-0">Due: Jan 22, 2026</p>
-                                    </label>
-                                </div>
-                            </div>
-                            <span class="badge bg-warning">High</span>
-                        </div>
-
-                        <div class="task-item d-flex justify-content-between align-items-start p-3">
-                            <div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="task4">
-                                    <label class="form-check-label" for="task4">
-                                        <strong>Schedule appointments</strong>
-                                        <p class="text-muted text-sm mb-0">Due: Jan 24, 2026</p>
-                                    </label>
-                                </div>
-                            </div>
-                            <span class="badge bg-success">Low</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Recent Orders -->
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title">Recent Orders</h5>
-                    <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
-                </div>
-                <div class="card-body">
-                    <div class="orders-list">
-                        <div class="order-item d-flex justify-content-between align-items-center p-3 border-bottom">
-                            <div>
-                                <h6 class="mb-1">Order #2024-001</h6>
-                                <p class="text-muted text-sm mb-0">Property Listing Services</p>
-                            </div>
-                            <span class="badge bg-success">Completed</span>
-                        </div>
-
-                        <div class="order-item d-flex justify-content-between align-items-center p-3 border-bottom">
-                            <div>
-                                <h6 class="mb-1">Order #2024-002</h6>
-                                <p class="text-muted text-sm mb-0">Consultation Services</p>
-                            </div>
-                            <span class="badge bg-info">In Progress</span>
-                        </div>
-
-                        <div class="order-item d-flex justify-content-between align-items-center p-3 border-bottom">
-                            <div>
-                                <h6 class="mb-1">Order #2024-003</h6>
-                                <p class="text-muted text-sm mb-0">Property Inspection</p>
-                            </div>
-                            <span class="badge bg-warning">Pending</span>
-                        </div>
-
-                        <div class="order-item d-flex justify-content-between align-items-center p-3">
-                            <div>
-                                <h6 class="mb-1">Order #2024-004</h6>
-                                <p class="text-muted text-sm mb-0">Valuation Report</p>
-                            </div>
-                            <span class="badge bg-secondary">On Hold</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Performance & Statistics -->
-    <div class="row">
-        <div class="col-xl-8">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Your Performance</h5>
-                </div>
-                <div class="card-body">
-                    <div class="performance-stats">
-                        <div class="stat-row d-flex justify-content-between align-items-center mb-3">
-                            <span>Task Completion Rate</span>
-                            <div class="stat-bar" style="width: 200px;">
-                                <div class="progress" style="height: 25px;">
-                                    <div class="progress-bar" style="width: 67%;">67%</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="stat-row d-flex justify-content-between align-items-center mb-3">
-                            <span>On-Time Delivery</span>
-                            <div class="stat-bar" style="width: 200px;">
-                                <div class="progress" style="height: 25px;">
-                                    <div class="progress-bar bg-success" style="width: 85%;">85%</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="stat-row d-flex justify-content-between align-items-center">
-                            <span>Client Satisfaction</span>
-                            <div class="stat-bar" style="width: 200px;">
-                                <div class="progress" style="height: 25px;">
-                                    <div class="progress-bar bg-warning" style="width: 92%;">92%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Quick Actions</h5>
-                </div>
-                <div class="card-body">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="ri-task-add-line"></i> Create New Task
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="ri-calendar-line"></i> View Schedule
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="ri-file-chart-line"></i> View Reports
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="ri-message-line"></i> Messages
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="ri-file-text-line"></i> Documentation
-                        </a>
-                    </div>
+                    @empty
+                        <p class="muted mb-0">No upcoming check-ins.</p>
+                    @endforelse
                 </div>
             </div>
         </div>
     </div>
 @endsection
 
-@push('scripts')
-    <style>
-        .task-item {
-            transition: background-color 0.3s ease;
-        }
+@push('styles')
+<style>
+    :root {
+        --brand-primary: #652482;
+        --brand-bg: #f8f5f0;
+        --brand-text: #222222;
+        --brand-accent: #decfbc;
+    }
 
-        .task-item:hover {
-            background-color: #f9f9f9;
-        }
+    body { background: var(--brand-bg); color: var(--brand-text); }
 
-        .order-item {
-            transition: background-color 0.3s ease;
-        }
+    .dash-shell { display: flex; flex-direction: column; gap: 24px; }
+    .dash-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; margin: 0 0 6px; color: #5b5566; }
+    .dash-head h1 { margin: 0 0 6px; font-weight: 700; }
+    .lede { margin: 0; color: #4a4550; }
+    .pill { background: var(--brand-accent); color: var(--brand-text); padding: 10px 14px; border-radius: 999px; font-weight: 600; }
 
-        .order-item:hover {
-            background-color: #f9f9f9;
-        }
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .card { background: white; border: 1px solid rgba(0,0,0,0.04); border-radius: 18px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+    .metric .label { margin: 0 0 6px; color: #5a5661; }
+    .metric .value { margin: 0; font-size: 32px; font-weight: 700; color: var(--brand-primary); }
+    .metric .sub { margin: 4px 0 0; color: #6f6a75; }
 
-        .progress {
-            background-color: #e9ecef;
-        }
+    .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+    .card-head h3 { margin: 0; }
+    .card-head .muted { margin: 4px 0 0; }
+    .muted { color: #6d6673; }
+    .wide { padding: 18px 18px 12px; }
+    .stack { display: flex; flex-direction: column; gap: 16px; }
 
-        .progress-bar {
-            background-color: #50a5f1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
+    .pill.light { background: rgba(101,36,130,0.08); color: var(--brand-primary); padding: 6px 10px; border-radius: 12px; font-weight: 600; }
+    .status { padding: 6px 10px; border-radius: 12px; font-weight: 600; font-size: 12px; text-transform: capitalize; }
+    .status-paid { background: rgba(60,179,113,0.12); color: #2d8658; }
 
-        .list-group-item {
-            padding: 0.75rem 1rem;
-            text-decoration: none;
-            color: #323238;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+    .list { display: flex; flex-direction: column; gap: 10px; }
+    .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .list-item:last-child { border-bottom: none; }
 
-        .list-group-item:hover {
-            background-color: #f1f5f7;
-            color: var(--bs-primary);
-        }
-
-        .list-group-item i {
-            font-size: 1.1rem;
-        }
-    </style>
-
-    <script>
-        // Counter animation
-        document.querySelectorAll('.counter-value').forEach(element => {
-            const target = parseInt(element.dataset.target);
-            let current = 0;
-            const increment = target / 50;
-
-            const counter = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target;
-                    clearInterval(counter);
-                } else {
-                    element.textContent = Math.floor(current);
-                }
-            }, 30);
-        });
-
-        // Checkbox handling
-        document.querySelectorAll('.form-check-input').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    this.closest('.form-check-label').style.textDecoration = 'line-through';
-                    this.closest('.form-check-label').style.opacity = '0.6';
-                } else {
-                    this.closest('.form-check-label').style.textDecoration = 'none';
-                    this.closest('.form-check-label').style.opacity = '1';
-                }
-            });
-        });
-    </script>
+    @media (max-width: 992px) {
+        .grid { grid-template-columns: 1fr; }
+        .dash-head { flex-direction: column; align-items: flex-start; }
+    }
+</style>
 @endpush

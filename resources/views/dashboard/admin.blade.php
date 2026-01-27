@@ -4,284 +4,184 @@
 @section('page-title', 'Admin Dashboard')
 
 @section('content')
-    <div class="alert alert-info mb-4">
-        <i class="ri-shield-admin-line"></i> You are viewing the <strong>Admin Dashboard</strong> with system statistics and user management options.
-    </div>
+    <div class="dash-shell">
+        <div class="dash-head">
+            <div>
+                <p class="eyebrow">Control Center</p>
+                <h1>Operations overview</h1>
+                <p class="lede">Full-system visibility across bookings, revenue, and payments.</p>
+            </div>
+            <div class="pill">Updated {{ now()->format('M d, Y') }}</div>
+        </div>
 
-    <!-- Admin Statistics -->
-    <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card card-animate">
-                <div class="card-body">
-                    <div class="d-flex align-items-end justify-content-between">
-                        <div>
-                            <h4 class="text-muted fw-normal mb-0">Total Users</h4>
-                            <h2 class="mb-2"><span class="counter-value" data-target="{{ $stats['total_users'] }}">0</span></h2>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                            <span class="avatar-title bg-primary-subtle rounded fs-3">
-                                <i class="ri-user-line text-primary"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+        <div class="metrics">
+            <div class="card metric">
+                <p class="label">Total bookings</p>
+                <p class="value">{{ number_format($totalBookings) }}</p>
+                <p class="sub">All time</p>
+            </div>
+            <div class="card metric">
+                <p class="label">Total revenue</p>
+                <p class="value">KES {{ number_format($totalRevenue, 2) }}</p>
+                <p class="sub">Confirmed payments</p>
+            </div>
+            <div class="card metric">
+                <p class="label">Pending bookings</p>
+                <p class="value">{{ number_format($pendingBookings) }}</p>
+                <p class="sub">Awaiting payment</p>
+            </div>
+            <div class="card metric">
+                <p class="label">Payment alerts</p>
+                <p class="value">{{ number_format($failedOrPendingPayments) }}</p>
+                <p class="sub">Failed / pending intents</p>
             </div>
         </div>
 
-        <div class="col-xl-3 col-md-6">
-            <div class="card card-animate">
-                <div class="card-body">
-                    <div class="d-flex align-items-end justify-content-between">
-                        <div>
-                            <h4 class="text-muted fw-normal mb-0">Admin Users</h4>
-                            <h2 class="mb-2"><span class="counter-value" data-target="{{ $stats['admin_users'] }}">0</span></h2>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                            <span class="avatar-title bg-danger-subtle rounded fs-3">
-                                <i class="ri-shield-admin-line text-danger"></i>
-                            </span>
-                        </div>
+        <div class="grid">
+            <div class="card wide">
+                <div class="card-head">
+                    <div>
+                        <h3>Recent bookings</h3>
+                        <p class="muted">Latest activity across all properties.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card card-animate">
-                <div class="card-body">
-                    <div class="d-flex align-items-end justify-content-between">
-                        <div>
-                            <h4 class="text-muted fw-normal mb-0">Staff Users</h4>
-                            <h2 class="mb-2"><span class="counter-value" data-target="{{ $stats['staff_users'] }}">0</span></h2>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                            <span class="avatar-title bg-success-subtle rounded fs-3">
-                                <i class="ri-team-line text-success"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card card-animate">
-                <div class="card-body">
-                    <div class="d-flex align-items-end justify-content-between">
-                        <div>
-                            <h4 class="text-muted fw-normal mb-0">Growth Rate</h4>
-                            <h2 class="mb-2"><span class="counter-value" data-target="{{ $stats['growth_rate'] }}">0</span>%</h2>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                            <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                <i class="ri-trending-up-line text-warning"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- System Overview -->
-        <div class="col-xl-8">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title">System Overview</h5>
-                    <a href="#" class="btn btn-sm btn-primary">View Details</a>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered">
-                            <thead class="table-light">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Booking</th>
+                                <th>Guest</th>
+                                <th>Property</th>
+                                <th>Dates</th>
+                                <th>Status</th>
+                                <th class="text-end">Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($recentBookings as $booking)
                                 <tr>
-                                    <th>Metric</th>
-                                    <th>Value</th>
-                                    <th>Status</th>
+                                    <td><span class="pill light">{{ $booking->booking_ref }}</span></td>
+                                    <td>{{ $booking->guest->name ?? 'Guest' }}</td>
+                                    <td>{{ $booking->property->name ?? 'Property' }}</td>
+                                    <td>{{ optional($booking->check_in)->format('M d') }} – {{ optional($booking->check_out)->format('M d') }}</td>
+                                    <td><span class="status status-{{ strtolower($booking->status) }}">{{ str_replace('_', ' ', $booking->status) }}</span></td>
+                                    <td class="text-end">KES {{ number_format($booking->total_amount, 2) }}</td>
+                                    <td class="text-end">
+                                        <a class="link" href="{{ route('booking.summary', $booking->id) }}">View</a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
+                            @empty
                                 <tr>
-                                    <td>Total Revenue</td>
-                                    <td><strong>${{ $stats['total_revenue'] }}k</strong></td>
-                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td colspan="7" class="text-center text-muted py-4">No bookings yet.</td>
                                 </tr>
-                                <tr>
-                                    <td>Total Orders</td>
-                                    <td><strong>{{ $stats['total_orders'] }}</strong></td>
-                                    <td><span class="badge bg-info">Processing</span></td>
-                                </tr>
-                                <tr>
-                                    <td>System Health</td>
-                                    <td><strong>100%</strong></td>
-                                    <td><span class="badge bg-success">Operational</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Database Status</td>
-                                    <td><strong>Connected</strong></td>
-                                    <td><span class="badge bg-success">Online</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
 
-        <!-- Admin Actions -->
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Admin Actions</h5>
+            <div class="card stack">
+                <div class="card-head">
+                    <h3>Payment health</h3>
+                    <p class="muted">Status across all payment intents.</p>
                 </div>
-                <div class="card-body">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1"><i class="ri-user-add-line"></i> Add User</h6>
-                                <span class="badge bg-primary">New</span>
+                <div class="chip-grid">
+                    @foreach ($paymentStatusSummary as $row)
+                        <div class="chip">
+                            <span class="dot dot-{{ strtolower($row->status) }}"></span>
+                            <div>
+                                <p class="label">{{ ucfirst(strtolower(str_replace('_', ' ', $row->status))) }}</p>
+                                <p class="value small">{{ $row->total }} intents</p>
                             </div>
-                            <p class="mb-1 text-muted">Create new user account</p>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1"><i class="ri-settings-4-line"></i> System Settings</h6>
-                            </div>
-                            <p class="mb-1 text-muted">Configure system parameters</p>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1"><i class="ri-file-chart-line"></i> Reports</h6>
-                            </div>
-                            <p class="mb-1 text-muted">Generate system reports</p>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1"><i class="ri-database-2-line"></i> Backup</h6>
-                            </div>
-                            <p class="mb-1 text-muted">Manage database backups</p>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1"><i class="ri-mail-line"></i> Email Templates</h6>
-                            </div>
-                            <p class="mb-1 text-muted">Manage email configurations</p>
-                        </a>
-                    </div>
+                        </div>
+                    @endforeach
+                    @if ($paymentStatusSummary->isEmpty())
+                        <p class="muted mb-0">No payment activity yet.</p>
+                    @endif
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Recent Activities -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title">Recent System Activities</h5>
-                    <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
-                </div>
-                <div class="card-body">
-                    <div class="activity-group">
-                        <div class="activity d-flex justify-content-between align-items-start">
-                            <div class="d-flex gap-3">
-                                <div class="avatar-xs flex-shrink-0">
-                                    <span class="avatar-title bg-success-subtle rounded-circle fs-13">
-                                        <i class="ri-user-add-line"></i>
-                                    </span>
-                                </div>
-                                <div>
-                                    <h6 class="mb-1">New User Created</h6>
-                                    <p class="text-muted text-sm mb-0">Staff account "John Doe" was created</p>
-                                </div>
+                <div class="divider"></div>
+                <h4 class="mb-3">By method</h4>
+                <div class="chip-grid">
+                    @foreach ($paymentMethodSummary as $row)
+                        <div class="chip">
+                            <span class="dot"></span>
+                            <div>
+                                <p class="label">{{ $row->method }} / {{ ucfirst(strtolower($row->status)) }}</p>
+                                <p class="value small">{{ $row->total }} intents</p>
                             </div>
-                            <small class="text-muted">2 hours ago</small>
                         </div>
-
-                        <div class="activity d-flex justify-content-between align-items-start">
-                            <div class="d-flex gap-3">
-                                <div class="avatar-xs flex-shrink-0">
-                                    <span class="avatar-title bg-info-subtle rounded-circle fs-13">
-                                        <i class="ri-shield-admin-line"></i>
-                                    </span>
-                                </div>
-                                <div>
-                                    <h6 class="mb-1">Role Changed</h6>
-                                    <p class="text-muted text-sm mb-0">User "Jane Smith" promoted to Admin</p>
-                                </div>
-                            </div>
-                            <small class="text-muted">4 hours ago</small>
-                        </div>
-
-                        <div class="activity d-flex justify-content-between align-items-start">
-                            <div class="d-flex gap-3">
-                                <div class="avatar-xs flex-shrink-0">
-                                    <span class="avatar-title bg-warning-subtle rounded-circle fs-13">
-                                        <i class="ri-database-2-line"></i>
-                                    </span>
-                                </div>
-                                <div>
-                                    <h6 class="mb-1">Database Backup</h6>
-                                    <p class="text-muted text-sm mb-0">Automatic backup completed successfully</p>
-                                </div>
-                            </div>
-                            <small class="text-muted">1 day ago</small>
-                        </div>
-
-                        <div class="activity d-flex justify-content-between align-items-start">
-                            <div class="d-flex gap-3">
-                                <div class="avatar-xs flex-shrink-0">
-                                    <span class="avatar-title bg-danger-subtle rounded-circle fs-13">
-                                        <i class="ri-alert-line"></i>
-                                    </span>
-                                </div>
-                                <div>
-                                    <h6 class="mb-1">Failed Login Attempt</h6>
-                                    <p class="text-muted text-sm mb-0">Invalid credentials from IP 192.168.1.100</p>
-                                </div>
-                            </div>
-                            <small class="text-muted">2 days ago</small>
-                        </div>
-                    </div>
+                    @endforeach
+                    @if ($paymentMethodSummary->isEmpty())
+                        <p class="muted mb-0">No method breakdown yet.</p>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 @endsection
 
-@push('scripts')
-    <style>
-        .activity {
-            padding: 1rem 0;
-            border-bottom: 1px solid #e9ecef;
-        }
+@push('styles')
+<style>
+    :root {
+        --brand-primary: #652482;
+        --brand-bg: #f8f5f0;
+        --brand-text: #222222;
+        --brand-accent: #decfbc;
+    }
 
-        .activity:last-child {
-            border-bottom: none;
-        }
+    body { background: var(--brand-bg); color: var(--brand-text); }
 
-        .activity-group {
-            margin: 0;
-        }
-    </style>
+    .dash-shell { display: flex; flex-direction: column; gap: 24px; }
+    .dash-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; margin: 0 0 6px; color: #5b5566; }
+    .dash-head h1 { margin: 0 0 6px; font-weight: 700; }
+    .lede { margin: 0; color: #4a4550; }
+    .pill { background: var(--brand-accent); color: var(--brand-text); padding: 10px 14px; border-radius: 999px; font-weight: 600; }
 
-    <script>
-        // Counter animation
-        document.querySelectorAll('.counter-value').forEach(element => {
-            const target = parseInt(element.dataset.target);
-            let current = 0;
-            const increment = target / 50;
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .card { background: white; border: 1px solid rgba(0,0,0,0.04); border-radius: 18px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+    .metric .label { margin: 0 0 6px; color: #5a5661; }
+    .metric .value { margin: 0; font-size: 32px; font-weight: 700; color: var(--brand-primary); }
+    .metric .sub { margin: 4px 0 0; color: #6f6a75; }
 
-            const counter = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target;
-                    clearInterval(counter);
-                } else {
-                    element.textContent = Math.floor(current);
-                }
-            }, 30);
-        });
-    </script>
+    .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+    .card-head h3 { margin: 0; }
+    .card-head .muted { margin: 4px 0 0; }
+    .muted { color: #6d6673; }
+    .wide { padding: 18px 18px 12px; }
+    .stack { display: flex; flex-direction: column; gap: 16px; }
+
+    .pill.light { background: rgba(101,36,130,0.08); color: var(--brand-primary); padding: 6px 10px; border-radius: 12px; font-weight: 600; }
+    .status { padding: 6px 10px; border-radius: 12px; font-weight: 600; font-size: 12px; text-transform: capitalize; }
+    .status-paid { background: rgba(60,179,113,0.12); color: #2d8658; }
+    .status-pending_payment { background: rgba(255,165,0,0.12); color: #b87400; }
+    .status-partially_paid { background: rgba(255,215,0,0.16); color: #8a6d00; }
+    .status-cancelled { background: rgba(220,53,69,0.12); color: #a12632; }
+    .status-draft { background: rgba(108,117,125,0.12); color: #495057; }
+    .status-expired { background: rgba(0,0,0,0.08); color: #444; }
+
+    .chip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .chip { border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: 10px 12px; display: flex; gap: 10px; align-items: center; background: #fff; box-shadow: 0 6px 16px rgba(0,0,0,0.04); }
+    .chip .label { margin: 0; font-weight: 700; color: var(--brand-text); }
+    .chip .value { margin: 2px 0 0; color: #6d6673; }
+    .chip .value.small { font-size: 13px; }
+    .dot { width: 12px; height: 12px; border-radius: 999px; background: var(--brand-primary); display: inline-block; }
+    .dot-succeeded { background: #2d8658; }
+    .dot-pending { background: #b87400; }
+    .dot-failed { background: #a12632; }
+    .dot-initiated { background: #4a5d8f; }
+    .dot-under_review { background: #7a5a00; }
+    .dot-cancelled { background: #6c757d; }
+
+    .divider { height: 1px; background: rgba(0,0,0,0.06); margin: 6px 0; }
+    .link { color: var(--brand-primary); font-weight: 700; text-decoration: none; }
+    .link:hover { text-decoration: underline; }
+
+    @media (max-width: 992px) {
+        .grid { grid-template-columns: 1fr; }
+        .dash-head { flex-direction: column; align-items: flex-start; }
+    }
+</style>
 @endpush

@@ -58,4 +58,18 @@ class Booking extends Model
     {
         return $this->belongsToMany(Amenity::class, 'booking_amenities');
     }
+
+    // Confirmed bookings only (paid)
+    public function scopeConfirmed($query)
+    {
+        return $query->where('status', 'PAID');
+    }
+
+    // Visibility for staff operations: confirmed and not yet checked out
+    public function scopeForStaffOperations($query)
+    {
+        return $query
+            ->confirmed()
+            ->whereDate('check_out', '>=', now());
+    }
 }
