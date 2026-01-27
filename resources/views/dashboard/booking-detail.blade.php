@@ -111,7 +111,7 @@
                 </div>
 
                 <!-- Transactions -->
-                @if($booking->transactions->count() > 0)
+                @if($booking->bookingTransactions->count() > 0)
                     <div class="card">
                         <div class="card-head">
                             <h3>Payment Transactions</h3>
@@ -127,7 +127,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($booking->transactions as $txn)
+                                    @foreach($booking->bookingTransactions as $txn)
                                         <tr>
                                             <td>{{ $txn->posted_at->format('M d, H:i') }}</td>
                                             <td><strong>KES {{ number_format($txn->amount, 2) }}</strong></td>

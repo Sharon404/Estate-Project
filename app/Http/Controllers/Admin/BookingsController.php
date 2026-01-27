@@ -53,7 +53,7 @@ class BookingsController extends Controller
     public function show(Booking $booking)
     {
         return view('dashboard.booking-detail', [
-            'booking' => $booking->load(['guest', 'property', 'transactions', 'receipts'])
+            'booking' => $booking->load(['guest', 'property', 'bookingTransactions', 'receipts', 'paymentIntents'])
         ]);
     }
 }
