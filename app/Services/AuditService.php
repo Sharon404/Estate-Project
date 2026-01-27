@@ -297,6 +297,72 @@ class AuditService
     }
 
     /**
+     * Log successful login
+     */
+    public static function logLoginSuccess($user = null)
+    {
+        $user = $user ?? Auth::user();
+
+        return self::createLog([
+            'user_id' => $user?->id,
+            'action' => 'login_success',
+            'resource_type' => 'Auth',
+            'resource_id' => $user?->id,
+            'status' => 'success',
+            'metadata' => [
+                'user_email' => $user?->email,
+                'user_name' => $user?->name,
+            ],
+            'description' => $user?->email
+                ? "User {$user->email} logged in successfully"
+                : 'Login succeeded'
+        ]);
+    }
+
+    /**
+     * Log failed login attempt
+     */
+    public static function logLoginFailed(string $email = null)
+    {
+        return self::createLog([
+            'user_id' => null,
+            'action' => 'login_failed',
+            'resource_type' => 'Auth',
+            'resource_id' => null,
+            'status' => 'failed',
+            'metadata' => [
+                'user_email' => $email,
+            ],
+            'description' => $email
+                ? "Login failed for {$email}"
+                : 'Login failed'
+        ]);
+    }
+
+    /**
+     * Log logout
+     */
+    public static function logLogout($user = null)
+    {
+        $user = $user ?? Auth::user();
+
+        return self::createLog([
+            'user_id' => $user?->id,
+            'action' => 'logout',
+            'resource_type' => 'Auth',
+            'resource_id' => $user?->id,
+            'status' => 'success',
+            'metadata' => [
+                'user_email' => $user?->email,
+                'user_name' => $user?->name,
+            ],
+            'description' => $user?->email
+                ? "User {$user->email} logged out"
+                : 'User logged out'
+        ]);
+    }
+
+    /**
      * Create an audit log entry
      */
     public static function createLog($data = [])

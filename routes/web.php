@@ -40,7 +40,7 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 // Protected Routes - Authenticated Users
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'audit.request'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
@@ -99,7 +99,7 @@ Route::post('api/mpesa/callback', [MpesaController::class, 'callback'])
     ->name('payment.mpesa.callback-external');
 
 // Admin Payment Routes - Manual verification
-Route::middleware('auth')->prefix('admin/payment')->name('admin.payment.')->group(function () {
+Route::middleware(['auth', 'audit.request'])->prefix('admin/payment')->name('admin.payment.')->group(function () {
     // Dashboard
     Route::get('verification-dashboard', [AdminPaymentController::class, 'verificationDashboard'])->name('verification-dashboard');
     
@@ -119,7 +119,7 @@ Route::middleware('auth')->prefix('admin/payment')->name('admin.payment.')->grou
 });
 
 // Admin Audit Routes - Logging and compliance
-Route::middleware('auth')->prefix('admin/audit')->name('admin.audit.')->group(function () {
+Route::middleware(['auth', 'audit.request'])->prefix('admin/audit')->name('admin.audit.')->group(function () {
     Route::get('logs', [AuditController::class, 'index'])->name('logs');
     Route::get('logs/{id}', [AuditController::class, 'show'])->name('logs-show');
     Route::get('resource', [AuditController::class, 'forResource'])->name('resource');

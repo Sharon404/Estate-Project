@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\AuditService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -30,8 +31,12 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
+            AuditService::logLoginSuccess(Auth::user());
+
             return redirect()->intended(route('dashboard'))->with('success', 'Welcome back!');
         }
+
+        AuditService::logLoginFailed($request->input('email'));
 
         throw ValidationException::withMessages([
             'email' => 'The provided credentials do not match our records.',
@@ -43,6 +48,10 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        $user = Auth::user();
+
+        AuditService::logLogout($user);
+
         Auth::logout();
 
         $request->session()->invalidate();
