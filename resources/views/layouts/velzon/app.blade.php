@@ -117,36 +117,58 @@
                     <ul class="metismenu list-unstyled" id="side-menu">
                         <li class="menu-title" data-key="t-menu">Menu</li>
 
-                        <li>
-                            <a href="{{ route('dashboard') }}" class="has-arrow">
-                                <i class="ri-dashboard-2-line"></i> <span>Dashboard</span>
-                            </a>
-                        </li>
+                        @if (auth()->check())
+                            @if (auth()->user()->role === 'admin' || strtolower(auth()->user()->role) === 'admin')
+                                <!-- Admin Menu -->
+                                <li>
+                                    <a href="{{ route('admin.dashboard') }}" class="has-arrow">
+                                        <i class="ri-dashboard-2-line"></i> <span>Dashboard</span>
+                                    </a>
+                                </li>
 
-                        <li class="menu-title" data-key="t-apps">Apps</li>
+                                <li class="menu-title" data-key="t-admin">Admin</li>
 
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow">
-                                <i class="ri-mail-send-line"></i> <span>Email</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="javascript: void(0);">Inbox</a></li>
-                                <li><a href="javascript: void(0);">Email Detail</a></li>
-                                <li><a href="javascript: void(0);">Compose Email</a></li>
-                            </ul>
-                        </li>
+                                <li>
+                                    <a href="{{ route('admin.bookings') }}">
+                                        <i class="ri-book-mark-line"></i> <span>Bookings</span>
+                                    </a>
+                                </li>
 
-                        <li class="menu-title" data-key="t-pages">Pages</li>
+                                <li>
+                                    <a href="{{ route('admin.analytics') }}">
+                                        <i class="ri-bar-chart-line"></i> <span>Analytics</span>
+                                    </a>
+                                </li>
 
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow">
-                                <i class="ri-account-circle-line"></i> <span>Account</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="javascript: void(0);">Profile</a></li>
-                                <li><a href="javascript: void(0);">Settings</a></li>
-                            </ul>
-                        </li>
+                                <li>
+                                    <a href="{{ route('admin.audit-logs') }}">
+                                        <i class="ri-file-list-line"></i> <span>Audit Logs</span>
+                                    </a>
+                                </li>
+
+                            @elseif (auth()->user()->role === 'staff' || strtolower(auth()->user()->role) === 'staff')
+                                <!-- Staff Menu -->
+                                <li>
+                                    <a href="{{ route('staff.dashboard') }}">
+                                        <i class="ri-dashboard-2-line"></i> <span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                            @else
+                                <!-- Default Dashboard -->
+                                <li>
+                                    <a href="{{ route('dashboard') }}">
+                                        <i class="ri-dashboard-2-line"></i> <span>Dashboard</span>
+                                    </a>
+                                </li>
+                            @endif
+                        @else
+                            <li>
+                                <a href="{{ route('dashboard') }}" class="has-arrow">
+                                    <i class="ri-dashboard-2-line"></i> <span>Dashboard</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
