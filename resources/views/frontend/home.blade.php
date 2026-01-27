@@ -8,7 +8,7 @@
         <div id="de-loader"></div>
         <!-- page preloader close -->
         
-        <section class="no-top no-bottom position-relative overflow-hidden mt-80 mt-sm-50 mx-2 rounded-1" style="min-height: 550px; background: #decfbc;">
+        <section id="home" class="no-top no-bottom position-relative overflow-hidden mt-80 mt-sm-50 mx-2 rounded-1" style="min-height: 550px; background: #decfbc;">
             <!-- Background Swiper -->
             <div class="swiper-hero position-absolute w-100 h-100 top-0 start-0">
                             <div class="swiper-wrapper">
@@ -246,11 +246,11 @@
             </div>
         </section>
 
-        <section class="bg-color-op-1 rounded-1 mx-2">
+        <section id="about" class="bg-color-op-1 rounded-1 mx-2">
             <div class="container">
                 <div class="row g-4 gx-5 align-items-center justify-content-between">
                     <div class="col-lg-6">
-                        <div class="subtitle wow fadeInUp" data-wow-delay=".0s">Tausi Holiday & Getaway Homes</div>
+                        <div class="subtitle wow fadeInUp" data-wow-delay=".0s">About Tausi</div>
                         <h2 class="wow fadeInUp" data-wow-delay=".2s">Private Homes Designed for Comfort & Quiet</h2>
                     </div>
                     <div class="col-lg-6">
@@ -402,7 +402,7 @@
             </div>
         </section>
 
-        <section aria-label="section">
+        <section id="booking" aria-label="section">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -551,7 +551,7 @@
             </div>
         </section>
 
-        <section class="bg-color-op-1 rounded-1 mx-2">
+        <section id="pricing" class="bg-color-op-1 rounded-1 mx-2">
             <div class="container">
                 <div class="row g-4 mb-2 justify-content-center">
                     <div class="col-lg-6 text-center">
@@ -808,6 +808,43 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="bg-light py-5">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-lg-12 text-center">
+                        <h2 class="wow fadeInUp mb-3">Get in Touch</h2>
+                        <p class="wow fadeInUp fs-18">Have questions about our homes? We're here to help!</p>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-4 text-center wow fadeInUp" data-wow-delay=".2s">
+                        <div class="mb-3">
+                            <i class="fa fa-phone fs-40 id-color"></i>
+                        </div>
+                        <h4 class="mb-2">Call Us</h4>
+                        <p class="mb-0"><a href="tel:+254718756254" class="text-decoration-none">+254 718 756 254</a><br>WhatsApp: <a href="https://wa.me/254718756254" class="text-decoration-none">+254 718 756 254</a></p>
+                    </div>
+
+                    <div class="col-lg-4 text-center wow fadeInUp" data-wow-delay=".4s">
+                        <div class="mb-3">
+                            <i class="fa fa-envelope fs-40 id-color"></i>
+                        </div>
+                        <h4 class="mb-2">Email Us</h4>
+                        <p class="mb-0"><a href="mailto:bookings@tausivacations.com" class="text-decoration-none">bookings@tausivacations.com</a></p>
+                    </div>
+
+                    <div class="col-lg-4 text-center wow fadeInUp" data-wow-delay=".6s">
+                        <div class="mb-3">
+                            <i class="fa fa-map-marker fs-40 id-color"></i>
+                        </div>
+                        <h4 class="mb-2">Visit Us</h4>
+                        <p class="mb-0">Nanyuki, Kenya</p>
+                    </div>
                 </div>
             </div>
         </section>
