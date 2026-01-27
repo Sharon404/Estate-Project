@@ -17,6 +17,7 @@ Route::get('/home-3', [FrontendController::class, 'home2'])->name('frontend.home
 Route::get('/home-4', [FrontendController::class, 'home2'])->name('frontend.home-4');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+Route::post('/contact', [FrontendController::class, 'contactStore'])->name('contact.store');
 Route::get('/properties', [FrontendController::class, 'properties'])->name('properties');
 Route::get('/property/{id}', [FrontendController::class, 'propertySingle'])->name('property.single');
 Route::get('/facilities', [FrontendController::class, 'facilities'])->name('facilities');

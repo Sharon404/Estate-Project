@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Contact;
+use App\Mail\ContactFormSubmitted;
 
 class FrontendController extends Controller
 {
@@ -48,6 +53,41 @@ class FrontendController extends Controller
             'title' => 'Contact Us - GrandStay',
             'description' => 'Get in touch with our team. We\'d love to hear from you.'
         ]);
+    }
+
+    /**
+     * Handle contact form submission
+     */
+    public function contactStore(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'message' => 'required|string|max:5000',
+        ]);
+
+        // Store in database
+        $contact = Contact::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'message' => $validated['message'],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'status' => 'new',
+        ]);
+
+        // Send email notification to admin
+        try {
+            $adminEmail = env('ADMIN_EMAIL', 'admin@tausirental.com');
+            Mail::to($adminEmail)->send(new ContactFormSubmitted($contact));
+        } catch (\Exception $e) {
+            // Log error but don't fail the request
+            \Log::error('Failed to send contact form email: ' . $e->getMessage());
+        }
+        
+        return redirect()->route('contact')->with('success', 'Thank you for contacting us! We will get back to you soon.');
     }
 
     /**

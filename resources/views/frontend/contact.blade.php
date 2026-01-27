@@ -81,7 +81,24 @@
 
                 <div class="col-lg-6">
                     <div class="bg-color-op-1 rounded-1 p-40 relative">
+                        @if(session('success'))
+                            <div class="alert alert-success mb-4" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if($errors->any())
+                            <div class="alert alert-danger mb-4" role="alert">
+                                <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form name="contactForm" id="contact_form" method="post" action="{{ route('contact.store') }}">
+                        @csrf
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <h3 class="fs-18">Name</h3>
