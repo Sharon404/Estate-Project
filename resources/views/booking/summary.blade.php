@@ -157,22 +157,16 @@
                 <!-- Action Buttons -->
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <form action="{{ route('booking.edit', ['booking' => $booking->id]) }}" method="POST" class="w-100">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-primary btn-lg w-100">
-                                <i class="fas fa-edit me-2"></i>
-                                Edit Information
-                            </button>
-                        </form>
+                        <a href="{{ route('reservation') }}" class="btn btn-outline-primary btn-lg w-100">
+                            <i class="fas fa-edit me-2"></i>
+                            Edit Information
+                        </a>
                     </div>
                     <div class="col-md-6">
-                        <form action="{{ route('booking.confirm-pay', ['booking' => $booking->id]) }}" method="POST" class="w-100">
-                            @csrf
-                            <button type="submit" class="btn btn-primary btn-lg w-100">
-                                <i class="fas fa-credit-card me-2"></i>
-                                Proceed to Payment
-                            </button>
-                        </form>
+                        <a href="{{ route('payment.show', ['booking' => $booking->id]) }}" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-credit-card me-2"></i>
+                            Proceed to Payment
+                        </a>
                     </div>
                 </div>
 

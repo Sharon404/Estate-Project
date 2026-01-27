@@ -19,10 +19,17 @@ class EnsureUserHasRole
             return redirect()->route('login');
         }
 
-        if (in_array(auth()->user()->role, $roles)) {
+        // Normalize roles to handle different casing (e.g., "Admin", "admin")
+        $requiredRoles = array_map('strtolower', $roles);
+        $userRole = strtolower(auth()->user()->role ?? '');
+
+        if (in_array($userRole, $requiredRoles)) {
             return $next($request);
         }
 
-        return abort(403, 'Unauthorized');
+        // Gracefully handle missing/incorrect role with a redirect instead of a 403 page
+        return redirect()->route('login')->withErrors([
+            'auth' => 'Unauthorized: your account does not have access to this area.',
+        ]);
     }
 }

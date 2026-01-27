@@ -45,8 +45,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         $user = auth()->user();
+        $role = strtolower($user->role ?? '');
 
-        if ($user && $user->role === 'admin') {
+        if ($role === 'admin' || $role === 'superadmin') {
             return redirect()->route('admin.dashboard');
         }
 
