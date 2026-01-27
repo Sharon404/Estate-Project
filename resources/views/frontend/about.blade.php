@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'About Us')
+@section('title', 'About Us - Tausi Holiday & Getaway Homes')
 
 @section('content')
 
@@ -16,9 +16,9 @@
             <div class="container relative z-2">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp mb-2">Who We Are</div>
+                        <div class="subtitle id-color wow fadeInUp mb-2">Tausi Holiday & Getaway Homes</div>
                         <div class="clearfix"></div>
-                        <h2 class="fs-60 fs-xs-8vw wow fadeInUp" data-wow-delay=".4s">About Us</h2>
+                        <h2 class="fs-60 fs-xs-8vw wow fadeInUp" data-wow-delay=".4s">Private Homes Designed for Comfort & Quiet</h2>
                     </div>
                 </div>
             </div>
@@ -44,10 +44,10 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="ps-lg-3">
-                            <div class="subtitle id-color wow fadeInUp" data-wow-delay=".2s">About Our Hotel</div>
-                            <h2 class="wow fadeInUp" data-wow-delay=".4s">Where Relaxation Meets Elegance</h2>
+                            <div class="subtitle id-color wow fadeInUp" data-wow-delay=".2s">Tausi Holiday & Getaway Homes</div>
+                            <h2 class="wow fadeInUp" data-wow-delay=".4s">Private Homes Designed for Comfort & Quiet</h2>
                             <p class="mb-0 wow fadeInUp" data-wow-delay=".6s">
-                                Experience refined hospitality designed to make every stay memorable and effortless. Our hotel offers thoughtfully curated rooms, attentive service, and a welcoming atmosphere where comfort and convenience come together seamlessly. From restful nights to peaceful mornings, every detail is carefully arranged to ensure guests enjoy a relaxing, enjoyable, and truly satisfying stay throughout their visit.
+                                Tausi offers fully furnished private houses ideal for families, couples, and small groups seeking a peaceful escape. Each home provides privacy, comfort, and a calm environment — with breakfast included and a simple flat nightly rate. Enjoy privacy, space, and flexibility — ideal for relaxing stays away from busy hotels.
                             </p>
                         </div>
 
@@ -56,67 +56,87 @@
             </div>
         </section>
 
-        <section class="bg-color-op-1 rounded-1 m-2 mt-0">
+        <section class="bg-color-op-1 rounded-1 m-2">
             <div class="container">
                 <div class="row g-4 mb-4">
                     <div class="col-lg-6 offset-lg-3 text-center">
-                        <div class="subtitle wow fadeInUp">Our Team</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Meet Our Professionals</h2>
+                        <div class="subtitle wow fadeInUp">What Makes Tausi Special</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Simple Comforts That Make a Difference</h2>
                         <p class="wow fadeInUp" data-wow-delay=".4s">
-                            Dedicated hospitality professionals working together to deliver seamless service and exceptional guest experiences throughout your stay.
+                            Each home is designed with essential comforts in mind — no unnecessary luxury, just what matters most for a peaceful stay.
                         </p>
                     </div>
                 </div>
                 <div class="row g-4">
-                    <div class="col-lg-3 wow fadeInUp" data-wow-delay=".4s">
-                        <img src="{{ asset('assets/frontend/images/team/1.webp') }}" class="w-100 rounded-10px" alt="">
-                        <div class="p-3 text-center">
-                            <h3 class="mb-0">Thomas Bennett</h3>
-                            <p class="mb-2">Guest Experience Manager</p>
-                            <div class="social-icons">
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-facebook-f"></i></a>
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-x-twitter"></i></a>
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-instagram"></i></a>
-                            </div>
+                    <div class="col-lg-6 wow fadeInUp" data-wow-delay=".0s">
+                        <div class="p-40 bg-white rounded-1 h-100 shadow-sm">
+                            <div class="icon-box mb-3"><i class="fa fa-lightbulb" style="font-size: 32px; color: #decfbc;"></i></div>
+                            <h3>Calm & Comfortable Spaces</h3>
+                            <p>Thoughtfully designed interiors that prioritize comfort and tranquility. Rest assured knowing every space is clean, comfortable, and ready for you.</p>
                         </div>
                     </div>
 
-                    <div class="col-lg-3 wow fadeInUp" data-wow-delay=".6s">
-                        <img src="{{ asset('assets/frontend/images/team/2.webp') }}" class="w-100 rounded-10px" alt="">
-                        <div class="p-3 text-center">
-                            <h3 class="mb-0">Barbara Charline</h3>
-                            <p class="mb-2">Housekeeping Supervisor</p>
-                            <div class="social-icons">
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-facebook-f"></i></a>
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-x-twitter"></i></a>
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-instagram"></i></a>
-                            </div>
+                    <div class="col-lg-6 wow fadeInUp" data-wow-delay=".1s">
+                        <div class="p-40 bg-white rounded-1 h-100 shadow-sm">
+                            <div class="icon-box mb-3"><i class="fa fa-tree" style="font-size: 32px; color: #decfbc;"></i></div>
+                            <h3>Private Outdoor Areas</h3>
+                            <p>Your own outdoor space for morning coffee or evening relaxation. Secure parking, quiet gardens, and the freedom to enjoy your stay privately.</p>
                         </div>
                     </div>
 
-                    <div class="col-lg-3 wow fadeInUp" data-wow-delay=".8s">
-                        <img src="{{ asset('assets/frontend/images/team/3.webp') }}" class="w-100 rounded-10px" alt="">
-                        <div class="p-3 text-center">
-                            <h3 class="mb-0">Madison Jane</h3>
-                            <p class="mb-2">Room Quality Specialist</p>
-                            <div class="social-icons">
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-facebook-f"></i></a>
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-x-twitter"></i></a>
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-instagram"></i></a>
-                            </div>
+                    <div class="col-lg-6 wow fadeInUp" data-wow-delay=".2s">
+                        <div class="p-40 bg-dark-2 text-light rounded-1 h-100 shadow-sm">
+                            <div class="icon-box mb-3"><i class="fa fa-utensils" style="font-size: 32px; color: #decfbc;"></i></div>
+                            <h3>Breakfast Included</h3>
+                            <p>Start each day with a complimentary breakfast prepared for you. Simple, nourishing meals that set the tone for a great day ahead.</p>
                         </div>
                     </div>
 
-                    <div class="col-lg-3 wow fadeInUp" data-wow-delay="1s">
-                        <img src="{{ asset('assets/frontend/images/team/4.webp') }}" class="w-100 rounded-10px" alt="">
-                        <div class="p-3 text-center">
-                            <h3 class="mb-0">Joshua Henry</h3>
-                            <p class="mb-2">Guest Service Coordinator</p>
-                            <div class="social-icons">
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-facebook-f"></i></a>
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-x-twitter"></i></a>
-                                <a href="#"><i class="bg-white id-color bg-hover-2 text-hover-white fa-brands fa-instagram"></i></a>
+                    <div class="col-lg-6 wow fadeInUp" data-wow-delay=".3s">
+                        <div class="p-40 bg-dark-2 text-light rounded-1 h-100 shadow-sm">
+                            <div class="icon-box mb-3"><i class="fa fa-wifi" style="font-size: 32px; color: #decfbc;"></i></div>
+                            <h3>Essential Services</h3>
+                            <p>Reliable Wi-Fi, secure parking, and attentive on-request support. We're here when you need us, without being intrusive.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-6 offset-lg-3 text-center">
+                        <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">Our Pricing</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">One Flat Rate for All</h2>
+                        <p class="wow fadeInUp" data-wow-delay=".4s">
+                            Transparent, straightforward pricing with no hidden fees. Same great experience for everyone.
+                        </p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-6 wow fadeInUp" data-wow-delay=".0s">
+                        <div class="p-40 bg-white rounded-1 h-100 shadow-sm">
+                            <h3 class="mb-3">Every Night Includes</h3>
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-3"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Entire house rental — no shared spaces</li>
+                                <li class="mb-3"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Breakfast prepared for you</li>
+                                <li class="mb-3"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Secure parking & Wi-Fi</li>
+                                <li class="mb-3"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Attentive on-request support</li>
+                                <li class="mb-0"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Calm, respectful environment</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 wow fadeInUp" data-wow-delay=".2s">
+                        <div class="p-40 bg-color rounded-1 h-100 shadow-sm text-light">
+                            <h3 class="mb-4 text-white">Our Rate</h3>
+                            <div class="mb-4">
+                                <span class="fs-48 fw-bold text-white">KES 25,000</span>
+                                <span class="d-block">/night per house</span>
                             </div>
+                            <p class="mb-4">Breakfast included. No surprises. One rate for everyone.</p>
+                            <a href="{{ route('properties') }}" class="btn btn-light fx-slide"><span>View Homes</span></a>
                         </div>
                     </div>
                 </div>
@@ -137,7 +157,7 @@
                             <i class="icofont-star"></i>
                             <i class="icofont-star"></i>
                         </span>
-                        (300+ Reviews)
+                        (150+ Reviews)
                     </div>
                     <div class="col-lg-7">
                         <div class="owl-single-dots owl-carousel owl-theme">
@@ -145,106 +165,22 @@
                                 <span class="d-stars id-color d-block mb-3">
                                     <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">A truly outstanding stay — warm service, beautiful rooms, and an atmosphere that feels unforgettable.</h3>
-                                <span class="wow fadeInUp">Anna L., Paris</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">We booked a whole house for a family weekend and everything was exactly as described. The space was peaceful, breakfast was great, and the privacy made the stay very relaxing.</h3>
+                                <span class="wow fadeInUp">Esther Mwangi, Family Guest</span>
                             </div>
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
                                     <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Everything exceeded expectations — from the amenities to the staff, truly a memorable hotel experience.</h3>
-                                <span class="wow fadeInUp">Michael H., Toronto</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">A quiet and comfortable place to stay while working remotely. Reliable Wi-Fi, clean spaces, and a simple booking process. I would definitely return.</h3>
+                                <span class="wow fadeInUp">Daniel Otieno, Business Traveler</span>
                             </div>
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
                                     <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Impeccable attention to detail. Every moment felt personal and thoughtfully crafted during our stay.</h3>
-                                <span class="wow fadeInUp">Nadia R., Dubai</span>
-                            </div>
-                            <div class="item">
-                                <span class="d-stars id-color d-block mb-3">
-                                    <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
-                                </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">From check-in to check-out, the experience was effortless and luxurious. Highly recommended.</h3>
-                                <span class="wow fadeInUp">Tom S., Los Angeles</span>
-                            </div>
-                            <div class="item">
-                                <span class="d-stars id-color d-block mb-3">
-                                    <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
-                                </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Beautiful interiors, friendly staff, and great location. We loved every moment of our vacation.</h3>
-                                <span class="wow fadeInUp">Elise K., Amsterdam</span>
-                            </div>
-                            <div class="item">
-                                <span class="d-stars id-color d-block mb-3">
-                                    <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
-                                </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Exceptional hospitality and comfort. The perfect choice for a relaxing and refreshing getaway.</h3>
-                                <span class="wow fadeInUp">David M., Singapore</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="container">
-                <div class="row g-4 mb-4 justify-content-center">
-                    <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">Welcome to GrandStay</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Hotel Facilities</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".4s">
-                            From premium rooms to full-service amenities, our team ensures a comfortable and memorable stay from check-in to check-out.
-                        </p>
-                    </div>
-                </div>
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="h-100 rounded-1 mh-300 wow fadeInUp" data-bgimage="url({{ asset('assets/frontend/images/misc/s1.webp') }}) center"></div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row g-4">
-                            <div class="col-md-6 wow fadeInUp" data-wow-delay=".0s">
-                                <div class="p-30 bg-white rounded-1 h-100">
-                                    <small class="text-uppercase border-bottom d-block">TOTAL ROOMS</small>
-                                    <div class="sm-hide spacer-double"></div>
-                                    <div class="spacer-double"></div>
-                                    <h2 class="mb-0">
-                                        <span class="timer" data-to="180" data-speed="3000">0</span>
-                                        <span class="id-color">+</span>
-                                    </h2>
-                                    luxury rooms & suites
-                                </div>
-                            </div>
-                            <div class="col-md-6 wow fadeInUp" data-wow-delay=".2s">
-                                <div class="p-30 bg-white rounded-1 h-100">
-                                    <small class="text-uppercase border-bottom d-block">YEARLY VISITORS</small>
-                                    <div class="sm-hide spacer-double"></div>
-                                    <div class="spacer-double"></div>
-                                    <h2 class="mb-0">
-                                        <span class="timer" data-to="8500" data-speed="3000">0</span>
-                                        <span class="id-color">+</span>
-                                    </h2>
-                                    happy guests
-                                </div>
-                            </div>
-                            <div class="col-md-6 wow fadeInUp" data-wow-delay=".4s">
-                                <div class="p-30 bg-white rounded-1 h-100">
-                                    <small class="text-uppercase border-bottom d-block">SIGNATURE MENU</small>
-                                    <div class="sm-hide spacer-double"></div>
-                                    <div class="spacer-double"></div>
-                                    <h2 class="mb-0">
-                                        <span class="timer" data-to="65" data-speed="3000">0</span>
-                                        <span class="id-color">+</span>
-                                    </h2>
-                                    curated dishes & beverages
-                                </div>
-                            </div>
-                            <div class="col-md-6 wow fadeInUp sm-hide d-md-block d-xs-none" data-wow-delay=".6s">
-                                <div class="p-30 bg-dark-2 rounded-1 h-100" data-bgimage="url({{ asset('assets/frontend/images/misc/s2.webp') }}) center">
-                                </div>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Perfect for a small group getaway. The house was spacious, well kept, and the environment was calm. Great value for the price.</h3>
+                                <span class="wow fadeInUp">Miriam Karanja, Group Guest</span>
                             </div>
                         </div>
                     </div>
