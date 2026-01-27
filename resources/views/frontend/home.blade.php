@@ -8,7 +8,7 @@
         <div id="de-loader"></div>
         <!-- page preloader close -->
         
-        <section id="home" class="no-top no-bottom position-relative overflow-hidden mt-80 mt-sm-50 mx-2 rounded-1" style="min-height: 550px; background: #decfbc;">
+        <section class="no-top no-bottom position-relative overflow-hidden mt-80 mt-sm-50 mx-2 rounded-1" style="min-height: 550px; background: #decfbc;">
             <!-- Background Swiper -->
             <div class="swiper-hero position-absolute w-100 h-100 top-0 start-0">
                             <div class="swiper-wrapper">
@@ -35,9 +35,9 @@
                                 AN ENTIRE HOUSE<br><span style="color: #decfbc;">JUST FOR YOU</span>
                             </h1>
                             <p class="text-dark wow fadeInUp mb-3" data-wow-delay=".2s" style="font-size: 1.125rem; max-width: 600px;">
-                                KES 25,000 per night · Breakfast included
+                                Privacy, comfort, and a warm hosting experience. Breakfast included.
                             </p>
-                            <a href="#booking" class="btn-main fx-slide wow fadeInUp" data-wow-delay=".4s">
+                            <a href="{{ route('properties') }}" class="btn-main fx-slide wow fadeInUp" data-wow-delay=".4s">
                                 <span>Book Your Stay</span>
                             </a>
                         </div>
@@ -62,7 +62,7 @@
                 <div class="row g-4">
 
                     <div class="col-lg-8 offset-lg-2">
-                        <a href="#pricing" class="d-block h-100 hover relative">
+                        <a href="{{ route('property.single', ['id' => 1]) }}" class="d-block h-100 hover relative">
                             <div class="rounded-1 overflow-hidden">
                                 <img src="{{ asset('assets/frontend/images/rooms/1.jpg') }}" class="w-100 hover-scale-1-2" alt="">
                             </div>
@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="col-lg-12 text-center">
-                        <a href="#pricing" class="btn-main fx-slide hover-white"><span>View Available Homes</span></a>
+                        <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white"><span>View Available Homes</span></a>
                     </div>            
 
                 </div>
@@ -175,10 +175,10 @@
             <div class="container">
                 <div class="row g-4 mb-4 justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">What's Included</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">What's Included in Your Stay</h2>
+                        <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">Welcome</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Breakfast & Hospitality</h2>
                         <p class="cwow fadeInUp" data-wow-delay=".4s">
-                            Each Tausi home comes with everything you need for a comfortable, worry-free stay — from fully furnished bedrooms to included breakfast every morning.
+                            Simple Comforts That Make a Difference
                         </p>
                     </div>
                 </div>
@@ -191,45 +191,48 @@
                     <div class="col-md-6">
                         <div class="row g-4">
 
-                            <!-- TOTAL HOMES -->
+                            <!-- ENTIRE HOMES -->
                             <div class="col-md-6 wow fadeInUp" data-wow-delay=".0s">
                                 <div class="p-30 bg-white rounded-1 h-100">
-                                    <small class="text-uppercase border-bottom d-block">PRIVATE HOMES</small>
+                                    <small class="text-uppercase border-bottom d-block">Breakfast Included</small>
                                     <div class="sm-hide spacer-double"></div>
                                     <div class="spacer-double"></div>
-                                    <h2 class="mb-0">
-                                        <span class="timer" data-to="8" data-speed="3000">0</span>
-                                        <span class="id-color">+</span>
-                                    </h2>
-                                    fully furnished homes
+                                    <p class="mb-0">
+                                        Freshly prepared daily breakfast
+                                    </p>
+                                    <p>
+                                        Served in a calm, private setting
+                                    </p>
                                 </div>
                             </div>
 
-                            <!-- YEARLY VISITORS -->
+                            <!-- HOME-STYLE HOSTING -->
                             <div class="col-md-6 wow fadeInUp" data-wow-delay=".2s">
                                 <div class="p-30 bg-white rounded-1 h-100">
-                                    <small class="text-uppercase border-bottom d-block">YEARLY VISITORS</small>
+                                    <small class="text-uppercase border-bottom d-block">Home-Style Hosting</small>
                                     <div class="sm-hide spacer-double"></div>
                                     <div class="spacer-double"></div>
-                                    <h2 class="mb-0">
-                                        <span class="timer" data-to="8500" data-speed="3000">0</span>
-                                        <span class="id-color">+</span>
-                                    </h2>
-                                    happy guests
+                                    <p class="mb-0">
+                                        Quiet, respectful environment
+                                    </p>
+                                    <p>
+                                        Ideal for families & small groups
+                                    </p>
                                 </div>
                             </div>
 
-                            <!-- RESTAURANT MENU ITEMS -->
+                            <!-- PRIVACY & COMFORT -->
                             <div class="col-md-6 wow fadeInUp" data-wow-delay=".4s">
                                 <div class="p-30 bg-white rounded-1 h-100">
-                                    <small class="text-uppercase border-bottom d-block">SIGNATURE MENU</small>
+                                    <small class="text-uppercase border-bottom d-block">Privacy & Comfort</small>
                                     <div class="sm-hide spacer-double"></div>
                                     <div class="spacer-double"></div>
-                                    <h2 class="mb-0">
-                                        <span class="timer" data-to="65" data-speed="3000">0</span>
-                                        <span class="id-color">+</span>
-                                    </h2>
-                                    curated dishes & beverages
+                                    <p class="mb-0">
+                                        Your entire home to yourself
+                                    </p>
+                                    <p>
+                                        Attentive on-request support
+                                    </p>
                                 </div>
                             </div>
 
@@ -246,19 +249,16 @@
             </div>
         </section>
 
-        <section id="about" class="bg-color-op-1 rounded-1 mx-2">
+        <section class="bg-color-op-1 rounded-1 mx-2">
             <div class="container">
                 <div class="row g-4 gx-5 align-items-center justify-content-between">
                     <div class="col-lg-6">
-                        <div class="subtitle wow fadeInUp" data-wow-delay=".0s">About Tausi</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Private Homes Designed for Comfort & Quiet</h2>
+                        <div class="subtitle wow fadeInUp" data-wow-delay=".0s">Welcome</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Experience Comfort, Elegance, and Exceptional Hospitality</h2>
                     </div>
                     <div class="col-lg-6">
                         <p class="wow fadeInUp" data-wow-delay=".4s">
-                            Tausi offers fully furnished private houses ideal for families, couples, and small groups seeking a peaceful escape. 
-                            Each home provides privacy, comfort, and a calm environment — with breakfast included and a simple flat nightly rate. 
-                            From quiet mornings with freshly prepared breakfast to restful evenings in complete privacy, every detail is carefully 
-                            designed to ensure your stay is seamless, comfortable, and truly memorable.
+                            At Tausi Holiday & Getaway Homes, we focus on the essentials that matter most — privacy, comfort, and a warm hosting experience. Every stay includes breakfast, prepared fresh to help you start your day relaxed and refreshed. Located in Nanyuki, Kenya, our entire homes are ideal for families and small groups seeking a quiet, respectful environment with attentive on-request support.
                         </p>
                     </div>
                 </div>
@@ -269,8 +269,8 @@
                   <div class="col-md-12 text-center">
                       <ul id="filters" class="wow fadeInUp" data-wow-delay="0s">
                         <li><a href="#" data-filter="*" class="selected">View All</a></li>
-                          <li><a href="#" data-filter=".homes">Homes</a></li>
-                          <li><a href="#" data-filter=".dining">Breakfast</a></li>
+                          <li><a href="#" data-filter=".rooms">Our Homes</a></li>
+                          <li><a href="#" data-filter=".dining">Dining</a></li>
                           <li><a href="#" data-filter=".facilities">Facilities</a><li>
                       </ul>
                   </div>
@@ -278,7 +278,7 @@
 
                 <div id="gallery" class="row g-3 wow fadeIn" data-wow-delay=".3s">
 
-                    <div class="col-md-3 col-sm-6 col-12 item homes">
+                    <div class="col-md-3 col-sm-6 col-12 item rooms">
                       <a href="{{ asset('assets/frontend/images/gallery/1.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -288,7 +288,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item breakfast">
+                    <div class="col-md-3 col-sm-6 col-12 item dining">
                       <a href="{{ asset('assets/frontend/images/gallery/6.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -298,7 +298,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item amenities">
+                    <div class="col-md-3 col-sm-6 col-12 item facilities">
                       <a href="{{ asset('assets/frontend/images/gallery/9.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -308,7 +308,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item homes">
+                    <div class="col-md-3 col-sm-6 col-12 item rooms">
                       <a href="{{ asset('assets/frontend/images/gallery/3.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -318,7 +318,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item breakfast">
+                    <div class="col-md-3 col-sm-6 col-12 item dining">
                       <a href="{{ asset('assets/frontend/images/gallery/8.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -328,7 +328,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item homes">
+                    <div class="col-md-3 col-sm-6 col-12 item rooms">
                       <a href="{{ asset('assets/frontend/images/gallery/5.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -338,7 +338,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item amenities">
+                    <div class="col-md-3 col-sm-6 col-12 item facilities">
                       <a href="{{ asset('assets/frontend/images/gallery/11.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -348,7 +348,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item homes">
+                    <div class="col-md-3 col-sm-6 col-12 item rooms">
                       <a href="{{ asset('assets/frontend/images/gallery/2.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -358,7 +358,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item amenities">
+                    <div class="col-md-3 col-sm-6 col-12 item facilities">
                       <a href="{{ asset('assets/frontend/images/gallery/10.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -368,7 +368,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item homes">
+                    <div class="col-md-3 col-sm-6 col-12 item rooms">
                       <a href="{{ asset('assets/frontend/images/gallery/4.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -378,7 +378,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item breakfast">
+                    <div class="col-md-3 col-sm-6 col-12 item dining">
                       <a href="{{ asset('assets/frontend/images/gallery/7.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -388,7 +388,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item amenities">
+                    <div class="col-md-3 col-sm-6 col-12 item facilities">
                       <a href="{{ asset('assets/frontend/images/gallery/12.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -402,7 +402,7 @@
             </div>
         </section>
 
-        <section id="booking" aria-label="section">
+        <section aria-label="section">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -442,7 +442,7 @@
                                     </div>
 
                                     <div class="col-md-1-5">
-                                        <div class="fs-18 text-dark fw-500 mb-10">Guests</div>
+                                        <div class="fs-18 text-dark fw-500 mb-10">Number of Homes</div>
                                         <select id="room-count" class="form-control">
                                             <option value="1" @selected(session('booking_data.room_count') == 1)>1</option>
                                             <option value="2" @selected(session('booking_data.room_count') == 2)>2</option>
@@ -551,12 +551,12 @@
             </div>
         </section>
 
-        <section id="pricing" class="bg-color-op-1 rounded-1 mx-2">
+        <section class="bg-color-op-1 rounded-1 mx-2">
             <div class="container">
                 <div class="row g-4 mb-2 justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color wow fadeInUp">Simple Pricing</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">One Flat Rate Entire Home Stay</h2>
+                        <div class="subtitle id-color wow fadeInUp">Exclusive Deals</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Latest Hotel Offers</h2>
                     </div>
                 </div>
 
@@ -564,14 +564,14 @@
                     <div class="col-lg-4 wow fadeInUp" data-wow-delay=".2s">
                         <div class="overflow-hidden rounded-1">
                             <div class="hover relative">
-                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">KES 25,000</h3>
+                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">20% OFF</h3>
                                 <img src="{{ asset('assets/frontend/images/offers/1.webp') }}" class="w-100 hover-scale-1-1" alt="">
-                                <a href="#booking" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                                <a href="{{ route('offer.single', ['id' => 1]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                             </div>
                             <div class="p-40 bg-dark-2 text-light relative">
-                                <a class="text-white" href="#booking">
-                                    <h3>2-3 Bedroom Home</h3>
-                                    <p>Per Night • Breakfast Included</p>
+                                <a class="text-white" href="{{ route('offers') }}">
+                                    <h3>Romantic Stay</h3>
+                                    <p>20% Off Weekend Packages</p>
                                 </a>
                             </div>
                         </div>
@@ -580,15 +580,15 @@
                     <div class="col-lg-4 wow fadeInUp" data-wow-delay=".4s">
                         <div class="overflow-hidden rounded-1">
                             <div class="p-40 bg-dark-2 text-light relative">
-                                <a class="text-white" href="#booking">
-                                    <h3>3-4 Bedroom Home</h3>
-                                    <p>Per Night • Breakfast Included</p>
+                                <a class="text-white" href="{{ route('offers') }}">
+                                    <h3>Early Bird Deal</h3>
+                                    <p>Save Up to 30% on Rooms</p>
                                 </a>
                             </div>
                             <div class="hover relative">
-                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 bottom-0 start-0 z-3">KES 25,000</h3>
+                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 bottom-0 start-0 z-3">30% OFF</h3>
                                 <img src="{{ asset('assets/frontend/images/offers/2.webp') }}" class="w-100 hover-scale-1-1" alt="">
-                                <a href="#booking" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                                <a href="{{ route('offer.single', ['id' => 2]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                             </div>
                         </div>
                     </div>
@@ -628,56 +628,56 @@
                             <div class="accordion-section">
 
                                 <div class="accordion-section-title" data-tab="#accordion-b1">
-                                    What time is check-in and check-out?
+                                    Is breakfast really included in the nightly rate?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b1">
                                     <p class="mb-0">
-                                        Check-in starts at 2:00 PM and check-out is at 12:00 PM. Early check-in and late check-out are available upon request and subject to availability.
+                                        Yes! Freshly prepared breakfast is included every morning. It's served in a calm, private setting and included in your nightly rate of KES 25,000.
                                     </p>
                                 </div>
 
                                 <div class="accordion-section-title" data-tab="#accordion-b2">
-                                    What's included in the stay?
+                                    Can we check in early or late checkout?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b2">
                                     <p class="mb-0">
-                                        Every Tausi home includes full furnishings, all linens and towels, fully equipped kitchen, Wi-Fi, breakfast ingredients or daily-prepared breakfast, and secure parking.
+                                        Early check-in and late checkout are available upon request, subject to availability. Please contact us in advance at +254 718 756 254 or bookings@tausivacations.com.
                                     </p>
                                 </div>
 
                                 <div class="accordion-section-title" data-tab="#accordion-b3">
-                                    Do you offer airport pick-up or shuttle service?
+                                    Is Tausi suitable for families?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b3">
                                     <p class="mb-0">
-                                        Yes, we provide pick-up and drop-off services on request. Please contact us in advance to arrange your transportation from Nanyuki town or the nearest airport.
+                                        Absolutely! Our homes are ideal for families and small groups. The quiet, respectful environment makes them perfect for children, and you have an entire home to yourselves with full privacy.
                                     </p>
                                 </div>
 
                                 <div class="accordion-section-title" data-tab="#accordion-b4">
-                                    Are pets allowed in the homes?
+                                    Do you have Wi-Fi?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b4">
                                     <p class="mb-0">
-                                        We welcome small, well-behaved pets in Tausi homes. Please inform us in advance so we can prepare appropriately.
+                                        Yes, complimentary high-speed Wi-Fi is available throughout all homes so you can stay connected during your stay.
                                     </p>
                                 </div>
 
                                 <div class="accordion-section-title" data-tab="#accordion-b5">
-                                    Is Wi-Fi available?
+                                    What's included in the home?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b5">
                                     <p class="mb-0">
-                                        Yes, complimentary high-speed Wi-Fi is available throughout all Tausi homes, perfect for staying connected during your stay.
+                                        Every home includes a full kitchen, living area, bedroom(s), bathroom, Wi-Fi, and daily breakfast. We focus on the essentials that make your stay comfortable and convenient.
                                     </p>
                                 </div>
 
                                 <div class="accordion-section-title" data-tab="#accordion-b6">
-                                    How many guests can each home accommodate?
+                                    Where is Tausi located?
                                 </div>
                                 <div class="accordion-section-content" id="accordion-b6">
                                     <p class="mb-0">
-                                        Our 2-3 bedroom homes comfortably accommodate 4-6 guests, while our 3-4 bedroom homes can sleep 6-8 guests. All homes are perfect for families or small groups seeking privacy.
+                                        We're located in Nanyuki, Kenya. For directions, booking inquiries, or to arrange transportation, contact us at +254 718 756 254 or bookings@tausivacations.com.
                                     </p>
                                 </div>
 
@@ -708,9 +708,9 @@
             </div>
         </section>
 
-        <section id="testimonial">
+        <section>
             <div class="container">
-                <div class="row g-4 mb-4 justify-content-center">
+                <div class="row g-4 mb-2 justify-content-center">
                     <div class="col-lg-6 text-center">
                         <div class="subtitle id-color wow fadeInUp">Guest Experiences</div>
                         <h2 class="wow fadeInUp" data-wow-delay=".2s">What Our Guests Say</h2>
@@ -718,133 +718,95 @@
                 </div>
 
                 <div class="row g-4">
-                    <div class="col-xl-4 col-lg-6 wow fadeInUp">
-                        <div class="p-4 bg-white rounded-1">
-                            <div class="mb-3">
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
+
+                    <div class="col-xl-3 col-lg-6">
+                    <div class="overflow-hidden">
+                        <div class="hover relative">
+                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
+                                <div class="fs-36 fw-bold lh-1">20</div>
+                                <span>Jun</span>
                             </div>
-                            <p class="mb-3">"Our stay at Tausi was absolutely perfect. The home was beautifully furnished, spotless, and felt like a true retreat. The included breakfast was delicious, and the whole experience was seamless."</p>
-                            <h5 class="mb-0">Sarah & James</h5>
-                            <small>Nanyuki, Kenya</small>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-delay=".2s">
-                        <div class="p-4 bg-white rounded-1">
-                            <div class="mb-3">
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
+                            <div class="rounded-1 overflow-hidden">
+                                <img src="{{ asset('assets/frontend/images/blog/1.jpg') }}" class="w-100 hover-scale-1-1" alt="">
                             </div>
-                            <p class="mb-3">"We needed a private space away from the hustle. Tausi provided exactly that – calm, comfort, and all the amenities we could ask for. Highly recommended for families!"</p>
-                            <h5 class="mb-0">Margaret Ochieng</h5>
-                            <small>Nairobi, Kenya</small>
+                            <a href="{{ route('blog.single', ['id' => 1]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                         </div>
-                    </div>
 
-                    <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-delay=".4s">
-                        <div class="p-4 bg-white rounded-1">
-                            <div class="mb-3">
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                            </div>
-                            <p class="mb-3">"The pick-up service was convenient, the home was lovely, and we felt genuinely welcomed. This is perfect for a quiet family getaway. We're definitely coming back!"</p>
-                            <h5 class="mb-0">David Kipchoge</h5>
-                            <small>Mombasa, Kenya</small>
+                        <div class="pt-4 relative">
+                            <a href="{{ route('blog.single', ['id' => 1]) }}">
+                                <h3>Top Hotel Amenities That Guests Love in 2025 Trends</h3>
+                            </a>
+                            <p>From smart-room technology to wellness features that elevate guest comfort and overall satisfaction.</p>
                         </div>
-                    </div>
-
-                    <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-delay=".1s">
-                        <div class="p-4 bg-white rounded-1">
-                            <div class="mb-3">
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                            </div>
-                            <p class="mb-3">"As couples seeking privacy and comfort, Tausi was ideal. The entire home setup, Wi-Fi connectivity, and breakfast made our romantic weekend unforgettable."</p>
-                            <h5 class="mb-0">Lisa & Mike</h5>
-                            <small>Nairobi, Kenya</small>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-delay=".3s">
-                        <div class="p-4 bg-white rounded-1">
-                            <div class="mb-3">
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                            </div>
-                            <p class="mb-3">"We brought our extended family of 8, and Tausi's larger home accommodated everyone comfortably. The communal spaces were perfect for our reunion."</p>
-                            <h5 class="mb-0">Paul & Family</h5>
-                            <small>Eldoret, Kenya</small>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-delay=".5s">
-                        <div class="p-4 bg-white rounded-1">
-                            <div class="mb-3">
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                                <i class="fa fa-star id-color"></i>
-                            </div>
-                            <p class="mb-3">"Outstanding value for money. The flat rate pricing is transparent, and you get everything advertised. No hidden costs, just genuine hospitality."</p>
-                            <h5 class="mb-0">Rachel Kamau</h5>
-                            <small>Nanyuki, Kenya</small>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="bg-light py-5">
-            <div class="container">
-                <div class="row mb-4">
-                    <div class="col-lg-12 text-center">
-                        <h2 class="wow fadeInUp mb-3">Get in Touch</h2>
-                        <p class="wow fadeInUp fs-18">Have questions about our homes? We're here to help!</p>
                     </div>
                 </div>
 
-                <div class="row g-4">
-                    <div class="col-lg-4 text-center wow fadeInUp" data-wow-delay=".2s">
-                        <div class="mb-3">
-                            <i class="fa fa-phone fs-40 id-color"></i>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="overflow-hidden">
+                        <div class="hover relative">
+                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
+                                <div class="fs-36 fw-bold lh-1">19</div>
+                                <span>Jun</span>
+                            </div>
+                            <div class="rounded-1 overflow-hidden">
+                                <img src="{{ asset('assets/frontend/images/blog/2.jpg') }}" class="w-100 hover-scale-1-1" alt="">
+                            </div>
+                            <a href="{{ route('blog.single', ['id' => 2]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                         </div>
-                        <h4 class="mb-2">Call Us</h4>
-                        <p class="mb-0"><a href="tel:+254718756254" class="text-decoration-none">+254 718 756 254</a><br>WhatsApp: <a href="https://wa.me/254718756254" class="text-decoration-none">+254 718 756 254</a></p>
-                    </div>
 
-                    <div class="col-lg-4 text-center wow fadeInUp" data-wow-delay=".4s">
-                        <div class="mb-3">
-                            <i class="fa fa-envelope fs-40 id-color"></i>
+                        <div class="pt-4 relative">
+                            <a href="{{ route('blog.single', ['id' => 2]) }}">
+                                <h3>How to Choose the Perfect Room for Your Stay</h3>
+                            </a>
+                            <p>Learn how to choose the ideal hotel room based on comfort, layout, and travel needs for a better stay.</p>
                         </div>
-                        <h4 class="mb-2">Email Us</h4>
-                        <p class="mb-0"><a href="mailto:bookings@tausivacations.com" class="text-decoration-none">bookings@tausivacations.com</a></p>
                     </div>
+                </div>
 
-                    <div class="col-lg-4 text-center wow fadeInUp" data-wow-delay=".6s">
-                        <div class="mb-3">
-                            <i class="fa fa-map-marker fs-40 id-color"></i>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="overflow-hidden">
+                        <div class="hover relative">
+                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
+                                <div class="fs-36 fw-bold lh-1">18</div>
+                                <span>Jun</span>
+                            </div>
+                            <div class="rounded-1 overflow-hidden">
+                                <img src="{{ asset('assets/frontend/images/blog/3.jpg') }}" class="w-100 hover-scale-1-1" alt="">
+                            </div>
+                            <a href="{{ route('blog.single', ['id' => 3]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                         </div>
-                        <h4 class="mb-2">Visit Us</h4>
-                        <p class="mb-0">Nanyuki, Kenya</p>
+
+                        <div class="pt-4 relative">
+                            <a href="{{ route('blog.single', ['id' => 3]) }}">
+                                <h3>The Art of Hospitality: Behind Our Signature Services</h3>
+                            </a>
+                            <p>Discover the thoughtful services and attention to detail that define exceptional hospitality experiences.</p>
+                        </div>
                     </div>
+                </div>
+
+                <div class="col-xl-3 col-lg-6">
+                    <div class="overflow-hidden">
+                        <div class="hover relative">
+                            <div class="abs z-2 bg-blur text-white p-3 pb-2 m-4 text-center fw-600 rounded-3">
+                                <div class="fs-36 fw-bold lh-1">17</div>
+                                <span>Jun</span>
+                            </div>
+                            <div class="rounded-1 overflow-hidden">
+                                <img src="{{ asset('assets/frontend/images/blog/4.jpg') }}" class="w-100 hover-scale-1-1" alt="">
+                            </div>
+                            <a href="{{ route('blog.single', ['id' => 4]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                        </div>
+
+                        <div class="pt-4 relative">
+                            <a href="{{ route('blog.single', ['id' => 4]) }}">
+                                <h3>Why Location Matters: Choosing a Hotel for Your Next Trip</h3>
+                            </a>
+                            <p>See how hotel location impacts convenience, accessibility, and overall travel experience.</p>
+                        </div>
+                    </div>
+                </div>
+
                 </div>
             </div>
         </section>

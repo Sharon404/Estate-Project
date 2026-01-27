@@ -144,7 +144,7 @@
                             <input type="date" id="checkout" name="checkout" required>
                         </div>
                         <div class="form-group">
-                            <label for="rooms">Number of Rooms</label>
+                            <label for="rooms">Number of Homes</label>
                             <input type="number" id="rooms" name="rooms" min="1" max="10" value="1" required>
                         </div>
                         <div class="form-group">

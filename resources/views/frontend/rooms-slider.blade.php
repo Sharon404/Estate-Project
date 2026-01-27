@@ -21,14 +21,14 @@
                                         <div class="row g-5 align-items-center">
                                             <div class="col-lg-5"> 
                                                 <div class="sw-text-wrapper wow anim-order-1">
-                                                    <h2 class="fs-60 mb-2">Deluxe Room</h2>
+                                                    <h2 class="fs-60 mb-2">Studio</h2>
                                                     <span class="d-stars id-color d-block mb-4">
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i>
                                                     </span>
                                                     <p class="lead mb-4 text-white mb-0">
-                                                        Elegant and cozy room designed for comfort and relaxation, featuring tasteful interiors and a warm, inviting atmosphere throughout.
+                                                        Compact, comfortable space perfect for solo travelers or couples, with essentials for a relaxing stay.
                                                     </p>
                                                     <div class="d-flex mb-2 fs-18 justify-content-between">
                                                         <div class="d-flex">    
@@ -36,11 +36,11 @@
                                                                 <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">2 guests
                                                             </div>
                                                             <div class="d-flex align-items-center">
-                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">28 ft
+                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Private
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
-                                                            <div class="fs-20 fw-bold">KES 10,900</div><span>/night</span>
+                                                            <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -63,14 +63,14 @@
                                         <div class="row g-5 align-items-center">
                                             <div class="col-lg-5"> 
                                                 <div class="sw-text-wrapper wow anim-order-1">
-                                                    <h2 class="fs-60 mb-2">Superior Room</h2>
+                                                    <h2 class="fs-60 mb-2">Bedsitter</h2>
                                                     <span class="d-stars id-color d-block mb-4">
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i>
                                                     </span>
                                                     <p class="lead mb-4 text-white mb-0">
-                                                        Refined and spacious room offering modern design details and enhanced comfort for a more enjoyable stay.
+                                                        Cozy self-contained unit with sleeping and living space, ideal for short-term stays with everything you need for comfort.
                                                     </p>
                                                     <div class="d-flex mb-2 fs-18 justify-content-between">
                                                         <div class="d-flex">    
@@ -78,11 +78,11 @@
                                                                 <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">2 guests
                                                             </div>
                                                             <div class="d-flex align-items-center">
-                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">30 ft
+                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Private
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
-                                                            <div class="fs-20 fw-bold">KES 12,900</div><span>/night</span>
+                                                            <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -105,26 +105,26 @@
                                         <div class="row g-5 align-items-center">
                                             <div class="col-lg-5"> 
                                                 <div class="sw-text-wrapper wow anim-order-1">
-                                                    <h2 class="fs-60 mb-2">Executive Room</h2>
+                                                    <h2 class="fs-60 mb-2">1 Bedroom House</h2>
                                                     <span class="d-stars id-color d-block mb-4">
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i>
                                                     </span>
                                                     <p class="lead mb-4 text-white mb-0">
-                                                        Designed for business travelers, combining comfort, functionality, and a calm environment for productivity.
+                                                        Perfect for small families or groups, with separate living and sleeping areas. Privacy and comfort in an entire home.
                                                     </p>
                                                     <div class="d-flex mb-2 fs-18 justify-content-between">
                                                         <div class="d-flex">    
                                                             <div class="d-flex align-items-center me-3">
-                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">2 guests
+                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">4 guests
                                                             </div>
                                                             <div class="d-flex align-items-center">
-                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">32 ft
+                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Entire Home
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
-                                                            <div class="fs-20 fw-bold">KES 14,900</div><span>/night</span>
+                                                            <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,26 +147,26 @@
                                         <div class="row g-5 align-items-center">
                                             <div class="col-lg-5"> 
                                                 <div class="sw-text-wrapper wow anim-order-1">
-                                                    <h2 class="fs-60 mb-2">Premium Suite</h2>
+                                                    <h2 class="fs-60 mb-2">2 Bedroom House</h2>
                                                     <span class="d-stars id-color d-block mb-4">
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i><i class="icofont-star"></i>
                                                         <i class="icofont-star"></i>
                                                     </span>
                                                     <p class="lead mb-4 text-white mb-0">
-                                                        Luxury suite with generous living space and refined details for an elevated stay experience.
+                                                        Spacious home perfect for families. Two bedrooms, full amenities, and complete privacy for your entire stay.
                                                     </p>
                                                     <div class="d-flex mb-2 fs-18 justify-content-between">
                                                         <div class="d-flex">    
                                                             <div class="d-flex align-items-center me-3">
-                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">2 guests
+                                                                <img src="{{ asset('assets/frontend/images/ui/user-light.webp') }}" class="w-15px me-2" alt="">6 guests
                                                             </div>
                                                             <div class="d-flex align-items-center">
-                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">38 ft
+                                                                <img src="{{ asset('assets/frontend/images/ui/floorplan-light.webp') }}" class="w-15px me-2" alt="">Entire Home
                                                             </div>
                                                         </div>
                                                         <div class="d-flex">
-                                                            <div class="fs-20 fw-bold">KES 17,900</div><span>/night</span>
+                                                            <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                                         </div>
                                                     </div>
                                                 </div>

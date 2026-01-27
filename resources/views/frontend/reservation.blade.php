@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="text-center border-1">
-                                            <h4>Room</h4>
+                                            <h4>Homes</h4>
                                             <div id="d-room-count" class="de-number">
                                                 <span class="d-minus">-</span>
                                                 <input id="room-count" type="text" class="no-border no-bg" value="1" name="room_count">
@@ -86,26 +86,26 @@
                                 </div>
 
                                 <div class="select-room mb-4">
-                                    <h4>Select Room</h4>
+                                    <h4>Select Home</h4>
 
                                     <select class="room-type form-control" name="room_type">
                                       <option value='Standart Room' data-src="{{ asset('assets/frontend/images/form/1.jpg') }}">
-                                        Standart Room | KES 11,900/night | 2 Guests
+                                        Studio | KES 25,000/night | 2 Guests
                                       </option>
                                       <option value='Deluxe Room' data-src="{{ asset('assets/frontend/images/form/2.jpg') }}">
-                                        Deluxe Room | KES 12,900/night | 2 Guests
+                                        Bedsitter | KES 25,000/night | 2 Guests
                                       </option>
                                       <option value='Premier Room' data-src="{{ asset('assets/frontend/images/form/3.jpg') }}">
-                                        Premier Room | KES 13,900/night | 2 Guests
+                                        1 Bedroom House | KES 25,000/night | 4 Guests
                                       </option>
                                       <option value='Family Suite' data-src="{{ asset('assets/frontend/images/form/4.jpg') }}">
-                                        Family Suite | KES 14,900/night | 4 Guests
+                                        2 Bedroom House | KES 25,000/night | 6 Guests
                                       </option>
                                       <option value='Luxury Suite' data-src="{{ asset('assets/frontend/images/form/5.jpg') }}">
-                                        Luxury Suite | KES 17,900/night | 2 Guests
+                                        2 Bedroom House | KES 25,000/night | 6 Guests
                                       </option>
                                       <option value='Presidential Suite' data-src="{{ asset('assets/frontend/images/form/6.jpg') }}">
-                                        Presidential Suite | KES 19,900/night | 2 Guests
+                                        Premium Home | KES 25,000/night | 8 Guests
                                       </option>
                                     </select>
                                 </div>
