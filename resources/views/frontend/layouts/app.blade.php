@@ -17,10 +17,13 @@
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/fontawesome/all.min.css') }}">
 
     <!-- Swiper CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/frontend/css/swiper.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/swiper.css') }}">
 
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/daterangepicker.css') }}">
+
+    <!-- Plugins CSS (includes Owl Carousel) -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/plugins.css') }}">
 
     <!-- Custom Styles -->
     <link href="{{ asset('assets/frontend/css/style.css') }}" rel="stylesheet">

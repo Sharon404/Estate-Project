@@ -1,16 +1,21 @@
 // Hero Swiper with immediate fade transitions and duplicate-active support
 document.addEventListener('DOMContentLoaded', function () {
     const initHero = () => {
+        console.log('Hero Swiper Init: Swiper available?', typeof Swiper !== 'undefined');
         if (typeof Swiper === 'undefined') return false;
+        
         const el = document.querySelector('.swiper-hero');
+        console.log('Hero Swiper Init: Element found?', !!el);
         if (!el) return false;
 
         // Destroy any existing instance to avoid conflicts from other scripts
         if (el.swiper) {
+            console.log('Hero Swiper: Destroying existing instance');
             el.swiper.destroy(true, true);
         }
 
-        new Swiper('.swiper-hero', {
+        console.log('Hero Swiper: Initializing...');
+        const swiperInstance = new Swiper('.swiper-hero', {
             direction: 'horizontal',
             loop: true,
             slidesPerView: 1,
@@ -29,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 clickable: true,
             },
         });
+        console.log('Hero Swiper: Initialized successfully', swiperInstance);
         return true;
     };
 
