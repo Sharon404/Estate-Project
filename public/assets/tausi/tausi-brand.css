@@ -581,4 +581,9 @@ h3.wow.fadeInUp.mb-4 {
 p.text-dark {
   color: #ffffff !important;
 }
+
+div.subtitle.id-color.wow.fadeInUp.mb-2.animated {
+  color: #decfbc !important;
+}
+
 /* =============== END TAUSI BRAND OVERRIDE =============== */
