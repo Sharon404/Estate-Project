@@ -46,56 +46,7 @@
             </div>
         </section>
 
-        <section>
-            <div class="container">
-
-                <div class="row g-4 mb-4 justify-content-center">
-                    <div class="col-lg-6 text-center">
-                        <div class="subtitle mb-0 id-color wow fadeInUp" data-wow-delay=".0s">Simple Pricing</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">One Flat Rate Entire Home Stay</h2>
-                        <p class="cwow fadeInUp" data-wow-delay=".4s">
-                            KES 25,000 per night · Breakfast Included
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row g-4">
-
-                    <div class="col-lg-8 offset-lg-2">
-                        <a href="{{ route('property.single', ['id' => 1]) }}" class="d-block h-100 hover relative">
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/rooms/1.jpg') }}" class="w-100 hover-scale-1-2" alt="">
-                            </div>
-                            <div class="pt-4">
-                                <div class="d-flex mb-2 fs-15 justify-content-between">
-                                    <div class="d-flex">    
-                                        <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4-6 guests
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
-                                    </div>
-                                </div>
-                                <div class="relative">
-                                    <h3 class="mb-2">Tausi Holiday Home - Nanyuki</h3>
-                                    <p class="text-muted">Flat rate of KES 25,000 per house per night, with breakfast included.</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-12 text-center">
-                        <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white"><span>View Available Homes</span></a>
-                    </div>            
-
-                </div>
-            </div>
-        </section>
-
+        <!-- Reservation Section -->
         <section aria-label="section">
             <div class="container">
                 <div class="row">
@@ -275,6 +226,56 @@
                             <img src="{{ asset('assets/frontend/images/misc/s3.webp') }}" class="w-100 rounded-1" alt="Tausi Outdoor">
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+
+                <div class="row g-4 mb-4 justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        <div class="subtitle mb-0 id-color wow fadeInUp" data-wow-delay=".0s">Simple Pricing</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">One Flat Rate Entire Home Stay</h2>
+                        <p class="cwow fadeInUp" data-wow-delay=".4s">
+                            KES 25,000 per night · Breakfast Included
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+
+                    <div class="col-lg-8 offset-lg-2">
+                        <a href="{{ route('property.single', ['id' => 1]) }}" class="d-block h-100 hover relative">
+                            <div class="rounded-1 overflow-hidden">
+                                <img src="{{ asset('assets/frontend/images/rooms/1.jpg') }}" class="w-100 hover-scale-1-2" alt="">
+                            </div>
+                            <div class="pt-4">
+                                <div class="d-flex mb-2 fs-15 justify-content-between">
+                                    <div class="d-flex">    
+                                        <div class="d-flex align-items-center me-3">
+                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4-6 guests
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <h3 class="mb-2">Tausi Holiday Home - Nanyuki</h3>
+                                    <p class="text-muted">Flat rate of KES 25,000 per house per night, with breakfast included.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-12 text-center">
+                        <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white"><span>View Available Homes</span></a>
+                    </div>            
+
                 </div>
             </div>
         </section>
@@ -635,43 +636,7 @@
 
             </div>
         </section>
-
-
-        <section>
-            <div class="container">
-                <div class="row g-4 gx-5 justify-content-center">
-                    <div class="col-lg-6 text-center">
-                        <div class="subtitle id-color">Guest Feedback</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">What Our Guests Say</h2>
-                    </div>
-                </div>
-
-                <div class="row g-4 mt-2">
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".0s">
-                        <div class="p-30 bg-white rounded-1 h-100 shadow-sm">
-                            <h4 class="mb-1">Esther Mwangi</h4>
-                            <span class="text-muted d-block mb-3">Family Guest</span>
-                            <p class="mb-0">We booked a whole house for a family weekend and everything was exactly as described. The space was peaceful, breakfast was great, and the privacy made the stay very relaxing.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".1s">
-                        <div class="p-30 bg-white rounded-1 h-100 shadow-sm">
-                            <h4 class="mb-1">Daniel Otieno</h4>
-                            <span class="text-muted d-block mb-3">Business Traveler</span>
-                            <p class="mb-0">A quiet and comfortable place to stay while working remotely. Reliable Wi-Fi, clean spaces, and a simple booking process. I would definitely return.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".2s">
-                        <div class="p-30 bg-white rounded-1 h-100 shadow-sm">
-                            <h4 class="mb-1">Miriam Karanja</h4>
-                            <span class="text-muted d-block mb-3">Group Guest</span>
-                            <p class="mb-0">Perfect for a small group getaway. The house was spacious, well kept, and the environment was calm. Great value for the price.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+        
 
         <section class="p-0 mx-2" aria-label="section">
             <div class="container-fluid">
