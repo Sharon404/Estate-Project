@@ -1,0 +1,413 @@
+/* ===============================================
+   TAUSI DASHBOARD BRANDING & STYLING
+   UI-ONLY ENHANCEMENTS - NO LOGIC CHANGES
+   =============================================== */
+
+/* =============== ROOT VARIABLES =============== */
+:root {
+    --tausi-primary: #652482;
+    --tausi-background: #f8f5f0;
+    --tausi-white: #ffffff;
+    --tausi-text: #222222;
+    --tausi-accent: #decfbc;
+}
+
+/* =============== BODY & LAYOUT =============== */
+body {
+    background-color: var(--tausi-background) !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    color: var(--tausi-text) !important;
+}
+
+#layout-wrapper {
+    background-color: var(--tausi-background) !important;
+}
+
+/* =============== TOP NAVBAR / HEADER =============== */
+.app-header,
+header.app-header,
+.navbar-header {
+    background-color: var(--tausi-primary) !important;
+    border-bottom: 2px solid var(--tausi-accent) !important;
+    box-shadow: 0 2px 8px rgba(101, 36, 130, 0.1) !important;
+}
+
+/* Logo Area */
+.navbar-brand-box {
+    background-color: var(--tausi-primary) !important;
+}
+
+.navbar-brand-box .logo {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.5rem 1rem !important;
+}
+
+/* Header Icons & Buttons */
+.header-item .btn,
+.btn-icon.btn-topbar {
+    color: var(--tausi-white) !important;
+}
+
+.header-item .btn:hover,
+.btn-icon.btn-topbar:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--tausi-accent) !important;
+}
+
+/* Sidebar Toggle Button */
+#vertical-menu-btn {
+    color: var(--tausi-white) !important;
+}
+
+#vertical-menu-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Header Search */
+.header-search .form-control {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: var(--tausi-white) !important;
+}
+
+.header-search .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.header-search .form-control:focus {
+    background-color: var(--tausi-white) !important;
+    color: var(--tausi-text) !important;
+    border-color: var(--tausi-accent) !important;
+}
+
+/* User Profile in Header */
+.topbar-user .user-name-text {
+    color: var(--tausi-white) !important;
+}
+
+.topbar-user .user-name-sub-text {
+    color: var(--tausi-accent) !important;
+}
+
+.header-profile-user {
+    border: 2px solid var(--tausi-accent) !important;
+}
+
+/* Notification Badge */
+.topbar-badge {
+    background-color: var(--tausi-accent) !important;
+}
+
+/* =============== LEFT SIDEBAR =============== */
+.vertical-menu {
+    background-color: var(--tausi-white) !important;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05) !important;
+    border-right: 1px solid var(--tausi-accent) !important;
+}
+
+/* Menu Title */
+.menu-title {
+    color: var(--tausi-primary) !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    padding: 1rem 1.5rem 0.5rem !important;
+}
+
+/* Menu Items */
+#sidebar-menu ul li a {
+    color: var(--tausi-text) !important;
+    padding: 0.75rem 1.5rem !important;
+    transition: all 0.2s ease !important;
+    font-weight: 500 !important;
+}
+
+#sidebar-menu ul li a:hover {
+    background-color: rgba(101, 36, 130, 0.05) !important;
+    color: var(--tausi-primary) !important;
+}
+
+#sidebar-menu ul li a i {
+    color: var(--tausi-primary) !important;
+    font-size: 1.1rem !important;
+    margin-right: 0.75rem !important;
+}
+
+/* Active Menu Item */
+#sidebar-menu ul li a.active,
+#sidebar-menu ul li.mm-active > a {
+    background-color: var(--tausi-primary) !important;
+    color: var(--tausi-white) !important;
+    border-left: 3px solid var(--tausi-accent) !important;
+}
+
+#sidebar-menu ul li a.active i,
+#sidebar-menu ul li.mm-active > a i {
+    color: var(--tausi-white) !important;
+}
+
+/* =============== PAGE CONTENT =============== */
+.main-content {
+    background-color: var(--tausi-background) !important;
+    padding-top: 1.5rem !important;
+}
+
+.page-content {
+    padding: 1.5rem 0 !important;
+}
+
+/* Page Title */
+.page-title-box {
+    background-color: var(--tausi-white) !important;
+    padding: 1.5rem !important;
+    border-radius: 8px !important;
+    margin-bottom: 1.5rem !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
+    border-left: 4px solid var(--tausi-primary) !important;
+}
+
+.page-title-box h4 {
+    color: var(--tausi-primary) !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+}
+
+/* =============== CARDS =============== */
+.card {
+    background-color: var(--tausi-white) !important;
+    border: 1px solid rgba(222, 207, 188, 0.3) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.card-header {
+    background-color: rgba(101, 36, 130, 0.05) !important;
+    border-bottom: 1px solid var(--tausi-accent) !important;
+    padding: 1rem 1.5rem !important;
+    font-weight: 600 !important;
+    color: var(--tausi-primary) !important;
+}
+
+.card-body {
+    padding: 1.5rem !important;
+}
+
+.card-title {
+    color: var(--tausi-primary) !important;
+    font-weight: 600 !important;
+}
+
+/* Stats Cards */
+.mini-stats-wid .mini-stat-icon {
+    background-color: rgba(101, 36, 130, 0.1) !important;
+    color: var(--tausi-primary) !important;
+}
+
+/* =============== BUTTONS =============== */
+.btn-primary {
+    background-color: var(--tausi-primary) !important;
+    border-color: var(--tausi-primary) !important;
+    color: var(--tausi-white) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #4d1b62 !important;
+    border-color: #4d1b62 !important;
+    color: var(--tausi-white) !important;
+}
+
+.btn-secondary {
+    background-color: var(--tausi-accent) !important;
+    border-color: var(--tausi-accent) !important;
+    color: var(--tausi-text) !important;
+}
+
+.btn-outline-primary {
+    border-color: var(--tausi-primary) !important;
+    color: var(--tausi-primary) !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--tausi-primary) !important;
+    color: var(--tausi-white) !important;
+}
+
+/* =============== TABLES =============== */
+.table {
+    background-color: var(--tausi-white) !important;
+}
+
+.table thead th {
+    background-color: rgba(101, 36, 130, 0.05) !important;
+    color: var(--tausi-primary) !important;
+    font-weight: 600 !important;
+    border-bottom: 2px solid var(--tausi-accent) !important;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(101, 36, 130, 0.02) !important;
+}
+
+/* =============== BADGES =============== */
+.badge-soft-primary {
+    background-color: rgba(101, 36, 130, 0.1) !important;
+    color: var(--tausi-primary) !important;
+}
+
+.badge-soft-success {
+    background-color: rgba(70, 127, 106, 0.1) !important;
+    color: #447f6a !important;
+}
+
+.badge-soft-warning {
+    background-color: rgba(222, 207, 188, 0.3) !important;
+    color: #8b7355 !important;
+}
+
+.badge-soft-danger {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    color: #dc3545 !important;
+}
+
+/* =============== FORMS =============== */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--tausi-primary) !important;
+    box-shadow: 0 0 0 0.2rem rgba(101, 36, 130, 0.15) !important;
+}
+
+/* =============== FOOTER =============== */
+.footer {
+    background-color: var(--tausi-white) !important;
+    border-top: 1px solid var(--tausi-accent) !important;
+    color: var(--tausi-text) !important;
+    padding: 1.25rem 0 !important;
+}
+
+.footer a {
+    color: var(--tausi-primary) !important;
+}
+
+/* =============== DROPDOWN MENUS =============== */
+.dropdown-menu {
+    border: 1px solid rgba(222, 207, 188, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: rgba(101, 36, 130, 0.05) !important;
+    color: var(--tausi-primary) !important;
+}
+
+.dropdown-header {
+    color: var(--tausi-primary) !important;
+    font-weight: 600 !important;
+}
+
+/* =============== ALERTS =============== */
+.alert-success {
+    background-color: rgba(70, 127, 106, 0.1) !important;
+    border-color: #447f6a !important;
+    color: #2d5446 !important;
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    border-color: #dc3545 !important;
+    color: #721c24 !important;
+}
+
+.alert-warning {
+    background-color: rgba(222, 207, 188, 0.3) !important;
+    border-color: var(--tausi-accent) !important;
+    color: #8b7355 !important;
+}
+
+.alert-info {
+    background-color: rgba(101, 36, 130, 0.1) !important;
+    border-color: var(--tausi-primary) !important;
+    color: #4d1b62 !important;
+}
+
+/* =============== RESPONSIVE =============== */
+@media (max-width: 991.98px) {
+    .vertical-menu {
+        background-color: var(--tausi-white) !important;
+    }
+}
+
+/* =============== CUSTOM COMPONENTS =============== */
+/* Dashboard Stats Widget */
+.dashboard-stat {
+    background: linear-gradient(135deg, var(--tausi-primary) 0%, #4d1b62 100%) !important;
+    color: var(--tausi-white) !important;
+    border-radius: 8px !important;
+    padding: 1.5rem !important;
+}
+
+.dashboard-stat h3 {
+    color: var(--tausi-white) !important;
+}
+
+.dashboard-stat .stat-icon {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: var(--tausi-white) !important;
+}
+
+/* Page Header Enhancement */
+.page-header-enhanced {
+    background: linear-gradient(135deg, var(--tausi-primary) 0%, #4d1b62 100%) !important;
+    color: var(--tausi-white) !important;
+    padding: 2rem !important;
+    border-radius: 8px !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.page-header-enhanced h1,
+.page-header-enhanced h2,
+.page-header-enhanced h3 {
+    color: var(--tausi-white) !important;
+}
+
+/* Section Divider */
+.section-divider {
+    border-bottom: 2px solid var(--tausi-accent) !important;
+    margin: 2rem 0 !important;
+}
+
+/* Text Utilities */
+.text-tausi-primary {
+    color: var(--tausi-primary) !important;
+}
+
+.bg-tausi-primary {
+    background-color: var(--tausi-primary) !important;
+}
+
+.bg-tausi-accent {
+    background-color: var(--tausi-accent) !important;
+}
+
+.border-tausi-primary {
+    border-color: var(--tausi-primary) !important;
+}
+
+/* =============== LOADING & STATES =============== */
+.spinner-border-tausi {
+    color: var(--tausi-primary) !important;
+}
+
+/* =============== ICONS =============== */
+.icon-tausi {
+    color: var(--tausi-primary) !important;
+}
+
+.icon-accent {
+    color: var(--tausi-accent) !important;
+}

@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Estate Project') - Velzon Admin</title>
+    <title>@yield('title', 'Dashboard') - Tausi</title>
 
     <!-- Velzon CSS -->
     <link rel="stylesheet" href="{{ asset('assets/velzon/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/velzon/css/icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/velzon/css/app.min.css') }}">
+    
+    <!-- Tausi Dashboard Branding -->
+    <link rel="stylesheet" href="{{ asset('assets/tausi/tausi-dashboard.css') }}">
 
     <!-- Additional Styles -->
     @stack('styles')
@@ -26,19 +29,19 @@
                     <div class="navbar-brand-box">
                         <a href="{{ route('dashboard') }}" class="logo logo-dark">
                             <span class="logo-sm">
-                                <img src="{{ asset('assets/velzon/images/logo-sm.png') }}" alt="logo-sm" height="22">
+                                <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausi" height="40" style="filter: brightness(0) invert(1);">
                             </span>
                             <span class="logo-lg">
-                                <img src="{{ asset('assets/velzon/images/logo-dark.png') }}" alt="logo-dark" height="17">
+                                <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausi" height="40" style="filter: brightness(0) invert(1);">
                             </span>
                         </a>
 
                         <a href="{{ route('dashboard') }}" class="logo logo-light">
                             <span class="logo-sm">
-                                <img src="{{ asset('assets/velzon/images/logo-sm.png') }}" alt="logo-sm" height="22">
+                                <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausi" height="40" style="filter: brightness(0) invert(1);">
                             </span>
                             <span class="logo-lg">
-                                <img src="{{ asset('assets/velzon/images/logo-light.png') }}" alt="logo-light" height="17">
+                                <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausi" height="40" style="filter: brightness(0) invert(1);">
                             </span>
                         </a>
                     </div>
@@ -207,11 +210,11 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script>© Estate Project
+                            <script>document.write(new Date().getFullYear())</script> © Tausi Holiday & Getaway Homes
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
-                                Design & Develop by <a href="javascript: void(0);" class="text-reset">Your Company</a>
+                                Nanyuki, Kenya
                             </div>
                         </div>
                     </div>
