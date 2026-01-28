@@ -23,17 +23,6 @@ class FrontendController extends Controller
     }
 
     /**
-     * Display the alternative home page layout
-     */
-    public function home2(): View
-    {
-        return view('frontend.homepage-2', [
-            'title' => 'Home 2 - GrandStay',
-            'description' => 'Experience luxury at GrandStay with our alternative homepage design.'
-        ]);
-    }
-
-    /**
      * Display the about page
      */
     public function about(): View
@@ -113,17 +102,6 @@ class FrontendController extends Controller
     }
 
     /**
-     * Display offers page
-     */
-    public function offers(): View
-    {
-        return view('frontend.offers', [
-            'title' => 'Special Offers - GrandStay',
-            'description' => 'Check out our amazing special offers and packages.'
-        ]);
-    }
-
-    /**
      * Display gallery page
      */
     public function gallery(): View
@@ -169,18 +147,6 @@ class FrontendController extends Controller
     }
 
     /**
-     * Display single offer page
-     */
-    public function offerSingle($id): View
-    {
-        return view('frontend.offer-single', [
-            'id' => $id,
-            'title' => 'Special Offer - GrandStay',
-            'description' => 'Learn more about this amazing offer.'
-        ]);
-    }
-
-    /**
      * Display single blog post page
      */
     public function blogSingle($id): View
@@ -189,17 +155,6 @@ class FrontendController extends Controller
             'id' => $id,
             'title' => 'Blog Post - GrandStay',
             'description' => 'Read our latest blog post.'
-        ]);
-    }
-
-    /**
-     * Display the reservation form page
-     */
-    public function reservation(): View
-    {
-        return view('frontend.reservation', [
-            'title' => 'Make a Reservation - GrandStay',
-            'description' => 'Book your perfect stay with us.'
         ]);
     }
 

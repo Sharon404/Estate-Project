@@ -15,9 +15,6 @@ use App\Http\Controllers\Admin\AuditController;
 
 // Frontend Routes
 Route::get('/', [FrontendController::class, 'index'])->name('home');
-Route::get('/home-2', [FrontendController::class, 'home2'])->name('frontend.home-2');
-Route::get('/home-3', [FrontendController::class, 'home2'])->name('frontend.home-3');
-Route::get('/home-4', [FrontendController::class, 'home2'])->name('frontend.home-4');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::post('/contact', [FrontendController::class, 'contactStore'])->name('contact.store');
@@ -25,12 +22,9 @@ Route::get('/properties', [FrontendController::class, 'properties'])->name('prop
 Route::get('/property/{id}', [FrontendController::class, 'propertySingle'])->name('property.single');
 Route::get('/facilities', [FrontendController::class, 'facilities'])->name('facilities');
 Route::get('/gallery', [FrontendController::class, 'gallery'])->name('gallery');
-Route::get('/gallery/carousel', [FrontendController::class, 'gallery'])->name('gallery.carousel');
 Route::get('/testimonials', [FrontendController::class, 'testimonials'])->name('testimonials');
 Route::get('/blog', [FrontendController::class, 'blog'])->name('blog');
 Route::get('/blog/{id}', [FrontendController::class, 'blogSingle'])->name('blog.single');
-// Reservation entry point handled by BookingController (non-submitting)
-// (see detailed flow below)
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
