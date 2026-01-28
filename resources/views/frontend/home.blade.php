@@ -591,10 +591,10 @@
                             <div class="hover relative">
                                 <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">20% OFF</h3>
                                 <img src="{{ asset('assets/frontend/images/offers/1.webp') }}" class="w-100 hover-scale-1-1" alt="">
-                                <a href="{{ route('offer.single', ['id' => 1]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                                <a href="{{ route('properties') }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                             </div>
                             <div class="p-40 bg-dark-2 text-light relative">
-                                <a class="text-white" href="{{ route('offers') }}">
+                                <a class="text-white" href="{{ route('properties') }}">
                                     <h3>Private House (2–3 Bedrooms)</h3>
                                     <p>Flat rate of KES 25,000 per house per night, with breakfast included.</p>
                                 </a>
@@ -605,7 +605,7 @@
                     <div class="col-lg-4 wow fadeInUp" data-wow-delay=".4s">
                         <div class="overflow-hidden rounded-1">
                             <div class="p-40 bg-dark-2 text-light relative">
-                                <a class="text-white" href="{{ route('offers') }}">
+                                <a class="text-white" href="{{ route('properties') }}">
                                     <h3>Breakfast Included</h3>
                                     <p>Enjoy a complimentary breakfast prepared daily as part of your nightly rate.</p>
                                 </a>
@@ -613,7 +613,7 @@
                             <div class="hover relative">
                                 <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 bottom-0 start-0 z-3">30% OFF</h3>
                                 <img src="{{ asset('assets/frontend/images/offers/2.webp') }}" class="w-100 hover-scale-1-1" alt="">
-                                <a href="{{ route('offer.single', ['id' => 2]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                                <a href="{{ route('properties') }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                             </div>
                         </div>
                     </div>
@@ -622,10 +622,10 @@
                         <div class="overflow-hidden rounded-1">
                             <div class="hover relative">
                                 <img src="{{ asset('assets/frontend/images/offers/3.webp') }}" class="w-100 hover-scale-1-1" alt="">
-                                <a href="{{ route('offer.single', ['id' => 3]) }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
+                                <a href="{{ route('properties') }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                             </div>
                             <div class="p-40 bg-dark-2 text-light relative">
-                                <a class="text-white" href="{{ route('offers') }}">
+                                <a class="text-white" href="{{ route('properties') }}">
                                     <h3>Entire house — no shared spaces</h3>
                                     <p>Ideal for families, couples, and small groups seeking a calm environment.</p>
                                 </a>

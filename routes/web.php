@@ -24,8 +24,6 @@ Route::post('/contact', [FrontendController::class, 'contactStore'])->name('cont
 Route::get('/properties', [FrontendController::class, 'properties'])->name('properties');
 Route::get('/property/{id}', [FrontendController::class, 'propertySingle'])->name('property.single');
 Route::get('/facilities', [FrontendController::class, 'facilities'])->name('facilities');
-Route::get('/offers', [FrontendController::class, 'offers'])->name('offers');
-Route::get('/offer/{id}', [FrontendController::class, 'offerSingle'])->name('offer.single');
 Route::get('/gallery', [FrontendController::class, 'gallery'])->name('gallery');
 Route::get('/gallery/carousel', [FrontendController::class, 'gallery'])->name('gallery.carousel');
 Route::get('/testimonials', [FrontendController::class, 'testimonials'])->name('testimonials');
