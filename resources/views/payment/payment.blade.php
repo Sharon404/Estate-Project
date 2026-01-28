@@ -313,10 +313,18 @@
     const amount = {{ $booking->amount_due }};
     const currency = '{{ $booking->currency }}';
     const till = '{{ config("mpesa.till_number", "*138#") }}';
+    const bookingStatus = '{{ $booking->status }}';
     
     let paymentIntentId = null;
     let stkPollingInterval = null;
     let statusPollingInterval = null;
+
+    // Check if booking is already paid on page load
+    window.addEventListener('DOMContentLoaded', function() {
+        if (bookingStatus === 'PAID' || bookingStatus === 'COMPLETED') {
+            showSuccess('Payment completed! You can download your receipt below.');
+        }
+    });
 
     // Handle Payment Method
     async function handlePaymentMethod() {
@@ -419,9 +427,7 @@
                 if (data.data.status === 'SUCCEEDED') {
                     clearInterval(stkPollingInterval);
                     showSuccess('Payment confirmed! Receipt sent to your email.');
-                    setTimeout(() => {
-                        window.location.href = '/';
-                    }, 3000);
+                    // Stay on page so user can download receipt
                     return;
                 } else if (data.data.status === 'FAILED') {
                     clearInterval(stkPollingInterval);
@@ -581,9 +587,8 @@
             if (data.success && data.data.status === 'PAID') {
                 showValidationSuccess(`Payment confirmed! Receipt: ${data.data.last_receipt?.mpesa_receipt_number || 'Processing'}`);
                 clearInterval(statusPollingInterval);
-                setTimeout(() => {
-                    window.location.href = '/';
-                }, 3000);
+                // Reload page to show success state with download button
+                window.location.reload();
             } else if (data.success && data.data.status === 'PARTIALLY_PAID') {
                 showValidationError(`Partial payment received. Paid: ${data.data.amount_paid}/${data.data.total_amount} KES. Please complete the remaining amount.`);
             } else {

@@ -44,9 +44,12 @@ class PaymentController extends Controller
      */
     public function showPaymentPage(Booking $booking)
     {
-        // Validate booking is pending payment
-        if (!in_array($booking->status, ['PENDING_PAYMENT', 'PARTIALLY_PAID'])) {
-            return redirect('/')->with('error', 'This booking is not awaiting payment.');
+        // Allow viewing for PAID/COMPLETED bookings (to download receipt)
+        // and for PENDING_PAYMENT/PARTIALLY_PAID (to make payment)
+        $allowedStatuses = ['PENDING_PAYMENT', 'PARTIALLY_PAID', 'PAID', 'COMPLETED'];
+        
+        if (!in_array($booking->status, $allowedStatuses)) {
+            return redirect('/')->with('error', 'This booking is not available for payment.');
         }
 
         return view('payment.payment', [
