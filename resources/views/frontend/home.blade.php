@@ -437,20 +437,9 @@
 
                 <div class="spacer-single"></div>
 
-                <div class="row">
-                  <div class="col-md-12 text-center">
-                      <ul id="filters" class="wow fadeInUp" data-wow-delay="0s">
-                        <li><a href="#" data-filter="*" class="selected">View All</a></li>
-                          <li><a href="#" data-filter=".rooms">Our Homes</a></li>
-                          <li><a href="#" data-filter=".dining">Dining</a></li>
-                          <li><a href="#" data-filter=".facilities">Facilities</a><li>
-                      </ul>
-                  </div>
-                </div>
-
                 <div id="gallery" class="row g-3 wow fadeIn" data-wow-delay=".3s">
 
-                    <div class="col-md-3 col-sm-6 col-12 item rooms">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/1.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -460,7 +449,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item dining">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/6.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -470,7 +459,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item facilities">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/9.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -480,7 +469,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item rooms">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/3.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -490,7 +479,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item dining">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/8.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -500,7 +489,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item rooms">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/5.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -510,7 +499,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item facilities">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/11.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -520,7 +509,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item rooms">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/2.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -530,7 +519,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item facilities">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/10.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -540,7 +529,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item rooms">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/4.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -550,7 +539,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item dining">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/7.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -560,7 +549,7 @@
                       </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-12 item facilities">
+                    <div class="col-md-3 col-sm-6 col-12 item">
                       <a href="{{ asset('assets/frontend/images/gallery/12.webp') }}" class="image-popup d-block hover">
                           <div class="relative overflow-hidden rounded-1">
                               <div class="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-3 text-center text-white">View</div>
@@ -589,7 +578,7 @@
                     <div class="col-lg-4 wow fadeInUp" data-wow-delay=".2s">
                         <div class="overflow-hidden rounded-1">
                             <div class="hover relative">
-                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">20% OFF</h3>
+                               <!-- <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">20% OFF</h3> -->
                                 <img src="{{ asset('assets/frontend/images/offers/1.webp') }}" class="w-100 hover-scale-1-1" alt="">
                                 <a href="{{ route('properties') }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                             </div>
@@ -611,7 +600,7 @@
                                 </a>
                             </div>
                             <div class="hover relative">
-                                <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 bottom-0 start-0 z-3">30% OFF</h3>
+                               <!-- <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 bottom-0 start-0 z-3">30% OFF</h3> -->
                                 <img src="{{ asset('assets/frontend/images/offers/2.webp') }}" class="w-100 hover-scale-1-1" alt="">
                                 <a href="{{ route('properties') }}" class="d-block abs w-100 h-100 top-0 start-0"></a>
                             </div>

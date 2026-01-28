@@ -129,11 +129,11 @@ Table of content:
 /* base background color */
 .bg-default{background: var(--bg-default)}
 .bg-color{background: var(--primary-color)}
-.bg-light{background: var(--bg-light) !important}
+.bg-light{background: var(--bg-light) }
 .bg-dark,.bg-dark-1{background-color: var(--bg-dark-1)}
-.bg-dark-2{background-color: var(--bg-dark-2) !important}
-.bg-dark-3{background-color: var(--bg-dark-3) !important}
-.bg-grey{background-color: var(--bg-grey) !important}
+.bg-dark-2{background-color: var(--bg-dark-2) }
+.bg-dark-3{background-color: var(--bg-dark-3) }
+.bg-grey{background-color: var(--bg-grey) }
 .bg-gradient-1{  background: -moz-linear-gradient(var(--bg-gradient-1)) !important;  background: -webkit-linear-gradient(var(--bg-gradient-1)) !important;background: linear-gradient(var(--bg-gradient-1)) !important;
 }
 /* base color */
@@ -295,7 +295,7 @@ header.smaller {
   -o-backdrop-filter: blur(10px);
   -moz-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border: none;*/
+  border: none;
 }
 
 header.header-mobile.header-float .header-inner,
@@ -3721,7 +3721,7 @@ ul.cols-2{
 
 .ul-style-4 li {
   margin: 2px 0 2px 0;
-  display: ;
+  display: flex;
   font-weight: 500;
 }
 
@@ -5578,7 +5578,8 @@ footer .widget{
   border-color: #555;
 }
 
-.widget_tags li a:hover border-color: #eceff3;
+.widget_tags li a:hover {
+  border-color: #eceff3;
 }
 
 footer .widget {

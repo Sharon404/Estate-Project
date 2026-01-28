@@ -563,6 +563,17 @@ h2.fs-96.mb-0 {
   color: #decfbc !important;
 }
 
+div.p-40.bg-dark-2.text-light.relative {
+  background: #447f6a !important;
+  color: #ffffff !important;
+}
+
+div.p-40.bg-dark-2.text-light.relative h3,
+div.p-40.bg-dark-2.text-light.relative p,
+div.p-40.bg-dark-2.text-light.relative a {
+  color: #ffffff !important;
+}
+
 p.text-dark {
   color: #ffffff !important;
 }
