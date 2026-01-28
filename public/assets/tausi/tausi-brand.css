@@ -163,6 +163,8 @@ a:hover {
 header {
   background: #ffffff !important;
   border-bottom: 1px solid #decfbc !important;
+  position: relative !important;
+  z-index: 9999 !important;
 }
 
 .navbar-brand img,
