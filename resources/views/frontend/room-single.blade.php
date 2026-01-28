@@ -19,7 +19,7 @@
                     <div class="col-lg-6 text-center">
                         <div class="subtitle id-color wow fadeInUp mb-2">Enjoy Your Stay</div>
                         <div class="clearfix"></div>
-                        <h2 class="fs-60 fs-xs-8vw wow fadeInUp" data-wow-delay=".4s">Deluxe Room</h2>
+                        <h2 class="fs-60 fs-xs-8vw wow fadeInUp" data-wow-delay=".4s">Tausi Holiday Home - Nanyuki</h2>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 <ul class="crumb">
                     <li><a href="{{ route('home') }}">Home</a></li>
                     <li><a href="{{ route('properties') }}">Rooms</a></li>
-                    <li class="active">Deluxe Room</li>
+                    <li class="active">Tausi Holiday Home - Nanyuki</li>
                 </ul>
             </div>
             <div class="sw-overlay op-8"></div>
@@ -44,7 +44,7 @@
                             <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt="">35 m²</div>
                             <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt=""> King Bed</div>
                             <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt=""> City View</div>
-                            <div class="d-lg-block d-sm-inline-block"><h2 class="fs-40 m-0 lh-1">KES 15,000 <span class="fs-20">/ night</span></h2></div>
+                            <div class="d-lg-block d-sm-inline-block"><h2 class="fs-40 m-0 lh-1">KES 25,000 <span class="fs-20">/ night</span></h2></div>
                         </div>
                     </div>
 
@@ -99,7 +99,7 @@
 
                         <div class="spacer-single"></div>
                         <p>
-                            Designed for travelers who appreciate comfort and style, the Deluxe Room features modern furnishings, warm ambient lighting, and carefully selected premium amenities. Thoughtfully designed to create a calming atmosphere, the space offers a perfect balance between elegance and functionality, ensuring a relaxing and enjoyable stay whether you are traveling for business or leisure.
+                            Tausi Holiday Home offers a fully furnished private house ideal for families, couples, and small groups seeking a peaceful escape. Each home provides privacy, comfort, and a calm environment — with breakfast included and a simple flat nightly rate. Perfect for families and groups looking for complete independence and comfort.
                         </p>
                         <h3 class="mt-4 mb-3">Room Amenities</h3>
                         <ul class="ul-check">
@@ -189,18 +189,18 @@
                                     <div class="d-flex mb-2 fs-15 justify-content-between">
                                         <div class="d-flex">    
                                             <div class="d-flex align-items-center me-3">
-                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
+                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4 guests
                                             </div>
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
+                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="fs-20 fw-bold">KES 15,000</div><span>/night</span>
+                                            <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                         </div>
                                     </div>
                                     <div class="relative">
-                                        <h3 class="mb-2">Superior Room</h3>
+                                        <h3 class="mb-2">2 Bedroom Villa - Nanyuki</h3>
                                     </div>
                                 </div>
                             </a>
@@ -222,11 +222,11 @@
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="fs-20 fw-bold">KES 14,900</div><span>/night</span>
+                                            <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                         </div>
                                     </div>
                                     <div class="relative">
-                                        <h3 class="mb-2">Executive Room</h3>
+                                        <h3 class="mb-2">3 Bedroom Villa - Nanyuki</h3>
                                     </div>
                                 </div>
                             </a>
