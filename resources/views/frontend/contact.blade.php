@@ -138,6 +138,40 @@
               </div>
             </div>
         </section>
+
+        <!-- Google Maps Location Section -->
+        <section class="relative">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="subtitle">Our Location</div>
+                        <h2 class="wow fadeInUp mb-3">Find Us on Google Maps</h2>
+                        <p class="mb-4">Visit us at Tausi Holiday & Getaway Homes in Nanyuki, Kenya. Use the map below for directions or <a href="https://www.google.com/maps/place/Nanyuki,+Kenya/@-0.0176197,36.9449778,12z" target="_blank" rel="noopener noreferrer" class="text-decoration-underline" style="color: #652482; font-weight: 600;">open in Google Maps</a> for navigation.</p>
+                        
+                        <div class="rounded-1 overflow-hidden shadow-sm" style="height: 400px; width: 100%;">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127499.14527869476!2d36.9449778!3d-0.0176197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x17887b1e2cffffff%3A0x7bce2f1e2bf0c0!2sNanyuki%2C%20Kenya!5e0!3m2!1sen!2s!4v1738088400000!5m2!1sen!2s" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="Tausi Holiday & Getaway Homes Location - Nanyuki, Kenya">
+                            </iframe>
+                        </div>
+
+                        <style>
+                            @media (max-width: 768px) {
+                                .rounded-1.overflow-hidden.shadow-sm {
+                                    height: 300px !important;
+                                }
+                            }
+                        </style>
+                    </div>
+                </div>
+            </div>
+        </section>
         
     </main>
 
