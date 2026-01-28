@@ -74,18 +74,18 @@
                                 <div class="d-flex mb-2 fs-15 justify-content-between">
                                     <div class="d-flex">    
                                         <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
+                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4 guests
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
+                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 14,900</div><span>/night</span>
+                                        <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                     </div>
                                 </div>
                                 <div class="relative">
-                                    <h3 class="mb-2">Executive Room</h3>
+                                    <h3 class="mb-2">2 Bedroom Villa - Nanyuki</h3>
                                 </div>
                             </div>
                         </a>
@@ -100,18 +100,18 @@
                                 <div class="d-flex mb-2 fs-15 justify-content-between">
                                     <div class="d-flex">    
                                         <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
+                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">6 guests
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
+                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 17,900</div><span>/night</span>
+                                        <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                     </div>
                                 </div>
                                 <div class="relative">
-                                    <h3 class="mb-2">Premium Suite</h3>
+                                    <h3 class="mb-2">3 Bedroom Villa - Nanyuki</h3>
                                 </div>
                             </div>
                         </a>
@@ -126,18 +126,18 @@
                                 <div class="d-flex mb-2 fs-15 justify-content-between">
                                     <div class="d-flex">    
                                         <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4 guests
+                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">6 guests
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">50 ft
+                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 22,900</div><span>/night</span>
+                                        <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                     </div>
                                 </div>
                                 <div class="relative">
-                                    <h3 class="mb-2">Family Suite</h3>
+                                    <h3 class="mb-2">4 Bedroom Villa - Nanyuki</h3>
                                 </div>
                             </div>
                         </a>
@@ -155,15 +155,15 @@
                                             <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4 guests
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">60 ft
+                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt=""> Entire Home
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 30,900</div><span>/night</span>
+                                        <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                     </div>
                                 </div>
                                 <div class="relative">
-                                    <h3 class="mb-2">Luxury Suite</h3>
+                                    <h3 class="mb-2">3 Bedroom Villa - Nanyuki</h3>
                                 </div>
                             </div>
                         </a>
@@ -174,90 +174,73 @@
         </section>
 
 
-        <section class="text-light jarallax m-2 rounded-1 overflow-hidden">
+        <section class="text-light jarallax jarallax-reviews mx-2 rounded-1 overflow-hidden">
             <img src="{{ asset('assets/frontend/images/background/1.webp') }}" class="jarallax-img" alt="">
             <div class="sw-overlay op-6"></div>
             <div class="container relative z-2">
                 <div class="row g-4 gx-5 align-items-center">
-                  <div class="col-lg-5 text-center">
-                      <h2 class="fs-96 mb-0">4.9</h2>
-                      <span class="d-stars id-color d-block wow fadeInUp">
-                          <i class="icofont-star"></i>
-                          <i class="icofont-star"></i>
-                          <i class="icofont-star"></i>
-                          <i class="icofont-star"></i>
-                          <i class="icofont-star"></i>
-                      </span>
-                      (300+ Reviews)
-                  </div>
+                    <div class="col-lg-5 text-center">
+                        <h2 class="fs-96 mb-0">4.9</h2>
+                        <span class="d-stars id-color d-block wow fadeInUp">
+                            <i class="icofont-star"></i>
+                            <i class="icofont-star"></i>
+                            <i class="icofont-star"></i>
+                            <i class="icofont-star"></i>
+                            <i class="icofont-star"></i>
+                        </span>
+                        (150+ Reviews)
+                    </div>
                     <div class="col-lg-7">
                         <div class="owl-single-dots owl-carousel owl-theme">
+                            
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
+                                    <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Their campaign made our brand shine online. Outstanding creativity and flawless execution.</h3>
-                                <span class="wow fadeInUp">Anna L., Paris</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">The breakfast was amazing and prepared fresh every morning. We felt completely at home!</h3>
+                                <span class="wow fadeInUp">Sarah M., Nairobi</span>
                             </div>
+
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
+                                    <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Our traffic grew beyond expectations. A truly data-driven and impactful partnership.</h3>
-                                <span class="wow fadeInUp">Michael H., Toronto</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Perfect for our family getaway. The entire home was clean, comfortable, and the hosts were so warm and welcoming.</h3>
+                                <span class="wow fadeInUp">James K., Kisumu</span>
                             </div>
+
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
+                                    <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">The attention to our goals was amazing. Every ad reflected our brand perfectly.</h3>
-                                <span class="wow fadeInUp">Nadia R., Dubai</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Nanyuki location is beautiful. We appreciated the quiet, respectful environment and excellent hospitality.</h3>
+                                <span class="wow fadeInUp">Emily W., Nairobi</span>
                             </div>
+
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
+                                    <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Working with them was effortless and inspiring. The best digital agency experience.</h3>
-                                <span class="wow fadeInUp">Tom S., Los Angeles</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Having the entire home to ourselves was wonderful. Privacy, comfort, and breakfast included - what more could we ask for?</h3>
+                                <span class="wow fadeInUp">Peter M., Kenyatta</span>
                             </div>
+
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
+                                    <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">From SEO to ads, everything delivered results. A partner we truly trust.</h3>
-                                <span class="wow fadeInUp">Elise K., Amsterdam</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Excellent value for money. The home is well-maintained and the hosts are attentive without being intrusive.</h3>
+                                <span class="wow fadeInUp">Lisa T., Thika</span>
                             </div>
+
                             <div class="item">
                                 <span class="d-stars id-color d-block mb-3">
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
-                                    <i class="icofont-star"></i>
+                                    <i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i><i class="icofont-star"></i>
                                 </span>
-                                <h3 class="mb-4 wow fadeInUp fs-40">Professional, creative, and results-driven. Our leads doubled in just two months.</h3>
-                                <span class="wow fadeInUp">David M., Singapore</span>
+                                <h3 class="mb-4 wow fadeInUp fs-40">Our favorite getaway spot! The peaceful surroundings and home-style hospitality make it perfect for relaxation.</h3>
+                                <span class="wow fadeInUp">David R., Mombasa</span>
                             </div>
+
                         </div>
                     </div>
                 </div>
