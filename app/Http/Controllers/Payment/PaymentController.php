@@ -415,15 +415,23 @@ class PaymentController extends Controller
             abort(403, 'Receipt not available for unpaid bookings');
         }
 
-        // Get the latest successful payment transaction
+        // Get the latest payment transaction (type = PAYMENT, not REFUND or ADJUSTMENT)
         $latestTransaction = $booking->bookingTransactions()
-            ->where('status', 'COMPLETED')
-            ->orderBy('created_at', 'desc')
+            ->where('type', 'PAYMENT')
+            ->orderBy('posted_at', 'desc')
             ->first();
 
         if (!$latestTransaction) {
-            abort(404, 'No completed payment transaction found');
+            abort(404, 'No payment transaction found');
         }
+
+        // Map source to human-readable payment method
+        $paymentMethodMap = [
+            'MPESA_STK' => 'M-PESA STK Push',
+            'MPESA_MANUAL' => 'M-PESA Manual Entry',
+            'MPESA_C2B' => 'M-PESA Paybill',
+            'ADMIN' => 'Manual Entry (Admin)',
+        ];
 
         // Prepare receipt data
         $receiptData = [
@@ -437,9 +445,9 @@ class PaymentController extends Controller
             'nights' => $booking->nights,
             'amount_paid' => number_format($booking->amount_paid, 2),
             'currency' => $booking->currency,
-            'payment_method' => $latestTransaction->payment_method === 'stk_push' ? 'M-PESA STK Push' : 'M-PESA Paybill',
-            'mpesa_receipt' => $latestTransaction->mpesa_receipt_number ?? 'N/A',
-            'payment_date' => $latestTransaction->created_at->format('M d, Y h:i A'),
+            'payment_method' => $paymentMethodMap[$latestTransaction->source] ?? $latestTransaction->source,
+            'mpesa_receipt' => $latestTransaction->external_ref ?? 'N/A',
+            'payment_date' => \Carbon\Carbon::parse($latestTransaction->posted_at)->format('M d, Y h:i A'),
             'generated_at' => now()->format('M d, Y h:i A'),
         ];
 
