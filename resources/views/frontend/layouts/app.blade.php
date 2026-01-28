@@ -56,7 +56,7 @@
                             <a class="nav-link" href="{{ route('home') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('properties') }}">Homes</a>
+                            <a class="nav-link" href="{{ route('properties') }}">Properties</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('about') }}">About</a>
@@ -104,7 +104,7 @@
                     <ul class="list-unstyled">
                         <li><a href="{{ route('home') }}" class="text-muted text-decoration-none">Home</a></li>
                         <li><a href="{{ route('about') }}" class="text-muted text-decoration-none">About</a></li>
-                        <li><a href="{{ route('properties') }}" class="text-muted text-decoration-none">Homes</a></li>
+                        <li><a href="{{ route('properties') }}" class="text-muted text-decoration-none">Properties</a></li>
                         <li><a href="{{ route('contact') }}" class="text-muted text-decoration-none">Contact</a></li>
                     </ul>
                 </div>

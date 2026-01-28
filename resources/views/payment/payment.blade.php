@@ -282,15 +282,15 @@
                             <div class="col-md-6 mb-3 mb-md-0">
                                 <h6 class="mb-1">Contact Support</h6>
                                 <p class="text-muted mb-0">
-                                    Email: support@nairobi-homes.com<br/>
-                                    Phone: +254 (0) 123 456 789
+                                    Tausi Holiday & Getaway Homes<br/>
+                                    Nanyuki, Kenya
                                 </p>
                             </div>
                             <div class="col-md-6">
                                 <h6 class="mb-1">Payment Information</h6>
                                 <p class="text-muted mb-0">
-                                    We accept M-PESA payments<br/>
-                                    All payments are secured and encrypted
+                                    M-PESA Payment Gateway<br/>
+                                    Secure & Encrypted Transactions
                                 </p>
                             </div>
                         </div>

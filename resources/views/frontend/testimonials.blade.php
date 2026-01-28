@@ -36,15 +36,15 @@
             <div class="container">
                 <div class="row g-4" id="gallery">
 
-                    <!-- Review 1 -->
+                    <!-- Review 1 - Sarah M. -->
                     <div class="col-lg-4 item">
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
                                     <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/1.webp') }}">
                                     <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Emily Johnson</div>
-                                        <small>12 March 2025</small>
+                                        <div class="text-dark fw-bold lh-1">Sarah M.</div>
+                                        <small>Nairobi</small>
                                     </div>
                                 </div>
                                 <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
@@ -60,20 +60,20 @@
                             </div>
 
                             <p>
-                                "Beautiful room, spotless bathroom, and incredibly comfortable bed. The romantic setup made our anniversary truly special."
+                                "The breakfast was amazing and prepared fresh every morning. We felt completely at home!"
                             </p>
                         </div>
                     </div>
 
-                    <!-- Review 2 -->
+                    <!-- Review 2 - James K. -->
                     <div class="col-lg-4 item">
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
                                     <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/2.webp') }}">
                                     <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Michael Brown</div>
-                                        <small>28 February 2025</small>
+                                        <div class="text-dark fw-bold lh-1">James K.</div>
+                                        <small>Kisumu</small>
                                     </div>
                                 </div>
                                 <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
@@ -89,20 +89,20 @@
                             </div>
 
                             <p>
-                                "Exceptional service from check-in to check-out. Staff were warm, attentive, and always ready to help."
+                                "Perfect for our family getaway. The entire home was clean, comfortable, and the hosts were so warm and welcoming."
                             </p>
                         </div>
                     </div>
 
-                    <!-- Review 3 -->
+                    <!-- Review 3 - Emily W. -->
                     <div class="col-lg-4 item">
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
                                     <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/3.webp') }}">
                                     <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Sophia Lee</div>
-                                        <small>18 February 2025</small>
+                                        <div class="text-dark fw-bold lh-1">Emily W.</div>
+                                        <small>Nairobi</small>
                                     </div>
                                 </div>
                                 <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
@@ -118,20 +118,20 @@
                             </div>
 
                             <p>
-                                "The breakfast was outstanding with plenty of options. Dining with a view made mornings unforgettable."
+                                "Nanyuki location is beautiful. We appreciated the quiet, respectful environment and excellent hospitality."
                             </p>
                         </div>
                     </div>
 
-                    <!-- Review 4 -->
+                    <!-- Review 4 - Peter M. -->
                     <div class="col-lg-4 item">
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
                                     <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/4.webp') }}">
                                     <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Daniel Martinez</div>
-                                        <small>02 February 2025</small>
+                                        <div class="text-dark fw-bold lh-1">Peter M.</div>
+                                        <small>Kenyatta</small>
                                     </div>
                                 </div>
                                 <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
@@ -147,20 +147,20 @@
                             </div>
 
                             <p>
-                                "Perfect location—quiet yet close to everything. Ideal for both relaxing and exploring the city."
+                                "Having the entire home to ourselves was wonderful. Privacy, comfort, and breakfast included - what more could we ask for?"
                             </p>
                         </div>
                     </div>
 
-                    <!-- Review 5 -->
+                    <!-- Review 5 - Lisa T. -->
                     <div class="col-lg-4 item">
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
                                     <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/5.webp') }}">
                                     <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Olivia Wilson</div>
-                                        <small>25 January 2025</small>
+                                        <div class="text-dark fw-bold lh-1">Lisa T.</div>
+                                        <small>Thika</small>
                                     </div>
                                 </div>
                                 <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
@@ -176,20 +176,20 @@
                             </div>
 
                             <p>
-                                "Spa facilities were top-notch. Exactly what we needed after a long day of travel."
+                                "Excellent value for money. The home is well-maintained and the hosts are attentive without being intrusive."
                             </p>
                         </div>
                     </div>
 
-                    <!-- Review 6 -->
+                    <!-- Review 6 - David R. -->
                     <div class="col-lg-4 item">
                         <div class="bg-white rounded-1 p-30">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="d-flex align-items-center">
                                     <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/6.webp') }}">
                                     <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">James Anderson</div>
-                                        <small>10 January 2025</small>
+                                        <div class="text-dark fw-bold lh-1">David R.</div>
+                                        <small>Mombasa</small>
                                     </div>
                                 </div>
                                 <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
@@ -205,176 +205,7 @@
                             </div>
 
                             <p>
-                                "Elegant interior, calming atmosphere, and excellent soundproofing. Slept incredibly well."
-                            </p>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-4 item">
-                        <div class="bg-white rounded-1 p-30">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/7.webp') }}">
-                                    <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Laura Bennett</div>
-                                        <small>22 December 2024</small>
-                                    </div>
-                                </div>
-                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
-                            </div>
-
-                            <div class="de-rating-ext mb-2">
-                                <span class="d-stars">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ms-2 text-white">5.0</span>
-                            </div>
-
-                            <p>
-                                "From the moment we arrived, everything felt thoughtfully curated. The room was beautifully designed, exceptionally clean, and incredibly comfortable. The romantic touches made our stay feel truly special and memorable."
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 item">
-                        <div class="bg-white rounded-1 p-30">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/8.webp') }}">
-                                    <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Thomas Müller</div>
-                                        <small>18 December 2024</small>
-                                    </div>
-                                </div>
-                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
-                            </div>
-
-                            <div class="de-rating-ext mb-2">
-                                <span class="d-stars">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ms-2 text-white">5.0</span>
-                            </div>
-
-                            <p>
-                                "The hotel strikes a perfect balance between luxury and warmth. Staff were professional yet genuinely friendly, and every request was handled quickly. The overall experience exceeded our expectations."
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 item">
-                        <div class="bg-white rounded-1 p-30">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/9.webp') }}">
-                                    <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Isabella Rossi</div>
-                                        <small>10 December 2024</small>
-                                    </div>
-                                </div>
-                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
-                            </div>
-
-                            <div class="de-rating-ext mb-2">
-                                <span class="d-stars">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ms-2 text-white">5.0</span>
-                            </div>
-
-                            <p>
-                                "Every detail felt intentional, from the soft lighting to the premium bedding. Breakfast was excellent with a wide selection, and the dining area created a relaxed, elegant atmosphere."
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 item">
-                        <div class="bg-white rounded-1 p-30">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/10.webp') }}">
-                                    <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Daniel Wong</div>
-                                        <small>05 December 2024</small>
-                                    </div>
-                                </div>
-                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
-                            </div>
-
-                            <div class="de-rating-ext mb-2">
-                                <span class="d-stars">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ms-2 text-white">5.0</span>
-                            </div>
-
-                            <p>
-                                "The location was ideal—peaceful and quiet, yet close enough to major attractions. The room was spacious, well-maintained, and perfect for relaxing after a long day."
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 item">
-                        <div class="bg-white rounded-1 p-30">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/11.webp') }}">
-                                    <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Sophie Laurent</div>
-                                        <small>30 November 2024</small>
-                                    </div>
-                                </div>
-                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
-                            </div>
-
-                            <div class="de-rating-ext mb-2">
-                                <span class="d-stars">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ms-2 text-white">5.0</span>
-                            </div>
-
-                            <p>
-                                "We stayed for a weekend and wished we could extend our stay. The ambiance, service quality, and attention to comfort made this one of our best hotel experiences."
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 item">
-                        <div class="bg-white rounded-1 p-30">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="d-flex align-items-center">
-                                    <img class="w-40px circle me-3" alt="" src="{{ asset('assets/frontend/images/testimonial/12.webp') }}">
-                                    <div class="mt-2">
-                                        <div class="text-dark fw-bold lh-1">Alexander Novak</div>
-                                        <small>22 November 2024</small>
-                                    </div>
-                                </div>
-                                <img src="{{ asset('assets/frontend/images/misc/google-icon.svg') }}" class="w-30px" alt="">
-                            </div>
-
-                            <div class="de-rating-ext mb-2">
-                                <span class="d-stars">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span class="ms-2 text-white">5.0</span>
-                            </div>
-
-                            <p>
-                                "This hotel delivers a refined, comfortable experience without feeling overly formal. Everything—from the room to the service—felt polished and thoughtfully executed."
+                                "Our favorite getaway spot! The peaceful surroundings and home-style hospitality make it perfect for relaxation."
                             </p>
                         </div>
                     </div>
