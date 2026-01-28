@@ -9,7 +9,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Payment\MpesaController;
-use App\Http\Controllers\Admin\AdminPaymentController;
+use App\Http\Controllers\Payment\AdminPaymentController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AuditController;
 

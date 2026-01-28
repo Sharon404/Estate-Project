@@ -448,4 +448,4 @@ class PaymentController extends Controller
 
         // Download PDF with booking reference as filename
         return $pdf->download('Receipt-' . $booking->booking_ref . '.pdf');
-    }
+    }}
