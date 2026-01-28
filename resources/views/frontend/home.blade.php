@@ -437,6 +437,12 @@
 
                 <div class="spacer-single"></div>
 
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3 class="wow fadeInUp mb-4" data-wow-delay="0s">Gallery</h3>
+                    </div>
+                </div>
+
                 <div id="gallery" class="row g-3 wow fadeIn" data-wow-delay=".3s">
 
                     <div class="col-md-3 col-sm-6 col-12 item">
