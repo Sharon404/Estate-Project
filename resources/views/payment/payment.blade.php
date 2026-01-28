@@ -139,7 +139,12 @@
                         </div>
                         <h4 class="text-success mb-2">Payment Received!</h4>
                         <p class="text-muted mb-3" id="success_message">Your payment has been verified. Receipt sent to your email.</p>
-                        <a href="/" class="btn btn-primary">← Back to Home</a>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <a href="{{ route('payment.receipt-download', ['booking' => $booking->id]) }}" class="btn btn-success">
+                                <i class="fas fa-download me-1"></i> Download Receipt
+                            </a>
+                            <a href="/" class="btn btn-primary">← Back to Home</a>
+                        </div>
                     </div>
 
                     <!-- Error State -->
@@ -282,8 +287,8 @@
                             <div class="col-md-6 mb-3 mb-md-0">
                                 <h6 class="mb-1">Contact Support</h6>
                                 <p class="text-muted mb-0">
-                                    Tausi Holiday & Getaway Homes<br/>
-                                    Nanyuki, Kenya
+                                    Email: bookings@tausivacations.com<br/>
+                                    Phone: +254 718 756 254
                                 </p>
                             </div>
                             <div class="col-md-6">

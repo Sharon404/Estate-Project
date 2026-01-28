@@ -40,8 +40,8 @@
                     <div class="col-lg-12">
 
                         <div class="p-4 fs-18 rounded-1 bg-color-op-1 d-lg-flex d-sm-block flex-wrap align-items-center justify-content-between gap-4 mb-4 fw-500">
-                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="abs w-20px start-0" alt="">3 Guests</div>
-                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt="">35 m²</div>
+                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="abs w-20px start-0" alt="">4-6 Guests</div>
+                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt="">2 Bedroom</div>
                             <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt=""> King Bed</div>
                             <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt=""> City View</div>
                             <div class="d-lg-block d-sm-inline-block"><h2 class="fs-40 m-0 lh-1">KES 25,000 <span class="fs-20">/ night</span></h2></div>
@@ -215,10 +215,10 @@
                                     <div class="d-flex mb-2 fs-15 justify-content-between">
                                         <div class="d-flex">    
                                             <div class="d-flex align-items-center me-3">
-                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
+                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4-6 guests
                                             </div>
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
+                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
                                             </div>
                                         </div>
                                         <div class="d-flex">
@@ -241,18 +241,18 @@
                                     <div class="d-flex mb-2 fs-15 justify-content-between">
                                         <div class="d-flex">    
                                             <div class="d-flex align-items-center me-3">
-                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">2 guests
+                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4-6 guests
                                             </div>
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">28 ft
+                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt=""> Entire Home
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="fs-20 fw-bold">KES 17,900</div><span>/night</span>
+                                            <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
                                         </div>
                                     </div>
                                     <div class="relative">
-                                        <h3 class="mb-2">Premium Suite</h3>
+                                        <h3 class="mb-2">4 Bedroom Villa - Nanyuki</h3>
                                     </div>
                                 </div>
                             </a>

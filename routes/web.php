@@ -103,6 +103,9 @@ Route::prefix('payment')->name('payment.')->group(function () {
     Route::get('receipts/{receiptNo}', [PaymentController::class, 'getReceiptByNumber'])->name('receipt-get');
     Route::get('bookings/{bookingId}/receipts', [PaymentController::class, 'getBookingReceipts'])->name('receipt-list');
     Route::get('bookings/{bookingId}/receipts/{receiptNo}', [PaymentController::class, 'getBookingReceipt'])->name('receipt-get-booking');
+    
+    // PDF Receipt Download
+    Route::get('booking/{booking}/receipt/download', [PaymentController::class, 'downloadReceipt'])->name('receipt-download');
 
     // M-PESA STK Push
     Route::prefix('mpesa')->name('mpesa.')->group(function () {
