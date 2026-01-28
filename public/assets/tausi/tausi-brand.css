@@ -547,6 +547,14 @@ h1.text-dark {
   color: #ffffff !important;
 }
 
+h2.fs-60.fs-xs-8vw {
+  color: #ffffff !important;
+}
+
+h2.subtitle.id-color {
+  color: #decfbc !important;
+}
+
 h3.mb-4.wow.fadeInUp.fs-40.animated {
   color: #ffffff !important;
 }

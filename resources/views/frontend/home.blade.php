@@ -226,6 +226,59 @@
             </div>
         </section>
 
+        <!-- About Section -->
+        <section id="about" class="bg-color-op-1 rounded-1 mx-2">
+            <div class="container">
+                <div class="row g-5 align-items-center">
+                    <!-- Content Column -->
+                    <div class="col-lg-6">
+                        <div class="subtitle id-color wow fadeInUp">Tausi Holiday & Getaway Homes</div>
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Private Homes Designed for Comfort & Quiet</h2>
+                        <p class="wow fadeInUp" data-wow-delay=".4s">
+                            Tausi offers fully furnished private houses ideal for families, couples, and small groups seeking a peaceful escape. Each home provides privacy, comfort, and a calm environment — with breakfast included and a simple flat nightly rate.
+                        </p>
+                        <div class="row g-3 my-4">
+                            <div class="col-md-6 wow fadeInUp" data-wow-delay=".0s">
+                                <div class="d-flex">
+                                    <div class="me-3">
+                                        <div class="icon-box mb-3"><i class="fa fa-lightbulb" style="font-size: 24px; color: #decfbc;"></i></div>
+                                    </div>
+                                    <div>
+                                        <h4 class="title">Calm & Comfortable Spaces</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 wow fadeInUp" data-wow-delay=".2s">
+                                <div class="d-flex">
+                                    <div class="me-3">
+                                        <div class="icon-box mb-3"><i class="fa fa-tree" style="font-size: 24px; color: #decfbc;"></i></div>
+                                    </div>
+                                    <div>
+                                        <h4 class="title">Private Outdoor Areas</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2 wow fadeInUp" data-wow-delay=".4s"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Entire house rental — no shared spaces</li>
+                            <li class="mb-2 wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-check me-2" style="color: #decfbc;"></i>KES 25,000 per night per house (breakfast included)</li>
+                            <li class="mb-2 wow fadeInUp" data-wow-delay=".6s"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Secure parking, Wi-Fi, and on-request services</li>
+                        </ul>
+                        <div class="wow fadeInUp" data-wow-delay=".8s">
+                            <a href="{{ route('properties') }}" class="btn-main fx-slide"><span>View Homes</span></a>
+                        </div>
+                    </div>
+                    <!-- Image Column -->
+                    <div class="col-lg-6">
+                        <div class="relative wow fadeInRight">
+                            <img src="{{ asset('assets/frontend/images/misc/s5.webp') }}" class="w-100 rounded-1 mb-3" alt="Tausi Homes">
+                            <img src="{{ asset('assets/frontend/images/misc/s3.webp') }}" class="w-100 rounded-1" alt="Tausi Outdoor">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <section class="text-light jarallax jarallax-reviews mx-2 rounded-1 overflow-hidden">
             <img src="{{ asset('assets/frontend/images/background/1.webp') }}" class="jarallax-img" alt="">
@@ -583,58 +636,6 @@
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="bg-color-op-1 rounded-1 mx-2">
-            <div class="container">
-                <div class="row g-5 align-items-center">
-                    <!-- Content Column -->
-                    <div class="col-lg-6">
-                        <div class="subtitle id-color wow fadeInUp">Tausi Holiday & Getaway Homes</div>
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">Private Homes Designed for Comfort & Quiet</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".4s">
-                            Tausi offers fully furnished private houses ideal for families, couples, and small groups seeking a peaceful escape. Each home provides privacy, comfort, and a calm environment — with breakfast included and a simple flat nightly rate.
-                        </p>
-                        <div class="row g-3 my-4">
-                            <div class="col-md-6 wow fadeInUp" data-wow-delay=".0s">
-                                <div class="d-flex">
-                                    <div class="me-3">
-                                        <div class="icon-box mb-3"><i class="fa fa-lightbulb" style="font-size: 24px; color: #decfbc;"></i></div>
-                                    </div>
-                                    <div>
-                                        <h4 class="title">Calm & Comfortable Spaces</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 wow fadeInUp" data-wow-delay=".2s">
-                                <div class="d-flex">
-                                    <div class="me-3">
-                                        <div class="icon-box mb-3"><i class="fa fa-tree" style="font-size: 24px; color: #decfbc;"></i></div>
-                                    </div>
-                                    <div>
-                                        <h4 class="title">Private Outdoor Areas</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <ul class="list-unstyled mb-4">
-                            <li class="mb-2 wow fadeInUp" data-wow-delay=".4s"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Entire house rental — no shared spaces</li>
-                            <li class="mb-2 wow fadeInUp" data-wow-delay=".5s"><i class="fa fa-check me-2" style="color: #decfbc;"></i>KES 25,000 per night per house (breakfast included)</li>
-                            <li class="mb-2 wow fadeInUp" data-wow-delay=".6s"><i class="fa fa-check me-2" style="color: #decfbc;"></i>Secure parking, Wi-Fi, and on-request services</li>
-                        </ul>
-                        <div class="wow fadeInUp" data-wow-delay=".8s">
-                            <a href="{{ route('properties') }}" class="btn-main fx-slide"><span>View Homes</span></a>
-                        </div>
-                    </div>
-                    <!-- Image Column -->
-                    <div class="col-lg-6">
-                        <div class="relative wow fadeInRight">
-                            <img src="{{ asset('assets/frontend/images/misc/s5.webp') }}" class="w-100 rounded-1 mb-3" alt="Tausi Homes">
-                            <img src="{{ asset('assets/frontend/images/misc/s3.webp') }}" class="w-100 rounded-1" alt="Tausi Outdoor">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <section>
             <div class="container">
