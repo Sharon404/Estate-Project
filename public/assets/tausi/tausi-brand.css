@@ -29,8 +29,8 @@
   --bg-dark-3: #652482 !important;
   --bg-dark-1-rgb: 101, 36, 130 !important;
 
-    --btn-primary-bg: #222222 !important;
-    --btn-primary-border: #222222 !important;
+    --btn-primary-bg: #4f1c65 !important;
+    --btn-primary-border: #4f1c65 !important;
     --btn-primary-color: #ffffff !important;
 
     --btn-primary-bg-hover: #4f1c65 !important;
@@ -67,9 +67,9 @@ button.btn-primary,
 a.btn-primary,
 input[type="submit"].btn-primary,
 .de-btn.btn-primary {
-  background: #222222 !important;
-  background-color: #222222 !important;
-  border-color: #222222 !important;
+  background: #652482 !important;
+  background-color: #652482 !important;
+  border-color: #652482 !important;
   color: #ffffff !important;
 }
 
@@ -542,4 +542,20 @@ img[src*="logo-light"] {
   display: none !important;
 }
 
+/* =============== SPECIFIC OVERRIDES =============== */
+h1.text-dark {
+  color: #ffffff !important;
+}
+
+h3.mb-4.wow.fadeInUp.fs-40.animated {
+  color: #ffffff !important;
+}
+
+h2.fs-96.mb-0 {
+  color: #decfbc !important;
+}
+
+p.text-dark {
+  color: #ffffff !important;
+}
 /* =============== END TAUSI BRAND OVERRIDE =============== */

@@ -96,6 +96,136 @@
             </div>
         </section>
 
+        <section aria-label="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="bg-white p-40 rounded-1">
+                            <!-- Reservation Form -->
+                            <form name="contactForm" id="contact_form" method="get" action="{{ route('properties') }}">
+                                @csrf
+                                @if (session('booking_data'))
+                                    <div class="alert alert-info mb-4" role="alert">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Edit Your Reservation</strong> - Update your dates, rooms, or guest information below.
+                                    </div>
+                                @endif
+
+                                <!-- Hidden fields for guest info -->
+                                <input type="hidden" id="name" name="name" value="{{ session('booking_data.guest_full_name', '') }}">
+                                <input type="hidden" id="email" name="email" value="{{ session('booking_data.guest_email', '') }}">
+                                <input type="hidden" id="phone" name="phone" value="{{ session('booking_data.guest_phone', '') }}">
+                                <input type="hidden" id="message" name="message" value="{{ session('booking_data.special_requests', '') }}">
+                                <input type="hidden" id="date-picker" name="date_picker">
+                                <input type="hidden" id="adult" name="adult">
+                                <input type="hidden" id="children" name="children">
+                                <input type="hidden" class="room-type" name="room_type">
+                                <input type="hidden" id="room-count" name="room_count">
+                                <input type="hidden" id="property_id" name="property_id">
+
+                                <div class="row g-4 align-items-end">
+                                    <div class="col-md-1-5">
+                                        <div class="fs-18 text-dark fw-500 mb-10">Check In</div>
+                                        <input type="text" id="checkin" class="form-control" value="{{ session('booking_data.check_in', '') }}" required>
+                                    </div>
+
+                                    <div class="col-md-1-5">
+                                        <div class="fs-18 text-dark fw-500 mb-10">Check Out</div>
+                                        <input type="text" id="checkout" class="form-control" value="{{ session('booking_data.check_out', '') }}" required>
+                                    </div>
+
+                                    <div class="col-md-1-5">
+                                        <div class="fs-18 text-dark fw-500 mb-10">Number of Homes</div>
+                                        <select id="room-count" name="room_count" class="form-control">
+                                            <option value="1" @selected(session('booking_data.room_count') == 1)>1</option>
+                                            <option value="2" @selected(session('booking_data.room_count') == 2)>2</option>
+                                            <option value="3" @selected(session('booking_data.room_count') == 3)>3</option>
+                                            <option value="4" @selected(session('booking_data.room_count') == 4)>4</option>
+                                            <option value="5" @selected(session('booking_data.room_count') == 5)>5</option>
+                                            <option value="6" @selected(session('booking_data.room_count') == 6)>6</option>
+                                            <option value="7" @selected(session('booking_data.adult') == 7)>7</option>
+                                            <option value="8" @selected(session('booking_data.adult') == 8)>8</option>
+                                            <option value="9" @selected(session('booking_data.guests') == 9)>9</option>
+                                            <option value="10" @selected(session('booking_data.guests') == 10)>10</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-md-1-5">
+                                        <div id='submit'>
+                                            <input type='submit' id='send_message' value='Check Availability' class="btn-main w-100">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+                            <!-- Guest Details Form (shown when editing) -->
+                            @if (session('booking_data'))
+                                <form id="guest-details-form" method="post" action="#" style="display: none;">
+                                    <div class="row g-4 mt-4 pt-4 border-top">
+                                        <div class="col-12">
+                                            <h5 class="mb-4">Guest Information</h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" id="guest_full_name" class="form-control" value="{{ session('booking_data.guest_full_name', '') }}" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" id="guest_email" class="form-control" value="{{ session('booking_data.guest_email', '') }}" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Phone</label>
+                                            <input type="tel" id="guest_phone" class="form-control" value="{{ session('booking_data.guest_phone', '') }}" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Special Requests</label>
+                                            <textarea id="special_requests" class="form-control" rows="3">{{ session('booking_data.special_requests', '') }}</textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="button" class="btn-main" onclick="submitGuestDetails()">Update & Proceed</button>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="cancelEditMode()">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <script>
+                                    function enterEditMode() {
+                                        document.getElementById('contact_form').style.display = 'none';
+                                        document.getElementById('guest-details-form').style.display = 'block';
+                                    }
+
+                                    function cancelEditMode() {
+                                        location.reload();
+                                    }
+
+                                    function submitGuestDetails() {
+                                        // Store guest details in session or localStorage
+                                        const guestData = {
+                                            full_name: document.getElementById('guest_full_name').value,
+                                            email: document.getElementById('guest_email').value,
+                                            phone: document.getElementById('guest_phone').value,
+                                            special_requests: document.getElementById('special_requests').value,
+                                        };
+                                        localStorage.setItem('guestDetails', JSON.stringify(guestData));
+                                        // Trigger availability check with updated data
+                                        document.getElementById('contact_form').submit();
+                                    }
+
+                                    // Auto-enter edit mode on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        enterEditMode();
+                                    });
+                                </script>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <section class="text-light jarallax jarallax-reviews mx-2 rounded-1 overflow-hidden">
             <img src="{{ asset('assets/frontend/images/background/1.webp') }}" class="jarallax-img" alt="">
@@ -390,135 +520,7 @@
             </div>
         </section>
 
-        <section aria-label="section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="bg-white p-40 rounded-1">
-                            <!-- Reservation Form -->
-                            <form name="contactForm" id="contact_form" method="post" action="{{ route('booking.store') }}">
-                                @csrf
-                                @if (session('booking_data'))
-                                    <div class="alert alert-info mb-4" role="alert">
-                                        <i class="fas fa-info-circle me-2"></i>
-                                        <strong>Edit Your Reservation</strong> - Update your dates, rooms, or guest information below.
-                                    </div>
-                                @endif
-
-                                <!-- Hidden fields for guest info -->
-                                <input type="hidden" id="name" name="name" value="{{ session('booking_data.guest_full_name', '') }}">
-                                <input type="hidden" id="email" name="email" value="{{ session('booking_data.guest_email', '') }}">
-                                <input type="hidden" id="phone" name="phone" value="{{ session('booking_data.guest_phone', '') }}">
-                                <input type="hidden" id="message" name="message" value="{{ session('booking_data.special_requests', '') }}">
-                                <input type="hidden" id="date-picker" name="date_picker">
-                                <input type="hidden" id="adult" name="adult">
-                                <input type="hidden" id="children" name="children">
-                                <input type="hidden" class="room-type" name="room_type">
-                                <input type="hidden" id="room-count" name="room_count">
-                                <input type="hidden" id="property_id" name="property_id">
-
-                                <div class="row g-4 align-items-end">
-                                    <div class="col-md-1-5">
-                                        <div class="fs-18 text-dark fw-500 mb-10">Check In</div>
-                                        <input type="text" id="checkin" class="form-control" value="{{ session('booking_data.check_in', '') }}" required>
-                                    </div>
-
-                                    <div class="col-md-1-5">
-                                        <div class="fs-18 text-dark fw-500 mb-10">Check Out</div>
-                                        <input type="text" id="checkout" class="form-control" value="{{ session('booking_data.check_out', '') }}" required>
-                                    </div>
-
-                                    <div class="col-md-1-5">
-                                        <div class="fs-18 text-dark fw-500 mb-10">Number of Homes</div>
-                                        <select id="room-count" name="room_count" class="form-control">
-                                            <option value="1" @selected(session('booking_data.room_count') == 1)>1</option>
-                                            <option value="2" @selected(session('booking_data.room_count') == 2)>2</option>
-                                            <option value="3" @selected(session('booking_data.room_count') == 3)>3</option>
-                                            <option value="4" @selected(session('booking_data.room_count') == 4)>4</option>
-                                            <option value="5" @selected(session('booking_data.room_count') == 5)>5</option>
-                                            <option value="6" @selected(session('booking_data.room_count') == 6)>6</option>
-                                            <option value="7" @selected(session('booking_data.adult') == 7)>7</option>
-                                            <option value="8" @selected(session('booking_data.adult') == 8)>8</option>
-                                            <option value="9" @selected(session('booking_data.guests') == 9)>9</option>
-                                            <option value="10" @selected(session('booking_data.guests') == 10)>10</option>
-                                        </select>
-                                    </div>
-
-
-                                    <div class="col-md-1-5">
-                                        <div id='submit'>
-                                            <input type='submit' id='send_message' value='Check Availability' class="btn-main w-100">
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </form>
-
-                            <!-- Guest Details Form (shown when editing) -->
-                            @if (session('booking_data'))
-                                <form id="guest-details-form" method="post" action="#" style="display: none;">
-                                    <div class="row g-4 mt-4 pt-4 border-top">
-                                        <div class="col-12">
-                                            <h5 class="mb-4">Guest Information</h5>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Full Name</label>
-                                            <input type="text" id="guest_full_name" class="form-control" value="{{ session('booking_data.guest_full_name', '') }}" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Email</label>
-                                            <input type="email" id="guest_email" class="form-control" value="{{ session('booking_data.guest_email', '') }}" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Phone</label>
-                                            <input type="tel" id="guest_phone" class="form-control" value="{{ session('booking_data.guest_phone', '') }}" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Special Requests</label>
-                                            <textarea id="special_requests" class="form-control" rows="3">{{ session('booking_data.special_requests', '') }}</textarea>
-                                        </div>
-                                        <div class="col-12">
-                                            <button type="button" class="btn-main" onclick="submitGuestDetails()">Update & Proceed</button>
-                                            <button type="button" class="btn btn-outline-secondary" onclick="cancelEditMode()">Cancel</button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                                <script>
-                                    function enterEditMode() {
-                                        document.getElementById('contact_form').style.display = 'none';
-                                        document.getElementById('guest-details-form').style.display = 'block';
-                                    }
-
-                                    function cancelEditMode() {
-                                        location.reload();
-                                    }
-
-                                    function submitGuestDetails() {
-                                        // Store guest details in session or localStorage
-                                        const guestData = {
-                                            full_name: document.getElementById('guest_full_name').value,
-                                            email: document.getElementById('guest_email').value,
-                                            phone: document.getElementById('guest_phone').value,
-                                            special_requests: document.getElementById('special_requests').value,
-                                        };
-                                        localStorage.setItem('guestDetails', JSON.stringify(guestData));
-                                        // Trigger availability check with updated data
-                                        document.getElementById('contact_form').submit();
-                                    }
-
-                                    // Auto-enter edit mode on page load
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        enterEditMode();
-                                    });
-                                </script>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
 
         <section class="bg-color-op-1 rounded-1 mx-2">
             <div class="container">
