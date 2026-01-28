@@ -85,18 +85,18 @@
                     </div>
 
                     <div class="col-lg-6 wow fadeInUp" data-wow-delay=".2s">
-                        <div class="p-40 bg-dark-2 text-light rounded-1 h-100 shadow-sm">
+                        <div class="p-40 rounded-1 h-100 shadow-sm" style="background-color: #bca1c5; color: #f7f3f8;">
                             <div class="icon-box mb-3"><i class="fa fa-utensils" style="font-size: 32px; color: #decfbc;"></i></div>
-                            <h3>Breakfast Included</h3>
-                            <p>Start each day with a complimentary breakfast prepared for you. Simple, nourishing meals that set the tone for a great day ahead.</p>
+                            <h3 style="color: #f7f3f8;">Breakfast Included</h3>
+                            <p style="color: #f7f3f8;">Start each day with a complimentary breakfast prepared for you. Simple, nourishing meals that set the tone for a great day ahead.</p>
                         </div>
                     </div>
 
                     <div class="col-lg-6 wow fadeInUp" data-wow-delay=".3s">
-                        <div class="p-40 bg-dark-2 text-light rounded-1 h-100 shadow-sm">
+                        <div class="p-40 rounded-1 h-100 shadow-sm" style="background-color: #bca1c5; color: #f7f3f8;">
                             <div class="icon-box mb-3"><i class="fa fa-wifi" style="font-size: 32px; color: #decfbc;"></i></div>
-                            <h3>Essential Services</h3>
-                            <p>Reliable Wi-Fi, secure parking, and attentive on-request support. We're here when you need us, without being intrusive.</p>
+                            <h3 style="color: #f7f3f8;">Essential Services</h3>
+                            <p style="color: #f7f3f8;">Reliable Wi-Fi, secure parking, and attentive on-request support. We're here when you need us, without being intrusive.</p>
                         </div>
                     </div>
                 </div>
