@@ -192,6 +192,15 @@
     .link { color: var(--brand-primary); font-weight: 700; text-decoration: none; }
     .link:hover { text-decoration: underline; }
 
+    /* Table spacing improvements */
+    .table-responsive { margin: 12px 0; }
+    .table { margin-bottom: 0; }
+    .table thead th { padding: 14px 12px; font-weight: 600; color: var(--brand-text); background: rgba(101,36,130,0.04); border-bottom: 2px solid rgba(101,36,130,0.1); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .table tbody td { padding: 16px 12px; border-bottom: 1px solid rgba(0,0,0,0.05); vertical-align: middle; }
+    .table tbody tr { transition: background-color 0.2s; }
+    .table tbody tr:hover { background-color: rgba(101,36,130,0.02); }
+    .table tbody tr:last-child td { border-bottom: none; }
+
     @media (max-width: 992px) {
         .grid { grid-template-columns: 1fr; }
         .dash-head { flex-direction: column; align-items: flex-start; }
