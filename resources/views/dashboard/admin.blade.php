@@ -159,7 +159,7 @@
     .metric .value { margin: 0; font-size: 32px; font-weight: 700; color: var(--brand-primary); }
     .metric .sub { margin: 4px 0 0; color: #6f6a75; }
 
-    .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
     .card-head h3 { margin: 0; }
     .card-head .muted { margin: 4px 0 0; }
     .muted { color: #6d6673; }
