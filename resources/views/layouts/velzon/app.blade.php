@@ -27,7 +27,7 @@
                 <!-- Logo Section -->
                 <div style="display: flex; align-items: center; flex-shrink: 0;">
                     <a href="{{ route('dashboard') }}" style="display: flex; align-items: center; text-decoration: none; padding: 0; margin: 0; height: 50px;">
-                        <img src="{{ asset('assets/velzon/images/logo-dark.png') }}" alt="Tausi" style="height: 45px; width: auto; display: block !important; visibility: visible !important; opacity: 1 !important; filter: brightness(0) invert(1); object-fit: contain;">
+                        <img src="{{ asset('assets/velzon/images/logo-light.png') }}" alt="Tausi" style="height: 45px; width: auto; display: block !important; visibility: visible !important; opacity: 1 !important; object-fit: contain; max-width: 150px;">
                     </a>
                     <!-- Menu Toggle -->
                     <button type="button" id="vertical-menu-btn" style="background: transparent; border: none; color: #ffffff; margin-left: 1rem; font-size: 1.5rem; padding: 0.5rem 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; visibility: visible; opacity: 1;">
