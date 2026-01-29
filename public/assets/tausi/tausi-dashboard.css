@@ -25,78 +25,214 @@ body {
 
 /* =============== TOP NAVBAR / HEADER =============== */
 .app-header,
-header.app-header,
-.navbar-header {
-    background-color: var(--tausi-primary) !important;
+header.app-header {
+    background: linear-gradient(135deg, #652482 0%, #5a2070 100%) !important;
     border-bottom: 2px solid var(--tausi-accent) !important;
-    box-shadow: 0 2px 8px rgba(101, 36, 130, 0.1) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    padding: 0.85rem 1.5rem !important;
+    height: auto !important;
+    min-height: 75px !important;
+    display: flex !important;
+    align-items: center !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1030 !important;
+}
+
+.navbar-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* Logo Area */
 .navbar-brand-box {
-    background-color: var(--tausi-primary) !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+}
+
+.navbar-brand-box a {
+    display: flex !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .navbar-brand-box .logo {
     display: flex !important;
     align-items: center !important;
-    padding: 0.5rem 1rem !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-decoration: none !important;
+    height: 50px !important;
+}
+
+.navbar-brand-box .logo-dark,
+.navbar-brand-box .logo-light {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+.navbar-brand-box .logo-sm,
+.navbar-brand-box .logo-lg {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+/* Logo Images - CRITICAL FIX */
+.navbar-brand-box .logo img,
+.navbar-brand-box .logo span img,
+.navbar-brand-box .logo-sm img,
+.navbar-brand-box .logo-lg img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: 45px !important;
+    width: auto !important;
+    max-width: 180px !important;
+    object-fit: contain !important;
+    filter: brightness(0) invert(1) !important;
 }
 
 /* Header Icons & Buttons */
+.header-item,
 .header-item .btn,
 .btn-icon.btn-topbar {
     color: var(--tausi-white) !important;
+    font-size: 1.25rem !important;
+    padding: 0.5rem 0.8rem !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border-radius: 4px !important;
 }
 
+.header-item:hover,
 .header-item .btn:hover,
 .btn-icon.btn-topbar:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    color: var(--tausi-accent) !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #f7f3f8 !important;
 }
 
 /* Sidebar Toggle Button */
 #vertical-menu-btn {
     color: var(--tausi-white) !important;
+    font-size: 1.5rem !important;
+    padding: 0.5rem 1rem !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
 }
 
 #vertical-menu-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #f7f3f8 !important;
 }
 
 /* Header Search */
+.header-search {
+    flex: 1 1 auto !important;
+    max-width: 300px !important;
+    margin: 0 1rem !important;
+}
+
 .header-search .form-control {
     background-color: rgba(255, 255, 255, 0.15) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
     color: var(--tausi-white) !important;
+    font-size: 0.95rem !important;
+    padding: 0.5rem 1rem !important;
+    height: 40px !important;
 }
 
 .header-search .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: rgba(255, 255, 255, 0.65) !important;
 }
 
 .header-search .form-control:focus {
     background-color: var(--tausi-white) !important;
     color: var(--tausi-text) !important;
     border-color: var(--tausi-accent) !important;
+    box-shadow: 0 0 0 0.2rem rgba(222, 207, 188, 0.3) !important;
 }
 
 /* User Profile in Header */
+.topbar-user {
+    margin-left: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.topbar-user .btn {
+    color: var(--tausi-white) !important;
+    font-size: 1.1rem !important;
+    background: transparent !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+.topbar-user .btn:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
 .topbar-user .user-name-text {
     color: var(--tausi-white) !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
 }
 
 .topbar-user .user-name-sub-text {
-    color: var(--tausi-accent) !important;
+    color: #decfbc !important;
+    font-size: 0.8rem !important;
+    margin: 0 !important;
 }
 
 .header-profile-user {
     border: 2px solid var(--tausi-accent) !important;
+    width: 42px !important;
+    height: 42px !important;
+    object-fit: cover !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Notification Badge */
 .topbar-badge {
-    background-color: var(--tausi-accent) !important;
+    background-color: #dc3545 !important;
+    color: var(--tausi-white) !important;
+}
+
+/* Header wrapper */
+.navbar-header {
+    width: 100% !important;
+}
+
+.navbar-header > div:first-child {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    flex-shrink: 0 !important;
+}
+
+.navbar-header > div:last-child {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.25rem !important;
+    margin-left: auto !important;
 }
 
 /* =============== LEFT SIDEBAR =============== */
@@ -161,16 +297,32 @@ header.app-header,
 /* Page Title */
 .page-title-box {
     background-color: var(--tausi-white) !important;
-    padding: 1.5rem !important;
+    padding: 2rem !important;
     border-radius: 8px !important;
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 2rem !important;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
     border-left: 4px solid var(--tausi-primary) !important;
 }
 
 .page-title-box h4 {
     color: var(--tausi-primary) !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
+    font-size: 1.75rem !important;
+    margin: 0 !important;
+    letter-spacing: -0.5px !important;
+}
+
+.page-title-box h3 {
+    color: var(--tausi-primary) !important;
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+    margin: 0 !important;
+}
+
+.page-title-box h2 {
+    color: var(--tausi-primary) !important;
+    font-weight: 700 !important;
+    font-size: 2rem !important;
     margin: 0 !important;
 }
 

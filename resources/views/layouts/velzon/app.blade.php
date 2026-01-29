@@ -24,37 +24,30 @@
         <!-- Header Start -->
         <header class="app-header">
             <div class="navbar-header">
-                <div class="d-flex">
+                <div class="d-flex align-items-center">
                     <!-- Logo -->
                     <div class="navbar-brand-box">
-                        <a href="{{ route('dashboard') }}" class="logo logo-dark">
-                            <span class="logo-sm">
-                                <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausi" height="40" style="filter: brightness(0) invert(1);">
-                            </span>
-                            <span class="logo-lg">
-                                <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausi" height="40" style="filter: brightness(0) invert(1);">
+                        <a href="{{ route('dashboard') }}" class="logo logo-dark" style="margin: 0; padding: 0; text-decoration: none;">
+                            <span class="logo-lg" style="display: flex; align-items: center;">
+                                <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausi" style="height: 45px; width: auto; filter: brightness(0) invert(1); display: block;">
                             </span>
                         </a>
-
-                        <a href="{{ route('dashboard') }}" class="logo logo-light">
-                            <span class="logo-sm">
-                                <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausi" height="40" style="filter: brightness(0) invert(1);">
-                            </span>
-                            <span class="logo-lg">
-                                <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausi" height="40" style="filter: brightness(0) invert(1);">
+                        <a href="{{ route('dashboard') }}" class="logo logo-light" style="margin: 0; padding: 0; text-decoration: none;">
+                            <span class="logo-lg" style="display: flex; align-items: center;">
+                                <img src="{{ asset('assets/frontend/images/logo-v5-black.png') }}" alt="Tausi" style="height: 45px; width: auto; filter: brightness(0) invert(1); display: block;">
                             </span>
                         </a>
                     </div>
 
                     <!-- Sidebar Toggle -->
-                    <button type="button" class="btn btn-sm px-3 fs-16 header-item" id="vertical-menu-btn">
+                    <button type="button" class="btn btn-sm px-3 fs-16 header-item" id="vertical-menu-btn" style="background: transparent; border: none; color: #ffffff;">
                         <i class="ri-menu-line align-middle"></i>
                     </button>
                 </div>
 
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center" style="gap: 0.5rem;">
                     <!-- Search -->
-                    <div class="header-search ms-3">
+                    <div class="header-search ms-3" style="display: none;">
                         <form class="app-search" action="#">
                             <div>
                                 <input type="text" class="form-control" placeholder="Search..." autocomplete="off" id="search-options" value="">
@@ -65,21 +58,21 @@
 
                     <!-- Topbar Right -->
                     <div class="ms-1 header-item d-none d-sm-flex">
-                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-toggle="fullscreen">
+                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-toggle="fullscreen" style="background: transparent; border: none; color: #ffffff;">
                             <i class='bx bx-fullscreen fs-22'></i>
                         </button>
                     </div>
 
                     <!-- Light/Dark Mode -->
                     <div class="ms-1 header-item d-none d-sm-flex">
-                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
+                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode" style="background: transparent; border: none; color: #ffffff;">
                             <i class='bx bx-moon fs-22'></i>
                         </button>
                     </div>
 
                     <!-- Notifications -->
                     <div class="dropdown ms-sm-3 header-item topbar-user">
-                        <button type="button" class="btn" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: transparent; border: none; color: #ffffff;">
                             <i class='bx bx-bell fs-22'></i>
                             <span class="position-absolute topbar-badge position-top-3 position-end-0 translate-middle p-2 bg-danger rounded-pill d-flex align-items-center justify-content-center" style="height:10px;width:10px;"></span>
                         </button>
@@ -87,12 +80,12 @@
 
                     <!-- User Profile -->
                     <div class="dropdown ms-sm-3 header-item topbar-user">
-                        <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: transparent; border: none; color: #ffffff; display: flex; align-items: center;">
                             <span class="d-flex align-items-center">
-                                <img class="rounded-circle header-profile-user" src="{{ asset('assets/velzon/images/avatar-1.jpg') }}" alt="Header Avatar">
-                                <span class="text-start ms-xl-2">
-                                    <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ auth()->user()->name ?? 'Admin' }}</span>
-                                    <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">{{ auth()->user()->role ?? 'Administrator' }}</span>
+                                <img class="rounded-circle header-profile-user" src="{{ asset('assets/velzon/images/avatar-1.jpg') }}" alt="Header Avatar" style="width: 40px; height: 40px; object-fit: cover; border: 2px solid #decfbc;">
+                                <span class="text-start ms-xl-2" style="display: none;">
+                                    <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text" style="color: #ffffff; font-size: 1rem; font-weight: 600;">{{ auth()->user()->name ?? 'Admin' }}</span>
+                                    <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text" style="color: #decfbc; font-size: 0.8rem;">{{ auth()->user()->role ?? 'Administrator' }}</span>
                                 </span>
                             </span>
                         </button>
