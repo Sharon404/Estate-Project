@@ -21,18 +21,38 @@ body {
 
 #layout-wrapper {
     background-color: var(--tausi-background) !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
-/* =============== TOP NAVBAR / HEADER =============== */
-.app-header,
+/* =============== TOP NAVBAR / HEADER - VELZON OVERRIDE =============== */
+/* Force Velzon header to display */
 header.app-header {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 75px !important;
     background: linear-gradient(135deg, #652482 0%, #5a2070 100%) !important;
     border-bottom: 2px solid var(--tausi-accent) !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     padding: 0.85rem 1.5rem !important;
+    align-items: center !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1030 !important;
+}
+
+.app-header {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     height: auto !important;
     min-height: 75px !important;
-    display: flex !important;
+    background: linear-gradient(135deg, #652482 0%, #5a2070 100%) !important;
+    border-bottom: 2px solid var(--tausi-accent) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    padding: 0.85rem 1.5rem !important;
     align-items: center !important;
     position: sticky !important;
     top: 0 !important;
@@ -46,6 +66,8 @@ header.app-header {
     width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
+    flex-wrap: nowrap !important;
+    min-width: 0 !important;
 }
 
 /* Logo Area */
@@ -56,6 +78,8 @@ header.app-header {
     display: flex !important;
     align-items: center !important;
     flex-shrink: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .navbar-brand-box a {
@@ -64,6 +88,8 @@ header.app-header {
     text-decoration: none !important;
     padding: 0 !important;
     margin: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .navbar-brand-box .logo {
@@ -73,6 +99,8 @@ header.app-header {
     margin: 0 !important;
     text-decoration: none !important;
     height: 50px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .navbar-brand-box .logo-dark,
@@ -80,6 +108,8 @@ header.app-header {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-start !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .navbar-brand-box .logo-sm,
@@ -87,13 +117,16 @@ header.app-header {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-start !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* Logo Images - CRITICAL FIX */
 .navbar-brand-box .logo img,
 .navbar-brand-box .logo span img,
 .navbar-brand-box .logo-sm img,
-.navbar-brand-box .logo-lg img {
+.navbar-brand-box .logo-lg img,
+.navbar-brand-box img {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -102,6 +135,9 @@ header.app-header {
     max-width: 180px !important;
     object-fit: contain !important;
     filter: brightness(0) invert(1) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
 /* Header Icons & Buttons */
@@ -116,6 +152,18 @@ header.app-header {
     cursor: pointer !important;
     transition: all 0.3s ease !important;
     border-radius: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.header-item {
+    display: flex !important;
+    align-items: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .header-item:hover,
@@ -134,6 +182,11 @@ header.app-header {
     background: transparent !important;
     cursor: pointer !important;
     transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 #vertical-menu-btn:hover {
@@ -143,9 +196,12 @@ header.app-header {
 
 /* Header Search */
 .header-search {
-    flex: 1 1 auto !important;
-    max-width: 300px !important;
-    margin: 0 1rem !important;
+    display: none !important;
+}
+
+.header-search,
+.header-search .form-control {
+    visibility: hidden !important;
 }
 
 .header-search .form-control {
@@ -173,6 +229,8 @@ header.app-header {
     margin-left: 0.5rem !important;
     display: flex !important;
     align-items: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .topbar-user .btn {
@@ -183,6 +241,8 @@ header.app-header {
     display: flex !important;
     align-items: center !important;
     gap: 0.5rem !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .topbar-user .btn:hover {
@@ -194,12 +254,16 @@ header.app-header {
     font-size: 1rem !important;
     font-weight: 600 !important;
     margin: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .topbar-user .user-name-sub-text {
     color: #decfbc !important;
     font-size: 0.8rem !important;
     margin: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .header-profile-user {
@@ -208,6 +272,13 @@ header.app-header {
     height: 42px !important;
     object-fit: cover !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.dropdown-menu {
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* Notification Badge */
