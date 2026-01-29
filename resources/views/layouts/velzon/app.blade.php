@@ -198,6 +198,74 @@
     <script src="{{ asset('assets/velzon/js/metisMenu.min.js') }}"></script>
     <script src="{{ asset('assets/velzon/js/app.min.js') }}"></script>
 
+    <!-- Custom Menu Toggle & Dropdown Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu toggle functionality
+            const menuBtn = document.getElementById('vertical-menu-btn');
+            const sidebar = document.querySelector('.vertical-menu');
+            
+            if (menuBtn && sidebar) {
+                menuBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                    document.body.classList.toggle('sidebar-enable');
+                });
+            }
+
+            // Dropdown menu functionality
+            const dropdownBtn = document.getElementById('page-header-user-dropdown');
+            const dropdownMenu = dropdownBtn?.nextElementSibling;
+            
+            if (dropdownBtn && dropdownMenu) {
+                dropdownBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isVisible = dropdownMenu.style.display === 'block';
+                    dropdownMenu.style.display = isVisible ? 'none' : 'block';
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                        dropdownMenu.style.display = 'none';
+                    }
+                });
+
+                // Prevent dropdown from closing when clicking inside
+                dropdownMenu.addEventListener('click', function(e) {
+                    if (e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON') {
+                        e.stopPropagation();
+                    }
+                });
+            }
+
+            // Fullscreen toggle
+            const fullscreenBtn = document.querySelector('[data-toggle="fullscreen"]');
+            if (fullscreenBtn) {
+                fullscreenBtn.addEventListener('click', function() {
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().catch(err => {
+                            console.log('Fullscreen error:', err);
+                        });
+                    } else {
+                        document.exitFullscreen();
+                    }
+                });
+            }
+
+            // Light/Dark mode toggle
+            const themeBtn = document.querySelector('.light-dark-mode');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', function() {
+                    document.body.classList.toggle('dark-mode');
+                    const icon = themeBtn.querySelector('span');
+                    if (icon) {
+                        icon.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+                    }
+                });
+            }
+        });
+    </script>
+
     <!-- Additional Scripts -->
     @stack('scripts')
     @yield('scripts')
