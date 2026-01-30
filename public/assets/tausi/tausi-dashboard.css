@@ -19,6 +19,17 @@ body {
     color: var(--tausi-text) !important;
 }
 
+/* =============== DROPDOWN BUTTON - ENSURE CLICKABLE =============== */
+#page-header-user-dropdown {
+    pointer-events: auto !important;
+    z-index: 1001 !important;
+}
+
+#user-dropdown-menu {
+    pointer-events: auto !important;
+    z-index: 1001 !important;
+}
+
 #layout-wrapper {
     background-color: var(--tausi-background) !important;
     display: flex !important;

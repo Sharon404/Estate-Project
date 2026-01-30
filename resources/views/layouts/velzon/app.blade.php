@@ -197,14 +197,24 @@
     <script src="{{ asset('assets/velzon/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/velzon/js/simplebar.min.js') }}"></script>
     <script src="{{ asset('assets/velzon/js/metisMenu.min.js') }}"></script>
+    
+    <!-- Disable Bootstrap dropdown to prevent interference -->
+    <script>
+        if (typeof $.fn.dropdown !== 'undefined') {
+            $.fn.dropdown.Constructor.VERSION = '999'; // Disable version checks
+        }
+    </script>
+    
     <script src="{{ asset('assets/velzon/js/app.min.js') }}"></script>
 
     <!-- Custom Menu Toggle & Dropdown Script -->
     <script>
-        // Global dropdown toggle function
+        // Global dropdown toggle function - uses vanilla JavaScript only
         window.toggleDropdown = function(event) {
-            event.preventDefault();
-            event.stopPropagation();
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
             console.log('Toggle dropdown called');
             
             const menu = document.getElementById('user-dropdown-menu');
@@ -218,19 +228,26 @@
             console.log('Dropdown is now:', menu.style.display);
         };
         
-        // Close dropdown when clicking outside
+        // Close dropdown when clicking outside - runs immediately
         document.addEventListener('click', function(e) {
             const menu = document.getElementById('user-dropdown-menu');
             const btn = document.getElementById('page-header-user-dropdown');
             
-            if (menu && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
-                menu.style.display = 'none';
-                console.log('Dropdown closed (outside click)');
+            if (menu && btn) {
+                // Don't close if clicking the button or menu
+                if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                    if (menu.style.display === 'block') {
+                        menu.style.display = 'none';
+                        console.log('Dropdown closed (outside click)');
+                    }
+                }
             }
         }, true);
 
-        // Menu toggle functionality
+        // Menu toggle functionality - runs after page loads
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, initializing menu');
+            
             const menuBtn = document.getElementById('vertical-menu-btn');
             const sidebar = document.querySelector('.vertical-menu');
             
