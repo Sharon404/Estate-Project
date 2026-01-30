@@ -60,133 +60,23 @@
 
                     <!-- Payment Form -->
                     <div class="card-body" id="payment-container">
-                        <!-- Phone Number Input -->
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Your Phone Number *</label>
-                            <input 
-                                type="tel" 
-                                id="phone_input" 
-                                class="form-control form-control-lg"
-                                placeholder="0712345678 or +254712345678"
-                            />
-                            <small class="text-muted">We'll send the M-PESA payment prompt to this number</small>
-                        </div>
-
-                        <!-- Payment Method -->
-                        <div class="mb-4">
-                            <div class="card border-info">
-                                <div class="card-body">
-                                    <div class="form-check">
-                                        <input 
-                                            class="form-check-input" 
-                                            type="radio" 
-                                            id="method_stk" 
-                                            name="payment_method" 
-                                            value="stk" 
-                                            checked
-                                        />
-                                        <label class="form-check-label w-100" for="method_stk">
-                                            <strong>M-PESA STK Push (Recommended)</strong>
-                                            <br/>
-                                            <small class="text-muted">Automatic payment prompt will be sent to your phone. Instant confirmation.</small>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card border-success mt-3">
-                                <div class="card-body">
-                                    <div class="form-check">
-                                        <input 
-                                            class="form-check-input" 
-                                            type="radio" 
-                                            id="method_paybill" 
-                                            name="payment_method" 
-                                            value="paybill"
-                                        />
-                                        <label class="form-check-label w-100" for="method_paybill">
-                                            <strong>M-PESA Paybill / Till</strong>
-                                            <br/>
-                                            <small class="text-muted">Use the booking reference as Account Number. We will auto-confirm from the M-PESA callback.</small>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pay Button -->
-                        <button 
-                            id="pay_now_btn" 
-                            onclick="handlePaymentMethod()"
-                            class="btn btn-primary btn-lg w-100 fw-bold"
-                        >
-                            <i class="fas fa-mobile-alt me-2"></i>
-                            Pay {{ number_format($booking->amount_due, 2) }} {{ $booking->currency }}
-                        </button>
-                    </div>
-
-                    <!-- Loading State -->
-                    <div id="loading_state" class="card-body text-center d-none">
-                        <div class="spinner-border text-primary mb-3" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <p class="text-muted" id="loading_message">Sending M-PESA prompt...</p>
-                    </div>
-
-                    <!-- Success State -->
-                    <div id="success_state" class="card-body text-center d-none">
-                        <div class="mb-3">
-                            <i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>
-                        </div>
-                        <h4 class="text-success mb-2">Payment Received!</h4>
-                        <p class="text-muted mb-3" id="success_message">Your payment has been verified. Receipt sent to your email.</p>
-                        <div class="d-flex gap-2 justify-content-center">
-                            <a href="{{ route('payment.receipt-download', ['booking' => $booking->id]) }}" class="btn btn-success">
-                                <i class="fas fa-download me-1"></i> Download Receipt
-                            </a>
-                            <a href="/" class="btn btn-primary">← Back to Home</a>
-                        </div>
-                    </div>
-
-                    <!-- Error State -->
-                    <div id="error_state" class="card-body d-none">
-                        <div class="alert alert-danger mb-0">
-                            <h5 class="mb-2" id="error_title">Payment Failed</h5>
-                            <p class="mb-2" id="error_message">An error occurred</p>
-                            <button onclick="resetForm()" class="btn btn-sm btn-outline-danger">Try Again</button>
-                        </div>
-                    </div>
-
-                    <!-- Pending State -->
-                    <div id="pending_state" class="card-body d-none">
-                        <div class="alert alert-info">
+                        <div class="alert alert-info mb-4">
                             <h5 class="mb-2">
-                                <i class="fas fa-clock me-2"></i>
-                                Awaiting Payment Confirmation
+                                <i class="fas fa-info-circle me-2"></i>
+                                How Payment Works
                             </h5>
-                            <p class="mb-2">Please complete your Paybill payment using:</p>
-                            <ul class="mb-2">
-                                <li><strong>Paybill Number:</strong> {{ config('mpesa.business_shortcode', '174379') }}</li>
-                                <li><strong>Account Number:</strong> {{ $booking->booking_ref }}</li>
-                                <li><strong>Amount:</strong> {{ number_format($booking->amount_due, 2) }} {{ $booking->currency }}</li>
-                            </ul>
-                            <p class="mb-0">Your payment will be automatically confirmed within seconds after you complete the transaction.</p>
-                        </div>
-                    </div>
-
-                    <!-- Manual Fallback Section -->
-                    <div id="manual_section" class="card-body border-top d-none">
-                        <div class="alert alert-warning mb-4">
-                            <h5 class="mb-0">
-                                <i class="fas fa-exclamation-triangle me-2"></i>
-                                Payment Prompt Failed
-                            </h5>
-                            <p class="mb-0 mt-2">The automatic M-PESA prompt didn't work. Please pay manually via Paybill using the details below:</p>
+                            <ol class="mb-0">
+                                <li>Pay via M-PESA using the Paybill details below</li>
+                                <li>Enter your M-PESA receipt code on this page</li>
+                                <li>Our admin will verify your payment and confirm your booking</li>
+                                <li>You'll receive confirmation via email once verified</li>
+                            </ol>
                         </div>
 
                         <!-- Paybill Information -->
                         <div class="card bg-light mb-4">
                             <div class="card-body">
-                                <h6 class="mb-3 fw-bold">Paybill Payment Details</h6>
+                                <h6 class="mb-3 fw-bold">M-PESA Payment Details</h6>
                                 <div class="row mb-3">
                                     <div class="col-sm-6">
                                         <small class="text-muted">Paybill Number:</small>
@@ -211,13 +101,7 @@
                                                 <i class="fas fa-copy"></i>
                                             </button>
                                         </div>
-                                        <small class="text-muted">Enter this as the Account Number to link your payment automatically.</small>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <small class="text-muted">Company:</small>
-                                        <p class="mb-0 fw-bold">{{ config('mpesa.company_name', 'Holiday Rentals') }}</p>
+                                        <small class="text-muted">Enter this as the Account Number</small>
                                     </div>
                                 </div>
                             </div>
@@ -226,55 +110,71 @@
                         <!-- Instructions -->
                         <div class="card bg-light mb-4">
                             <div class="card-body">
-                                <h6 class="mb-3 fw-bold">How to Pay via M-PESA Paybill:</h6>
-                                <ol class="mb-3">
+                                <h6 class="mb-3 fw-bold">How to Pay via M-PESA:</h6>
+                                <ol class="mb-0">
                                     <li>Open M-PESA on your phone</li>
                                     <li>Select <strong>"Lipa na M-PESA"</strong> then <strong>"Pay Bill"</strong></li>
-                                    <li>Enter Business Number (Paybill): <code>{{ config('mpesa.business_shortcode', '174379') }}</code></li>
+                                    <li>Enter Business Number: <code>{{ config('mpesa.business_shortcode', '174379') }}</code></li>
                                     <li>Enter Account Number: <code>{{ $booking->booking_ref }}</code></li>
                                     <li>Enter Amount: <strong>{{ number_format($booking->amount_due, 2) }}</strong></li>
-                                    <li>Enter your M-PESA PIN</li>
-                                    <li>You'll receive a confirmation SMS with a receipt code.</li>
+                                    <li>Enter your M-PESA PIN and confirm</li>
+                                    <li>You'll receive an SMS with an M-PESA receipt code</li>
                                 </ol>
                             </div>
                         </div>
 
-                        <!-- Manual Receipt Code Entry -->
+                        <!-- M-PESA Code Entry -->
                         <div class="card bg-light mb-4">
                             <div class="card-body">
-                                <h6 class="mb-3 fw-bold">Enter Your M-PESA Receipt Code</h6>
-                                <p class="text-muted mb-3">After completing the Paybill payment, enter the M-PESA receipt code you received in the SMS below:</p>
+                                <h6 class="mb-3 fw-bold">Submit Your M-PESA Receipt Code</h6>
+                                <p class="text-muted mb-3">After completing your payment, enter the M-PESA receipt code from your confirmation SMS:</p>
+                                
                                 <div class="mb-3">
+                                    <label class="form-label fw-bold">M-PESA Receipt Code *</label>
                                     <input 
                                         type="text" 
                                         id="mpesa_receipt_code" 
                                         class="form-control form-control-lg"
-                                        placeholder="e.g. LIK123ABC456"
+                                        placeholder="e.g. SH12ABC34D"
                                         maxlength="20"
+                                        required
                                     />
                                     <small class="text-muted">This is the code from your M-PESA confirmation SMS</small>
                                 </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Your Phone Number *</label>
+                                    <input 
+                                        type="tel" 
+                                        id="phone_input" 
+                                        class="form-control form-control-lg"
+                                        placeholder="0712345678 or +254712345678"
+                                        required
+                                    />
+                                    <small class="text-muted">The phone number you used for M-PESA payment</small>
+                                </div>
+
                                 <button 
-                                    id="validate_receipt_btn" 
-                                    onclick="validateReceiptCode()"
-                                    class="btn btn-primary w-100 fw-bold"
+                                    id="submit_code_btn" 
+                                    onclick="submitMpesaCode()"
+                                    class="btn btn-primary btn-lg w-100 fw-bold"
                                 >
-                                    <i class="fas fa-check me-2"></i>
-                                    Validate Payment
+                                    <i class="fas fa-paper-plane me-2"></i>
+                                    Submit for Verification
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Validation Result -->
-                        <div id="validation_success" class="alert alert-success d-none">
-                            <h5 class="mb-2"><i class="fas fa-check-circle me-2"></i>Payment Confirmed!</h5>
-                            <p id="validation_success_text" class="mb-0"></p>
+                        <!-- Submission Result -->
+                        <div id="submission_success" class="alert alert-success d-none">
+                            <h5 class="mb-2"><i class="fas fa-check-circle me-2"></i>Code Submitted Successfully!</h5>
+                            <p class="mb-0">Your M-PESA code has been received. An administrator will verify your payment shortly and contact you via email or phone to confirm your booking.</p>
                         </div>
 
-                        <div id="validation_error" class="alert alert-danger d-none">
-                            <h5 class="mb-2"><i class="fas fa-exclamation-circle me-2"></i>Validation Failed</h5>
-                            <p id="validation_error_text" class="mb-0"></p>
-                            <button onclick="clearValidationError()" class="btn btn-sm btn-outline-danger mt-2">Try Again</button>
+                        <div id="submission_error" class="alert alert-danger d-none">
+                            <h5 class="mb-2"><i class="fas fa-exclamation-circle me-2"></i>Submission Failed</h5>
+                            <p id="submission_error_text" class="mb-0"></p>
+                            <button onclick="clearSubmissionError()" class="btn btn-sm btn-outline-danger mt-2">Try Again</button>
                         </div>
                     </div>
                 </div>
@@ -402,223 +302,116 @@
                 return;
             }
 
-            // STK successful - poll for status
-            updateLoadingMessage('Waiting for payment confirmation...');
-            pollPaymentStatus();
+@section('scripts')
+<script>
+    const bookingId = {{ $booking->id }};
+    const bookingRef = '{{ $booking->booking_ref }}';
+    const amount = {{ $booking->amount_due }};
+    const currency = '{{ $booking->currency }}';
+
+    // Submit M-PESA Code Function
+    async function submitMpesaCode() {
+        const mpesaCode = document.getElementById('mpesa_receipt_code').value.trim().toUpperCase();
+        const phone = document.getElementById('phone_input').value.trim();
+
+        // Validation
+        if (!mpesaCode) {
+            showSubmissionError('Please enter your M-PESA receipt code');
+            return;
+        }
+
+        if (!phone) {
+            showSubmissionError('Please enter your phone number');
+            return;
+        }
+
+        // Disable button
+        const submitBtn = document.getElementById('submit_code_btn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting...';
+
+        try {
+            // First create payment intent
+            const intentResponse = await fetch('/payment/intents', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    booking_id: bookingId,
+                    amount: amount
+                })
+            });
+
+            const intentData = await intentResponse.json();
+
+            if (!intentData.success) {
+                throw new Error(intentData.message || 'Failed to create payment intent');
+            }
+
+            const paymentIntentId = intentData.data.payment_intent_id;
+
+            // Submit manual M-PESA code
+            const response = await fetch('/payment/manual-entry', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    payment_intent_id: paymentIntentId,
+                    mpesa_receipt_number: mpesaCode,
+                    amount: amount,
+                    phone_e164: phone
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showSubmissionSuccess();
+                // Clear form
+                document.getElementById('mpesa_receipt_code').value = '';
+                document.getElementById('phone_input').value = '';
+            } else {
+                throw new Error(data.message || 'Submission failed');
+            }
 
         } catch (error) {
-            console.error('Error:', error);
-            showError(error.message || 'An error occurred. Please try again.');
+            console.error('Submission error:', error);
+            showSubmissionError(error.message || 'Failed to submit M-PESA code. Please try again.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Submit for Verification';
         }
     }
 
-    // Poll for payment status
-    function pollPaymentStatus() {
-        const maxAttempts = 30;
-        let attempts = 0;
-
-        stkPollingInterval = setInterval(async () => {
-            attempts++;
-
-            try {
-                const response = await fetch(`/payment/intents/${paymentIntentId}`);
-                const data = await response.json();
-
-                if (data.data.status === 'SUCCEEDED') {
-                    clearInterval(stkPollingInterval);
-                    showSuccess('Payment confirmed! Receipt sent to your email.');
-                    // Stay on page so user can download receipt
-                    return;
-                } else if (data.data.status === 'FAILED') {
-                    clearInterval(stkPollingInterval);
-                    showManualFallback();
-                    return;
-                }
-
-                if (attempts >= maxAttempts) {
-                    clearInterval(stkPollingInterval);
-                    showManualFallback();
-                    return;
-                }
-            } catch (error) {
-                console.error('Error checking status:', error);
-            }
-        }, 2000);
+    function showSubmissionSuccess() {
+        document.getElementById('submission_success').classList.remove('d-none');
+        document.getElementById('submission_error').classList.add('d-none');
+        document.getElementById('submit_code_btn').classList.add('d-none');
     }
 
-    // Poll booking status for C2B
-    function startStatusPolling() {
-        clearInterval(statusPollingInterval);
-        const maxAttempts = 120; // ~10 minutes at 5s interval
-        let attempts = 0;
-
-        statusPollingInterval = setInterval(async () => {
-            attempts++;
-            try {
-                const response = await fetch(`/api/booking/${bookingRef}/status`);
-                const data = await response.json();
-
-                if (!data.success) {
-                    return;
-                }
-
-                const status = data.data.status;
-                const paid = data.data.amount_paid;
-                const receiptNo = data.data.last_receipt?.receipt_no;
-                const mpesaReceipt = data.data.last_receipt?.mpesa_receipt_number;
-
-                if (status === 'PAID') {
-                    clearInterval(statusPollingInterval);
-                    const receiptText = mpesaReceipt ? ` Receipt: ${mpesaReceipt}` : '';
-                    showSuccess(`Payment confirmed for ${bookingRef}.${receiptText}`);
-                    return;
-                }
-
-                if (status === 'PARTIALLY_PAID') {
-                    updateLoadingMessage(`Waiting for payment confirmation... Paid ${paid} / ${amount} ${currency}`);
-                }
-
-                if (attempts >= maxAttempts) {
-                    clearInterval(statusPollingInterval);
-                    showManualFallback();
-                }
-            } catch (error) {
-                console.error('Polling error', error);
-            }
-        }, 5000);
+    function showSubmissionError(message) {
+        document.getElementById('submission_error_text').textContent = message;
+        document.getElementById('submission_error').classList.remove('d-none');
+        document.getElementById('submission_success').classList.add('d-none');
     }
 
-    // Show Manual Fallback
-    function showManualFallback() {
-        document.getElementById('payment-container').classList.add('d-none');
-        document.getElementById('loading_state').classList.add('d-none');
-        document.getElementById('success_state').classList.add('d-none');
-        document.getElementById('error_state').classList.add('d-none');
-        document.getElementById('pending_state').classList.add('d-none');
-        document.getElementById('manual_section').classList.remove('d-none');
-    }
-
-    function showPendingState() {
-        document.getElementById('payment-container').classList.add('d-none');
-        document.getElementById('loading_state').classList.remove('d-none');
-        document.getElementById('success_state').classList.add('d-none');
-        document.getElementById('error_state').classList.add('d-none');
-        document.getElementById('pending_state').classList.add('d-none');
-        document.getElementById('manual_section').classList.add('d-none');
-        updateLoadingMessage('Waiting for payment confirmation... Complete Paybill using your booking reference.');
-    }
-
-
-
-    // UI Helper Functions
-    function showLoading(message = 'Processing...') {
-        document.getElementById('payment-container').classList.add('d-none');
-        document.getElementById('success_state').classList.add('d-none');
-        document.getElementById('error_state').classList.add('d-none');
-        document.getElementById('pending_state').classList.add('d-none');
-        document.getElementById('manual_section').classList.add('d-none');
-        document.getElementById('loading_state').classList.remove('d-none');
-        updateLoadingMessage(message);
-    }
-
-    function updateLoadingMessage(message) {
-        document.getElementById('loading_message').textContent = message;
-    }
-
-    function showSuccess(message) {
-        document.getElementById('payment-container').classList.add('d-none');
-        document.getElementById('loading_state').classList.add('d-none');
-        document.getElementById('error_state').classList.add('d-none');
-        document.getElementById('pending_state').classList.add('d-none');
-        document.getElementById('manual_section').classList.add('d-none');
-        document.getElementById('success_message').textContent = message;
-        document.getElementById('success_state').classList.remove('d-none');
-    }
-
-    function showError(message) {
-        document.getElementById('payment-container').classList.remove('d-none');
-        document.getElementById('loading_state').classList.add('d-none');
-        document.getElementById('success_state').classList.add('d-none');
-        document.getElementById('pending_state').classList.add('d-none');
-        document.getElementById('manual_section').classList.add('d-none');
-        document.getElementById('error_title').textContent = 'Error';
-        document.getElementById('error_message').textContent = message;
-        document.getElementById('error_state').classList.remove('d-none');
-    }
-
-    function resetForm() {
-        document.getElementById('payment-container').classList.remove('d-none');
-        document.getElementById('loading_state').classList.add('d-none');
-        document.getElementById('success_state').classList.add('d-none');
-        document.getElementById('error_state').classList.add('d-none');
-        document.getElementById('pending_state').classList.add('d-none');
-        document.getElementById('manual_section').classList.add('d-none');
-        document.getElementById('phone_input').value = '';
-        document.getElementById('receipt_number').value = '';
-        document.getElementById('notes').value = '';
+    function clearSubmissionError() {
+        document.getElementById('submission_error').classList.add('d-none');
+        document.getElementById('submission_success').classList.add('d-none');
     }
 
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
             alert('Copied to clipboard!');
+        }).catch(() => {
+            alert('Failed to copy. Please copy manually.');
         });
-    }
-
-    // Validate M-PESA receipt code for C2B
-    async function validateReceiptCode() {
-        const receiptCode = document.getElementById('mpesa_receipt_code').value.trim();
-
-        if (!receiptCode) {
-            showValidationError('Please enter your M-PESA receipt code');
-            return;
-        }
-
-        document.getElementById('validate_receipt_btn').disabled = true;
-        document.getElementById('validate_receipt_btn').innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Validating...';
-
-        try {
-            const response = await fetch(`/api/booking/${bookingRef}/status`, {
-                method: 'GET',
-                headers: { 'Accept': 'application/json' }
-            });
-
-            const data = await response.json();
-
-            if (data.success && data.data.status === 'PAID') {
-                showValidationSuccess(`Payment confirmed! Receipt: ${data.data.last_receipt?.mpesa_receipt_number || 'Processing'}`);
-                clearInterval(statusPollingInterval);
-                // Reload page to show success state with download button
-                window.location.reload();
-            } else if (data.success && data.data.status === 'PARTIALLY_PAID') {
-                showValidationError(`Partial payment received. Paid: ${data.data.amount_paid}/${data.data.total_amount} KES. Please complete the remaining amount.`);
-            } else {
-                showValidationError('Payment not yet confirmed. Please wait a moment and try again.');
-            }
-        } catch (error) {
-            showValidationError('Failed to validate payment. Please try again.');
-            console.error('Validation error:', error);
-        } finally {
-            document.getElementById('validate_receipt_btn').disabled = false;
-            document.getElementById('validate_receipt_btn').innerHTML = '<i class="fas fa-check me-2"></i>Validate Payment';
-        }
-    }
-
-    function showValidationSuccess(message) {
-        document.getElementById('validation_success_text').textContent = message;
-        document.getElementById('validation_success').classList.remove('d-none');
-        document.getElementById('validation_error').classList.add('d-none');
-    }
-
-    function showValidationError(message) {
-        document.getElementById('validation_error_text').textContent = message;
-        document.getElementById('validation_error').classList.remove('d-none');
-        document.getElementById('validation_success').classList.add('d-none');
-    }
-
-    function clearValidationError() {
-        document.getElementById('mpesa_receipt_code').value = '';
-        document.getElementById('validation_error').classList.add('d-none');
-        document.getElementById('validation_success').classList.add('d-none');
     }
 </script>
 @endsection
