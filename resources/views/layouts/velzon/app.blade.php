@@ -58,15 +58,15 @@
 
                     <!-- User Profile -->
                     <div style="position: relative; display: flex; align-items: center;">
-                        <button type="button" id="page-header-user-dropdown" style="background: transparent; border: none; color: #ffffff; display: flex; align-items: center; gap: 0.5rem; visibility: visible; opacity: 1; cursor: pointer; padding: 0;">
+                        <button type="button" id="page-header-user-dropdown" onclick="window.toggleDropdown(event)" style="background: transparent; border: none; color: #ffffff; display: flex; align-items: center; gap: 0.5rem; visibility: visible; opacity: 1; cursor: pointer; padding: 0; position: relative; z-index: 1001;">
                             <div style="width: 42px; height: 42px; border-radius: 50%; border: 2px solid #decfbc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); background-color: #652482; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: bold; font-size: 1rem;">
                                 {{ substr(auth()->user()->name ?? 'A', 0, 1) }}
                             </div>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-end" style="position: absolute; top: 100%; right: 0; background: #ffffff; border: 1px solid #decfbc; border-radius: 6px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); min-width: 250px; display: none; z-index: 1000;">
+                        <div class="dropdown-menu dropdown-menu-end" id="user-dropdown-menu" style="position: absolute; top: 100%; right: 0; background: #ffffff; border: 1px solid #decfbc; border-radius: 6px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); min-width: 250px; display: none; z-index: 1001; margin-top: 5px;">
                             <h6 style="background: transparent; color: #652482; font-size: 0.95rem; font-weight: 600; padding: 0.75rem 1rem; margin: 0;">Welcome, {{ auth()->user()->name ?? 'User' }}!</h6>
-                            <a href="#" style="color: #222222; font-size: 0.95rem; padding: 0.7rem 1rem; display: block; text-decoration: none; transition: all 0.2s;"><span style="font-size: 0.9rem; margin-right: 0.5rem;">👤</span> <span>Profile</span></a>
-                            <a href="#" style="color: #222222; font-size: 0.95rem; padding: 0.7rem 1rem; display: block; text-decoration: none; transition: all 0.2s;"><span style="font-size: 0.9rem; margin-right: 0.5rem;">⚙️</span> <span>Settings</span></a>
+                            <a href="#" onclick="event.preventDefault()" style="color: #222222; font-size: 0.95rem; padding: 0.7rem 1rem; display: block; text-decoration: none; transition: all 0.2s;"><span style="font-size: 0.9rem; margin-right: 0.5rem;">👤</span> <span>Profile</span></a>
+                            <a href="#" onclick="event.preventDefault()" style="color: #222222; font-size: 0.95rem; padding: 0.7rem 1rem; display: block; text-decoration: none; transition: all 0.2s;"><span style="font-size: 0.9rem; margin-right: 0.5rem;">⚙️</span> <span>Settings</span></a>
                             <div style="border-top: 1px solid #e9ecef; margin: 0.5rem 0;"></div>
                             <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
                                 @csrf
@@ -201,90 +201,36 @@
 
     <!-- Custom Menu Toggle & Dropdown Script -->
     <script>
-        // Immediate inline execution for dropdown (before DOMContentLoaded)
-        function initDropdown() {
-            try {
-                const dropdownBtn = document.getElementById('page-header-user-dropdown');
-                if (!dropdownBtn) {
-                    console.log('Dropdown button not found yet');
-                    return false;
-                }
-                
-                // Find dropdown menu - search in siblings and parent
-                let dropdownMenu = dropdownBtn.nextElementSibling;
-                if (!dropdownMenu || !dropdownMenu.classList.contains('dropdown-menu')) {
-                    // Try searching in parent's children
-                    const parent = dropdownBtn.parentElement;
-                    dropdownMenu = parent.querySelector('.dropdown-menu');
-                }
-                
-                if (!dropdownMenu) {
-                    console.log('Dropdown menu not found');
-                    return false;
-                }
-                
-                console.log('✓ Dropdown initialized');
-                
-                // Add pointer-events to ensure button is clickable
-                dropdownBtn.style.pointerEvents = 'auto';
-                dropdownMenu.style.pointerEvents = 'auto';
-                
-                // Click handler for button
-                const handleButtonClick = function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('Button clicked, menu display:', dropdownMenu.style.display);
-                    
-                    if (dropdownMenu.style.display === 'block') {
-                        dropdownMenu.style.display = 'none';
-                        console.log('Menu hidden');
-                    } else {
-                        dropdownMenu.style.display = 'block';
-                        console.log('Menu shown');
-                    }
-                };
-                
-                // Remove existing listeners to avoid duplicates
-                dropdownBtn.replaceWith(dropdownBtn.cloneNode(true));
-                const freshBtn = document.getElementById('page-header-user-dropdown');
-                const freshMenu = freshBtn.parentElement.querySelector('.dropdown-menu');
-                
-                freshBtn.addEventListener('click', handleButtonClick);
-                
-                // Close on outside click
-                document.addEventListener('click', function(e) {
-                    if (!freshBtn.contains(e.target) && !freshMenu.contains(e.target)) {
-                        if (freshMenu.style.display === 'block') {
-                            freshMenu.style.display = 'none';
-                            console.log('Menu closed (outside click)');
-                        }
-                    }
-                }, true); // Use capture phase
-                
-                return true;
-            } catch (err) {
-                console.error('Dropdown init error:', err);
-                return false;
+        // Global dropdown toggle function
+        window.toggleDropdown = function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log('Toggle dropdown called');
+            
+            const menu = document.getElementById('user-dropdown-menu');
+            if (!menu) {
+                console.error('Dropdown menu not found');
+                return;
             }
-        }
+            
+            const isVisible = menu.style.display === 'block';
+            menu.style.display = isVisible ? 'none' : 'block';
+            console.log('Dropdown is now:', menu.style.display);
+        };
         
-        // Try to init immediately
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initDropdown);
-        } else {
-            initDropdown();
-        }
-        
-        // Retry every 100ms for 2 seconds if not initialized
-        let retries = 20;
-        const retryInterval = setInterval(function() {
-            if (initDropdown() || retries-- <= 0) {
-                clearInterval(retryInterval);
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('user-dropdown-menu');
+            const btn = document.getElementById('page-header-user-dropdown');
+            
+            if (menu && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.style.display = 'none';
+                console.log('Dropdown closed (outside click)');
             }
-        }, 100);
+        }, true);
 
+        // Menu toggle functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Menu toggle functionality
             const menuBtn = document.getElementById('vertical-menu-btn');
             const sidebar = document.querySelector('.vertical-menu');
             
