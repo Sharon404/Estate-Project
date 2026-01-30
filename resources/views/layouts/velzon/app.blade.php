@@ -70,6 +70,7 @@
                             <div style="border-top: 1px solid #e9ecef; margin: 0.5rem 0;"></div>
                             <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
                                 @csrf
+                                <input type="hidden" name="redirect_to" value="{{ route('login') }}">
                                 <button type="submit" style="background: none; border: none; cursor: pointer; text-align: left; width: 100%; padding: 0.7rem 1rem; color: #222222; font-size: 0.95rem; display: block; text-decoration: none;"><span style="font-size: 0.9rem; margin-right: 0.5rem;">🚪</span> <span>Logout</span></button>
                             </form>
                         </div>
