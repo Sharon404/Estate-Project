@@ -201,6 +201,88 @@
 
     <!-- Custom Menu Toggle & Dropdown Script -->
     <script>
+        // Immediate inline execution for dropdown (before DOMContentLoaded)
+        function initDropdown() {
+            try {
+                const dropdownBtn = document.getElementById('page-header-user-dropdown');
+                if (!dropdownBtn) {
+                    console.log('Dropdown button not found yet');
+                    return false;
+                }
+                
+                // Find dropdown menu - search in siblings and parent
+                let dropdownMenu = dropdownBtn.nextElementSibling;
+                if (!dropdownMenu || !dropdownMenu.classList.contains('dropdown-menu')) {
+                    // Try searching in parent's children
+                    const parent = dropdownBtn.parentElement;
+                    dropdownMenu = parent.querySelector('.dropdown-menu');
+                }
+                
+                if (!dropdownMenu) {
+                    console.log('Dropdown menu not found');
+                    return false;
+                }
+                
+                console.log('✓ Dropdown initialized');
+                
+                // Add pointer-events to ensure button is clickable
+                dropdownBtn.style.pointerEvents = 'auto';
+                dropdownMenu.style.pointerEvents = 'auto';
+                
+                // Click handler for button
+                const handleButtonClick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Button clicked, menu display:', dropdownMenu.style.display);
+                    
+                    if (dropdownMenu.style.display === 'block') {
+                        dropdownMenu.style.display = 'none';
+                        console.log('Menu hidden');
+                    } else {
+                        dropdownMenu.style.display = 'block';
+                        console.log('Menu shown');
+                    }
+                };
+                
+                // Remove existing listeners to avoid duplicates
+                dropdownBtn.replaceWith(dropdownBtn.cloneNode(true));
+                const freshBtn = document.getElementById('page-header-user-dropdown');
+                const freshMenu = freshBtn.parentElement.querySelector('.dropdown-menu');
+                
+                freshBtn.addEventListener('click', handleButtonClick);
+                
+                // Close on outside click
+                document.addEventListener('click', function(e) {
+                    if (!freshBtn.contains(e.target) && !freshMenu.contains(e.target)) {
+                        if (freshMenu.style.display === 'block') {
+                            freshMenu.style.display = 'none';
+                            console.log('Menu closed (outside click)');
+                        }
+                    }
+                }, true); // Use capture phase
+                
+                return true;
+            } catch (err) {
+                console.error('Dropdown init error:', err);
+                return false;
+            }
+        }
+        
+        // Try to init immediately
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initDropdown);
+        } else {
+            initDropdown();
+        }
+        
+        // Retry every 100ms for 2 seconds if not initialized
+        let retries = 20;
+        const retryInterval = setInterval(function() {
+            if (initDropdown() || retries-- <= 0) {
+                clearInterval(retryInterval);
+            }
+        }, 100);
+
         document.addEventListener('DOMContentLoaded', function() {
             // Menu toggle functionality
             const menuBtn = document.getElementById('vertical-menu-btn');
@@ -211,46 +293,6 @@
                     sidebar.classList.toggle('active');
                     document.body.classList.toggle('sidebar-enable');
                 });
-            }
-
-            // Dropdown menu functionality - simple and reliable
-            const dropdownBtn = document.getElementById('page-header-user-dropdown');
-            const dropdownMenu = dropdownBtn ? dropdownBtn.nextElementSibling : null;
-            
-            if (dropdownBtn && dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
-                console.log('Dropdown initialized successfully');
-                
-                // Toggle dropdown on button click
-                dropdownBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    // Toggle visibility
-                    if (dropdownMenu.style.display === 'block') {
-                        dropdownMenu.style.display = 'none';
-                    } else {
-                        dropdownMenu.style.display = 'block';
-                    }
-                });
-                
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function(e) {
-                    const clickedInsideBtn = dropdownBtn.contains(e.target);
-                    const clickedInsideMenu = dropdownMenu.contains(e.target);
-                    
-                    if (!clickedInsideBtn && !clickedInsideMenu && dropdownMenu.style.display === 'block') {
-                        dropdownMenu.style.display = 'none';
-                    }
-                });
-                
-                // Prevent dropdown from closing when clicking items inside it
-                dropdownMenu.addEventListener('click', function(e) {
-                    if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'FORM') {
-                        e.stopPropagation();
-                    }
-                });
-            } else {
-                console.error('Dropdown button or menu not found in expected location');
             }
 
             // Fullscreen toggle
