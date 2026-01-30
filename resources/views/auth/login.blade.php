@@ -246,7 +246,7 @@
             <!-- Header -->
             <div class="login-header">
                 <div class="logo-wrapper">
-                    <img src="{{ asset('assets/velzon/images/logo-dark.png') }}" alt="Logo">
+                    <img src="{{ asset('assets/velzon/images/logo-v5-black.png') }}" alt="Logo">
                 </div>
                 <h1>Admin Login</h1>
                 <p>Estate Project Management System</p>

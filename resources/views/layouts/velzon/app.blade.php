@@ -215,12 +215,20 @@
             // Dropdown menu functionality - improved version
             const dropdownBtn = document.getElementById('page-header-user-dropdown');
             if (dropdownBtn) {
-                // Find the dropdown menu by looking for the dropdown-menu class in parent
-                const dropdownContainer = dropdownBtn.closest('div[style*="position: relative"]');
-                const dropdownMenu = dropdownContainer ? dropdownContainer.querySelector('.dropdown-menu') : null;
+                // Find the dropdown menu - look in parent divs
+                let dropdownMenu = null;
+                let parent = dropdownBtn.parentElement;
+                while (parent && !dropdownMenu) {
+                    dropdownMenu = parent.querySelector('.dropdown-menu');
+                    if (dropdownMenu) break;
+                    parent = parent.parentElement;
+                }
                 
                 if (dropdownMenu) {
+                    console.log('Dropdown found and initialized');
+                    
                     dropdownBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
                         e.stopPropagation();
                         const isVisible = dropdownMenu.style.display === 'block';
                         dropdownMenu.style.display = isVisible ? 'none' : 'block';
@@ -233,15 +241,15 @@
                         }
                     });
 
-                    // Prevent dropdown from closing when clicking inside (except links)
-                    dropdownMenu.addEventListener('click', function(e) {
-                        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('form')) {
-                            // Allow link clicks, button clicks, and form submissions
-                            setTimeout(() => { dropdownMenu.style.display = 'none'; }, 100);
-                        } else {
-                            e.stopPropagation();
-                        }
-                    });
+                    // Allow form submission (logout)
+                    const logoutForm = dropdownMenu.querySelector('form');
+                    if (logoutForm) {
+                        logoutForm.addEventListener('submit', function(e) {
+                            // Form will submit naturally
+                        });
+                    }
+                } else {
+                    console.log('Dropdown menu not found');
                 }
             }
 
