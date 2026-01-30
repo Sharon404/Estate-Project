@@ -30,6 +30,25 @@ body {
     z-index: 1001 !important;
 }
 
+/* =============== SIDEBAR TOGGLE FIX =============== */
+.vertical-menu {
+    pointer-events: auto !important;
+    z-index: auto !important;
+}
+
+#vertical-menu-btn {
+    pointer-events: auto !important;
+    z-index: 1001 !important;
+    position: relative !important;
+}
+
+/* Ensure toggle button visible on all screens */
+#vertical-menu-btn {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
 #layout-wrapper {
     background-color: var(--tausi-background) !important;
     display: flex !important;

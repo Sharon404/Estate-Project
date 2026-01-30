@@ -18,7 +18,7 @@
     @stack('styles')
     @yield('styles')
 </head>
-<body>
+<body data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-layout-mode="light">
     <!-- Begin page -->
     <div id="layout-wrapper">
         <!-- Header Start -->
@@ -250,11 +250,29 @@
             
             const menuBtn = document.getElementById('vertical-menu-btn');
             const sidebar = document.querySelector('.vertical-menu');
+            const body = document.body;
             
             if (menuBtn && sidebar) {
-                menuBtn.addEventListener('click', function() {
-                    sidebar.classList.toggle('active');
-                    document.body.classList.toggle('sidebar-enable');
+                menuBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const screenWidth = window.innerWidth;
+                    console.log('Toggle clicked, screen width:', screenWidth);
+                    
+                    // Always toggle sidebar-enable for mobile
+                    body.classList.toggle('sidebar-enable');
+                    
+                    // For desktop (≥992px), toggle vertical-collapsed
+                    if (screenWidth >= 992) {
+                        body.classList.toggle('vertical-collapsed');
+                        console.log('Desktop toggle, vertical-collapsed:', body.classList.contains('vertical-collapsed'));
+                    } else {
+                        console.log('Mobile toggle, sidebar-enable:', body.classList.contains('sidebar-enable'));
+                    }
+                    
+                    // Force layout recalculation
+                    void sidebar.offsetHeight; // Trigger reflow
                 });
             }
 
