@@ -212,30 +212,37 @@
                 });
             }
 
-            // Dropdown menu functionality
+            // Dropdown menu functionality - improved version
             const dropdownBtn = document.getElementById('page-header-user-dropdown');
-            const dropdownMenu = dropdownBtn?.nextElementSibling;
-            
-            if (dropdownBtn && dropdownMenu) {
-                dropdownBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const isVisible = dropdownMenu.style.display === 'block';
-                    dropdownMenu.style.display = isVisible ? 'none' : 'block';
-                });
-
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                        dropdownMenu.style.display = 'none';
-                    }
-                });
-
-                // Prevent dropdown from closing when clicking inside
-                dropdownMenu.addEventListener('click', function(e) {
-                    if (e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON') {
+            if (dropdownBtn) {
+                // Find the dropdown menu by looking for the dropdown-menu class in parent
+                const dropdownContainer = dropdownBtn.closest('div[style*="position: relative"]');
+                const dropdownMenu = dropdownContainer ? dropdownContainer.querySelector('.dropdown-menu') : null;
+                
+                if (dropdownMenu) {
+                    dropdownBtn.addEventListener('click', function(e) {
                         e.stopPropagation();
-                    }
-                });
+                        const isVisible = dropdownMenu.style.display === 'block';
+                        dropdownMenu.style.display = isVisible ? 'none' : 'block';
+                    });
+
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function(e) {
+                        if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                            dropdownMenu.style.display = 'none';
+                        }
+                    });
+
+                    // Prevent dropdown from closing when clicking inside (except links)
+                    dropdownMenu.addEventListener('click', function(e) {
+                        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('form')) {
+                            // Allow link clicks, button clicks, and form submissions
+                            setTimeout(() => { dropdownMenu.style.display = 'none'; }, 100);
+                        } else {
+                            e.stopPropagation();
+                        }
+                    });
+                }
             }
 
             // Fullscreen toggle
