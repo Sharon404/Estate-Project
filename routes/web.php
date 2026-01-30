@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\AuditLogsController;
+use App\Http\Controllers\Admin\MpesaVerificationController;
 use App\Http\Controllers\Staff\StaffDashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FrontendController;
@@ -56,6 +57,13 @@ Route::middleware(['auth', 'role:admin', 'audit.request'])->prefix('admin')->nam
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::get('/audit-logs', [AuditLogsController::class, 'index'])->name('audit-logs');
     Route::get('/audit-logs/{auditLog}', [AuditLogsController::class, 'show'])->name('audit-log-detail');
+    
+    // M-Pesa Manual Verification Routes
+    Route::get('/mpesa-verification', [MpesaVerificationController::class, 'index'])->name('mpesa-verification.index');
+    Route::get('/mpesa-verification/{submission}', [MpesaVerificationController::class, 'show'])->name('mpesa-verification.show');
+    Route::put('/mpesa-verification/{submission}/verify', [MpesaVerificationController::class, 'verify'])->name('mpesa-verification.verify');
+    Route::post('/mpesa-verification/{submission}/reject', [MpesaVerificationController::class, 'reject'])->name('mpesa-verification.reject');
+    Route::post('/mpesa-verification/{submission}/check-status', [MpesaVerificationController::class, 'checkPaymentStatus'])->name('mpesa-verification.check-status');
 });
 
 // Staff Dashboard

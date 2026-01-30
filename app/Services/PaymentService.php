@@ -264,52 +264,39 @@ class PaymentService
             );
         }
 
-        // Check if receipt already exists (prevents duplicates)
-        $existing = \App\Models\MpesaManualSubmission::where(
-            'mpesa_receipt_number',
-            $mpesaReceiptNumber
-        )->first();
+        // Check if M-Pesa code already exists for this booking (prevents duplicates)
+        $existing = \App\Models\MpesaManualSubmission::where('booking_id', $paymentIntent->booking->id)
+            ->where('mpesa_code', strtoupper($mpesaReceiptNumber))
+            ->first();
 
         if ($existing) {
             throw new \Exception(
-                "Receipt '{$mpesaReceiptNumber}' has already been submitted. " .
-                "Status: {$existing->status}"
+                "M-Pesa code '{$mpesaReceiptNumber}' has already been submitted for this booking. " .
+                "Current status: {$existing->status}"
             );
         }
 
-        // Check if receipt already processed in callback
-        $processed = \App\Models\BookingTransaction::where(
-            'external_ref',
-            $mpesaReceiptNumber
-        )->first();
-
-        if ($processed) {
-            throw new \Exception(
-                "Receipt '{$mpesaReceiptNumber}' has already been verified and processed."
-            );
-        }
-
-        // Create manual submission record
+        // Create manual submission record - NO AUTO-VALIDATION
+        // Just store the code for admin to verify
         $submission = \App\Models\MpesaManualSubmission::create([
-            'payment_intent_id' => $paymentIntent->id,
-            'mpesa_receipt_number' => strtoupper($mpesaReceiptNumber),
-            'phone_e164' => $phoneE164,
+            'booking_id' => $paymentIntent->booking->id,
+            'mpesa_code' => strtoupper($mpesaReceiptNumber),
+            'phone' => $phoneE164 ?? '',
             'amount' => $amount,
-            'status' => 'SUBMITTED',
-            'raw_notes' => $notes,
-            'submitted_by_guest' => true,
-            'submitted_at' => now(),
+            'status' => 'PENDING', // Waiting for admin verification
+            'payment_status' => 'NOT_CHECKED', // Admin will check this
+            'admin_notes' => $notes,
         ]);
 
         return [
             'success' => true,
-            'message' => 'Manual payment submitted. Awaiting automatic confirmation via M-PESA callback.',
+            'message' => 'M-Pesa code submitted successfully. Admin will verify the payment shortly.',
             'submission_id' => $submission->id,
-            'receipt_number' => $submission->mpesa_receipt_number,
+            'mpesa_code' => $submission->mpesa_code,
             'amount' => (float) $submission->amount,
             'status' => $submission->status,
-            'next_step' => 'We will auto-confirm once Safaricom sends the C2B callback. No admin action needed.',
-            'submitted_at' => $submission->submitted_at,
+            'payment_status' => $submission->payment_status,
+            'next_step' => 'Your submission has been received. An administrator will verify the M-Pesa payment and confirm your booking within a few minutes.',
         ];
     }
 
