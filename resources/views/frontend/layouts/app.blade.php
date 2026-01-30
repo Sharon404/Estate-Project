@@ -67,7 +67,7 @@
                     </ul>
 
                     <!-- Reservation Button -->
-                    <a href="{{ route('reservation') }}" class="btn btn-primary ms-lg-3 mt-3 mt-lg-0">
+                    <a href="{{ route('properties') }}" class="btn btn-primary ms-lg-3 mt-3 mt-lg-0">
                         Check Availability
                     </a>
                 </div>
