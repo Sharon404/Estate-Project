@@ -26,13 +26,14 @@
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 1rem;">
                 <!-- Logo Section -->
                 <div style="display: flex; align-items: center; flex-shrink: 0;">
-                    <a href="{{ route('dashboard') }}" style="display: flex; align-items: center; text-decoration: none; padding: 0; margin: 0; height: 50px;">
-                        <img src="{{ asset('assets/velzon/images/logo-v5-black.png') }}" alt="Tausi" style="height: 45px; width: auto; display: block !important; visibility: visible !important; opacity: 1 !important; object-fit: contain; max-width: 150px;">
-                    </a>
                     <!-- Menu Toggle -->
                     <button type="button" id="vertical-menu-btn" style="background: transparent; border: none; color: #ffffff; margin-left: 1rem; font-size: 1.5rem; padding: 0.5rem 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; visibility: visible; opacity: 1;">
                         <span style="font-size: 1.5rem;">☰</span>
                     </button>
+                    <!-- Logo -->
+                    <a href="{{ route('dashboard') }}" style="display: flex; align-items: center; text-decoration: none; padding: 0; margin: 0; height: 50px;">
+                        <img src="{{ asset('assets/velzon/images/logo-v5-black.png') }}" alt="Tausi" style="height: 45px; width: auto; display: block !important; visibility: visible !important; opacity: 1 !important; object-fit: contain; max-width: 150px;">
+                    </a>
                 </div>
 
                 <!-- Right Section - Buttons & User -->
@@ -57,7 +58,7 @@
 
                     <!-- User Profile -->
                     <div style="position: relative; display: flex; align-items: center;">
-                        <button type="button" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: transparent; border: none; color: #ffffff; display: flex; align-items: center; gap: 0.5rem; visibility: visible; opacity: 1; cursor: pointer; padding: 0;">
+                        <button type="button" id="page-header-user-dropdown" style="background: transparent; border: none; color: #ffffff; display: flex; align-items: center; gap: 0.5rem; visibility: visible; opacity: 1; cursor: pointer; padding: 0;">
                             <div style="width: 42px; height: 42px; border-radius: 50%; border: 2px solid #decfbc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); background-color: #652482; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: bold; font-size: 1rem;">
                                 {{ substr(auth()->user()->name ?? 'A', 0, 1) }}
                             </div>
@@ -212,45 +213,44 @@
                 });
             }
 
-            // Dropdown menu functionality - improved version
+            // Dropdown menu functionality - simple and reliable
             const dropdownBtn = document.getElementById('page-header-user-dropdown');
-            if (dropdownBtn) {
-                // Find the dropdown menu - look in parent divs
-                let dropdownMenu = null;
-                let parent = dropdownBtn.parentElement;
-                while (parent && !dropdownMenu) {
-                    dropdownMenu = parent.querySelector('.dropdown-menu');
-                    if (dropdownMenu) break;
-                    parent = parent.parentElement;
-                }
+            const dropdownMenu = dropdownBtn ? dropdownBtn.nextElementSibling : null;
+            
+            if (dropdownBtn && dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+                console.log('Dropdown initialized successfully');
                 
-                if (dropdownMenu) {
-                    console.log('Dropdown found and initialized');
+                // Toggle dropdown on button click
+                dropdownBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     
-                    dropdownBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const isVisible = dropdownMenu.style.display === 'block';
-                        dropdownMenu.style.display = isVisible ? 'none' : 'block';
-                    });
-
-                    // Close dropdown when clicking outside
-                    document.addEventListener('click', function(e) {
-                        if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                            dropdownMenu.style.display = 'none';
-                        }
-                    });
-
-                    // Allow form submission (logout)
-                    const logoutForm = dropdownMenu.querySelector('form');
-                    if (logoutForm) {
-                        logoutForm.addEventListener('submit', function(e) {
-                            // Form will submit naturally
-                        });
+                    // Toggle visibility
+                    if (dropdownMenu.style.display === 'block') {
+                        dropdownMenu.style.display = 'none';
+                    } else {
+                        dropdownMenu.style.display = 'block';
                     }
-                } else {
-                    console.log('Dropdown menu not found');
-                }
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    const clickedInsideBtn = dropdownBtn.contains(e.target);
+                    const clickedInsideMenu = dropdownMenu.contains(e.target);
+                    
+                    if (!clickedInsideBtn && !clickedInsideMenu && dropdownMenu.style.display === 'block') {
+                        dropdownMenu.style.display = 'none';
+                    }
+                });
+                
+                // Prevent dropdown from closing when clicking items inside it
+                dropdownMenu.addEventListener('click', function(e) {
+                    if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'FORM') {
+                        e.stopPropagation();
+                    }
+                });
+            } else {
+                console.error('Dropdown button or menu not found in expected location');
             }
 
             // Fullscreen toggle
