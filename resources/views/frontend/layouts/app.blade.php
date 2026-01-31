@@ -151,11 +151,11 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="{{ asset('assets/frontend/js/bootstrap.bundle.min.js') }}"></script>
-
-    <!-- jQuery (if needed by template) -->
+    <!-- jQuery (needed by template) -->
     <script src="{{ asset('assets/frontend/js/jquery.min.js') }}"></script>
+
+    <!-- Vendors JS (includes Bootstrap 5 + other libraries) -->
+    <script src="{{ asset('assets/frontend/js/vendors.js') }}"></script>
 
     @stack('scripts')
 

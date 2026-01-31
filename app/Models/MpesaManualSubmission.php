@@ -13,9 +13,12 @@ class MpesaManualSubmission extends Model
 
     protected $casts = [
         'amount' => 'decimal:2',
+        'submitted_at' => 'datetime',
+        'reviewed_at' => 'datetime',
     ];
 
-    public $timestamps = false; // Uses submitted_at, not created_at/updated_at
+    const CREATED_AT = 'submitted_at';
+    const UPDATED_AT = null;
 
     /**
      * Get the booking this submission belongs to
