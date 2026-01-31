@@ -18,7 +18,12 @@ class BookingController extends Controller
      */
     public function reservationForm()
     {
-        return view('booking.reservation');
+        // Get all active properties
+        $properties = Property::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+            
+        return view('booking.reservation', compact('properties'));
     }
 
     /**

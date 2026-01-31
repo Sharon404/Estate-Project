@@ -87,21 +87,15 @@
 
                                 <div class="select-room mb-4">
                                     <h4>Select Home</h4>
-
-                                                                        <select class="room-type form-control" name="room_type">
-                                                                            <option value='Tausi Holiday Home - Nanyuki' data-src="{{ asset('assets/frontend/images/form/1.jpg') }}">
-                                                                                Tausi Holiday Home - Nanyuki
-                                                                            </option>
-                                                                            <option value='2 Bedroom Villa - Nanyuki' data-src="{{ asset('assets/frontend/images/form/2.jpg') }}">
-                                                                                2 Bedroom Villa - Nanyuki
-                                                                            </option>
-                                                                            <option value='3 Bedroom Villa - Nanyuki' data-src="{{ asset('assets/frontend/images/form/3.jpg') }}">
-                                                                                3 Bedroom Villa - Nanyuki
-                                                                            </option>
-                                                                            <option value='4 Bedroom Villa - Nanyuki' data-src="{{ asset('assets/frontend/images/form/4.jpg') }}">
-                                                                                4 Bedroom Villa - Nanyuki
-                                                                            </option>
-                                                                        </select>
+                                    <select class="room-type form-control" name="property_id" id="property_id">
+                                        @foreach($properties as $property)
+                                            <option value="{{ $property->id }}" 
+                                                data-src="{{ $property->images->first()?->image_url ?? asset('assets/frontend/images/form/1.jpg') }}"
+                                                {{ request('property_id') == $property->id ? 'selected' : '' }}>
+                                                {{ $property->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="row">

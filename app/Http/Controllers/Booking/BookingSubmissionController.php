@@ -39,8 +39,7 @@ class BookingSubmissionController extends Controller
                 'adult' => 'required|integer|min:1',
                 'children' => 'required|integer|min:0',
                 'room_count' => 'required|integer|min:1',
-                'room_type' => 'nullable|string',
-                'property_id' => 'nullable|integer',
+                'property_id' => 'required|integer|exists:properties,id',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             \Log::error('Validation failed:', $e->errors());
@@ -48,6 +47,9 @@ class BookingSubmissionController extends Controller
         }
 
         try {
+            // Get property name for display
+            $property = Property::find($validated['property_id']);
+            
             // Store all form data in session for later booking creation
             session(['pending_booking_data' => [
                 'name' => $validated['name'] ?? '',
@@ -59,8 +61,8 @@ class BookingSubmissionController extends Controller
                 'adult' => $validated['adult'],
                 'children' => $validated['children'],
                 'room_count' => $validated['room_count'],
-                'room_type' => $validated['room_type'] ?? '',
-                'property_id' => $validated['property_id'] ?? null,
+                'property_id' => $validated['property_id'],
+                'property_name' => $property->name ?? '',
             ]]);
 
             // Redirect to summary preview (without booking ref since no booking exists yet)
