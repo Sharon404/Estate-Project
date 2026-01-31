@@ -45,7 +45,7 @@
                         </div>
 
                         <div id="booking_form_wrap">
-                            <form name="contactForm" id='booking_form' class="form-border" method="post" action="{{ route('booking.submit') }}">
+                            <form name="contactForm" id='booking_form' class="form-border" method="post" action="{{ route('booking.store') }}">
                                 
                                 <div class="row g-4 mb-4">
                                     <div class="col-md-12">
