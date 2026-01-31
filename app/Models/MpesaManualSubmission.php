@@ -15,7 +15,7 @@ class MpesaManualSubmission extends Model
         'amount' => 'decimal:2',
     ];
 
-    public $timestamps = true;
+    public $timestamps = false; // Uses submitted_at, not created_at/updated_at
 
     /**
      * Get the booking this submission belongs to
