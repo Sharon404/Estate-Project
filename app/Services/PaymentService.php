@@ -264,14 +264,13 @@ class PaymentService
             );
         }
 
-        // Check if M-Pesa code already exists for this booking (prevents duplicates)
-        $existing = \App\Models\MpesaManualSubmission::where('booking_id', $paymentIntent->booking->id)
-            ->where('mpesa_code', strtoupper($mpesaReceiptNumber))
+        // Check if M-Pesa code already exists (prevents duplicates)
+        $existing = \App\Models\MpesaManualSubmission::where('mpesa_receipt_number', strtoupper($mpesaReceiptNumber))
             ->first();
 
         if ($existing) {
             throw new \Exception(
-                "M-Pesa code '{$mpesaReceiptNumber}' has already been submitted for this booking. " .
+                "M-Pesa code '{$mpesaReceiptNumber}' has already been submitted. " .
                 "Current status: {$existing->status}"
             );
         }
@@ -280,22 +279,20 @@ class PaymentService
         // Just store the code for admin to verify
         $submission = \App\Models\MpesaManualSubmission::create([
             'booking_id' => $paymentIntent->booking->id,
-            'mpesa_code' => strtoupper($mpesaReceiptNumber),
-            'phone' => $phoneE164 ?? '',
+            'mpesa_receipt_number' => strtoupper($mpesaReceiptNumber),
+            'phone_e164' => $phoneE164,
             'amount' => $amount,
-            'status' => 'PENDING', // Waiting for admin verification
-            'payment_status' => 'NOT_CHECKED', // Admin will check this
-            'admin_notes' => $notes,
+            'status' => 'SUBMITTED', // Waiting for admin verification
+            'raw_notes' => $notes,
         ]);
 
         return [
             'success' => true,
             'message' => 'M-Pesa code submitted successfully. Admin will verify the payment shortly.',
             'submission_id' => $submission->id,
-            'mpesa_code' => $submission->mpesa_code,
+            'mpesa_receipt_number' => $submission->mpesa_receipt_number,
             'amount' => (float) $submission->amount,
             'status' => $submission->status,
-            'payment_status' => $submission->payment_status,
             'next_step' => 'Your submission has been received. An administrator will verify the M-Pesa payment and confirm your booking within a few minutes.',
         ];
     }

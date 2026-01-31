@@ -13,19 +13,17 @@ return new class extends Migration
     {
         Schema::create('mpesa_manual_submissions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('payment_intent_id');
+            $table->unsignedBigInteger('booking_id');
             $table->string('mpesa_receipt_number', 20)->unique('uq_manual_mpesa_receipt');
             $table->string('phone_e164', 20)->nullable();
             $table->decimal('amount', 12, 2);
             $table->enum('status', ['SUBMITTED', 'VERIFIED', 'REJECTED'])->default('SUBMITTED');
             $table->text('raw_notes')->nullable();
-            $table->boolean('submitted_by_guest')->default(true);
-            $table->timestamp('submitted_at')->useCurrent();
-            $table->timestamp('reviewed_at')->nullable();
+            $table->timestamps();
 
-            $table->foreign('payment_intent_id', 'fk_manual_submission_payment_intent')
+            $table->foreign('booking_id', 'fk_manual_submission_booking')
                 ->references('id')
-                ->on('payment_intents');
+                ->on('bookings');
         });
     }
 

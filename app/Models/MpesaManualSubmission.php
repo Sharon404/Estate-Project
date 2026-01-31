@@ -13,8 +13,6 @@ class MpesaManualSubmission extends Model
 
     protected $casts = [
         'amount' => 'decimal:2',
-        'payment_check_response' => 'array',
-        'verified_at' => 'datetime',
     ];
 
     public $timestamps = true;
@@ -25,13 +23,5 @@ class MpesaManualSubmission extends Model
     public function booking(): BelongsTo
     {
         return $this->belongsTo(Booking::class);
-    }
-
-    /**
-     * Get the admin user who verified this submission
-     */
-    public function verifiedBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'verified_by');
     }
 }

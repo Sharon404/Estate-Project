@@ -206,103 +206,9 @@
     </div>
 </section>
 
-<!-- JavaScript -->
-<script>
-    const bookingId = {{ $booking->id }};
-    const bookingRef = '{{ $booking->booking_ref }}';
-    const amount = {{ $booking->amount_due }};
-    const currency = '{{ $booking->currency }}';
-    const till = '{{ config("mpesa.till_number", "*138#") }}';
-    const bookingStatus = '{{ $booking->status }}';
-    
-    let paymentIntentId = null;
-    let stkPollingInterval = null;
-    let statusPollingInterval = null;
+@endsection
 
-    // Check if booking is already paid on page load
-    window.addEventListener('DOMContentLoaded', function() {
-        if (bookingStatus === 'PAID' || bookingStatus === 'COMPLETED') {
-            showSuccess('Payment completed! You can download your receipt below.');
-        }
-    });
-
-    // Handle Payment Method
-    async function handlePaymentMethod() {
-        const method = document.querySelector('input[name="payment_method"]:checked')?.value || 'stk';
-
-        if (method === 'paybill') {
-            showPendingState();
-            startStatusPolling();
-            return;
-        }
-
-        const phone = document.getElementById('phone_input').value.trim();
-        if (!phone) {
-            showError('Please enter your phone number');
-            return;
-        }
-
-        try {
-            console.log('Starting STK payment flow for booking:', bookingId, 'amount:', amount);
-            
-            // Show loading state
-            showLoading('Sending M-PESA prompt to your phone...');
-
-            // Create payment intent
-            console.log('Creating payment intent...');
-            const intentResponse = await fetch('/payment/intents', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-                body: JSON.stringify({
-                    booking_id: bookingId,
-                    amount: amount
-                })
-            });
-
-            console.log('Payment intent response status:', intentResponse.status);
-            const intentData = await intentResponse.json();
-            console.log('Payment intent data:', intentData);
-            
-            if (!intentData.success) {
-                throw new Error(intentData.message || 'Failed to create payment intent');
-            }
-
-            paymentIntentId = intentData.data.payment_intent_id;
-
-            // Normalize phone to E.164 for M-PESA
-            const phoneE164 = phone.startsWith('+') ? phone : `+254${phone.replace(/^0/, '')}`;
-            console.log('Normalized phone:', phoneE164);
-
-            // Initiate STK
-            console.log('Initiating STK push...');
-            const stkResponse = await fetch('/payment/mpesa/stk', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-                body: JSON.stringify({
-                    payment_intent_id: paymentIntentId,
-                    phone_e164: phoneE164
-                })
-            });
-
-            console.log('STK response status:', stkResponse.status);
-            const stkData = await stkResponse.json();
-            console.log('STK data:', stkData);
-
-            if (!stkData.success) {
-                // STK failed - show manual fallback after timeout
-                updateLoadingMessage('STK prompt timed out. Showing manual payment option...');
-                setTimeout(showManualFallback, 2000);
-                return;
-            }
-
-@section('scripts')
+@push('scripts')
 <script>
     const bookingId = {{ $booking->id }};
     const bookingRef = '{{ $booking->booking_ref }}';
@@ -414,4 +320,4 @@
         });
     }
 </script>
-@endsection
+@endpush
