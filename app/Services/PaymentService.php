@@ -239,17 +239,17 @@ class PaymentService
      * @throws \Exception
      */
     public function submitManualPayment(
-        \App\Models\PaymentIntent $paymentIntent,
+        \App\Models\Booking $booking,
         string $mpesaReceiptNumber,
         float $amount,
         ?string $phoneE164 = null,
         ?string $notes = null
     ): array {
-        // Validate payment intent is waiting for payment
-        if (!in_array($paymentIntent->status, ['INITIATED', 'PENDING'])) {
+        // Validate booking status
+        if (!in_array($booking->status, ['PENDING_PAYMENT', 'PARTIALLY_PAID'])) {
             throw new \Exception(
-                "Cannot submit manual payment for intent in {$paymentIntent->status} status. " .
-                "Intent must be INITIATED or PENDING."
+                "Cannot submit manual payment for booking in {$booking->status} status. " .
+                "Booking must be PENDING_PAYMENT or PARTIALLY_PAID."
             );
         }
 
@@ -258,9 +258,9 @@ class PaymentService
             throw new \Exception('Payment amount must be greater than zero');
         }
 
-        if ($amount > $paymentIntent->booking->amount_due) {
+        if ($amount > $booking->amount_due) {
             throw new \Exception(
-                "Amount ({$amount}) exceeds amount due ({$paymentIntent->booking->amount_due})"
+                "Amount ({$amount}) exceeds amount due ({$booking->amount_due})"
             );
         }
 
@@ -278,7 +278,7 @@ class PaymentService
         // Create manual submission record - NO AUTO-VALIDATION
         // Just store the code for admin to verify
         $submission = \App\Models\MpesaManualSubmission::create([
-            'booking_id' => $paymentIntent->booking->id,
+            'booking_id' => $booking->id,
             'mpesa_receipt_number' => strtoupper($mpesaReceiptNumber),
             'phone_e164' => $phoneE164,
             'amount' => $amount,

@@ -237,29 +237,7 @@
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting...';
 
         try {
-            // First create payment intent
-            const intentResponse = await fetch('/payment/intents', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({
-                    booking_id: bookingId,
-                    amount: amount
-                })
-            });
-
-            const intentData = await intentResponse.json();
-
-            if (!intentData.success) {
-                throw new Error(intentData.message || 'Failed to create payment intent');
-            }
-
-            const paymentIntentId = intentData.data.payment_intent_id;
-
-            // Submit manual M-PESA code
+            // Submit manual M-PESA code directly with booking ID
             const response = await fetch('/payment/manual-entry', {
                 method: 'POST',
                 headers: {
@@ -268,10 +246,10 @@
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 },
                 body: JSON.stringify({
-                    payment_intent_id: paymentIntentId,
+                    booking_id: bookingId,
                     mpesa_receipt_number: mpesaCode,
                     amount: amount,
-                    phone_e164: phone
+                    phone: phone
                 })
             });
 

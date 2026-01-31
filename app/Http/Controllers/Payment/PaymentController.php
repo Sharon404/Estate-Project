@@ -203,58 +203,88 @@ class PaymentController extends Controller
      * 
      * POST /payment/manual-entry
      * 
-    * Called when STK fails/times out and guest wants to enter receipt manually.
-    * Stores the receipt for reference only; booking is auto-confirmed
-    * exclusively when Safaricom sends the C2B confirmation webhook
-    * (no admin intervention).
+     * Called when guest wants to submit M-PESA receipt code manually.
+     * Stores the receipt with booking_id for admin verification.
      * 
      * Request body:
      * {
-     *   "payment_intent_id": 1,
+     *   "booking_id": 1,
      *   "mpesa_receipt_number": "LIK123ABC456",
      *   "amount": 5000,
-     *   "phone_e164": "+254712345678",  // optional
-     *   "notes": "STK timed out, sending manual receipt"  // optional
+     *   "phone": "0712345678" or "+254712345678" or "01234567"
      * }
      * 
-     * @param \App\Http\Requests\SubmitManualMpesaRequest $request
+     * @param \Illuminate\Http\Request $request
      * @return JsonResponse
      */
-    public function submitManualPayment(\App\Http\Requests\SubmitManualMpesaRequest $request): JsonResponse
+    public function submitManualPayment(\Illuminate\Http\Request $request): JsonResponse
     {
         try {
-            $validated = $request->validated();
+            $validated = $request->validate([
+                'booking_id' => 'required|exists:bookings,id',
+                'mpesa_receipt_number' => 'required|string|min:3|max:20',
+                'amount' => 'required|numeric|min:0.01',
+                'phone' => 'required|string|min:9|max:20',
+            ]);
 
-            $paymentIntent = PaymentIntent::findOrFail($validated['payment_intent_id']);
+            $booking = \App\Models\Booking::findOrFail($validated['booking_id']);
+            
+            // Normalize phone number to E.164 format
+            $phone = $this->normalizePhoneNumber($validated['phone']);
 
             $result = $this->paymentService->submitManualPayment(
-                $paymentIntent,
+                $booking,
                 $validated['mpesa_receipt_number'],
                 $validated['amount'],
-                $validated['phone_e164'] ?? null,
-                $validated['notes'] ?? null
+                $phone
             );
 
             Log::info('Manual payment submitted', [
-                'payment_intent_id' => $paymentIntent->id,
+                'booking_id' => $booking->id,
                 'receipt_number' => $validated['mpesa_receipt_number'],
                 'amount' => $validated['amount'],
             ]);
 
             return response()->json($result, 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error',
+                'errors' => $e->errors(),
+            ], 422);
         } catch (\Exception $e) {
             Log::error('Manual payment submission failed', [
                 'error' => $e->getMessage(),
-                'payment_intent_id' => $request->input('payment_intent_id'),
+                'booking_id' => $request->input('booking_id'),
                 'receipt_number' => $request->input('mpesa_receipt_number'),
             ]);
 
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to submit manual payment',
-                'error' => $e->getMessage(),
+                'message' => $e->getMessage(),
             ], 400);
         }
+    }
+
+    /**
+     * Normalize phone number to E.164 format (+254...)
+     * Accepts: 07xxxx, +254xxxx, 01xxxx, 2547xxxx
+     */
+    private function normalizePhoneNumber(string $phone): string
+    {
+        $phone = preg_replace('/\D/', '', $phone); // Remove non-digits
+
+        // Handle different formats
+        if (substr($phone, 0, 1) === '0') {
+            // 07... or 01... format - replace 0 with country code
+            $phone = '254' . substr($phone, 1);
+        } elseif (substr($phone, 0, 3) !== '254') {
+            // Doesn't start with 254, so assume it's missing the country code
+            $phone = '254' . $phone;
+        }
+
+        // Return in E.164 format
+        return '+' . $phone;
     }
 
     /**
