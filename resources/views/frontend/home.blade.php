@@ -222,7 +222,6 @@
                     <!-- Image Column -->
                     <div class="col-lg-6">
                         <div class="relative wow fadeInRight">
-                            <img src="{{ asset('assets/frontend/images/misc/s5.webp') }}" class="w-100 rounded-1 mb-3" alt="Tausi Homes">
                             <img src="{{ asset('assets/frontend/images/misc/s3.webp') }}" class="w-100 rounded-1" alt="Tausi Outdoor">
                         </div>
                     </div>
@@ -380,7 +379,6 @@
                                 <div class="p-30 bg-white rounded-1 h-100">
                                     <small class="text-uppercase border-bottom d-block">Breakfast Included</small>
                                     <div class="sm-hide spacer-double"></div>
-                                    <div class="spacer-double"></div>
                                     <p class="mb-0">Freshly prepared daily breakfast</p>
                                     <p>Served in a calm, private setting</p>
                                 </div>
@@ -391,7 +389,6 @@
                                 <div class="p-30 bg-white rounded-1 h-100">
                                     <small class="text-uppercase border-bottom d-block">Home-Style Hosting</small>
                                     <div class="sm-hide spacer-double"></div>
-                                    <div class="spacer-double"></div>
                                     <p class="mb-0">Quiet, respectful environment</p>
                                     <p>Attentive on-request support</p>
                                 </div>
@@ -402,7 +399,6 @@
                                 <div class="p-30 bg-white rounded-1 h-100">
                                     <small class="text-uppercase border-bottom d-block">Ideal for families & small groups</small>
                                     <div class="sm-hide spacer-double"></div>
-                                    <div class="spacer-double"></div>
                                     <p class="mb-0">Included in the nightly rate</p>
                                     <p>Quiet, respectful environment</p>
                                 </div>
