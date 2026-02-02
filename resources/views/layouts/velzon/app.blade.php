@@ -216,7 +216,6 @@
                 event.preventDefault();
                 event.stopPropagation();
             }
-            console.log('Toggle dropdown called');
             
             const menu = document.getElementById('user-dropdown-menu');
             if (!menu) {
@@ -226,7 +225,6 @@
             
             const isVisible = menu.style.display === 'block';
             menu.style.display = isVisible ? 'none' : 'block';
-            console.log('Dropdown is now:', menu.style.display);
         };
         
         // Close dropdown when clicking outside - runs immediately
@@ -239,7 +237,6 @@
                 if (!btn.contains(e.target) && !menu.contains(e.target)) {
                     if (menu.style.display === 'block') {
                         menu.style.display = 'none';
-                        console.log('Dropdown closed (outside click)');
                     }
                 }
             }
@@ -247,8 +244,6 @@
 
         // Menu toggle functionality - runs after page loads
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Page loaded, initializing menu');
-            
             const menuBtn = document.getElementById('vertical-menu-btn');
             const sidebar = document.querySelector('.vertical-menu');
             const body = document.body;
@@ -259,7 +254,6 @@
                     e.stopPropagation();
                     
                     const screenWidth = window.innerWidth;
-                    console.log('Toggle clicked, screen width:', screenWidth);
                     
                     // Always toggle sidebar-enable for mobile
                     body.classList.toggle('sidebar-enable');
@@ -267,9 +261,6 @@
                     // For desktop (≥992px), toggle vertical-collapsed
                     if (screenWidth >= 992) {
                         body.classList.toggle('vertical-collapsed');
-                        console.log('Desktop toggle, vertical-collapsed:', body.classList.contains('vertical-collapsed'));
-                    } else {
-                        console.log('Mobile toggle, sidebar-enable:', body.classList.contains('sidebar-enable'));
                     }
                     
                     // Force layout recalculation
@@ -283,7 +274,7 @@
                 fullscreenBtn.addEventListener('click', function() {
                     if (!document.fullscreenElement) {
                         document.documentElement.requestFullscreen().catch(err => {
-                            console.log('Fullscreen error:', err);
+                            // Fullscreen error
                         });
                     } else {
                         document.exitFullscreen();

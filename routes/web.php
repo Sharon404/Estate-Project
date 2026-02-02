@@ -84,15 +84,6 @@ Route::post('/booking/store', [BookingController::class, 'store'])->name('bookin
 // Booking summary/history (after booking created)
 Route::get('/bookings/{booking}/summary', [BookingController::class, 'showSummary'])->name('booking.summary');
 
-// CSRF validation test routes
-Route::get('/csrf-test', function () {
-    return view('booking.csrf-test');
-})->name('csrf.test');
-
-Route::post('/csrf-test', function () {
-    return back()->with('success', 'CSRF validation passed successfully.');
-})->name('csrf.test.submit');
-
 // Payment Routes - M-PESA Integration
 Route::prefix('payment')->name('payment.')->group(function () {
     // Payment page display
