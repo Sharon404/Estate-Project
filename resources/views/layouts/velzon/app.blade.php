@@ -99,11 +99,43 @@
 
                                 <li class="menu-title" data-key="t-admin">Admin</li>
 
+                                <li class="menu-title" data-key="t-admin-management">Management</li>
+
                                 <li>
-                                    <a href="{{ route('admin.bookings') }}">
-                                        <i class="ri-book-mark-line"></i> <span>Bookings</span>
+                                    <a href="{{ route('admin.users.index') }}">
+                                        <i class="ri-user-3-line"></i> <span>Users</span>
                                     </a>
                                 </li>
+
+                                <li>
+                                    <a href="{{ route('admin.properties.index') }}">
+                                        <i class="ri-home-4-line"></i> <span>Properties</span>
+                                    </a>
+                                </li>
+
+                                <li class="menu-title" data-key="t-admin-payments">Payments</li>
+
+                                <li>
+                                    <a href="{{ route('admin.refunds.index') }}">
+                                        <i class="ri-refund-2-line"></i> <span>Refunds</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('admin.payouts.index') }}">
+                                        <i class="ri-exchange-dollar-line"></i> <span>Payouts</span>
+                                    </a>
+                                </li>
+
+                                <li class="menu-title" data-key="t-admin-support">Support</li>
+
+                                <li>
+                                    <a href="{{ route('admin.tickets.index') }}">
+                                        <i class="ri-customer-service-2-line"></i> <span>Tickets</span>
+                                    </a>
+                                </li>
+
+                                <li class="menu-title" data-key="t-admin-ops">Operations</li>
 
                                 <li>
                                     <a href="{{ route('admin.analytics') }}">
@@ -117,11 +149,45 @@
                                     </a>
                                 </li>
 
+                                <li class="menu-title" data-key="t-admin-reports">Reports</li>
+
+                                <li>
+                                    <a href="{{ route('admin.reports.index') }}">
+                                        <i class="ri-bar-chart-line"></i> <span>Reports</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('admin.reconciliation.index') }}">
+                                        <i class="ri-shield-check-line"></i> <span>Reconciliation</span>
+                                    </a>
+                                </li>
+
                             @elseif (auth()->user()->role === 'staff' || strtolower(auth()->user()->role) === 'staff')
                                 <!-- Staff Menu -->
                                 <li>
                                     <a href="{{ route('staff.dashboard') }}">
                                         <i class="ri-dashboard-2-line"></i> <span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li class="menu-title" data-key="t-staff-operations">Operations</li>
+
+                                <li>
+                                    <a href="{{ route('staff.bookings.index') }}">
+                                        <i class="ri-book-mark-line"></i> <span>Bookings</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('staff.verification.index') }}">
+                                        <i class="ri-shield-user-line"></i> <span>Verification</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('staff.tickets.index') }}">
+                                        <i class="ri-customer-service-2-line"></i> <span>Tickets</span>
                                     </a>
                                 </li>
 

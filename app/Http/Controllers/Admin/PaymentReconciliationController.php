@@ -47,7 +47,7 @@ class PaymentReconciliationController extends Controller
         // Orphaned payments (receipts without bookings)
         $orphanedPayments = Receipt::whereNull('booking_id')
             ->orWhereDoesntHave('booking')
-            ->latest()
+            ->orderByDesc('issued_at')
             ->limit(10)
             ->get();
 

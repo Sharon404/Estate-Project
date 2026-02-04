@@ -15,13 +15,24 @@ class StaffVerificationController extends Controller
      */
     public function index()
     {
-        $submissions = MpesaManualSubmission::with(['booking.guest'])
+        $submissions = MpesaManualSubmission::with(['booking.guest', 'booking.property'])
             ->where('status', 'PENDING')
             ->orderBy('created_at', 'desc')
             ->paginate(15);
 
+        // Stats
+        $stats = [
+            'pending' => MpesaManualSubmission::where('status', 'PENDING')->count(),
+            'verified_today' => MpesaManualSubmission::where('status', 'VERIFIED')
+                ->whereDate('verified_at', today())
+                ->count(),
+            'your_verifications' => MpesaManualSubmission::where('verified_by', Auth::id())->count(),
+        ];
+
         return view('staff.verification.index', [
             'submissions' => $submissions,
+            'bookings' => $submissions, // Alias for backward compatibility
+            'stats' => $stats,
         ]);
     }
 

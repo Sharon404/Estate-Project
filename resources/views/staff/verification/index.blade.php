@@ -32,16 +32,16 @@
         <!-- Pending Verifications -->
         <div class="card" style="margin-top: 1.5rem;">
             <div class="card-head">
-                <h3>Pending Verifications ({{ $bookings->total() }})</h3>
-                <p class="muted">Bookings awaiting M-PESA confirmation</p>
+                <h3>Pending Verifications ({{ $submissions->total() }})</h3>
+                <p class="muted">Submissions awaiting M-PESA confirmation</p>
             </div>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Booking ID</th>
+                            <th>Submission ID</th>
+                            <th>Booking</th>
                             <th>Guest</th>
-                            <th>Property</th>
                             <th>Amount</th>
                             <th>M-PESA Code</th>
                             <th>Submitted</th>
@@ -49,22 +49,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($bookings as $booking)
+                        @forelse($submissions as $submission)
                             <tr>
-                                <td><code>#{{ $booking->id }}</code></td>
-                                <td>{{ $booking->guest->name ?? 'N/A' }}</td>
-                                <td>{{ $booking->property->name ?? 'N/A' }}</td>
-                                <td><strong>{{ number_format($booking->total_amount) }} KES</strong></td>
+                                <td><code>#{{ $submission->id }}</code></td>
+                                <td><code>#{{ $submission->booking->id ?? 'N/A' }}</code></td>
+                                <td>{{ $submission->booking->guest->name ?? 'N/A' }}</td>
+                                <td><strong>{{ number_format($submission->amount) }} KES</strong></td>
                                 <td>
-                                    @if($booking->mpesa_receipt_number)
-                                        <code style="background: #FFF3E0; padding: 0.25rem 0.5rem; border-radius: 4px;">{{ $booking->mpesa_receipt_number }}</code>
+                                    @if($submission->mpesa_code)
+                                        <code style="background: #FFF3E0; padding: 0.25rem 0.5rem; border-radius: 4px;">{{ $submission->mpesa_code }}</code>
                                     @else
                                         <span class="text-muted">No code</span>
                                     @endif
                                 </td>
-                                <td>{{ $booking->updated_at->diffForHumans() }}</td>
+                                <td>{{ $submission->created_at->diffForHumans() }}</td>
                                 <td>
-                                    <a href="{{ route('staff.verification.show', $booking) }}" class="pill" style="background: var(--brand-primary, #652482); color: white; text-decoration: none; font-size: 0.875rem;">Verify</a>
+                                    <a href="{{ route('staff.verification.show', $submission) }}" class="pill" style="background: var(--brand-primary, #652482); color: white; text-decoration: none; font-size: 0.875rem;">Verify</a>
                                 </td>
                             </tr>
                         @empty
@@ -82,9 +82,9 @@
                     </tbody>
                 </table>
             </div>
-            @if($bookings->hasPages())
+            @if($submissions->hasPages())
                 <div class="card-footer">
-                    {{ $bookings->links() }}
+                    {{ $submissions->links() }}
                 </div>
             @endif
         </div>
