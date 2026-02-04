@@ -151,3 +151,4 @@ Route::middleware(['auth', 'audit.request'])->prefix('admin/audit')->name('admin
     Route::get('statistics', [AuditController::class, 'statistics'])->name('statistics');
     Route::get('export', [AuditController::class, 'export'])->name('export');
 });
+
