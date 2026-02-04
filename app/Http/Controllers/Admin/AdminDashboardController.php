@@ -36,6 +36,12 @@ class AdminDashboardController extends Controller
         $avgNights = Booking::whereBetween('created_at', [$startOfMonth, Carbon::now()->endOfDay()])
             ->avg('nights') ?? 0;
 
+        // NEW: Additional stats for new features
+        $pendingRefunds = \App\Models\Refund::where('status', 'PENDING')->count();
+        $pendingVerifications = \App\Models\MpesaManualSubmission::where('status', 'PENDING')->count();
+        $openTickets = \App\Models\SupportTicket::whereIn('status', ['OPEN', 'IN_PROGRESS'])->count();
+        $pendingPayouts = \App\Models\Payout::where('status', 'PENDING')->count();
+        
         // Bookings Overview Table
         $bookings = Booking::with(['guest', 'property'])
             ->latest('created_at')
@@ -63,6 +69,10 @@ class AdminDashboardController extends Controller
             'completedPayments' => $completedPayments,
             'pendingOrFailedPayments' => $pendingOrFailedPayments,
             'avgNights' => round($avgNights, 1),
+            'pendingRefunds' => $pendingRefunds,
+            'pendingVerifications' => $pendingVerifications,
+            'openTickets' => $openTickets,
+            'pendingPayouts' => $pendingPayouts,
             'bookings' => $bookings,
             'payments' => $payments,
             'transactions' => $transactions,

@@ -44,12 +44,24 @@ class StaffDashboardController extends Controller
             ->orderBy('check_out')
             ->get();
 
+        // NEW: Staff-specific pending tasks
+        $pendingVerifications = \App\Models\MpesaManualSubmission::where('status', 'PENDING')->count();
+        $myTickets = \App\Models\SupportTicket::where('assigned_to', auth()->id())
+            ->whereIn('status', ['OPEN', 'IN_PROGRESS'])
+            ->count();
+        $unassignedTickets = \App\Models\SupportTicket::whereNull('assigned_to')
+            ->where('status', 'OPEN')
+            ->count();
+
         return view('dashboard.staff', [
             'today' => $today,
             'todaysCheckins' => $todaysCheckins,
             'todaysCheckouts' => $todaysCheckouts,
             'upcomingCheckins' => $upcomingCheckins,
             'upcomingCheckouts' => $upcomingCheckouts,
+            'pendingVerifications' => $pendingVerifications,
+            'myTickets' => $myTickets,
+            'unassignedTickets' => $unassignedTickets,
             'stats' => [
                 'today_checkins' => $todaysCheckins->count(),
                 'today_checkouts' => $todaysCheckouts->count(),

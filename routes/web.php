@@ -64,11 +64,78 @@ Route::middleware(['auth', 'role:admin', 'audit.request'])->prefix('admin')->nam
     Route::put('/mpesa-verification/{submission}/verify', [MpesaVerificationController::class, 'verify'])->name('mpesa-verification.verify');
     Route::post('/mpesa-verification/{submission}/reject', [MpesaVerificationController::class, 'reject'])->name('mpesa-verification.reject');
     Route::post('/mpesa-verification/{submission}/check-status', [MpesaVerificationController::class, 'checkPaymentStatus'])->name('mpesa-verification.check-status');
+    
+    // Users Management
+    Route::get('/users', [\App\Http\Controllers\Admin\UsersController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}', [\App\Http\Controllers\Admin\UsersController::class, 'show'])->name('users.show');
+    Route::get('/users/{user}/edit', [\App\Http\Controllers\Admin\UsersController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [\App\Http\Controllers\Admin\UsersController::class, 'update'])->name('users.update');
+    Route::get('/users/{user}/login-history', [\App\Http\Controllers\Admin\UsersController::class, 'loginHistory'])->name('users.login-history');
+    
+    // Properties Management
+    Route::get('/properties', [\App\Http\Controllers\Admin\PropertiesController::class, 'index'])->name('properties.index');
+    Route::get('/properties/{property}', [\App\Http\Controllers\Admin\PropertiesController::class, 'show'])->name('properties.show');
+    Route::get('/properties/{property}/edit', [\App\Http\Controllers\Admin\PropertiesController::class, 'edit'])->name('properties.edit');
+    Route::put('/properties/{property}', [\App\Http\Controllers\Admin\PropertiesController::class, 'update'])->name('properties.update');
+    Route::post('/properties/{property}/photos', [\App\Http\Controllers\Admin\PropertiesController::class, 'uploadPhotos'])->name('properties.photos.upload');
+    Route::delete('/properties/{property}/photos/{image}', [\App\Http\Controllers\Admin\PropertiesController::class, 'deletePhoto'])->name('properties.photos.delete');
+    Route::post('/properties/{property}/photos/{image}/primary', [\App\Http\Controllers\Admin\PropertiesController::class, 'setPrimaryPhoto'])->name('properties.photos.primary');
+    
+    // Refunds Management (Admin only)
+    Route::get('/refunds', [\App\Http\Controllers\Admin\RefundsController::class, 'index'])->name('refunds.index');
+    Route::get('/refunds/{refund}', [\App\Http\Controllers\Admin\RefundsController::class, 'show'])->name('refunds.show');
+    Route::get('/refunds/create', [\App\Http\Controllers\Admin\RefundsController::class, 'create'])->name('refunds.create');
+    Route::post('/refunds', [\App\Http\Controllers\Admin\RefundsController::class, 'store'])->name('refunds.store');
+    Route::post('/refunds/{refund}/approve', [\App\Http\Controllers\Admin\RefundsController::class, 'approve'])->name('refunds.approve');
+    Route::post('/refunds/{refund}/reject', [\App\Http\Controllers\Admin\RefundsController::class, 'reject'])->name('refunds.reject');
+    Route::post('/refunds/{refund}/processed', [\App\Http\Controllers\Admin\RefundsController::class, 'markProcessed'])->name('refunds.processed');
+    
+    // Support Tickets
+    Route::get('/tickets', [\App\Http\Controllers\Admin\TicketsController::class, 'index'])->name('tickets.index');
+    Route::get('/tickets/{ticket}', [\App\Http\Controllers\Admin\TicketsController::class, 'show'])->name('tickets.show');
+    Route::post('/tickets/{ticket}/assign', [\App\Http\Controllers\Admin\TicketsController::class, 'assign'])->name('tickets.assign');
+    Route::post('/tickets/{ticket}/reply', [\App\Http\Controllers\Admin\TicketsController::class, 'reply'])->name('tickets.reply');
+    Route::post('/tickets/{ticket}/status', [\App\Http\Controllers\Admin\TicketsController::class, 'updateStatus'])->name('tickets.status');
+    Route::post('/tickets/{ticket}/escalate', [\App\Http\Controllers\Admin\TicketsController::class, 'escalate'])->name('tickets.escalate');
+    
+    // Payouts Management
+    Route::get('/payouts', [\App\Http\Controllers\Admin\PayoutsController::class, 'index'])->name('payouts.index');
+    Route::get('/payouts/{payout}', [\App\Http\Controllers\Admin\PayoutsController::class, 'show'])->name('payouts.show');
+    Route::get('/payouts/create', [\App\Http\Controllers\Admin\PayoutsController::class, 'create'])->name('payouts.create');
+    Route::post('/payouts', [\App\Http\Controllers\Admin\PayoutsController::class, 'store'])->name('payouts.store');
+    Route::post('/payouts/{payout}/approve', [\App\Http\Controllers\Admin\PayoutsController::class, 'approve'])->name('payouts.approve');
+    Route::post('/payouts/{payout}/completed', [\App\Http\Controllers\Admin\PayoutsController::class, 'markCompleted'])->name('payouts.completed');
+    Route::post('/payouts/{payout}/disputed', [\App\Http\Controllers\Admin\PayoutsController::class, 'markDisputed'])->name('payouts.disputed');
+    
+    // Reports
+    Route::get('/reports', [\App\Http\Controllers\Admin\ReportsController::class, 'index'])->name('reports.index');
+    Route::get('/reports/revenue', [\App\Http\Controllers\Admin\ReportsController::class, 'revenue'])->name('reports.revenue');
+    Route::get('/reports/occupancy', [\App\Http\Controllers\Admin\ReportsController::class, 'occupancy'])->name('reports.occupancy');
+    Route::get('/reports/cancellations', [\App\Http\Controllers\Admin\ReportsController::class, 'cancellations'])->name('reports.cancellations');
+    
+    // Payment Reconciliation
+    Route::get('/reconciliation', [\App\Http\Controllers\Admin\PaymentReconciliationController::class, 'index'])->name('reconciliation.index');
+    Route::post('/reconciliation/{booking}/resolve', [\App\Http\Controllers\Admin\PaymentReconciliationController::class, 'resolveMismatch'])->name('reconciliation.resolve');
 });
 
 // Staff Dashboard
 Route::middleware(['auth', 'role:staff', 'audit.request'])->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', [StaffDashboardController::class, 'index'])->name('dashboard');
+    
+    // Staff Bookings (read-only)
+    Route::get('/bookings', [\App\Http\Controllers\Staff\StaffBookingsController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/{booking}', [\App\Http\Controllers\Staff\StaffBookingsController::class, 'show'])->name('bookings.show');
+    
+    // Staff Verification (can verify, cannot reject)
+    Route::get('/verification', [\App\Http\Controllers\Staff\StaffVerificationController::class, 'index'])->name('verification.index');
+    Route::get('/verification/{submission}', [\App\Http\Controllers\Staff\StaffVerificationController::class, 'show'])->name('verification.show');
+    Route::put('/verification/{submission}/verify', [\App\Http\Controllers\Staff\StaffVerificationController::class, 'verify'])->name('verification.verify');
+    
+    // Staff Tickets (assigned or unassigned only)
+    Route::get('/tickets', [\App\Http\Controllers\Staff\StaffTicketsController::class, 'index'])->name('tickets.index');
+    Route::get('/tickets/{ticket}', [\App\Http\Controllers\Staff\StaffTicketsController::class, 'show'])->name('tickets.show');
+    Route::post('/tickets/{ticket}/reply', [\App\Http\Controllers\Staff\StaffTicketsController::class, 'reply'])->name('tickets.reply');
+    Route::post('/tickets/{ticket}/status', [\App\Http\Controllers\Staff\StaffTicketsController::class, 'updateStatus'])->name('tickets.status');
 });
 
 // Booking Routes - Public Three-Step Flow: Form → Confirm → Store

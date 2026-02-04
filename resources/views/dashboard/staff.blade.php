@@ -37,6 +37,35 @@
             </div>
         </div>
 
+        <!-- NEW: Staff Tasks Panel -->
+        <div class="card">
+            <div class="card-head">
+                <h3>Your Tasks</h3>
+                <p class="muted">Pending items requiring your attention</p>
+            </div>
+            <div class="metrics" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                <a href="{{ route('staff.bookings.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">📋 Bookings</p>
+                    <p class="sub">View all bookings</p>
+                </a>
+                <a href="{{ route('staff.verification.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">✓ Verifications</p>
+                    <p class="value">{{ $pendingVerifications }}</p>
+                    <p class="sub">Pending M-PESA codes</p>
+                </a>
+                <a href="{{ route('staff.tickets.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">🎫 My Tickets</p>
+                    <p class="value">{{ $myTickets }}</p>
+                    <p class="sub">Assigned to you</p>
+                </a>
+                <a href="{{ route('staff.tickets.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">📥 Unassigned</p>
+                    <p class="value">{{ $unassignedTickets }}</p>
+                    <p class="sub">Available tickets</p>
+                </a>
+            </div>
+        </div>
+
         <div class="grid">
             <!-- Today's Check-ins -->
             <div class="card">

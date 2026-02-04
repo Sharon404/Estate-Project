@@ -42,6 +42,52 @@
             </div>
         </div>
 
+        <!-- NEW: Quick Actions Panel -->
+        <div class="card">
+            <div class="card-head">
+                <h3>Quick Actions</h3>
+                <p class="muted">Navigate to key management areas</p>
+            </div>
+            <div class="metrics" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                <a href="{{ route('admin.users.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">👥 Users</p>
+                    <p class="sub">Manage users & KYC</p>
+                </a>
+                <a href="{{ route('admin.properties.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">🏠 Properties</p>
+                    <p class="sub">Listings & availability</p>
+                </a>
+                <a href="{{ route('admin.refunds.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">💰 Refunds</p>
+                    <p class="value">{{ $pendingRefunds }}</p>
+                    <p class="sub">Pending approval</p>
+                </a>
+                <a href="{{ route('admin.mpesa-verification.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">✓ Verifications</p>
+                    <p class="value">{{ $pendingVerifications }}</p>
+                    <p class="sub">M-PESA codes</p>
+                </a>
+                <a href="{{ route('admin.tickets.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">🎫 Support</p>
+                    <p class="value">{{ $openTickets }}</p>
+                    <p class="sub">Open tickets</p>
+                </a>
+                <a href="{{ route('admin.payouts.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">💳 Payouts</p>
+                    <p class="value">{{ $pendingPayouts }}</p>
+                    <p class="sub">Awaiting approval</p>
+                </a>
+                <a href="{{ route('admin.reports.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">📊 Reports</p>
+                    <p class="sub">Revenue & analytics</p>
+                </a>
+                <a href="{{ route('admin.reconciliation.index') }}" class="card metric hover-lift" style="text-decoration: none; cursor: pointer;">
+                    <p class="label">🔍 Reconciliation</p>
+                    <p class="sub">Payment audits</p>
+                </a>
+            </div>
+        </div>
+
         <div class="grid">
             <div class="card wide">
                 <div class="card-head">

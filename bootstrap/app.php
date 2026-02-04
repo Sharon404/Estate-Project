@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\EnsureUserHasRole::class,
             'auth.required' => \App\Http\Middleware\EnsureUserIsAuthenticated::class,
             'audit.request' => \App\Http\Middleware\AuditRequest::class,
+            'permission' => \App\Http\Middleware\CheckPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
