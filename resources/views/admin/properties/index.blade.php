@@ -60,12 +60,11 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Property</th>
-                            <th>Owner</th>
-                            <th>Location</th>
-                            <th>Price/Night</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Nightly Rate</th>
                             <th>Status</th>
-                            <th>Photos</th>
+                            <th>Created</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -73,26 +72,59 @@
                         @forelse($properties as $property)
                             <tr>
                                 <td>
-                                    <strong>{{ $property->name }}</strong>
+                                    @if($property->images->count() > 0)
+                                        <img src="{{ $property->images->first()->url }}" alt="{{ $property->name }}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;">
+                                    @else
+                                        <div class="bg-light d-flex align-items-center justify-content-center" style="width: 60px; height: 40px; border-radius: 4px;">
+                                            <i class="ri-image-line text-muted"></i>
+                                        </div>
+                                    @endif
                                 </td>
-                                <td>{{ $property->owner->name ?? 'N/A' }}</td>
-                                <td>{{ $property->location }}</td>
-                                <td><strong>{{ number_format($property->price_per_night) }} KES</strong></td>
                                 <td>
-                                    @if($property->status == 'ACTIVE')
+                                    <strong>{{ $property->name }}</strong>
+                                    @if($property->description)
+                                        <br>
+                                        <small class="text-muted">{{ Str::limit($property->description, 50) }}</small>
+                                    @endif
+                                </td>
+                                <td>
+                                    <strong>{{ $property->currency }} {{ number_format($property->nightly_rate, 2) }}</strong>
+                                    <br>
+                                    <small class="text-muted">per night</small>
+                                </td>
+                                <td>
+                                    @if($property->is_active)
                                         <span class="pill" style="background: #E8F5E9; color: #2E7D32;">Active</span>
                                     @else
                                         <span class="pill" style="background: #FFEBEE; color: #C62828;">Inactive</span>
                                     @endif
                                 </td>
-                                <td>{{ $property->photos_count ?? 0 }} photos</td>
                                 <td>
-                                    <a href="{{ route('admin.properties.show', $property) }}" class="link">View</a>
+                                    <small>{{ $property->created_at ? $property->created_at->format('M d, Y') : 'N/A' }}</small>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div class="btn-group" role="group" style="display: flex; gap: 0.5rem;">
+                                        <a href="{{ route('admin.properties.edit', $property) }}" class="pill light" style="text-decoration: none; font-size: 0.875rem;">
+                                            <i class="ri-edit-line"></i> Edit
+                                        </a>
+                                        <form action="{{ route('admin.properties.destroy', $property) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this property?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="pill light" style="background: #FFEBEE; color: #C62828; border: none; cursor: pointer; font-size: 0.875rem;">
+                                                <i class="ri-delete-bin-line"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center text-muted py-3">No properties found.</td>
+                                <td colspan="6" class="text-center py-4">
+                                    <p class="text-muted mb-3">No properties found</p>
+                                    <a href="{{ route('admin.properties.create') }}" class="pill" style="background: var(--brand-primary, #652482); color: white; text-decoration: none;">
+                                        <i class="ri-add-line"></i> Add Your First Property
+                                    </a>
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>
