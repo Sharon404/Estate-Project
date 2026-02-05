@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Room Detail - GrandStay')
+@section('title', $property->name . ' - GrandStay')
 @section('content')
 
 
@@ -19,7 +19,7 @@
                     <div class="col-lg-6 text-center">
                         <div class="subtitle id-color wow fadeInUp mb-2">Enjoy Your Stay</div>
                         <div class="clearfix"></div>
-                        <h2 class="fs-60 fs-xs-8vw wow fadeInUp" data-wow-delay=".4s">Tausi Holiday Home - Nanyuki</h2>
+                        <h2 class="fs-60 fs-xs-8vw wow fadeInUp" data-wow-delay=".4s">{{ $property->name }}</h2>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 <ul class="crumb">
                     <li><a href="{{ route('home') }}">Home</a></li>
                     <li><a href="{{ route('properties') }}">Rooms</a></li>
-                    <li class="active">Tausi Holiday Home - Nanyuki</li>
+                    <li class="active">{{ $property->name }}</li>
                 </ul>
             </div>
             <div class="sw-overlay op-8"></div>
@@ -40,11 +40,11 @@
                     <div class="col-lg-12">
 
                         <div class="p-4 fs-18 rounded-1 bg-color-op-1 d-lg-flex d-sm-block flex-wrap align-items-center justify-content-between gap-4 mb-4 fw-500">
-                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="abs w-20px start-0" alt="">4-6 Guests</div>
-                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt="">2 Bedroom</div>
-                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt=""> King Bed</div>
-                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt=""> City View</div>
-                            <div class="d-lg-block d-sm-inline-block"><h2 class="fs-40 m-0 lh-1">KES 25,000 <span class="fs-20">/ night</span></h2></div>
+                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="abs w-20px start-0" alt="">{{ $property->max_guests }} Guests</div>
+                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt="">{{ $property->bedrooms }} Bedroom</div>
+                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt=""> {{ $property->bathrooms }} Bathroom</div>
+                            <div class="me-4 d-lg-block py-2 d-sm-inline-block relative lh-1-3 ps-30"><img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="abs w-20px start-0" alt=""> {{ $property->property_type }}</div>
+                            <div class="d-lg-block d-sm-inline-block"><h2 class="fs-40 m-0 lh-1">KES {{ number_format($property->price_per_night) }} <span class="fs-20">/ night</span></h2></div>
                         </div>
                     </div>
 
@@ -99,17 +99,22 @@
 
                         <div class="spacer-single"></div>
                         <p>
-                            Tausi Holiday Home offers a fully furnished private house ideal for families, couples, and small groups seeking a peaceful escape. Each home provides privacy, comfort, and a calm environment — with breakfast included and a simple flat nightly rate. Perfect for families and groups looking for complete independence and comfort.
+                            {{ $property->description ?? 'A beautiful property perfect for your stay. Enjoy comfort and relaxation in our well-appointed accommodations.' }}
                         </p>
-                        <h3 class="mt-4 mb-3">Room Amenities</h3>
+                        
+                        @if($property->amenities)
+                        <h3 class="mt-4 mb-3">Property Amenities</h3>
                         <ul class="ul-check">
-                            <li>Free Wi-Fi</li>
-                            <li>Smart TV</li>
-                            <li>Minibar</li>
-                            <li>Coffee Machine</li>
-                            <li>Safe Deposit Box</li>
-                            <li>Rain Shower</li>
+                            @php
+                                $amenities = is_string($property->amenities) ? json_decode($property->amenities, true) : $property->amenities;
+                                if (is_array($amenities)) {
+                                    foreach ($amenities as $amenity) {
+                                        echo '<li>' . $amenity . '</li>';
+                                    }
+                                }
+                            @endphp
                         </ul>
+                        @endif
                     </div>
 
                     <div class="col-lg-4" id="booking">
@@ -179,84 +184,44 @@
                 <div class="mt-5">
                     <h2 class="mb-4">Other Rooms</h2>
                     <div class="row g-4">
+                        @php
+                            $otherProperties = \App\Models\Property::where('id', '!=', $property->id)->limit(3)->get();
+                        @endphp
+                        @forelse($otherProperties as $otherProperty)
                         <div class="col-md-4">
-                            <a href="{{ route('property.single', ['id' => 2]) }}" class="d-block h-100 hover relative">
+                            <a href="{{ route('property.single', ['id' => $otherProperty->id]) }}" class="d-block h-100 hover relative">
                                 <div class="rounded-1 overflow-hidden">
-                                    <h3 class="abs bg-color rounded-3 text-white fs-20 lh-1 p-2 px-3 m-4 top-0 start-0 z-3">Best Selling</h3>
-                                    <img src="{{ asset('assets/frontend/images/rooms/2.jpg') }}" class="w-100 hover-scale-1-2" alt="">
+                                    @if($otherProperty->photos && $otherProperty->photos->count() > 0)
+                                        <img src="{{ $otherProperty->photos->first()->url ?? asset('assets/frontend/images/rooms/2.jpg') }}" class="w-100 hover-scale-1-2" alt="">
+                                    @else
+                                        <img src="{{ asset('assets/frontend/images/rooms/2.jpg') }}" class="w-100 hover-scale-1-2" alt="">
+                                    @endif
                                 </div>
                                 <div class="pt-4">
                                     <div class="d-flex mb-2 fs-15 justify-content-between">
                                         <div class="d-flex">    
                                             <div class="d-flex align-items-center me-3">
-                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4 guests
+                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">{{ $otherProperty->max_guests }} guests
                                             </div>
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
+                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">{{ $otherProperty->property_type }}
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
+                                            <div class="fs-20 fw-bold">KES {{ number_format($otherProperty->price_per_night) }}</div><span>/night</span>
                                         </div>
                                     </div>
                                     <div class="relative">
-                                        <h3 class="mb-2">2 Bedroom Villa - Nanyuki</h3>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>           
-
-                        <div class="col-md-4">
-                            <a href="{{ route('property.single', ['id' => 3]) }}" class="d-block h-100 hover relative">
-                                <div class="rounded-1 overflow-hidden">
-                                    <img src="{{ asset('assets/frontend/images/rooms/3.jpg') }}" class="w-100 hover-scale-1-2" alt="">
-                                </div>
-                                <div class="pt-4">
-                                    <div class="d-flex mb-2 fs-15 justify-content-between">
-                                        <div class="d-flex">    
-                                            <div class="d-flex align-items-center me-3">
-                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4-6 guests
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
-                                        </div>
-                                    </div>
-                                    <div class="relative">
-                                        <h3 class="mb-2">3 Bedroom Villa - Nanyuki</h3>
+                                        <h3 class="mb-2">{{ $otherProperty->name }}</h3>
                                     </div>
                                 </div>
                             </a>
                         </div>
-
-                        <div class="col-md-4">
-                            <a href="{{ route('property.single', ['id' => 4]) }}" class="d-block h-100 hover relative">
-                                <div class="rounded-1 overflow-hidden">
-                                    <img src="{{ asset('assets/frontend/images/rooms/4.jpg') }}" class="w-100 hover-scale-1-2" alt="">
-                                </div>
-                                <div class="pt-4">
-                                    <div class="d-flex mb-2 fs-15 justify-content-between">
-                                        <div class="d-flex">    
-                                            <div class="d-flex align-items-center me-3">
-                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4-6 guests
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt=""> Entire Home
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
-                                        </div>
-                                    </div>
-                                    <div class="relative">
-                                        <h3 class="mb-2">4 Bedroom Villa - Nanyuki</h3>
-                                    </div>
-                                </div>
-                            </a>
+                        @empty
+                        <div class="col-md-12">
+                            <p class="text-center text-muted">No other properties available</p>
                         </div>
+                        @endforelse
                     </div>
                 </div>
 
@@ -296,7 +261,8 @@
                 checkin: checkin,
                 checkout: checkout,
                 rooms: rooms,
-                guests: guests
+                guests: guests,
+                property_id: {{ $property->id }}
             });
 
             window.location.href = '/reservation?' + params.toString();

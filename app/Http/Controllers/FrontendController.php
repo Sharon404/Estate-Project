@@ -139,10 +139,12 @@ class FrontendController extends Controller
      */
     public function propertySingle($id): View
     {
+        $property = \App\Models\Property::findOrFail($id);
+        
         return view('frontend.room-single', [
-            'id' => $id,
-            'title' => 'Room Details - GrandStay',
-            'description' => 'Explore the details of this beautiful room.'
+            'property' => $property,
+            'title' => $property->name . ' - GrandStay',
+            'description' => $property->description ?? 'Explore the details of this beautiful room.'
         ]);
     }
 

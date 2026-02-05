@@ -23,10 +23,8 @@ class StaffVerificationController extends Controller
         // Stats
         $stats = [
             'pending' => MpesaManualSubmission::where('status', 'PENDING')->count(),
-            'verified_today' => MpesaManualSubmission::where('status', 'VERIFIED')
-                ->whereDate('verified_at', today())
-                ->count(),
-            'your_verifications' => MpesaManualSubmission::where('verified_by', Auth::id())->count(),
+            'verified_today' => MpesaManualSubmission::where('status', 'VERIFIED')->count(),
+            'your_verifications' => MpesaManualSubmission::where('status', 'VERIFIED')->count(),
         ];
 
         return view('staff.verification.index', [
@@ -65,10 +63,7 @@ class StaffVerificationController extends Controller
         // Staff can only confirm, not reject
         $submission->update([
             'status' => 'VERIFIED',
-            'payment_status' => 'CONFIRMED',
-            'admin_notes' => $validated['notes'],
-            'verified_by' => Auth::id(),
-            'verified_at' => now(),
+            'raw_notes' => $validated['notes'] ?? null,
         ]);
 
         // Create booking transaction
