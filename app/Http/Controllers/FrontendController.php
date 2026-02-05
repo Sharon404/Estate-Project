@@ -144,12 +144,20 @@ class FrontendController extends Controller
      */
     public function propertySingle($id): View
     {
-        $property = \App\Models\Property::findOrFail($id);
+        $property = \App\Models\Property::with('images')->findOrFail($id);
+        
+        // Fetch other properties for "More Homes" section
+        $otherProperties = \App\Models\Property::with('images')
+            ->where('id', '!=', $property->id)
+            ->where('status', 'APPROVED')
+            ->limit(3)
+            ->get();
         
         return view('frontend.room-single', [
             'property' => $property,
+            'otherProperties' => $otherProperties,
             'title' => $property->name . ' - GrandStay',
-            'description' => $property->description ?? 'Explore the details of this beautiful room.'
+            'description' => $property->description ?? 'Explore the details of this beautiful property.'
         ]);
     }
 

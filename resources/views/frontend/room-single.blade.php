@@ -50,46 +50,32 @@
                             <a class="btn-prev"></a>                                
 
                             <div id="room-carousel" class="owl-single-static owl-carousel owl-theme">
-                                <!-- item begin -->
-                                <div class="item">
-                                    <div class="relative">
-                                        <div class="overflow-hidden rounded-1">
-                                            <img src="{{ asset('assets/frontend/images/room-single/1.webp') }}" class="w-100" alt="">
+                                @if($property->images && $property->images->count() > 0)
+                                    @foreach($property->images as $image)
+                                    <!-- item begin -->
+                                    <div class="item">
+                                        <div class="relative">
+                                            <div class="overflow-hidden rounded-1">
+                                                <img src="{{ $image->url }}" class="w-100" alt="{{ $property->name }}">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- item end -->
-                                                        
-                                <!-- item begin -->
-                                <div class="item">
-                                    <div class="relative">
-                                        <div class="overflow-hidden rounded-1">
-                                            <img src="{{ asset('assets/frontend/images/room-single/2.webp') }}" class="w-100" alt="">
+                                    <!-- item end -->
+                                    @endforeach
+                                @else
+                                    <!-- Fallback placeholder images -->
+                                    @for($i = 1; $i <= 4; $i++)
+                                    <!-- item begin -->
+                                    <div class="item">
+                                        <div class="relative">
+                                            <div class="overflow-hidden rounded-1">
+                                                <img src="{{ asset('assets/frontend/images/room-single/' . $i . '.webp') }}" class="w-100" alt="">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- item end -->
-                                
-                                <!-- item begin -->
-                                <div class="item">
-                                    <div class="relative">
-                                        <div class="overflow-hidden rounded-1">
-                                            <img src="{{ asset('assets/frontend/images/room-single/3.webp') }}" class="w-100" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- item end -->
-
-                                <!-- item begin -->
-                                <div class="item">
-                                    <div class="relative">
-                                        <div class="overflow-hidden rounded-1">
-                                            <img src="{{ asset('assets/frontend/images/room-single/4.webp') }}" class="w-100" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- item end -->
-
+                                    <!-- item end -->
+                                    @endfor
+                                @endif
                             </div>
                         </div>
 
