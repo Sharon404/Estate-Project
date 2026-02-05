@@ -43,8 +43,8 @@
                         <div class="col-lg-8 offset-lg-2">
                             <a href="{{ route('property.single', ['id' => $property->id]) }}" class="d-block h-100 hover relative">
                                 <div class="rounded-1 overflow-hidden">
-                                    @if($property->photos && $property->photos->count() > 0)
-                                        <img src="{{ $property->photos->first()->url ?? asset('assets/frontend/images/rooms/1.jpg') }}" class="w-100 hover-scale-1-2" alt="">
+                                    @if($property->images && $property->images->count() > 0)
+                                        <img src="{{ $property->images->first()->url }}" class="w-100 hover-scale-1-2" alt="{{ $property->name }}">
                                     @else
                                         <img src="{{ asset('assets/frontend/images/rooms/1.jpg') }}" class="w-100 hover-scale-1-2" alt="">
                                     @endif
@@ -73,8 +73,8 @@
                         <div class="col-md-6">
                             <a href="{{ route('property.single', ['id' => $property->id]) }}" class="d-block h-100 hover relative">
                                 <div class="rounded-1 overflow-hidden">
-                                    @if($property->photos && $property->photos->count() > 0)
-                                        <img src="{{ $property->photos->first()->url ?? asset('assets/frontend/images/rooms/2.jpg') }}" class="w-100 hover-scale-1-2" alt="">
+                                    @if($property->images && $property->images->count() > 0)
+                                        <img src="{{ $property->images->first()->url }}" class="w-100 hover-scale-1-2" alt="{{ $property->name }}">
                                     @else
                                         <img src="{{ asset('assets/frontend/images/rooms/' . (($loop->index % 5) + 2) . '.jpg') }}" class="w-100 hover-scale-1-2" alt="">
                                     @endif

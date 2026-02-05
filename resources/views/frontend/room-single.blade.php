@@ -187,8 +187,8 @@
                         <div class="col-md-4">
                             <a href="{{ route('property.single', ['id' => $otherProperty->id]) }}" class="d-block h-100 hover relative">
                                 <div class="rounded-1 overflow-hidden">
-                                    @if($otherProperty->photos && $otherProperty->photos->count() > 0)
-                                        <img src="{{ $otherProperty->photos->first()->url ?? asset('assets/frontend/images/rooms/2.jpg') }}" class="w-100 hover-scale-1-2" alt="">
+                                    @if($otherProperty->images && $otherProperty->images->count() > 0)
+                                        <img src="{{ $otherProperty->images->first()->url }}" class="w-100 hover-scale-1-2" alt="{{ $otherProperty->name }}">
                                     @else
                                         <img src="{{ asset('assets/frontend/images/rooms/2.jpg') }}" class="w-100 hover-scale-1-2" alt="">
                                     @endif

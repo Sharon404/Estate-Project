@@ -84,7 +84,9 @@ class FrontendController extends Controller
      */
     public function properties(): View
     {
-        $properties = \App\Models\Property::where('status', 'APPROVED')->get();
+        $properties = \App\Models\Property::with('images')
+            ->where('status', 'APPROVED')
+            ->get();
         
         return view('frontend.rooms', [
             'title' => 'Our Homes - Tausi Rental',
