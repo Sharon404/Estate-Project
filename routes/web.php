@@ -80,8 +80,8 @@ Route::middleware(['auth', 'role:admin', 'audit.request'])->prefix('admin')->nam
     Route::get('/properties/{property}/edit', [\App\Http\Controllers\Admin\PropertyController::class, 'edit'])->name('properties.edit');
     Route::put('/properties/{property}', [\App\Http\Controllers\Admin\PropertyController::class, 'update'])->name('properties.update');
     Route::delete('/properties/{property}', [\App\Http\Controllers\Admin\PropertyController::class, 'destroy'])->name('properties.destroy');
-    Route::delete('/properties/{property}/photos/{image}', [\App\Http\Controllers\Admin\PropertiesController::class, 'deletePhoto'])->name('properties.photos.delete');
-    Route::post('/properties/{property}/photos/{image}/primary', [\App\Http\Controllers\Admin\PropertiesController::class, 'setPrimaryPhoto'])->name('properties.photos.primary');
+    Route::delete('/properties/{property}/photos/{image}', [\App\Http\Controllers\Admin\PropertyController::class, 'deletePhoto'])->name('properties.photos.delete');
+    Route::post('/properties/{property}/photos/{image}/primary', [\App\Http\Controllers\Admin\PropertyController::class, 'setPrimaryPhoto'])->name('properties.photos.primary');
     
     // Refunds Management (Admin only)
     Route::get('/refunds', [\App\Http\Controllers\Admin\RefundsController::class, 'index'])->name('refunds.index');

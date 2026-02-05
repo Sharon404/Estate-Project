@@ -163,4 +163,37 @@ class PropertyController extends Controller
         return redirect()->route('admin.properties.index')
             ->with('success', 'Property deleted successfully!');
     }
+
+    /**
+     * Delete a specific image from a property.
+     */
+    public function deletePhoto(Property $property, PropertyImage $image)
+    {
+        if ($image->property_id !== $property->id) {
+            abort(404);
+        }
+
+        Storage::disk('public')->delete($image->file_path);
+        $image->delete();
+
+        return back()->with('success', 'Photo deleted successfully');
+    }
+
+    /**
+     * Set a property image as the primary/featured image.
+     */
+    public function setPrimaryPhoto(Property $property, PropertyImage $image)
+    {
+        if ($image->property_id !== $property->id) {
+            abort(404);
+        }
+
+        // Unset all primary photos
+        $property->images()->update(['is_primary' => false]);
+
+        // Set new primary
+        $image->update(['is_primary' => true]);
+
+        return back()->with('success', 'Primary photo updated');
+    }
 }

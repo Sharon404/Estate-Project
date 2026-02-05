@@ -1,438 +1,486 @@
-# Estate Project - Booking System
+# Estate Project - Property Rental Management System
 
-A complete, enterprise-grade hotel booking system with M-PESA payment integration built with Laravel 12.
+A comprehensive, enterprise-grade property rental management system with M-PESA payment integration, role-based access control (RBAC), and audit logging built with Laravel 12.
 
-**Status**: ✅ Production Ready
+**Status**: ⚠️ In Development (Core Features Working | Booking Flow in Progress)
 
-## Quick Start
+---
 
-### Core Flow
-```
-1. Guest submits booking form (POST /bookings)
-2. System generates confirmation with booking reference
-3. Guest confirms and locks booking for payment
-4. M-PESA STK is sent to customer
-5. Payment verified via callback (or manual fallback)
-6. Receipt generated and emailed
-```
+## 📋 Table of Contents
 
-## Project Structure
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Quick Start](#quick-start)
+- [Project Structure](#project-structure)
+- [Database Schema](#database-schema)
+- [API Endpoints](#api-endpoints)
+- [User Flows](#user-flows)
+- [Configuration](#configuration)
+- [Development](#development)
+- [Deployment](#deployment)
+- [Troubleshooting](#troubleshooting)
+
+---
+
+## ✨ Features
+
+### ✅ Implemented & Working
+- **Property Management**: Full CRUD for properties with multi-image support
+- **Image Management**: Upload multiple images per property, set primary image, responsive carousel display
+- **Admin Dashboard**: Complete property listing with pagination and filtering
+- **Role-Based Access Control (RBAC)**: Admin and Staff roles with 26 granular permissions
+- **Audit Logging**: Track all user actions with IP address, user agent, and metadata
+- **Payment Infrastructure**: M-PESA integration with STK push and manual verification
+- **Receipt Generation**: PDF receipts with booking details and payment information
+- **Frontend Property Display**: Dynamic property listings with real-time database queries
+- **Responsive Design**: Built on Velzon dashboard template with Tausi custom branding
+- **Email System**: Queue-based email notifications for contact forms and receipts
+
+### ⚠️ Partially Implemented
+- **Booking System**: Database tables and models exist; 3-step form in progress (Step 2 confirmation incomplete)
+- **Payment Processing**: M-PESA callbacks configured; booking-to-payment linking needs work
+- **Admin User Management**: Views exist but authentication flows incomplete
+- **Staff Dashboard**: Framework in place but no content
+
+### ❌ Not Yet Implemented
+- **Guest Registration/Login**: No user account system for guests
+- **Search & Filter**: No date range or amenity filtering on properties page
+- **Booking History**: No "My Bookings" feature for guests
+- **Reviews/Ratings**: No guest review system
+- **Wishlist/Favorites**: No property favoriting feature
+- **Blog/Gallery**: Static pages; not database-driven
+- **Testimonials**: Hardcoded content; not editable via admin
+- **Cancellation Policy**: No booking cancellation logic
+- **Availability Calendar**: No visual calendar display
+
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+| **Framework** | Laravel 12.48.1 |
+| **Language** | PHP 8.4.17 |
+| **Database** | MySQL 8.0.44 |
+| **Frontend** | Bootstrap 5 + Vite |
+| **Templating** | Blade |
+| **Docker** | Docker Compose (Nginx, PHP-FPM, MySQL) |
+| **Payment Gateway** | M-PESA (Daraja API) |
+| **Queue System** | Database driver |
+| **Authentication** | Laravel Auth + Custom RBAC |
+| **Audit Trail** | Custom AuditLog middleware |
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Docker & Docker Compose installed
+- Git
+- At least 2GB RAM available
+
+### Installation
+
+1. **Clone Repository**
+   ```bash
+   git clone <repository-url>
+   cd Estate\ Project
+   ```
+
+2. **Set Up Environment**
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Configure .env**
+   ```env
+   APP_NAME="Tausi Rental"
+   APP_DEBUG=true
+   APP_URL=http://localhost
+
+   DB_CONNECTION=mysql
+   DB_HOST=db
+   DB_PORT=3306
+   DB_DATABASE=estate_project
+   DB_USERNAME=root
+   DB_PASSWORD=root
+
+   QUEUE_CONNECTION=database
+   MAIL_DRIVER=smtp
+   MAIL_HOST=smtp.mailtrap.io
+   MAIL_PORT=2525
+   ```
+
+4. **Start Docker Containers**
+   ```bash
+   docker-compose up -d
+   ```
+
+5. **Run Migrations**
+   ```bash
+   docker-compose exec app php artisan migrate
+   ```
+
+6. **Generate Application Key**
+   ```bash
+   docker-compose exec app php artisan key:generate
+   ```
+
+7. **Create Storage Symlink**
+   ```bash
+   docker-compose exec app php artisan storage:link
+   ```
+
+8. **Seed Demo Data (Optional)**
+   ```bash
+   docker-compose exec app php artisan db:seed
+   ```
+
+### Access the Application
+
+- **Frontend**: http://localhost:8000
+- **Admin Dashboard**: http://localhost:8000/login (credentials: see seed or create via tinker)
+- **Database Admin (Adminer)**: http://localhost:8081
+
+---
+
+## 📁 Project Structure
 
 ```
 app/
-├── Services/
-│   ├── BookingService.php              # Orchestrates entire booking workflow
-│   ├── PaymentService.php              # Manages payment processing
-│   ├── MpesaStkService.php             # Sends STK push
-│   ├── MpesaCallbackService.php        # Handles M-PESA callbacks
-│   ├── ReceiptService.php              # Generates receipts
-│   ├── AuditService.php                # Logs all actions
-│   └── EmailService.php                # Sends emails
-│
 ├── Http/Controllers/
-│   ├── Booking/
-│   │   └── BookingController.php       # store(), summary(), confirm()
+│   ├── FrontendController.php              # Public-facing pages
+│   ├── Auth/LoginController.php            # Authentication
+│   ├── Admin/
+│   │   ├── PropertyController.php          # Property CRUD + image management
+│   │   ├── BookingsController.php          # Booking list/detail
+│   │   ├── AnalyticsController.php         # Dashboard analytics
+│   │   ├── AuditLogsController.php         # Audit trail viewing
+│   │   ├── UsersController.php             # User management
+│   │   ├── MpesaVerificationController.php # Payment verification
+│   │   ├── RefundsController.php           # Refund management
+│   │   └── PayoutsController.php           # Payout processing
+│   ├── Booking/BookingController.php       # 3-step reservation flow
 │   ├── Payment/
-│   │   ├── PaymentController.php       # Payment intents & manual entries
-│   │   └── MpesaController.php         # STK & callbacks
-│   └── Admin/
-│       └── AdminPaymentController.php  # Payment verification
+│   │   ├── PaymentController.php           # Payment intents & receipts
+│   │   ├── MpesaController.php             # M-PESA STK & callbacks
+│   │   └── AdminPaymentController.php      # Admin verification
+│   └── Staff/
+│       ├── StaffDashboardController.php    # Staff view
+│       ├── StaffBookingsController.php     # Staff booking view
+│       └── StaffVerificationController.php # Staff verification tasks
 │
-├── Http/Requests/
-│   ├── StoreBookingRequest.php
-│   ├── ConfirmBookingRequest.php
-│   ├── InitiateStkRequest.php
-│   └── SubmitManualMpesaRequest.php
+├── Models/
+│   ├── User.php, Property.php, PropertyImage.php
+│   ├── Booking.php, Guest.php, PaymentIntent.php
+│   ├── BookingTransaction.php, Receipt.php
+│   ├── AuditLog.php, SupportTicket.php
+│   ├── Permission.php, Role.php
+│   └── [M-PESA Models]
 │
-└── Models/
-    ├── Booking.php
-    ├── Guest.php
-    ├── PaymentIntent.php
-    ├── BookingTransaction.php           # Payment ledger (immutable)
-    ├── Receipt.php
-    └── AuditLog.php
+├── Services/
+│   ├── BookingService.php
+│   ├── PaymentService.php, MpesaStkService.php
+│   ├── ReceiptService.php, EmailService.php
+│   ├── AuditService.php
+│   └── [Additional Services]
+│
+└── Mail/
+    ├── ContactFormSubmitted.php
+    └── ReceiptNotificationMail.php
+
+database/
+├── migrations/                      # 36 migrations
+└── seeders/
+
+resources/views/
+├── frontend/                        # Public pages
+├── admin/                           # Admin panels
+├── booking/                         # Booking flow (3-step)
+├── payment/                         # Payment interface
+└── layouts/
+
+routes/web.php                       # 77 routes
+
+config/
+├── app.php, database.php, mail.php
+└── mpesa.php
+
+storage/app/public/properties/       # Uploaded images
 ```
 
-## Database Schema
+---
 
-### bookings
-- id, booking_ref (BK202601251A3K9), property_id, guest_id
-- status (DRAFT → PENDING_PAYMENT → PAID)
-- check_in, check_out, nights, adults, children
-- total_amount, accommodation_subtotal, addons_subtotal
-- amount_paid, amount_due, nightly_rate
+## 🗄️ Database Schema (35 Tables)
 
-### payment_intents
-- id, booking_id, intent_ref
-- method (MPESA_STK, MPESA_MANUAL)
-- amount, currency
-- status (INITIATED → PENDING → SUCCEEDED/FAILED)
+### Core Tables
 
-### booking_transactions (LEDGER)
-- id, booking_id, payment_intent_id
-- type (CREDIT/DEBIT), amount, reference
-- description, meta (JSON)
-- **IMMUTABLE**: Single source of truth for all payments
+| Table | Key Fields |
+|-------|-----------|
+| **properties** | id, name, nightly_rate, currency, description (TEXT), amenities (JSON), status (APPROVED\|PENDING\|REJECTED) |
+| **property_images** | id, property_id, file_path, is_primary (boolean) |
+| **bookings** | id, booking_ref, property_id, guest_id, check_in, check_out, status (DRAFT\|PENDING_PAYMENT\|PAID\|CANCELLED), total_amount |
+| **guests** | id, full_name, email, phone_e164 |
+| **payment_intents** | id, booking_id, method (MPESA_STK\|MPESA_MANUAL), amount, status |
+| **booking_transactions** | id, booking_id, type (CREDIT\|DEBIT), amount, reference (immutable ledger) |
+| **receipts** | id, booking_id, receipt_number (RCP-{booking_ref}), amount_paid |
 
-### receipts
-- id, booking_id, receipt_number (RCP-BK{booking_ref})
-- amount_paid, issued_at
+### RBAC Tables
+- **users**: With role field (admin\|staff\|guest)
+- **permissions**: Granular permission names
+- **roles**: Role definitions
+- **role_permissions**: Role-permission mapping
 
-### audit_logs
-- action, description, booking_id, guest_id, user_id
-- ip_address, user_agent, meta (JSON), timestamp
+### Audit & Payment Tables
+- **audit_logs**: action, description, ip_address, user_agent, meta (JSON)
+- **mpesa_stk_requests, mpesa_stk_callbacks, mpesa_c2b_transactions**: M-PESA integration
 
-## API Endpoints
+---
 
-### Booking Operations
+## 🔗 API Endpoints
+
+### Frontend Routes (Public)
 ```
-POST   /bookings                        # Create reservation (DRAFT)
-GET    /bookings/{id}/summary           # Get confirmation (booking_ref generated)
-PATCH  /bookings/{id}/confirm           # Confirm & lock (PENDING_PAYMENT)
-```
-
-### Payment Operations
-```
-POST   /payment/intents                 # Create payment intent
-GET    /payment/intents/{id}            # Get intent status
-POST   /payment/mpesa/stk               # Send STK push
-GET    /payment/mpesa/stk/{id}/status   # Check STK status
-POST   /payment/mpesa/callback          # M-PESA callback
-POST   /payment/manual-entry            # Submit manual receipt
-GET    /payment/receipts/{number}       # Get receipt
+GET  /                              # Home page
+GET  /properties                    # Properties listing
+GET  /property/{id}                 # Property detail
+GET  /contact, POST /contact        # Contact form
+GET  /facilities, /gallery, /blog   # Static pages
 ```
 
-### Admin Operations (Auth Required)
+### Booking Routes
 ```
-GET    /admin/payment/verification-dashboard   # Dashboard
-GET    /admin/payment/manual-submissions/pending
-POST   /admin/payment/manual-submissions/{id}/verify
-POST   /admin/payment/manual-submissions/{id}/reject
-```
-
-## Key Features
-
-### ✅ Ledger-Based Payments
-- `BookingTransaction` is immutable source of truth
-- All amounts derived from ledger
-- Zero double-charging protection
-
-### ✅ Status Machine
-```
-DRAFT → PENDING_PAYMENT → PAID
+GET  /reservation                   # Step 1: Form
+GET  /reservation/confirm           # Step 2: Confirmation (incomplete)
+POST /booking/store                 # Step 3: Create booking
+GET  /bookings/{booking}/summary    # Summary
 ```
 
-### ✅ Payment Paths
-1. **STK Success**: Callback → Ledger → PAID
-2. **STK Failure**: Manual → Admin Review → Ledger → PAID
-
-### ✅ Transactional Safety
-- All state changes wrapped in `DB::transaction()`
-- All-or-nothing semantics
-- Idempotency checks on ledger creation
-
-### ✅ Validation
-- Property exists
-- Dates valid (future check-in, checkout after check-in)
-- Phone in E.164 format
-- Amount matches calculation
-
-### ✅ Audit Trail
-- Every action logged
-- IP address & user agent captured
-- Payment metadata preserved
-
-## Implementation Details
-
-### Booking Creation Flow
-1. **store()**: Creates guest, calculates amounts, creates DRAFT booking
-2. **summary()**: Generates booking_ref (BK+YYYYMMDD+5-char random), persists it
-3. **confirm()**: Validates DRAFT, moves to PENDING_PAYMENT
-
-### Payment Flow (STK Success)
-1. **initiateStk()**: Creates PaymentIntent (INITIATED)
-2. **M-PESA Callback**: Receives payment confirmation
-3. **callback()**: Creates BookingTransaction, marks booking PAID
-4. **ReceiptService**: Generates receipt, sends email
-
-### Payment Flow (STK Failure → Manual)
-1. **submitManualPayment()**: Creates MpesaManualSubmission (PENDING_REVIEW)
-2. **Admin Dashboard**: Reviews submission
-3. **verifySubmission()**: Creates BookingTransaction, marks PAID
-4. **ReceiptService**: Generates receipt, sends email
-
-## Testing
-
-### Manual Test (cURL)
-```bash
-# 1. Create booking
-curl -X POST http://localhost:8000/api/bookings \
-  -H "Content-Type: application/json" \
-  -d '{...}'
-
-# 2. Get confirmation
-curl http://localhost:8000/api/bookings/{id}/summary
-
-# 3. Confirm booking
-curl -X PATCH http://localhost:8000/api/bookings/{id}/confirm
-
-# 4. Initiate STK
-curl -X POST http://localhost:8000/api/payment/mpesa/stk
-
-# 5. Simulate callback
-curl -X POST http://localhost:8000/api/payment/mpesa/callback
+### Payment Routes
+```
+GET  /payment/booking/{booking}     # Payment page
+POST /payment/intents               # Create intent
+POST /payment/mpesa/stk             # STK push
+POST /payment/mpesa/callback        # M-PESA callback
+POST /payment/manual-entry          # Manual submission
+GET  /payment/receipts/{number}     # Receipt
 ```
 
-### Automated Test
-```bash
-bash test_booking_flow.sh
+### Admin Routes (Protected)
+```
+GET  /admin/dashboard               # Dashboard
+GET  /admin/properties              # Property list
+GET  /admin/properties/create       # Create form
+POST /admin/properties              # Store property
+GET  /admin/properties/{id}/edit    # Edit form
+PUT  /admin/properties/{id}         # Update property
+DELETE /admin/properties/{id}       # Delete property
+DELETE /admin/properties/{id}/photos/{image} # Delete image
+POST /admin/properties/{id}/photos/{image}/primary # Set primary
+
+GET  /admin/bookings                # Booking list
+GET  /admin/analytics               # Analytics
+GET  /admin/audit-logs              # Audit trail
+GET  /admin/users                   # User management
+GET  /admin/mpesa-verification      # Payment verification
+GET  /admin/refunds                 # Refund requests
+GET  /admin/tickets                 # Support tickets
 ```
 
-## Database Access
-
-### Adminer (Web UI)
+### Staff Routes (Protected)
 ```
-URL: http://localhost:8081
-Server: db
-Database: holiday_rentals
-User: root
-Password: root
+GET  /staff/dashboard               # Staff dashboard
+GET  /staff/bookings                # View bookings
+GET  /staff/verification            # Verification tasks
 ```
 
-### Command Line
-```bash
-docker exec laravel_mysql mysql -u root -proot holiday_rentals
+---
+
+## 👥 User Flows
+
+### Guest Booking Flow (⚠️ Incomplete)
+```
+1. Guest visits /reservation
+2. Fills form: check-in, check-out, rooms, guests
+3. Form posts to /booking/store
+   ✅ Creates Guest & DRAFT Booking
+   ❌ NO property selection (always uses first active property)
+4. Redirects to /reservation/confirm
+   ❌ ISSUE: Confirmation form is empty, no data passed
+5. Guest should confirm and proceed to payment
+6. Payment at /payment/booking/{booking}
+   ✅ STK push initiated or manual fallback
+7. Callback marks booking PAID
+8. Receipt generated and emailed
 ```
 
-## Common Patterns
-
-### Creating a Booking in Service
-```php
-$booking = BookingService::createReservation([
-    'property_id' => 1,
-    'check_in' => '2026-01-25',
-    'check_out' => '2026-01-28',
-    'adults' => 2,
-    'children' => 0,
-    'guest' => [
-        'full_name' => 'John Doe',
-        'email' => 'john@example.com',
-        'phone_e164' => '+254701123456',
-    ]
-]);
+### Admin Property Management Flow (✅ Working)
+```
+1. Admin logs in → /admin/properties
+2. Creates: /admin/properties/create
+   ✅ Fills all fields, uploads multiple images
+3. Edits: /admin/properties/{id}/edit
+   ✅ Modifies fields, manages images
+4. Deletes: /admin/properties/{id}
+   ✅ Cascades delete all images
+5. Manages images:
+   ✅ Delete specific images
+   ✅ Set primary image
 ```
 
-### Recording Payment
-```php
-$booking = Booking::find($bookingId);
-BookingService::markAsPaid($booking, $paymentIntent, $amount, $reference);
+---
+
+## ⚙️ Configuration
+
+### M-PESA Integration (.env)
+```env
+MPESA_CONSUMER_KEY=your_daraja_consumer_key
+MPESA_CONSUMER_SECRET=your_daraja_consumer_secret
+MPESA_BUSINESS_SHORTCODE=your_shortcode
+MPESA_PASSKEY=your_passkey
+MPESA_CALLBACK_URL=https://yourdomain.com/payment/mpesa/callback
 ```
 
-### Generating Receipt
-```php
-$receipt = ReceiptService::generateReceipt(
-    $booking,
-    $paymentIntent,
-    $amount,
-    $reference
-);
+### Email Configuration (.env)
+```env
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_username
+MAIL_PASSWORD=your_password
+MAIL_FROM_ADDRESS=noreply@tausirental.com
+ADMIN_EMAIL=admin@tausirental.com
 ```
 
-## Error Handling
+---
 
-All endpoints return standard error responses:
-
-```json
-{
-  "success": false,
-  "message": "Error description",
-  "code": "ERROR_CODE"
-}
-```
-
-Common error codes:
-- `BOOKING_NOT_FOUND`
-- `BOOKING_INVALID_STATE`
-- `INVALID_AMOUNT`
-- `PAYMENT_INTENT_NOT_FOUND`
-- `UNAUTHORIZED_ADMIN`
-
-## Validation Rules
-
-### Booking Submission
-- property_id: Required, must exist
-- check_in: Required, date, must be future
-- check_out: Required, date, must be after check-in
-- adults: Required, integer, minimum 1
-- children: Required, integer, minimum 0
-- guest.full_name: Required, string
-- guest.email: Required, email, unique
-- guest.phone_e164: Required, E.164 format
-
-### Payment Submission
-- booking_id: Required, must exist, must be PENDING_PAYMENT
-- amount: Required, must match booking total
-- phone_e164: Required, E.164 format
-- receipt/checkout_request_id: Required based on method
-
-## Deployment Checklist
-
-- [ ] Configure M-PESA credentials in .env
-- [ ] Set up email service (SMTP/SES/Mailgun)
-- [ ] Create admin user account
-- [ ] Test with M-PESA sandbox
-- [ ] Enable HTTPS on production
-- [ ] Configure M-PESA callback IP allowlist
-- [ ] Set up monitoring for payment failures
-- [ ] Configure backup strategy for audit_logs
-
-## Support
-
-### Check Status
-- **Bookings**: `SELECT * FROM bookings WHERE id = ?`
-- **Payments**: `SELECT * FROM booking_transactions WHERE booking_id = ?`
-- **Receipts**: `SELECT * FROM receipts WHERE booking_id = ?`
-- **Audit Trail**: `SELECT * FROM audit_logs WHERE booking_id = ? ORDER BY timestamp DESC`
-
-### Debug Logs
-```bash
-tail -f storage/logs/laravel.log
-```
-
-### Manual Payment Verification
-```sql
-SELECT * FROM mpesa_manual_submissions WHERE status = 'PENDING_REVIEW';
-```
-
-## Architecture Decisions
-
-1. **Service Layer**: Business logic isolated in services for testability
-2. **Ledger Pattern**: BookingTransaction is immutable, single source of truth
-3. **Status Machine**: Explicit state transitions prevent invalid operations
-4. **Form Requests**: Validation in form requests prevents invalid data
-5. **Audit Service**: Complete action history enables compliance & debugging
-6. **Transactional Boundaries**: DB::transaction() ensures consistency
-7. **Idempotency**: Duplicate checks prevent double-charging
-
-## File Reference
-
-| File | Purpose |
-|------|---------|
-| BookingService.php | High-level workflow orchestration |
-| PaymentService.php | Payment processing logic |
-| ReceiptService.php | Receipt generation & retrieval |
-| AuditService.php | Action logging |
-| BookingController.php | Booking endpoints |
-| PaymentController.php | Payment intent & manual entry |
-| MpesaController.php | M-PESA integration |
-| AdminPaymentController.php | Admin verification endpoints |
-
-**Last Updated**: January 23, 2026
-   php artisan migrate
-   ```
-
-5. **Start Development Server**
-   ```bash
-   php artisan serve
-   ```
-
-   The application will be available at `http://localhost:8000`
-
-## Configuration
+## 🔧 Development
 
 ### Database
-- **Driver**: MySQL
-- **Connection**: Configured in `.env` (localhost, port 3306)
-- **Database Name**: estate_project
-
-### Queues
-- **Driver**: Database
-- **Job Table**: `jobs` (created during migration)
-- **Processing**: Run `php artisan queue:work`
-
-### Email
-- **Mailer**: SMTP
-- **Default Provider**: Mailtrap (for development)
-- **Configuration**: Environment-based (`.env` file)
-
-## Project Structure
-
-```
-docs/
-├── CHANGELOG.md          # Project changelog
-└── SETUP.md             # Detailed setup documentation
-```
-
-For additional configuration details, see [SETUP.md](docs/SETUP.md).
-
-## Development
-
-### Build Frontend Assets
 ```bash
-npm run dev
+docker-compose exec app php artisan migrate           # Run migrations
+docker-compose exec app php artisan migrate:rollback # Rollback
+docker-compose exec app php artisan db:seed          # Seed data
+docker-compose exec app php artisan tinker           # Tinker shell
 ```
 
-### Run Tests
+### Frontend Assets
 ```bash
-php artisan test
+npm run dev      # Development mode
+npm run build    # Production build
 ```
 
-### Process Queue Jobs
+### Optimization
 ```bash
-php artisan queue:work
+docker-compose exec app php artisan cache:clear
+docker-compose exec app php artisan config:cache
+docker-compose exec app php artisan route:cache
+docker-compose exec app php artisan view:cache
 ```
 
-### Tinker Shell
+### Logs
 ```bash
-php artisan tinker
+docker-compose exec app tail -f storage/logs/laravel.log
+docker-compose logs -f app
 ```
 
-## Documentation
+---
 
-- [Setup Guide](docs/SETUP.md) - Detailed configuration instructions
-- [Changelog](docs/CHANGELOG.md) - Project version history
-- [Laravel Documentation](https://laravel.com/docs/12) - Official Laravel docs
+## 🚀 Deployment
 
-## Security Notes
+### Pre-Deployment Checklist
+- [ ] Set `APP_DEBUG=false`
+- [ ] Configure M-PESA credentials
+- [ ] Set up email service
+- [ ] Create admin user
+- [ ] Run migrations
+- [ ] Test M-PESA sandbox
+- [ ] Enable HTTPS
+- [ ] Set up M-PESA IP whitelist
+- [ ] Configure backups
+- [ ] End-to-end testing
 
-- Never commit `.env` file to version control
-- Keep database credentials and SMTP passwords in `.env` only
-- Review and update security headers in production
-- Run `php artisan config:cache` in production
+### Deployment Steps
+```bash
+git pull origin main
+composer install --no-dev --optimize-autoloader
+php artisan migrate --force
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan cache:clear
+docker-compose restart app
+```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🐛 Troubleshooting
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Images Not Displaying
+```bash
+docker-compose exec app php artisan storage:link
+docker-compose exec app chmod -R 755 storage/app/public
+```
 
-### Premium Partners
+### Payment Callbacks Not Received
+- Verify callback URL is publicly accessible
+- Confirm M-PESA IP addresses are whitelisted
+- Check `laravel.log` for callback errors
+- Verify `mpesa_stk_callbacks` table for payloads
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Database Connection Issues
+```bash
+docker-compose ps
+docker-compose logs db
+docker-compose restart db
+```
 
-## Contributing
+### Out of Memory
+```bash
+# Increase in docker/php/php.ini
+memory_limit = 256M
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 📊 Key Statistics
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **35 Database Tables**: Comprehensive data model
+- **77 API Routes**: Full REST coverage
+- **26 Admin/Staff Permissions**: Granular RBAC
+- **27 Blade Templates**: Complete admin interface
+- **12 Service Classes**: Modular business logic
+- **100% Test Pass Rate**: Admin views validated
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🔒 Security Best Practices
 
-## License
+1. Never commit `.env` file
+2. Validate all inputs with Laravel rules
+3. CSRF protection enabled on all forms
+4. SQL injection prevention via query builder
+5. Rate limiting on payment/auth endpoints
+6. Complete audit logging of all actions
+7. Bcrypt password hashing
+8. HTTPS required in production
+9. M-PESA IP whitelist for callbacks
+10. Regular database backups
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-=======
-# Estate-Project
-Real estate project
->>>>>>> 7617695f773c84b1d1c571e69dc77cc2ef93756e
+---
+
+## 📝 License
+
+Proprietary software. All rights reserved.
+
+---
+
+## 📞 Support
+
+For issues, bugs, or feature requests, open an issue in the repository or contact the development team.
+
+---
+
+**Last Updated**: February 5, 2026  
+**Version**: 1.0.0 (In Development)  
+**Current Focus**: Completing booking confirmation flow and implementing search functionality
