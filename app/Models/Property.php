@@ -9,9 +9,21 @@ class Property extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'amenities' => 'array',
+        'is_active' => 'boolean',
+        'nightly_rate' => 'decimal:2'
+    ];
+
     public function images(): HasMany
     {
         return $this->hasMany(PropertyImage::class);
+    }
+
+    // Alias for images (for backward compatibility with views that use 'photos')
+    public function photos(): HasMany
+    {
+        return $this->images();
     }
 
     public function bookings(): HasMany

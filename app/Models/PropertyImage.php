@@ -9,8 +9,15 @@ class PropertyImage extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['url'];
+
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function getUrlAttribute(): string
+    {
+        return asset('storage/' . $this->file_path);
     }
 }

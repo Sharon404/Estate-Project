@@ -6,12 +6,24 @@
 @section('content')
     <div class="dash-shell">
         <div class="dash-head">
-            <div>
-                <p class="eyebrow">Property Management</p>
-                <h1>Properties</h1>
-                <p class="lede">Manage all property listings</p>
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div>
+                    <p class="eyebrow">Property Management</p>
+                    <h1>Properties</h1>
+                    <p class="lede">Manage all property listings</p>
+                </div>
+                <a href="{{ route('admin.properties.create') }}" class="pill" style="background: var(--brand-primary, #652482); color: white; text-decoration: none;">
+                    <i class="ri-add-line"></i> Add New Property
+                </a>
             </div>
         </div>
+
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
 
         <!-- Filters -->
         <div class="card" style="margin-bottom: 1.5rem;">

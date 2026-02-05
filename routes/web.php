@@ -73,11 +73,13 @@ Route::middleware(['auth', 'role:admin', 'audit.request'])->prefix('admin')->nam
     Route::get('/users/{user}/login-history', [\App\Http\Controllers\Admin\UsersController::class, 'loginHistory'])->name('users.login-history');
     
     // Properties Management
-    Route::get('/properties', [\App\Http\Controllers\Admin\PropertiesController::class, 'index'])->name('properties.index');
-    Route::get('/properties/{property}', [\App\Http\Controllers\Admin\PropertiesController::class, 'show'])->name('properties.show');
-    Route::get('/properties/{property}/edit', [\App\Http\Controllers\Admin\PropertiesController::class, 'edit'])->name('properties.edit');
-    Route::put('/properties/{property}', [\App\Http\Controllers\Admin\PropertiesController::class, 'update'])->name('properties.update');
-    Route::post('/properties/{property}/photos', [\App\Http\Controllers\Admin\PropertiesController::class, 'uploadPhotos'])->name('properties.photos.upload');
+    Route::get('/properties', [\App\Http\Controllers\Admin\PropertyController::class, 'index'])->name('properties.index');
+    Route::get('/properties/create', [\App\Http\Controllers\Admin\PropertyController::class, 'create'])->name('properties.create');
+    Route::post('/properties', [\App\Http\Controllers\Admin\PropertyController::class, 'store'])->name('properties.store');
+    Route::get('/properties/{property}', [\App\Http\Controllers\Admin\PropertyController::class, 'show'])->name('properties.show');
+    Route::get('/properties/{property}/edit', [\App\Http\Controllers\Admin\PropertyController::class, 'edit'])->name('properties.edit');
+    Route::put('/properties/{property}', [\App\Http\Controllers\Admin\PropertyController::class, 'update'])->name('properties.update');
+    Route::delete('/properties/{property}', [\App\Http\Controllers\Admin\PropertyController::class, 'destroy'])->name('properties.destroy');
     Route::delete('/properties/{property}/photos/{image}', [\App\Http\Controllers\Admin\PropertiesController::class, 'deletePhoto'])->name('properties.photos.delete');
     Route::post('/properties/{property}/photos/{image}/primary', [\App\Http\Controllers\Admin\PropertiesController::class, 'setPrimaryPhoto'])->name('properties.photos.primary');
     
