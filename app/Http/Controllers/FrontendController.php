@@ -16,9 +16,17 @@ class FrontendController extends Controller
      */
     public function index(): View
     {
+        // Query 3 featured approved properties for homepage display
+        $featuredProperties = \App\Models\Property::with('images')
+            ->where('status', 'APPROVED')
+            ->where('is_active', true)
+            ->limit(3)
+            ->get();
+
         return view('frontend.home', [
-            'title' => 'Home - GrandStay',
-            'description' => 'Welcome to GrandStay, your premier destination for luxury hospitality.'
+            'title' => 'Home - Tausi Rental',
+            'description' => 'Welcome to Tausi Rental, your premier destination for luxury holiday homes.',
+            'featuredProperties' => $featuredProperties
         ]);
     }
 

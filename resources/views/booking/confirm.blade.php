@@ -121,26 +121,43 @@ document.addEventListener('DOMContentLoaded', function() {
     const email = params.get('email');
     const phone = params.get('phone');
     const notes = params.get('notes') || '';
+    const propertyId = params.get('property_id');
+    const propertyName = params.get('property_name');
+    const nightlyRate = params.get('nightly_rate');
+    const currency = params.get('currency');
+    const totalPrice = params.get('total_price');
 
     // Validate presence
-    if (!checkin || !checkout || !rooms || !adults || !fullName || !email || !phone) {
+    if (!checkin || !checkout || !rooms || !adults || !fullName || !email || !phone || !propertyId) {
         alert('Missing reservation details. Please start over.');
         window.location.href = '/reservation';
         return;
     }
 
-    // Display values read-only
+    // Display property details
+    if (propertyName) document.getElementById('display-property').textContent = propertyName;
+    if (nightlyRate && currency) document.getElementById('nightly_rate_display').textContent = currency + ' ' + parseFloat(nightlyRate).toLocaleString();
+    if (totalPrice && currency) document.getElementById('total_price_display').textContent = currency + ' ' + parseFloat(totalPrice).toLocaleString();
+
+    // Display booking dates and guests
     document.getElementById('display-checkin').textContent = checkin;
     document.getElementById('display-checkout').textContent = checkout;
     document.getElementById('display-rooms').textContent = rooms;
     const guestsText = children > 0 ? `${adults} adult(s), ${children} child(ren)` : `${adults} adult(s)`;
     document.getElementById('display-guests').textContent = guestsText;
+    
+    // Display guest information
     document.getElementById('display-name').textContent = fullName;
     document.getElementById('display-email').textContent = email;
     document.getElementById('display-phone').textContent = phone;
     document.getElementById('display-notes').textContent = notes || '-';
 
-    // Hidden inputs for POST
+    // Hidden inputs for POST (all booking data)
+    document.getElementById('hidden-property-id').value = propertyId;
+    document.getElementById('hidden-property-name').value = propertyName;
+    document.getElementById('hidden-nightly-rate').value = nightlyRate;
+    document.getElementById('hidden-currency').value = currency;
+    document.getElementById('hidden-total-price').value = totalPrice;
     document.getElementById('hidden-checkin').value = checkin;
     document.getElementById('hidden-checkout').value = checkout;
     document.getElementById('hidden-rooms').value = rooms;

@@ -243,36 +243,50 @@
                 </div>
 
                 <div class="row g-4">
-
-                    <div class="col-lg-8 offset-lg-2">
-                        <a href="{{ route('property.single', ['id' => 1]) }}" class="d-block h-100 hover relative">
-                            <div class="rounded-1 overflow-hidden">
-                                <img src="{{ asset('assets/frontend/images/rooms/1.jpg') }}" class="w-100 hover-scale-1-2" alt="">
-                            </div>
-                            <div class="pt-4">
-                                <div class="d-flex mb-2 fs-15 justify-content-between">
-                                    <div class="d-flex">    
-                                        <div class="d-flex align-items-center me-3">
-                                            <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4-6 guests
+                    @forelse($featuredProperties as $property)
+                        <div class="col-lg-8 offset-lg-2 {{ $loop->iteration > 1 ? 'd-none d-lg-block' : '' }}">
+                            <a href="{{ route('property.single', ['id' => $property->id]) }}" class="d-block h-100 hover relative">
+                                <div class="rounded-1 overflow-hidden">
+                                    @if($property->images->count() > 0)
+                                        <img src="{{ $property->images->first()->url }}" class="w-100 hover-scale-1-2" alt="{{ $property->name }}" style="height: 400px; object-fit: cover;">
+                                    @else
+                                        <div class="w-100 bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                                            <i class="fas fa-image fa-3x text-muted"></i>
                                         </div>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
+                                    @endif
+                                </div>
+                                <div class="pt-4">
+                                    <div class="d-flex mb-2 fs-15 justify-content-between">
+                                        <div class="d-flex">    
+                                            <div class="d-flex align-items-center me-3">
+                                                <img src="{{ asset('assets/frontend/images/ui/user.webp') }}" class="w-15px me-2" alt="">4-6 guests
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{ asset('assets/frontend/images/ui/floorplan.webp') }}" class="w-15px me-2" alt="">Entire Home
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="fs-20 fw-bold">{{ $property->currency }} {{ number_format($property->nightly_rate, 0) }}</div><span>/night</span>
                                         </div>
                                     </div>
-                                    <div class="d-flex">
-                                        <div class="fs-20 fw-bold">KES 25,000</div><span>/night</span>
+                                    <div class="relative">
+                                        <h3 class="mb-2">{{ $property->name }}</h3>
+                                        <p class="text-muted">{{ Str::limit($property->description ?? 'Beautiful holiday home with breakfast included.', 100) }}</p>
                                     </div>
                                 </div>
-                                <div class="relative">
-                                    <h3 class="mb-2">Tausi Holiday Home - Nanyuki</h3>
-                                    <p class="text-muted">Flat rate of KES 25,000 per house per night, with breakfast included.</p>
-                                </div>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="col-lg-8 offset-lg-2">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Coming Soon</strong> - Featured properties will be displayed here. Browse all available homes below.
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    @endforelse
 
                     <div class="col-lg-12 text-center">
-                        <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white"><span>View Available Homes</span></a>
+                        <a href="{{ route('properties') }}" class="btn-main fx-slide hover-white"><span>View All Available Homes</span></a>
                     </div>            
 
                 </div>

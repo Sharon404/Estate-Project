@@ -14,16 +14,18 @@ use Illuminate\Support\Str;
 class BookingController extends Controller
 {
     /**
-     * Step 1: Display reservation form (no POST, no CSRF needed)
+     * Step 1: Display reservation form with available properties
      */
     public function reservationForm()
     {
-        // Get all active properties
-        $properties = Property::where('is_active', true)
+        // Get all active approved properties with eager loaded images
+        $availableProperties = Property::with('images')
+            ->where('is_active', true)
+            ->where('status', 'APPROVED')
             ->orderBy('name')
             ->get();
             
-        return view('booking.reservation', compact('properties'));
+        return view('booking.reservation', ['availableProperties' => $availableProperties]);
     }
 
     /**
