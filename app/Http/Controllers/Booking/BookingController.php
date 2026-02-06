@@ -25,8 +25,8 @@ class BookingController extends Controller
             return redirect()->route('home')->with('error', 'Please select a property to book.');
         }
         
-        // Load the specific property with images and amenities
-        $property = Property::with(['images', 'amenities'])
+        // Load the specific property with images
+        $property = Property::with('images')
             ->where('id', $propertyId)
             ->where('is_active', true)
             ->where('status', 'APPROVED')
@@ -40,9 +40,9 @@ class BookingController extends Controller
      */
     public function getBookedDates($propertyId)
     {
-        // Get all confirmed/pending bookings for this property
+        // Get all confirmed/pending/partially paid bookings for this property
         $bookings = Booking::where('property_id', $propertyId)
-            ->whereIn('status', ['CONFIRMED', 'PENDING'])
+            ->whereIn('status', ['PENDING_PAYMENT', 'PARTIALLY_PAID', 'PAID'])
             ->get(['check_in', 'check_out']);
         
         // Build array of all booked dates
@@ -104,7 +104,7 @@ class BookingController extends Controller
 
             // *** CRITICAL: Check for overlapping bookings on this property ***
             $overlappingBooking = Booking::where('property_id', $property->id)
-                ->whereIn('status', ['CONFIRMED', 'PENDING'])
+                ->whereIn('status', ['PARTIALLY_PAID', 'PAID', 'PENDING_PAYMENT'])
                 ->where(function($query) use ($checkInDate, $checkOutDate) {
                     // Booking overlaps if:
                     // 1. New checkin is between existing checkin and checkout
@@ -163,7 +163,7 @@ class BookingController extends Controller
                 'children' => $children,
                 'rooms' => 1, // Entire home booking
                 'special_requests' => $validated['notes'] ?? '',
-                'status' => 'PENDING',
+                'status' => 'PENDING_PAYMENT',
                 'currency' => $currency,
                 'nightly_rate' => $nightlyRate,
                 'nights' => $nights,

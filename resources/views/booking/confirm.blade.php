@@ -17,6 +17,49 @@
                     </div>
                 </div>
 
+                <!-- Error Messages -->
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> Please check the following:
+                        <ul class="mb-0 mt-2">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                <!-- Property Details Display -->
+                <div class="card shadow-sm mb-4 border-0">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-home me-2 text-primary"></i>Property Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <small class="text-muted d-block fw-600 mb-2">PROPERTY</small>
+                                <p class="mb-0 fs-16" id="display-property">-</p>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="text-muted d-block fw-600 mb-2">NIGHTLY RATE</small>
+                                <p class="mb-0 fs-16 text-primary fw-bold" id="nightly_rate_display">-</p>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="text-muted d-block fw-600 mb-2">TOTAL PRICE</small>
+                                <p class="mb-0 fs-18 text-success fw-bold" id="total_price_display">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Stay Details Display -->
                 <div class="card shadow-sm mb-4 border-0">
                     <div class="card-header bg-light">
@@ -43,6 +86,13 @@
                 <!-- Read-Only Details + Single POST Form -->
                 <form action="{{ route('booking.store') }}" method="POST" id="bookingForm">
                     @csrf
+
+                    <!-- Hidden Property Fields -->
+                    <input type="hidden" id="hidden-property-id" name="property_id">
+                    <input type="hidden" id="hidden-property-name" name="property_name">
+                    <input type="hidden" id="hidden-nightly-rate" name="nightly_rate">
+                    <input type="hidden" id="hidden-currency" name="currency">
+                    <input type="hidden" id="hidden-total-price" name="total_price">
 
                     <!-- Hidden Fields (all params) -->
                     <input type="hidden" id="hidden-checkin" name="checkin">
