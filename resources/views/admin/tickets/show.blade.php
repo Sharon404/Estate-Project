@@ -135,7 +135,7 @@
                         @if($ticket->booking_id)
                             <div>
                                 <p class="label" style="margin: 0 0 0.25rem;">Related Booking</p>
-                                <a href="{{ route('admin.bookings.show', $ticket->booking_id) }}" class="link">#{{ $ticket->booking_id }}</a>
+                                <a href="{{ route('admin.booking-detail', $ticket->booking_id) }}" class="link">#{{ $ticket->booking_id }}</a>
                             </div>
                         @endif
                         <div>

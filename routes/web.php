@@ -54,6 +54,9 @@ Route::middleware(['auth', 'role:admin', 'audit.request'])->prefix('admin')->nam
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings');
     Route::get('/bookings/{booking}', [BookingsController::class, 'show'])->name('booking-detail');
+    Route::get('/bookings/{booking}/edit', [BookingsController::class, 'edit'])->name('bookings.edit');
+    Route::put('/bookings/{booking}', [BookingsController::class, 'update'])->name('bookings.update');
+    Route::delete('/bookings/{booking}', [BookingsController::class, 'destroy'])->name('bookings.destroy');
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::get('/audit-logs', [AuditLogsController::class, 'index'])->name('audit-logs');
     Route::get('/audit-logs/{auditLog}', [AuditLogsController::class, 'show'])->name('audit-log-detail');

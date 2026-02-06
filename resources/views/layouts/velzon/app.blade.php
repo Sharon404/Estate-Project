@@ -113,6 +113,12 @@
                                     </a>
                                 </li>
 
+                                <li>
+                                    <a href="{{ route('admin.bookings') }}">
+                                        <i class="ri-book-mark-line"></i> <span>Bookings</span>
+                                    </a>
+                                </li>
+
                                 <li class="menu-title" data-key="t-admin-payments">Payments</li>
 
                                 <li>

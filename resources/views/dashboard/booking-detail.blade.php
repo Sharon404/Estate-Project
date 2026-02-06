@@ -11,7 +11,15 @@
                 <h1>{{ $booking->booking_ref }}</h1>
                 <p class="lede">Complete booking details and payment history.</p>
             </div>
-            <a href="{{ route('admin.bookings') }}" style="padding: 0.5rem 1rem; background: #2196F3; color: white; border: none; border-radius: 4px; text-decoration: none;">← Back</a>
+            <div style="display: flex; gap: 0.5rem;">
+                <a href="{{ route('admin.bookings') }}" style="padding: 0.5rem 1rem; background: #2196F3; color: white; border: none; border-radius: 4px; text-decoration: none;">← Back</a>
+                <a href="{{ route('admin.bookings.edit', $booking) }}" style="padding: 0.5rem 1rem; background: #2E7D32; color: white; border: none; border-radius: 4px; text-decoration: none;">Edit</a>
+                <form method="POST" action="{{ route('admin.bookings.destroy', $booking) }}" onsubmit="return confirm('Delete this booking? This action cannot be undone.');" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" style="padding: 0.5rem 1rem; background: #D32F2F; color: white; border: none; border-radius: 4px; cursor: pointer;">Delete</button>
+                </form>
+            </div>
         </div>
 
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
@@ -158,11 +166,10 @@
                                 $statusColors = [
                                     'DRAFT' => 'background: #F3E5F5; color: #6A1B9A;',
                                     'PENDING_PAYMENT' => 'background: #FFF3E0; color: #E65100;',
-                                    'CONFIRMED' => 'background: #E3F2FD; color: #1565C0;',
-                                    'CHECKED_IN' => 'background: #E8F5E9; color: #2E7D32;',
-                                    'CHECKED_OUT' => 'background: #C8E6C9; color: #1B5E20;',
+                                    'PARTIALLY_PAID' => 'background: #FFF9C4; color: #F57F17;',
+                                    'PAID' => 'background: #C8E6C9; color: #2E7D32;',
                                     'CANCELLED' => 'background: #FFEBEE; color: #C62828;',
-                                    'NO_SHOW' => 'background: #FCE4EC; color: #880E4F;',
+                                    'EXPIRED' => 'background: #ECEFF1; color: #546E7A;',
                                 ];
                             @endphp
                             <p style="margin: 0.5rem 0 0 0; display: inline-block; {{ $statusColors[$booking->status] ?? '' }} padding: 0.5rem 1rem; border-radius: 4px; font-weight: bold;">

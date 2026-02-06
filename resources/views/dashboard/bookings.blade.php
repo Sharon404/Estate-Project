@@ -92,11 +92,10 @@
                                         $statusColors = [
                                             'DRAFT' => 'background: #F3E5F5; color: #6A1B9A;',
                                             'PENDING_PAYMENT' => 'background: #FFF3E0; color: #E65100;',
-                                            'CONFIRMED' => 'background: #E3F2FD; color: #1565C0;',
-                                            'CHECKED_IN' => 'background: #E8F5E9; color: #2E7D32;',
-                                            'CHECKED_OUT' => 'background: #C8E6C9; color: #1B5E20;',
+                                            'PARTIALLY_PAID' => 'background: #FFF9C4; color: #F57F17;',
+                                            'PAID' => 'background: #C8E6C9; color: #2E7D32;',
                                             'CANCELLED' => 'background: #FFEBEE; color: #C62828;',
-                                            'NO_SHOW' => 'background: #FCE4EC; color: #880E4F;',
+                                            'EXPIRED' => 'background: #ECEFF1; color: #546E7A;',
                                         ];
                                     @endphp
                                     <span style="{{ $statusColors[$booking->status] ?? '' }} padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">
@@ -120,7 +119,17 @@
                                     <small>{{ $booking->created_at->format('M d, Y') }}</small>
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.booking-detail', $booking) }}" style="color: #2196F3; text-decoration: none; font-weight: bold;">View →</a>
+                                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                        <a href="{{ route('admin.booking-detail', $booking) }}" style="color: #2196F3; text-decoration: none; font-weight: bold;">View</a>
+                                        <span style="color: #ccc;">|</span>
+                                        <a href="{{ route('admin.bookings.edit', $booking) }}" style="color: #2E7D32; text-decoration: none; font-weight: bold;">Edit</a>
+                                        <span style="color: #ccc;">|</span>
+                                        <form method="POST" action="{{ route('admin.bookings.destroy', $booking) }}" onsubmit="return confirm('Delete this booking? This action cannot be undone.');" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" style="background: none; border: none; color: #D32F2F; font-weight: bold; cursor: pointer; padding: 0;">Delete</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
