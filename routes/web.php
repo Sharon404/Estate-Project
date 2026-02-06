@@ -146,6 +146,9 @@ Route::middleware('auth')->group(function () {
     // Step 1: GET /reservation - Display reservation form
     Route::get('/reservation', [BookingController::class, 'reservationForm'])->name('reservation');
 
+    // API: Get booked dates for a property (for calendar availability)
+    Route::get('/api/property/{propertyId}/booked-dates', [BookingController::class, 'getBookedDates'])->name('property.booked-dates');
+
     // Step 2: GET /reservation/confirm - Display confirmation before POST
     Route::get('/reservation/confirm', [BookingController::class, 'confirmForm'])->name('reservation.confirm');
 

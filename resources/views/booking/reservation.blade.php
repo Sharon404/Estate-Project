@@ -9,25 +9,27 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="bg-white p-40 rounded-1">
+                    <!-- Selected Property Display -->
+                    <div class="alert alert-info d-flex align-items-center mb-4">
+                        <i class="fas fa-home me-3 fs-4"></i>
+                        <div>
+                            <h5 class="mb-1">{{ $property->name }}</h5>
+                            <p class="mb-0 small">{{ $property->currency }} {{ number_format($property->nightly_rate, 0) }} per night | Entire Home</p>
+                        </div>
+                    </div>
+                    
                     <h2 class="mb-4">Check Availability & Make a Reservation</h2>
-                    <p class="text-muted mb-4">Fill in your preferred dates and room requirements below. You'll review all details on the next step.</p>
+                    <p class="text-muted mb-4">Select your dates below. You'll review all details on the next step.</p>
 
                     <!-- Reservation Form -->
                     <form id="reservationForm" onsubmit="return false;">
+                        <!-- Hidden Property ID -->
+                        <input type="hidden" id="property_id" name="property_id" value="{{ $property->id }}">
+                        <input type="hidden" id="property_name" name="property_name" value="{{ $property->name }}">
+                        <input type="hidden" id="nightly_rate" name="nightly_rate" value="{{ $property->nightly_rate }}">
+                        <input type="hidden" id="currency" name="currency" value="{{ $property->currency }}">
+                        
                         <div class="row g-4 align-items-end">
-                            
-                            <!-- Property Selector -->
-                            <div class="col-md-2">
-                                <label for="property_selector" class="form-label fw-500 mb-2">Select Property *</label>
-                                <select id="property_selector" name="property_id" class="form-control" required onchange="updatePropertyRate()">
-                                    <option value="">Choose a property...</option>
-                                    @forelse($availableProperties as $prop)
-                                        <option value="{{ $prop->id }}" data-rate="{{ $prop->nightly_rate }}" data-currency="{{ $prop->currency }}" data-name="{{ $prop->name }}">{{ Str::limit($prop->name, 20) }} - {{ $prop->currency }} {{ number_format($prop->nightly_rate, 0) }}/nt</option>
-                                    @empty
-                                        <option value="" disabled>No properties available</option>
-                                    @endforelse
-                                </select>
-                            </div>
                             
                             <!-- Check-In Date -->
                             <div class="col-md-1-5">
@@ -42,7 +44,7 @@
                             </div>
 
                             <!-- Check-Out Date -->
-                            <div class="col-md-1-5">
+                            <div class="col-md-3">
                                 <label for="checkout" class="form-label fw-500 mb-2">Check Out *</label>
                                 <input 
                                     type="date" 
@@ -53,29 +55,8 @@
                                     onchange="calculateTotal()">
                             </div>
 
-                            <!-- Number of Rooms -->
-                            <div class="col-md-1-5">
-                                <label for="rooms" class="form-label fw-500 mb-2">Rooms *</label>
-                                <select id="rooms" name="rooms" class="form-control" required onchange="calculateTotal()">
-                                    <option value="">Select...</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-
-                            <!-- Nightly Rate Display -->
-                            <div class="col-md-1-5">
-                                <label class="form-label fw-500 mb-2">Nightly Rate</label>
-                                <div class="form-control-plaintext fs-16 fw-bold text-primary">
-                                    <span id="nightly_rate_display">-</span>
-                                </div>
-                            </div>
-
                             <!-- Total Price Display -->
-                            <div class="col-md-1-5">
+                            <div class="col-md-3">
                                 <label class="form-label fw-500 mb-2">Total</label>
                                 <div class="form-control-plaintext fs-18 fw-bold text-success">
                                     <span id="total_price_display">-</span>
@@ -151,45 +132,72 @@
 </section>
 
 <script>
-// Update nightly rate display when property is selected
-function updatePropertyRate() {
-    const selector = document.getElementById('property_selector');
-    const selectedOption = selector.options[selector.selectedIndex];
+// Fetch and disable booked dates when page loads
+let bookedDates = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    const propertyId = document.getElementById('property_id').value;
+    const today = new Date().toISOString().split('T')[0];
     
-    if (!selectedOption.value) {
-        document.getElementById('nightly_rate_display').textContent = '-';
-        document.getElementById('total_price_display').textContent = '-';
-        return;
+    // Set minimum date to today
+    document.getElementById('checkin').setAttribute('min', today);
+    document.getElementById('checkout').setAttribute('min', today);
+    
+    // Fetch booked dates from server
+    fetch(`/api/property/${propertyId}/booked-dates`)
+        .then(response => response.json())
+        .then(data => {
+            bookedDates = data.booked_dates || [];
+            console.log('Loaded booked dates:', bookedDates.length);
+        })
+        .catch(error => {
+            console.error('Error fetching booked dates:', error);
+        });
+});
+
+// Validate selected dates aren't booked
+function validateDates() {
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+    
+    if (!checkin || !checkout) return true;
+    
+    const checkinDate = new Date(checkin);
+    const checkoutDate = new Date(checkout);
+    
+    // Check if any date in the range is already booked
+    for (let d = new Date(checkinDate); d < checkoutDate; d.setDate(d.getDate() + 1)) {
+        const dateStr = d.toISOString().split('T')[0];
+        if (bookedDates.includes(dateStr)) {
+            alert(`Sorry, this property is not available for the selected dates. ${dateStr} is already booked.`);
+            return false;
+        }
     }
     
-    const rate = parseFloat(selectedOption.getAttribute('data-rate'));
-    const currency = selectedOption.getAttribute('data-currency');
-    
-    document.getElementById('nightly_rate_display').textContent = currency + ' ' + rate.toLocaleString();
-    calculateTotal();
+    return true;
 }
 
-// Calculate and display total price
+// Calculate and display total price (entire home = no room count needed)
 function calculateTotal() {
     const checkin = document.getElementById('checkin').value;
     const checkout = document.getElementById('checkout').value;
-    const rooms = parseInt(document.getElementById('rooms').value) || 0;
     
-    if (!checkin || !checkout || !rooms) {
+    if (!checkin || !checkout) {
         document.getElementById('total_price_display').textContent = '-';
         return;
     }
     
-    const selector = document.getElementById('property_selector');
-    const selectedOption = selector.options[selector.selectedIndex];
-    
-    if (!selectedOption.value) {
+    // Validate dates aren't booked
+    if (!validateDates()) {
         document.getElementById('total_price_display').textContent = '-';
+        document.getElementById('checkin').value = '';
+        document.getElementById('checkout').value = '';
         return;
     }
     
-    const rate = parseFloat(selectedOption.getAttribute('data-rate'));
-    const currency = selectedOption.getAttribute('data-currency');
+    // Get property data from hidden fields
+    const rate = parseFloat(document.getElementById('nightly_rate').value);
+    const currency = document.getElementById('currency').value;
     
     const checkinDate = new Date(checkin);
     const checkoutDate = new Date(checkout);
@@ -200,20 +208,20 @@ function calculateTotal() {
         return;
     }
     
-    const total = rate * nights * rooms;
+    // Entire home booking - no room multiplier
+    const total = rate * nights;
     document.getElementById('total_price_display').textContent = currency + ' ' + total.toLocaleString();
 }
 
 function goToConfirm() {
-    // Collect values
-    const propertyId = document.getElementById('property_selector').value;
-    const propertyName = document.getElementById('property_selector').options[document.getElementById('property_selector').selectedIndex].getAttribute('data-name');
-    const nightly_rate = document.getElementById('property_selector').options[document.getElementById('property_selector').selectedIndex].getAttribute('data-rate');
-    const currency = document.getElementById('property_selector').options[document.getElementById('property_selector').selectedIndex].getAttribute('data-currency');
+    // Collect values from hidden fields and form inputs
+    const propertyId = document.getElementById('property_id').value;
+    const propertyName = document.getElementById('property_name').value;
+    const nightly_rate = document.getElementById('nightly_rate').value;
+    const currency = document.getElementById('currency').value;
     
     const checkin = document.getElementById('checkin').value.trim();
     const checkout = document.getElementById('checkout').value.trim();
-    const rooms = document.getElementById('rooms').value;
     const adults = document.getElementById('guests').value;
     const children = document.getElementById('children').value;
     const fullName = document.getElementById('full_name').value.trim();
@@ -222,11 +230,6 @@ function goToConfirm() {
     const notes = document.getElementById('notes').value.trim();
 
     // Validation
-    if (!propertyId) {
-        alert('Please select a property');
-        return;
-    }
-
     if (!checkin || !checkout) {
         alert('Please select both check-in and check-out dates');
         return;
@@ -239,8 +242,8 @@ function goToConfirm() {
         return;
     }
 
-    if (!rooms || !adults) {
-        alert('Please select rooms and adults');
+    if (!adults) {
+        alert('Please select number of adults');
         return;
     }
 
@@ -249,15 +252,14 @@ function goToConfirm() {
         return;
     }
 
-    // Calculate total
+    // Calculate total (entire home - no room count)
     const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
-    const total_price = parseFloat(nightly_rate) * nights * parseInt(rooms);
+    const total_price = parseFloat(nightly_rate) * nights;
 
     // Build query parameters
     const params = new URLSearchParams();
     params.append('checkin', checkin);
     params.append('checkout', checkout);
-    params.append('rooms', rooms);
     params.append('adults', adults);
     params.append('children', children || '0');
     params.append('full_name', fullName);

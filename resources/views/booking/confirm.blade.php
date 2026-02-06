@@ -24,19 +24,15 @@
                     </div>
                     <div class="card-body">
                         <div class="row g-4">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <small class="text-muted d-block fw-600 mb-2">CHECK-IN</small>
                                 <p class="mb-0 fs-16" id="display-checkin">-</p>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <small class="text-muted d-block fw-600 mb-2">CHECK-OUT</small>
                                 <p class="mb-0 fs-16" id="display-checkout">-</p>
                             </div>
-                            <div class="col-md-3">
-                                <small class="text-muted d-block fw-600 mb-2">ROOMS</small>
-                                <p class="mb-0 fs-16" id="display-rooms">-</p>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <small class="text-muted d-block fw-600 mb-2">GUESTS</small>
                                 <p class="mb-0 fs-16" id="display-guests">-</p>
                             </div>
@@ -51,7 +47,6 @@
                     <!-- Hidden Fields (all params) -->
                     <input type="hidden" id="hidden-checkin" name="checkin">
                     <input type="hidden" id="hidden-checkout" name="checkout">
-                    <input type="hidden" id="hidden-rooms" name="rooms">
                     <input type="hidden" id="hidden-adults" name="adults">
                     <input type="hidden" id="hidden-children" name="children">
                     <input type="hidden" id="hidden-full-name" name="full_name">
@@ -114,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const checkin = params.get('checkin');
     const checkout = params.get('checkout');
-    const rooms = params.get('rooms');
     const adults = parseInt(params.get('adults') || '0', 10);
     const children = parseInt(params.get('children') || '0', 10);
     const fullName = params.get('full_name');
@@ -127,8 +121,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const currency = params.get('currency');
     const totalPrice = params.get('total_price');
 
-    // Validate presence
-    if (!checkin || !checkout || !rooms || !adults || !fullName || !email || !phone || !propertyId) {
+    // Validate presence (no rooms needed for entire home)
+    if (!checkin || !checkout || !adults || !fullName || !email || !phone || !propertyId) {
         alert('Missing reservation details. Please start over.');
         window.location.href = '/reservation';
         return;
@@ -142,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Display booking dates and guests
     document.getElementById('display-checkin').textContent = checkin;
     document.getElementById('display-checkout').textContent = checkout;
-    document.getElementById('display-rooms').textContent = rooms;
     const guestsText = children > 0 ? `${adults} adult(s), ${children} child(ren)` : `${adults} adult(s)`;
     document.getElementById('display-guests').textContent = guestsText;
     
@@ -160,7 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('hidden-total-price').value = totalPrice;
     document.getElementById('hidden-checkin').value = checkin;
     document.getElementById('hidden-checkout').value = checkout;
-    document.getElementById('hidden-rooms').value = rooms;
     document.getElementById('hidden-adults').value = adults;
     document.getElementById('hidden-children').value = children;
     document.getElementById('hidden-full-name').value = fullName;

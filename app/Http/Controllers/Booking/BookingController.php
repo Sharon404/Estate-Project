@@ -14,18 +14,50 @@ use Illuminate\Support\Str;
 class BookingController extends Controller
 {
     /**
-     * Step 1: Display reservation form with available properties
+     * Step 1: Display reservation form with pre-selected property
      */
-    public function reservationForm()
+    public function reservationForm(Request $request)
     {
-        // Get all active approved properties with eager loaded images
-        $availableProperties = Property::with('images')
+        // Get property_id from URL or fail
+        $propertyId = $request->get('property_id');
+        
+        if (!$propertyId) {
+            return redirect()->route('home')->with('error', 'Please select a property to book.');
+        }
+        
+        // Load the specific property with images and amenities
+        $property = Property::with(['images', 'amenities'])
+            ->where('id', $propertyId)
             ->where('is_active', true)
             ->where('status', 'APPROVED')
-            ->orderBy('name')
-            ->get();
+            ->firstOrFail();
             
-        return view('booking.reservation', ['availableProperties' => $availableProperties]);
+        return view('booking.reservation', compact('property'));
+    }
+
+    /**
+     * API: Get booked dates for a property (for calendar availability)
+     */
+    public function getBookedDates($propertyId)
+    {
+        // Get all confirmed/pending bookings for this property
+        $bookings = Booking::where('property_id', $propertyId)
+            ->whereIn('status', ['CONFIRMED', 'PENDING'])
+            ->get(['check_in', 'check_out']);
+        
+        // Build array of all booked dates
+        $bookedDates = [];
+        foreach ($bookings as $booking) {
+            $start = Carbon::parse($booking->check_in);
+            $end = Carbon::parse($booking->check_out);
+            
+            // Include all dates in the range (checkin to checkout)
+            for ($date = $start; $date->lte($end); $date->addDay()) {
+                $bookedDates[] = $date->format('Y-m-d');
+            }
+        }
+        
+        return response()->json(['booked_dates' => array_unique($bookedDates)]);
     }
 
     /**
@@ -48,13 +80,50 @@ class BookingController extends Controller
             'notes' => 'nullable|string|max:1000',
             'checkin' => 'required|date_format:Y-m-d',
             'checkout' => 'required|date_format:Y-m-d|after:checkin',
-            'rooms' => 'required|integer|min:1|max:10',
             'adults' => 'required|integer|min:1|max:10',
             'children' => 'nullable|integer|min:0|max:6',
+            'property_id' => 'required|exists:properties,id',
         ]);
 
         try {
             $children = (int) ($validated['children'] ?? 0);
+
+            // Get the specific property from validated data
+            $property = Property::where('id', $validated['property_id'])
+                ->where('is_active', true)
+                ->where('status', 'APPROVED')
+                ->firstOrFail();
+
+            $checkInDate = Carbon::createFromFormat('Y-m-d', $validated['checkin'])->startOfDay();
+            $checkOutDate = Carbon::createFromFormat('Y-m-d', $validated['checkout'])->startOfDay();
+            $nights = $checkInDate->diffInDays($checkOutDate);
+            
+            if ($nights <= 0) {
+                return back()->withErrors(['error' => 'Check-out date must be after check-in date.']);
+            }
+
+            // *** CRITICAL: Check for overlapping bookings on this property ***
+            $overlappingBooking = Booking::where('property_id', $property->id)
+                ->whereIn('status', ['CONFIRMED', 'PENDING'])
+                ->where(function($query) use ($checkInDate, $checkOutDate) {
+                    // Booking overlaps if:
+                    // 1. New checkin is between existing checkin and checkout
+                    // 2. New checkout is between existing checkin and checkout
+                    // 3. New booking completely contains existing booking
+                    $query->whereBetween('check_in', [$checkInDate, $checkOutDate])
+                        ->orWhereBetween('check_out', [$checkInDate, $checkOutDate])
+                        ->orWhere(function($q) use ($checkInDate, $checkOutDate) {
+                            $q->where('check_in', '<=', $checkInDate)
+                              ->where('check_out', '>=', $checkOutDate);
+                        });
+                })
+                ->first();
+
+            if ($overlappingBooking) {
+                return back()->withErrors([
+                    'error' => 'Sorry, this property is not available for the selected dates. Please choose different dates.'
+                ])->withInput();
+            }
 
             $guest = Guest::firstOrCreate(
                 ['email' => $validated['email']],
@@ -64,26 +133,17 @@ class BookingController extends Controller
                 ]
             );
 
-            $checkInDate = Carbon::createFromFormat('Y-m-d', $validated['checkin'])->startOfDay();
-            $checkOutDate = Carbon::createFromFormat('Y-m-d', $validated['checkout'])->startOfDay();
-            $nights = $checkInDate->diffInDays($checkOutDate);
-            if ($nights <= 0) {
-                return back()->withErrors(['error' => 'Check-out date must be after check-in date.']);
-            }
-
-            $property = Property::where('is_active', true)->first();
-            if (!$property) {
-                return back()->withErrors(['error' => 'No properties available for booking.']);
-            }
-
             $nightlyRate = $property->nightly_rate ?? 0;
             $currency = $property->currency ?? 'KES';
-            $accommodationSubtotal = $nightlyRate * $nights * (int) $validated['rooms'];
+            
+            // Entire home booking - no room multiplier
+            $accommodationSubtotal = $nightlyRate * $nights;
             $totalAmount = $accommodationSubtotal;
 
             $existing = Booking::where('guest_id', $guest->id)
                 ->whereDate('check_in', $checkInDate->toDateString())
                 ->whereDate('check_out', $checkOutDate->toDateString())
+                ->where('property_id', $property->id)
                 ->whereIn('status', ['DRAFT', 'PENDING_PAYMENT'])
                 ->first();
             if ($existing) {
@@ -101,9 +161,9 @@ class BookingController extends Controller
                 'check_out' => $checkOutDate,
                 'adults' => (int) $validated['adults'],
                 'children' => $children,
-                'rooms' => (int) $validated['rooms'],
+                'rooms' => 1, // Entire home booking
                 'special_requests' => $validated['notes'] ?? '',
-                'status' => 'PENDING_PAYMENT',
+                'status' => 'PENDING',
                 'currency' => $currency,
                 'nightly_rate' => $nightlyRate,
                 'nights' => $nights,
