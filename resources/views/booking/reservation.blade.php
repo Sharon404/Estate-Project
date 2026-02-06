@@ -22,7 +22,7 @@
                     <p class="text-muted mb-4">Select your dates below. You'll review all details on the next step.</p>
 
                     <!-- Reservation Form -->
-                    <form id="reservationForm" onsubmit="return false;">
+                    <form id="reservationForm" onsubmit="return false;" data-booked-dates-url="{{ route('property.booked-dates', ['propertyId' => $property->id]) }}">
                         <!-- Hidden Property ID -->
                         <input type="hidden" id="property_id" name="property_id" value="{{ $property->id }}">
                         <input type="hidden" id="property_name" name="property_name" value="{{ $property->name }}">
@@ -40,7 +40,7 @@
                                     name="checkin"
                                     class="form-control" 
                                     required
-                                    onchange="calculateTotal()">
+                                    onchange="validateDateAndCalculate()">
                             </div>
 
                             <!-- Check-Out Date -->
@@ -52,7 +52,12 @@
                                     name="checkout"
                                     class="form-control" 
                                     required
-                                    onchange="calculateTotal()">
+                                    onchange="validateDateAndCalculate()">
+                            </div>
+
+                            <!-- Availability Warning -->
+                            <div class="col-12">
+                                <div id="date-availability-warning" class="alert alert-warning d-none" role="alert"></div>
                             </div>
 
                             <!-- Total Price Display -->
@@ -135,23 +140,39 @@
 // Fetch and disable booked dates when page loads
 let bookedDates = [];
 
+function formatLocalDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const propertyId = document.getElementById('property_id').value;
-    const today = new Date().toISOString().split('T')[0];
+    const today = formatLocalDate(new Date());
+    const bookedDatesUrl = document.getElementById('reservationForm').dataset.bookedDatesUrl;
+    const warningEl = document.getElementById('date-availability-warning');
     
     // Set minimum date to today
     document.getElementById('checkin').setAttribute('min', today);
     document.getElementById('checkout').setAttribute('min', today);
     
     // Fetch booked dates from server
-    fetch(`/api/property/${propertyId}/booked-dates`)
-        .then(response => response.json())
+    fetch(bookedDatesUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Availability service returned ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
-            bookedDates = data.booked_dates || [];
+            bookedDates = Array.isArray(data.booked_dates) ? data.booked_dates : [];
             console.log('Loaded booked dates:', bookedDates.length);
         })
         .catch(error => {
             console.error('Error fetching booked dates:', error);
+            warningEl.textContent = 'Unable to load availability right now. Please refresh or try again in a moment.';
+            warningEl.classList.remove('d-none');
         });
 });
 
@@ -159,6 +180,9 @@ document.addEventListener('DOMContentLoaded', function() {
 function validateDates() {
     const checkin = document.getElementById('checkin').value;
     const checkout = document.getElementById('checkout').value;
+    const warningEl = document.getElementById('date-availability-warning');
+    warningEl.classList.add('d-none');
+    warningEl.textContent = '';
     
     if (!checkin || !checkout) return true;
     
@@ -166,15 +190,65 @@ function validateDates() {
     const checkoutDate = new Date(checkout);
     
     // Check if any date in the range is already booked
+    const bookedList = Array.isArray(bookedDates) ? bookedDates : [];
     for (let d = new Date(checkinDate); d < checkoutDate; d.setDate(d.getDate() + 1)) {
-        const dateStr = d.toISOString().split('T')[0];
-        if (bookedDates.includes(dateStr)) {
-            alert(`Sorry, this property is not available for the selected dates. ${dateStr} is already booked.`);
+        const dateStr = formatLocalDate(d);
+        if (bookedList.includes(dateStr)) {
+            warningEl.textContent = `Sorry, this property is not available for the selected dates. ${dateStr} is already booked.`;
+            warningEl.classList.remove('d-none');
             return false;
         }
     }
     
     return true;
+}
+
+// Validate date selection prevents booked dates
+function validateDateAndCalculate() {
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+    const warningEl = document.getElementById('date-availability-warning');
+    const bookedList = Array.isArray(bookedDates) ? bookedDates : [];
+    
+    if (!checkin && !checkout) {
+        warningEl.classList.add('d-none');
+        document.getElementById('total_price_display').textContent = '-';
+        return;
+    }
+    
+    // If only check-in date selected, verify it's not booked
+    if (checkin && !checkout) {
+        if (bookedList.includes(checkin)) {
+            warningEl.textContent = `Sorry, ${checkin} is already booked. Please select another date.`;
+            warningEl.classList.remove('d-none');
+            document.getElementById('checkin').value = '';
+            document.getElementById('total_price_display').textContent = '-';
+            return;
+        }
+        warningEl.classList.add('d-none');
+        return;
+    }
+    
+    // If only check-out date selected, verify it's not booked
+    if (!checkin && checkout) {
+        if (bookedList.includes(checkout)) {
+            warningEl.textContent = `Sorry, ${checkout} is already booked. Please select another date.`;
+            warningEl.classList.remove('d-none');
+            document.getElementById('checkout').value = '';
+            document.getElementById('total_price_display').textContent = '-';
+            return;
+        }
+        warningEl.classList.add('d-none');
+        return;
+    }
+    
+    // Both dates selected - validate range
+    if (!validateDates()) {
+        document.getElementById('total_price_display').textContent = '-';
+        return;
+    }
+    
+    calculateTotal();
 }
 
 // Calculate and display total price (entire home = no room count needed)
@@ -184,14 +258,6 @@ function calculateTotal() {
     
     if (!checkin || !checkout) {
         document.getElementById('total_price_display').textContent = '-';
-        return;
-    }
-    
-    // Validate dates aren't booked
-    if (!validateDates()) {
-        document.getElementById('total_price_display').textContent = '-';
-        document.getElementById('checkin').value = '';
-        document.getElementById('checkout').value = '';
         return;
     }
     
@@ -249,6 +315,11 @@ function goToConfirm() {
 
     if (!fullName || !email || !phone) {
         alert('Please provide your full name, email, and phone');
+        return;
+    }
+
+    // Ensure selected dates are available
+    if (!validateDates()) {
         return;
     }
 

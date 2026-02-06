@@ -48,16 +48,17 @@ class BookingController extends Controller
         // Build array of all booked dates
         $bookedDates = [];
         foreach ($bookings as $booking) {
-            $start = Carbon::parse($booking->check_in);
-            $end = Carbon::parse($booking->check_out);
+            $start = Carbon::parse($booking->check_in)->startOfDay();
+            $end = Carbon::parse($booking->check_out)->startOfDay();
             
-            // Include all dates in the range (checkin to checkout)
-            for ($date = $start; $date->lte($end); $date->addDay()) {
+            // Include all dates in the range (checkin to day before checkout)
+            for ($date = $start; $date->lt($end); $date->addDay()) {
                 $bookedDates[] = $date->format('Y-m-d');
             }
         }
         
-        return response()->json(['booked_dates' => array_unique($bookedDates)]);
+        // Return as a proper JSON array (re-index to ensure it's serialized as array, not object)
+        return response()->json(['booked_dates' => array_values(array_unique($bookedDates))]);
     }
 
     /**
@@ -106,16 +107,10 @@ class BookingController extends Controller
             $overlappingBooking = Booking::where('property_id', $property->id)
                 ->whereIn('status', ['PARTIALLY_PAID', 'PAID', 'PENDING_PAYMENT'])
                 ->where(function($query) use ($checkInDate, $checkOutDate) {
-                    // Booking overlaps if:
-                    // 1. New checkin is between existing checkin and checkout
-                    // 2. New checkout is between existing checkin and checkout
-                    // 3. New booking completely contains existing booking
-                    $query->whereBetween('check_in', [$checkInDate, $checkOutDate])
-                        ->orWhereBetween('check_out', [$checkInDate, $checkOutDate])
-                        ->orWhere(function($q) use ($checkInDate, $checkOutDate) {
-                            $q->where('check_in', '<=', $checkInDate)
-                              ->where('check_out', '>=', $checkOutDate);
-                        });
+                    // Two bookings overlap if one starts before the other ends
+                    // Overlap occurs when: existing_checkin < new_checkout AND existing_checkout > new_checkin
+                    $query->where('check_in', '<', $checkOutDate)
+                          ->where('check_out', '>', $checkInDate);
                 })
                 ->first();
 

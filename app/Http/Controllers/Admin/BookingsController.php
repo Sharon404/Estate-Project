@@ -97,6 +97,23 @@ class BookingsController extends Controller
             return back()->withErrors(['error' => 'Check-out date must be after check-in date.'])->withInput();
         }
 
+        // *** CRITICAL: Check for overlapping bookings when editing dates ***
+        $overlappingBooking = Booking::where('property_id', $booking->property_id)
+            ->where('id', '!=', $booking->id) // Exclude current booking
+            ->whereIn('status', ['PARTIALLY_PAID', 'PAID', 'PENDING_PAYMENT'])
+            ->where(function($query) use ($checkInDate, $checkOutDate) {
+                // Two bookings overlap if one starts before the other ends
+                $query->where('check_in', '<', $checkOutDate)
+                      ->where('check_out', '>', $checkInDate);
+            })
+            ->first();
+
+        if ($overlappingBooking) {
+            return back()->withErrors([
+                'error' => 'These dates overlap with booking #' . $overlappingBooking->booking_ref . '. Please choose different dates.'
+            ])->withInput();
+        }
+
         $rooms = (int) $validated['rooms'];
         $nightlyRate = (float) $validated['nightly_rate'];
         $accommodationSubtotal = $nightlyRate * $nights * $rooms;
