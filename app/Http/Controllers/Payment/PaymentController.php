@@ -448,6 +448,9 @@ class PaymentController extends Controller
             abort(403, 'Receipt not available for unpaid bookings');
         }
 
+        // Load guest and property relationships
+        $booking->load(['guest', 'property']);
+
         // Get the latest payment transaction (type = PAYMENT, not REFUND or ADJUSTMENT)
         $latestTransaction = $booking->bookingTransactions()
             ->where('type', 'PAYMENT')
@@ -469,9 +472,9 @@ class PaymentController extends Controller
         // Prepare receipt data
         $receiptData = [
             'booking_ref' => $booking->booking_ref,
-            'guest_name' => $booking->guest_full_name,
-            'guest_phone' => $booking->guest_phone,
-            'guest_email' => $booking->guest_email,
+            'guest_name' => $booking->guest->full_name,
+            'guest_phone' => $booking->guest->phone_e164,
+            'guest_email' => $booking->guest->email,
             'property_name' => $booking->property->name,
             'check_in' => $booking->check_in->format('M d, Y'),
             'check_out' => $booking->check_out->format('M d, Y'),
